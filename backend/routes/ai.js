@@ -107,16 +107,19 @@ router.post('/chat', async (req, res) => {
     try {
         const { message, language, weatherData } = req.body;
         
+        const langMap = { 'en': 'English', 'kn': 'Kannada', 'ta': 'Tamil', 'te': 'Telugu', 'ml': 'Malayalam', 'hi': 'Hindi' };
+        const targetLang = langMap[language] || 'English';
+        
         const systemPrompt = `You are Krishi AI, a helpful, friendly, and expert South Indian agricultural assistant.
 Your goal is to help farmers with scientific advice, crop management, and pest control.
 Context:
 - Current Weather: ${JSON.stringify(weatherData || 'Unknown')}
 - Tone: Professional yet empathetic, like a knowledgeable local agricultural officer.
-- Languages: You fluently speak English, Kannada, Tamil, Telugu, Malayalam, and Hindi.
+- YOUR LANGUAGE INSTRUCTION: The user has selected ${targetLang}. You MUST respond ENTIRELY in ${targetLang} language using native script.
 - Knowledge: Deep expertise in South Indian crops like Ragi, Paddy, Coconut, Arecanut, Ginger, Coffee, and Pepper.
 
 STRICT INSTRUCTIONS:
-1. If the farmer asks in a specific language, ALWAYS respond using that language and its native script.
+1. ALWAYS respond using ${targetLang} and its native script.
 2. Be concise but practical. Provide step-by-step guidance when possible.
 3. If weather data is provided, incorporate it into your advice.`;
 
