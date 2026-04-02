@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,11 +16,12 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 2rem;
-            background: linear-gradient(135deg, rgba(46,125,50,0.3), rgba(56,142,60,0.1));
-            border: 1px solid rgba(76,175,80,0.2);
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.3), rgba(56, 142, 60, 0.1));
+            border: 1px solid rgba(76, 175, 80, 0.2);
             position: relative;
             overflow: hidden;
         }
+
         .weather-hero::before {
             content: '';
             position: absolute;
@@ -28,7 +30,7 @@
             width: 400px;
             height: 400px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(76,175,80,0.15), transparent 70%);
+            background: radial-gradient(circle, rgba(76, 175, 80, 0.15), transparent 70%);
             pointer-events: none;
         }
 
@@ -39,29 +41,48 @@
             flex-wrap: wrap;
             margin-top: 1rem;
         }
+
         .weather-stat {
             flex: 1;
             min-width: 100px;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             padding: 1rem 1.2rem;
             border-radius: 14px;
             border: 1px solid var(--glass-border);
             text-align: center;
             transition: transform 0.2s, background 0.2s;
         }
+
         .weather-stat:hover {
             transform: translateY(-3px);
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
-        .weather-stat i { font-size: 1.2rem; margin-bottom: 0.4rem; display: block; }
-        .weather-stat .stat-value { font-size: 1.4rem; font-weight: 700; }
-        .weather-stat .stat-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.2rem; }
+
+        .weather-stat i {
+            font-size: 1.2rem;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        .weather-stat .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .weather-stat .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.2rem;
+        }
 
         /* Full-Width Map */
         .map-container {
             position: relative;
             margin-top: 1.5rem;
         }
+
         #map {
             height: 450px;
             border-radius: 16px;
@@ -69,6 +90,7 @@
             border: 1px solid var(--glass-border);
             z-index: 1;
         }
+
         .map-search-bar {
             position: absolute;
             top: 12px;
@@ -80,21 +102,24 @@
             width: 90%;
             max-width: 500px;
         }
+
         .map-search-bar input {
             flex: 1;
             padding: 0.8rem 1.2rem;
             border-radius: 25px;
-            border: 2px solid rgba(76,175,80,0.3);
-            background: rgba(255,255,255,0.92);
+            border: 2px solid rgba(76, 175, 80, 0.3);
+            background: rgba(255, 255, 255, 0.92);
             color: #111;
             font-family: 'Inter', sans-serif;
             font-size: 0.95rem;
             outline: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
+
         .map-search-bar input:focus {
             border-color: #4CAF50;
         }
+
         .map-search-bar button {
             padding: 0.8rem 1.2rem;
             border-radius: 25px;
@@ -103,10 +128,13 @@
             color: white;
             cursor: pointer;
             font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
             transition: transform 0.2s;
         }
-        .map-search-bar button:hover { transform: scale(1.05); }
+
+        .map-search-bar button:hover {
+            transform: scale(1.05);
+        }
 
         .map-search-results {
             position: absolute;
@@ -116,13 +144,14 @@
             z-index: 1001;
             width: 90%;
             max-width: 500px;
-            background: rgba(255,255,255,0.97);
+            background: rgba(255, 255, 255, 0.97);
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
             max-height: 200px;
             overflow-y: auto;
             display: none;
         }
+
         .map-search-results .result-item {
             padding: 0.8rem 1.2rem;
             cursor: pointer;
@@ -131,16 +160,26 @@
             border-bottom: 1px solid #eee;
             transition: background 0.2s;
         }
-        .map-search-results .result-item:hover { background: #e8f5e9; }
-        .map-search-results .result-item:last-child { border-bottom: none; }
-        .map-search-results .result-item i { color: #4CAF50; margin-right: 0.5rem; }
+
+        .map-search-results .result-item:hover {
+            background: #e8f5e9;
+        }
+
+        .map-search-results .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .map-search-results .result-item i {
+            color: #4CAF50;
+            margin-right: 0.5rem;
+        }
 
         .map-location-badge {
             position: absolute;
             bottom: 12px;
             left: 12px;
             z-index: 1000;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 20px;
@@ -156,43 +195,53 @@
             padding: 0.5rem 0;
             scrollbar-width: thin;
         }
+
         .forecast-item {
             min-width: 90px;
             text-align: center;
             padding: 1rem 0.8rem;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 14px;
             border: 1px solid var(--glass-border);
             transition: transform 0.2s, background 0.2s;
             flex-shrink: 0;
         }
+
         .forecast-item:hover {
             transform: translateY(-3px);
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         /* Seasonal Crop Card */
         .crop-card {
-            background: linear-gradient(135deg, rgba(255,152,0,0.12), rgba(76,175,80,0.08));
-            border: 1px solid rgba(255,152,0,0.2);
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.12), rgba(76, 175, 80, 0.08));
+            border: 1px solid rgba(255, 152, 0, 0.2);
         }
+
         .crop-recommendation-box {
-            background: rgba(0,0,0,0.12);
+            background: rgba(0, 0, 0, 0.12);
             padding: 1.5rem;
             border-radius: 14px;
             min-height: 120px;
             line-height: 1.7;
             font-size: 1rem;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .crop-recommendation-box strong { color: var(--accent-color); }
-        [data-theme='light'] .crop-recommendation-box { background: rgba(0,0,0,0.04); }
+
+        .crop-recommendation-box strong {
+            color: var(--accent-color);
+        }
+
+        [data-theme='light'] .crop-recommendation-box {
+            background: rgba(0, 0, 0, 0.04);
+        }
 
         .crop-input-group {
             display: flex;
             gap: 0.8rem;
             margin-bottom: 1.5rem;
         }
+
         .crop-input-group .form-control {
             flex: 1;
             padding: 1rem;
@@ -201,9 +250,14 @@
         }
 
         /* Language Selector */
-        .lang-selector { display: flex; align-items: center; gap: 0.5rem; }
+        .lang-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         .lang-select {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--glass-border);
             color: var(--text-primary);
             padding: 0.5rem 0.8rem;
@@ -213,8 +267,16 @@
             cursor: pointer;
             outline: none;
         }
-        .lang-select option { background: #1a1a1a; color: #fff; }
-        [data-theme='light'] .lang-select option { background: #fff; color: #111; }
+
+        .lang-select option {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        [data-theme='light'] .lang-select option {
+            background: #fff;
+            color: #111;
+        }
 
         /* Section Headers */
         .section-header {
@@ -223,6 +285,7 @@
             justify-content: space-between;
             margin-bottom: 1.2rem;
         }
+
         .section-title {
             display: flex;
             align-items: center;
@@ -232,9 +295,17 @@
         }
 
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 5px rgba(76,175,80,0.3); }
-            50% { box-shadow: 0 0 20px rgba(76,175,80,0.6); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
+            }
         }
+
         .auto-badge {
             background: var(--accent-color);
             color: white;
@@ -250,9 +321,10 @@
         .glass-card {
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
+
         .glass-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
         }
 
         .gradient-text {
@@ -268,16 +340,21 @@
             cursor: pointer;
             flex-shrink: 0;
         }
+
         .profile-avatar {
             width: 70px;
             height: 70px;
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--accent-color);
-            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
             transition: transform 0.3s;
         }
-        .profile-avatar:hover { transform: scale(1.08); }
+
+        .profile-avatar:hover {
+            transform: scale(1.08);
+        }
+
         .avatar-overlay {
             position: absolute;
             bottom: -2px;
@@ -291,8 +368,9 @@
             justify-content: center;
             color: white;
             font-size: 0.6rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
+
         .avatar-initials {
             width: 70px;
             height: 70px;
@@ -307,9 +385,12 @@
             background: linear-gradient(135deg, #4CAF50, #2E7D32);
             cursor: pointer;
             transition: transform 0.3s;
-            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
         }
-        .avatar-initials:hover { transform: scale(1.08); }
+
+        .avatar-initials:hover {
+            transform: scale(1.08);
+        }
 
         /* Two column for crop sections */
         .crop-grid {
@@ -318,11 +399,15 @@
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
+
         @media (max-width: 768px) {
-            .crop-grid { grid-template-columns: 1fr; }
+            .crop-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <nav class="glass">
         <a href="dashboard.html" class="logo">
@@ -336,9 +421,9 @@
                 <i class="fas fa-language" style="font-size: 1.2rem;"></i>
                 <select id="langSelect" class="lang-select" title="Translate">
                     <option value="en">English</option>
+                    <option value="te">తెలుగు</option>
                     <option value="kn">ಕನ್ನಡ</option>
                     <option value="ta">தமிழ்</option>
-                    <option value="te">తెలుగు</option>
                     <option value="ml">മലയാളം</option>
                     <option value="hi">हिन्दी</option>
                 </select>
@@ -352,7 +437,8 @@
         <!-- Hero Weather Section -->
         <div class="glass glass-card weather-hero" style="margin-top: 0;">
             <!-- Profile Avatar -->
-            <div class="profile-avatar-wrap" id="avatarWrap" onclick="document.getElementById('profileUploadInput').click()">
+            <div class="profile-avatar-wrap" id="avatarWrap"
+                onclick="document.getElementById('profileUploadInput').click()">
                 <div class="avatar-initials" id="avatarDisplay">?</div>
                 <div class="avatar-overlay"><i class="fas fa-camera"></i></div>
                 <input type="file" id="profileUploadInput" accept="image/*" style="display:none;">
@@ -369,25 +455,41 @@
             <div id="currentWeatherBox" style="display: flex; align-items: center; gap: 1.5rem; min-width: 300px;">
                 <i class="fas fa-spinner fa-spin fa-2x"></i>
                 <div>
-                   <h2 style="font-size: 3rem; font-weight: 200;">--°</h2>
-                   <p>Loading weather...</p>
+                    <h2 style="font-size: 3rem; font-weight: 200;">--°</h2>
+                    <p>Loading weather...</p>
                 </div>
             </div>
         </div>
 
         <!-- Weather Stats Row -->
         <div class="weather-stats" id="weatherStatsRow">
-            <div class="weather-stat"><i class="fas fa-tint" style="color: #4fc3f7;"></i><div class="stat-value" id="statHumidity">--%</div><div class="stat-label">Humidity</div></div>
-            <div class="weather-stat"><i class="fas fa-wind" style="color: #aed581;"></i><div class="stat-value" id="statWind">-- m/s</div><div class="stat-label">Wind</div></div>
-            <div class="weather-stat"><i class="fas fa-compress-arrows-alt" style="color: #ffb74d;"></i><div class="stat-value" id="statPressure">-- hPa</div><div class="stat-label">Pressure</div></div>
-            <div class="weather-stat"><i class="fas fa-eye" style="color: #ce93d8;"></i><div class="stat-value" id="statVisibility">-- km</div><div class="stat-label">Visibility</div></div>
-            <div class="weather-stat"><i class="fas fa-temperature-arrow-up" style="color: #ef5350;"></i><div class="stat-value" id="statFeelsLike">--°</div><div class="stat-label">Feels Like</div></div>
+            <div class="weather-stat"><i class="fas fa-tint" style="color: #4fc3f7;"></i>
+                <div class="stat-value" id="statHumidity">--%</div>
+                <div class="stat-label">Humidity</div>
+            </div>
+            <div class="weather-stat"><i class="fas fa-wind" style="color: #aed581;"></i>
+                <div class="stat-value" id="statWind">-- m/s</div>
+                <div class="stat-label">Wind</div>
+            </div>
+            <div class="weather-stat"><i class="fas fa-compress-arrows-alt" style="color: #ffb74d;"></i>
+                <div class="stat-value" id="statPressure">-- hPa</div>
+                <div class="stat-label">Pressure</div>
+            </div>
+            <div class="weather-stat"><i class="fas fa-eye" style="color: #ce93d8;"></i>
+                <div class="stat-value" id="statVisibility">-- km</div>
+                <div class="stat-label">Visibility</div>
+            </div>
+            <div class="weather-stat"><i class="fas fa-temperature-arrow-up" style="color: #ef5350;"></i>
+                <div class="stat-value" id="statFeelsLike">--°</div>
+                <div class="stat-label">Feels Like</div>
+            </div>
         </div>
 
         <!-- Full-Width Interactive Map with Search -->
         <div class="map-container glass glass-card" style="padding: 0; overflow: hidden; margin-top: 1.5rem;">
             <div class="map-search-bar">
-                <input type="text" id="mapSearch" placeholder="🔍 Search village, city, or district..." autocomplete="off">
+                <input type="text" id="mapSearch" placeholder="🔍 Search village, city, or district..."
+                    autocomplete="off">
                 <button id="mapSearchBtn"><i class="fas fa-search"></i></button>
             </div>
             <div class="map-search-results" id="mapSearchResults"></div>
@@ -417,7 +519,8 @@
                         <span id="seasonalTitle">Seasonal Crops</span>
                         <span class="auto-badge">AUTO</span>
                     </div>
-                    <button id="refreshSeasonalBtn" class="btn btn-glass" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                    <button id="refreshSeasonalBtn" class="btn btn-glass"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
                         <i class="fas fa-sync-alt"></i>
                     </button>
                 </div>
@@ -478,7 +581,7 @@
 
         // ========== PROFILE AVATAR ==========
         const avatarDisplay = document.getElementById('avatarDisplay');
-        
+
         function showAvatar(imageUrl) {
             if (!imageUrl) {
                 avatarDisplay.innerText = farmer.name.charAt(0).toUpperCase();
@@ -487,11 +590,11 @@
             // Check if input is a filename (old style) or Base64 (new style)
             let src = imageUrl;
             if (imageUrl && !imageUrl.startsWith('data:')) {
-                src = `${API_BASE_URL.replace('/api','')}/uploads/profiles/${imageUrl}`;
+                src = `${API_BASE_URL.replace('/api', '')}/uploads/profiles/${imageUrl}`;
             }
             avatarDisplay.outerHTML = `<img class="profile-avatar" id="avatarDisplay" src="${src}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-initials\\' id=\\'avatarDisplay\\'>${farmer.name.charAt(0).toUpperCase()}</div>'">`;
         }
-        
+
         // Load initially from the farmer object (refreshed at login)
         showAvatar(farmer.profileImage);
 
@@ -499,7 +602,7 @@
         document.getElementById('profileUploadInput').addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
-            
+
             if (file.size > 5 * 1024 * 1024) {
                 alert('Image must be less than 5MB');
                 return;
@@ -514,7 +617,7 @@
                     body: formData
                 });
                 const data = await res.json();
-                
+
                 if (data.success) {
                     // Update the local farmer object with the new image
                     farmer.profileImage = data.profileImage;
@@ -523,7 +626,7 @@
                 } else {
                     alert(data.error || 'Upload failed');
                 }
-            } catch(err) {
+            } catch (err) {
                 alert('Failed to upload image.');
             }
         });
@@ -612,7 +715,7 @@
                     const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=en`);
                     const geoData = await geoRes.json();
                     name = geoData.address?.village || geoData.address?.town || geoData.address?.city || geoData.address?.county || 'Selected Location';
-                } catch(e) {
+                } catch (e) {
                     name = 'Selected Location';
                 }
             }
@@ -680,7 +783,7 @@
                         updateLocation(lat, lon, name);
                     });
                 });
-            } catch(e) {
+            } catch (e) {
                 searchResults.innerHTML = '<div class="result-item"><i class="fas fa-exclamation-circle"></i> Search error</div>';
                 searchResults.style.display = 'block';
             }
@@ -701,13 +804,13 @@
                 const res = await fetch(`${API_BASE_URL}/weather/current?lat=${lat}&lon=${lon}`);
                 const data = await res.json();
                 lastWeatherData = data;
-                
+
                 const temp = Math.round(data.main.temp);
                 const desc = data.weather[0].description;
                 const iconCode = data.weather[0].icon;
                 const feelsLike = Math.round(data.main.feels_like);
                 const visibility = data.visibility ? (data.visibility / 1000).toFixed(1) : '--';
-                
+
                 document.getElementById('currentWeatherBox').innerHTML = `
                     <img src="https://openweathermap.org/img/wn/${iconCode}@4x.png" alt="weather" width="100" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
                     <div>
@@ -720,7 +823,7 @@
                 document.getElementById('statPressure').innerText = `${data.main.pressure} hPa`;
                 document.getElementById('statVisibility').innerText = `${visibility} km`;
                 document.getElementById('statFeelsLike').innerText = `${feelsLike}°`;
-            } catch(e) {
+            } catch (e) {
                 document.getElementById('currentWeatherBox').innerHTML = `<p>Error loading weather.</p>`;
             }
         }
@@ -731,10 +834,10 @@
             try {
                 const res = await fetch(`${API_BASE_URL}/weather/forecast?lat=${lat}&lon=${lon}`);
                 const data = await res.json();
-                
+
                 let html = '';
                 data.list.slice(0, 8).forEach(item => {
-                    const time = new Date(item.dt_txt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    const time = new Date(item.dt_txt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                     const temp = Math.round(item.main.temp);
                     const iconCode = item.weather[0].icon;
                     html += `
@@ -746,7 +849,7 @@
                     `;
                 });
                 document.getElementById('forecastBox').innerHTML = html;
-            } catch(e) {
+            } catch (e) {
                 document.getElementById('forecastBox').innerHTML = `<p>Error loading forecast.</p>`;
             }
         }
@@ -772,7 +875,7 @@
                 const data = await res.json();
                 let formatted = (data.recommendation || '').replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 box.innerHTML = `<div style="line-height: 1.8;">${formatted}</div>`;
-            } catch(e) {
+            } catch (e) {
                 box.innerHTML = '<p style="color: #ffb74d;">Failed to fetch recommendations.</p>';
             }
         }
@@ -791,7 +894,7 @@
         async function fetchCropAdvice(cropName) {
             const btn = document.getElementById('getCropAdviceBtn');
             const box = document.getElementById('cropAdviceBox');
-            if(btn) btn.disabled = true;
+            if (btn) btn.disabled = true;
             box.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
 
             try {
@@ -808,10 +911,10 @@
                 const data = await res.json();
                 let formatted = (data.advice || '').replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
                 box.innerHTML = `<div style="line-height: 1.7;">${formatted}</div>`;
-            } catch(e) {
+            } catch (e) {
                 box.innerHTML = '<p style="color: #ffb74d;">Failed to fetch advice.</p>';
             }
-            if(btn) btn.disabled = false;
+            if (btn) btn.disabled = false;
         }
 
         // ========== CHATBOT ==========
@@ -822,7 +925,7 @@
 
         async function handleChat() {
             const msg = document.getElementById('chatInput').value.trim();
-            if(!msg) return;
+            if (!msg) return;
             const chatBody = document.getElementById('chatBody');
             chatBody.innerHTML += `<div class="chat-bubble user">${msg}</div>`;
             document.getElementById('chatInput').value = '';
@@ -842,14 +945,15 @@
                 document.getElementById(typingId).remove();
                 chatBody.innerHTML += `<div class="chat-bubble bot">${data.advice || 'Error'}</div>`;
                 chatBody.scrollTop = chatBody.scrollHeight;
-            } catch(e) {
-                if(document.getElementById(typingId)) document.getElementById(typingId).remove();
+            } catch (e) {
+                if (document.getElementById(typingId)) document.getElementById(typingId).remove();
                 chatBody.innerHTML += `<div class="chat-bubble bot" style="color: #ff6b6b;">Error getting advice.</div>`;
             }
         }
 
         document.getElementById('sendChat').addEventListener('click', handleChat);
-        document.getElementById('chatInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') handleChat(); });
+        document.getElementById('chatInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChat(); });
     </script>
 </body>
+
 </html>
