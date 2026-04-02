@@ -46,14 +46,37 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database Connection
-if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('✅ MongoDB Connected Successfully'))
-    .catch((err) => console.error('❌ MongoDB Connection Error:', err));
-} else {
-  console.log('⚠️ MONGODB_URI not found in environment variables. Database not connected.');
+// Database Connection (Singleton pattern for Serverless)
+let cachedDb = null;
+async function connectToDatabase() {
+  if (cachedDb) return cachedDb;
+  if (!process.env.MONGODB_URI) {
+    console.log('⚠️ MONGODB_URI not found.');
+    return null;
+  }
+  
+  try {
+    const db = await mongoose.connect(process.env.MONGODB_URI);
+    console.log('✅ MongoDB Connected Successfully');
+    cachedDb = db;
+    return db;
+  } catch (err) {
+    console.error('❌ MongoDB Connection Error:', err.message);
+    throw err;
+  }
 }
+
+// Initial connection attempt
+connectToDatabase();
+
+app.use(async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (err) {
+    res.status(500).json({ error: 'Database connection failed: ' + err.message });
+  }
+});
 
 // Basic route for testing
 app.get('/', (req, res) => {

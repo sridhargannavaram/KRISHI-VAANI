@@ -48,7 +48,7 @@ router.post('/send-otp', async (req, res) => {
         });
     } catch (error) {
         console.error('Error sending OTP:', error);
-        res.status(500).json({ error: 'Failed to send OTP.' });
+        res.status(500).json({ error: 'Failed to send OTP: ' + error.message });
     }
 });
 
@@ -87,7 +87,7 @@ router.post('/verify-otp', async (req, res) => {
         return res.json({ success: true, message: 'OTP verified (demo mode).' });
     } catch (error) {
         console.error('OTP Verification Error:', error);
-        res.status(500).json({ error: 'Server error during verification.' });
+        res.status(500).json({ error: 'Server error during verification: ' + error.message });
     }
 });
 
@@ -115,7 +115,7 @@ router.post('/register', async (req, res) => {
         res.status(201).json({ success: true, message: 'Farmer registered successfully.' });
     } catch (error) {
         console.error('Registration Error:', error);
-        res.status(500).json({ error: 'Server error during registration.' });
+        res.status(500).json({ error: 'Server error during registration: ' + error.message });
     }
 });
 
@@ -156,7 +156,7 @@ router.post('/login', async (req, res) => {
         });
     } catch (error) {
         console.error('Login Error:', error);
-        res.status(500).json({ error: 'Server error during login.' });
+        res.status(500).json({ error: 'Server error during login: ' + error.message });
     }
 });
 
