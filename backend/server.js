@@ -56,7 +56,9 @@ async function connectToDatabase() {
   }
   
   try {
-    const db = await mongoose.connect(process.env.MONGODB_URI);
+    const db = await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+    });
     console.log('✅ MongoDB Connected Successfully');
     cachedDb = db;
     return db;
