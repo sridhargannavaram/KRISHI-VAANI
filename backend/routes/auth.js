@@ -151,7 +151,8 @@ router.post('/login', async (req, res) => {
                 phone: farmer.phone,
                 city: farmer.city,
                 location: farmer.location,
-                alertPreferences: farmer.alertPreferences
+                alertPreferences: farmer.alertPreferences,
+                profileImage: farmer.profileImage
             }
         });
     } catch (error) {

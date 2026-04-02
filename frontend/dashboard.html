@@ -478,23 +478,22 @@
 
         // ========== PROFILE AVATAR ==========
         const avatarDisplay = document.getElementById('avatarDisplay');
-        const savedImage = localStorage.getItem('profileImage');
         
         function showAvatar(imageUrl) {
+            if (!imageUrl) {
+                avatarDisplay.innerText = farmer.name.charAt(0).toUpperCase();
+                return;
+            }
             // Check if input is a filename (old style) or Base64 (new style)
             let src = imageUrl;
             if (imageUrl && !imageUrl.startsWith('data:')) {
-                // If it's a legacy filename, attempt to load from local uploads (only works on Dev, not Vercel)
                 src = `${API_BASE_URL.replace('/api','')}/uploads/profiles/${imageUrl}`;
             }
             avatarDisplay.outerHTML = `<img class="profile-avatar" id="avatarDisplay" src="${src}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-initials\\' id=\\'avatarDisplay\\'>${farmer.name.charAt(0).toUpperCase()}</div>'">`;
         }
         
-        if (savedImage) {
-            showAvatar(savedImage);
-        } else {
-            avatarDisplay.innerText = farmer.name.charAt(0).toUpperCase();
-        }
+        // Load initially from the farmer object (refreshed at login)
+        showAvatar(farmer.profileImage);
 
         // Upload handler
         document.getElementById('profileUploadInput').addEventListener('change', async (e) => {
@@ -517,7 +516,9 @@
                 const data = await res.json();
                 
                 if (data.success) {
-                    localStorage.setItem('profileImage', data.profileImage);
+                    // Update the local farmer object with the new image
+                    farmer.profileImage = data.profileImage;
+                    localStorage.setItem('farmer', JSON.stringify(farmer));
                     showAvatar(data.profileImage);
                 } else {
                     alert(data.error || 'Upload failed');

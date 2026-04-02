@@ -43,8 +43,7 @@ function getAuthHeader() {
 }
 
 function logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('farmer');
+    localStorage.clear();
     window.location.href = 'index.html';
 }
 
