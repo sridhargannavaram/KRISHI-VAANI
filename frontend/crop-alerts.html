@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Crop Alerts | KRISHI VAANI</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h2 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .page-header p { color: var(--text-secondary); }
+
+        /* Crop Selector */
+        .crop-selector {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .crop-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 14px;
+            border: 2px solid var(--glass-border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .crop-btn:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
+        .crop-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 20px rgba(76,175,80,0.4);
+        }
+        .crop-emoji { font-size: 1.3rem; }
+
+        /* Alert Cards */
+        .alerts-container { margin-top: 1.5rem; }
+        .alert-card {
+            padding: 1.2rem 1.5rem;
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border-left: 5px solid;
+            transition: transform 0.2s;
+        }
+        .alert-card:hover { transform: translateX(5px); }
+        .alert-high {
+            background: rgba(244,67,54,0.12);
+            border-left-color: #f44336;
+        }
+        .alert-medium {
+            background: rgba(255,152,0,0.12);
+            border-left-color: #FF9800;
+        }
+        .alert-low {
+            background: rgba(76,175,80,0.12);
+            border-left-color: #4CAF50;
+        }
+        .alert-icon {
+            font-size: 1.5rem;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .alert-high .alert-icon { background: rgba(244,67,54,0.2); color: #f44336; }
+        .alert-medium .alert-icon { background: rgba(255,152,0,0.2); color: #FF9800; }
+        .alert-low .alert-icon { background: rgba(76,175,80,0.2); color: #4CAF50; }
+        .alert-body { flex: 1; }
+        .alert-msg { font-weight: 600; margin-bottom: 0.4rem; line-height: 1.4; }
+        .alert-meta { font-size: 0.8rem; color: var(--text-secondary); display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+        .priority-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge-HIGH { background: #f44336; color: white; }
+        .badge-MEDIUM { background: #FF9800; color: white; }
+        .badge-LOW { background: #4CAF50; color: white; }
+
+        .alert-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .action-chip {
+            padding: 0.25rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--glass-border);
+        }
+
+        .send-alert-btn {
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            border: none;
+            background: #f44336;
+            color: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .send-alert-btn:hover { background: #d32f2f; transform: scale(1.05); }
+
+        /* Weather Summary */
+        .weather-summary {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .weather-badge {
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 768px) { .charts-grid { grid-template-columns: 1fr; } }
+        .chart-card { padding: 1.5rem; }
+        .chart-card canvas { max-height: 280px; }
+
+        /* No alerts */
+        .no-alerts {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+        .no-alerts i { font-size: 3rem; color: #4CAF50; margin-bottom: 1rem; display: block; }
+
+        .section-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--glass-border), transparent);
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="glass">
+        <a href="dashboard.html" class="logo"><i class="fas fa-leaf"></i> KRISHI VAANI</a>
+        <div class="nav-links">
+            <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+            <a href="alert-guard.html"><i class="fas fa-bell"></i> AlertGuard</a>
+            <a href="news.html"><i class="fas fa-newspaper"></i> Agri-News</a>
+            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <button id="logoutBtn" class="btn btn-glass">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h2><i class="fas fa-shield-alt" style="color: var(--accent-color);"></i> Smart Crop Alert Engine</h2>
+            <p>Select your crop to get weather-based alerts with priority levels & trigger actions</p>
+        </div>
+
+        <!-- Crop Selector -->
+        <div class="crop-selector" id="cropSelector">
+            <button class="crop-btn" data-crop="rice"><span class="crop-emoji">🌾</span> Rice</button>
+            <button class="crop-btn" data-crop="wheat"><span class="crop-emoji">🌿</span> Wheat</button>
+            <button class="crop-btn active" data-crop="tomato"><span class="crop-emoji">🍅</span> Tomato</button>
+            <button class="crop-btn" data-crop="ragi"><span class="crop-emoji">🌱</span> Ragi</button>
+            <button class="crop-btn" data-crop="cotton"><span class="crop-emoji">☁️</span> Cotton</button>
+            <button class="crop-btn" data-crop="sugarcane"><span class="crop-emoji">🎋</span> Sugarcane</button>
+            <button class="crop-btn" data-crop="groundnut"><span class="crop-emoji">🥜</span> Groundnut</button>
+        </div>
+
+        <!-- Weather Summary -->
+        <div class="glass glass-card">
+            <h3 style="margin-bottom: 1rem;"><i class="fas fa-cloud-sun" style="color: #4fc3f7;"></i> Current Weather Summary</h3>
+            <div class="weather-summary" id="weatherSummary">
+                <div class="weather-badge"><i class="fas fa-spinner fa-spin"></i> Loading weather...</div>
+            </div>
+        </div>
+
+        <!-- Alert Results -->
+        <div class="glass glass-card" style="margin-top: 1.5rem;" id="alertsSection">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3><i class="fas fa-exclamation-triangle" style="color: #FF9800;"></i> <span id="alertTitle">Crop Alerts</span></h3>
+                <div id="alertSummary" style="font-size: 0.85rem; color: var(--text-secondary);"></div>
+            </div>
+            <div class="alerts-container" id="alertsBox">
+                <div class="no-alerts"><i class="fas fa-spinner fa-spin"></i><p>Analyzing crop conditions...</p></div>
+            </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- Weather Visualization Charts -->
+        <div class="page-header" style="margin-top: 0;">
+            <h2><i class="fas fa-chart-area" style="color: #ce93d8;"></i> Weather Forecast Visualization</h2>
+            <p>5-day weather trends for your location</p>
+        </div>
+
+        <div class="charts-grid">
+            <div class="glass glass-card chart-card">
+                <h4 style="margin-bottom: 1rem;"><i class="fas fa-thermometer-half" style="color: #ef5350;"></i> Temperature (°C)</h4>
+                <canvas id="tempChart"></canvas>
+            </div>
+            <div class="glass glass-card chart-card">
+                <h4 style="margin-bottom: 1rem;"><i class="fas fa-tint" style="color: #4fc3f7;"></i> Humidity (%)</h4>
+                <canvas id="humidityChart"></canvas>
+            </div>
+            <div class="glass glass-card chart-card">
+                <h4 style="margin-bottom: 1rem;"><i class="fas fa-wind" style="color: #aed581;"></i> Wind Speed (m/s)</h4>
+                <canvas id="windChart"></canvas>
+            </div>
+            <div class="glass glass-card chart-card">
+                <h4 style="margin-bottom: 1rem;"><i class="fas fa-compress-arrows-alt" style="color: #ffb74d;"></i> Pressure (hPa)</h4>
+                <canvas id="pressureChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        if (!isAuthenticated()) window.location.href = 'login.html';
+
+        const farmer = JSON.parse(localStorage.getItem('farmer'));
+        const loc = farmer.location.coordinates;
+        let selectedCrop = 'tomato';
+        let charts = {};
+
+        // Crop selector
+        document.querySelectorAll('.crop-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.crop-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedCrop = btn.dataset.crop;
+                analyzeCrop();
+            });
+        });
+
+        // Analyze crop alerts
+        async function analyzeCrop() {
+            const box = document.getElementById('alertsBox');
+            box.innerHTML = '<div class="no-alerts"><i class="fas fa-spinner fa-spin"></i><p>Analyzing crop conditions...</p></div>';
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/crop-alerts/analyze`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        crop: selectedCrop,
+                        lat: loc[1],
+                        lon: loc[0],
+                        location: farmer.city
+                    })
+                });
+                const data = await res.json();
+
+                // Update weather summary
+                const w = data.weather;
+                document.getElementById('weatherSummary').innerHTML = `
+                    <div class="weather-badge"><i class="fas fa-thermometer-half" style="color:#ef5350;"></i> ${w.temp}°C</div>
+                    <div class="weather-badge"><i class="fas fa-tint" style="color:#4fc3f7;"></i> ${w.humidity}%</div>
+                    <div class="weather-badge"><i class="fas fa-wind" style="color:#aed581;"></i> ${w.windSpeed} m/s</div>
+                    <div class="weather-badge"><i class="fas fa-cloud-rain" style="color:#90caf9;"></i> ${w.isRaining ? '🌧 Raining' : w.rainForecast ? '⛅ Rain Expected' : '☀️ No Rain'}</div>
+                    <div class="weather-badge"><i class="fas fa-map-marker-alt" style="color:#4CAF50;"></i> ${data.location}</div>
+                `;
+
+                document.getElementById('alertTitle').innerText = `${data.crop} — ${data.alertCount} Alert(s)`;
+                document.getElementById('alertSummary').innerHTML = data.alertCount > 0 
+                    ? `Highest Priority: <span class="priority-badge badge-${data.highestPriority}">${data.highestPriority}</span>`
+                    : '<span style="color:#4CAF50;">✅ All Clear</span>';
+
+                if (data.alerts.length === 0) {
+                    box.innerHTML = `<div class="no-alerts">
+                        <i class="fas fa-check-circle"></i>
+                        <p><strong>All Clear!</strong></p>
+                        <p>No weather threats detected for ${data.crop} at your location.</p>
+                    </div>`;
+                    return;
+                }
+
+                let html = '';
+                data.alerts.forEach((alert, i) => {
+                    const levelClass = `alert-${alert.priority.toLowerCase()}`;
+                    const icon = alert.priority === 'HIGH' ? 'fa-exclamation-triangle' : alert.priority === 'MEDIUM' ? 'fa-exclamation-circle' : 'fa-info-circle';
+                    
+                    html += `
+                        <div class="alert-card ${levelClass}">
+                            <div class="alert-icon"><i class="fas ${icon}"></i></div>
+                            <div class="alert-body">
+                                <div class="alert-msg">${alert.message}</div>
+                                <div class="alert-meta">
+                                    <span class="priority-badge badge-${alert.priority}">${alert.priority}</span>
+                                    <span><i class="fas fa-tag"></i> ${alert.condition.replace('_', ' ')}</span>
+                                </div>
+                                <div class="alert-actions">
+                                    ${alert.actions.map(a => `<span class="action-chip"><i class="fas ${a === 'SMS' ? 'fa-sms' : a === 'Voice Call' ? 'fa-phone' : 'fa-bell'}"></i> ${a}</span>`).join('')}
+                                    ${alert.priority === 'HIGH' ? `<button class="send-alert-btn" onclick="sendAlert('${alert.message.replace(/'/g, "\\'")}', '${alert.priority}')"><i class="fas fa-paper-plane"></i> Send Alert Now</button>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                box.innerHTML = html;
+
+            } catch(e) {
+                box.innerHTML = '<div class="no-alerts"><i class="fas fa-exclamation-circle" style="color:#f44336;"></i><p>Error analyzing crop alerts.</p></div>';
+            }
+        }
+
+        // Send SMS/Voice alert
+        async function sendAlert(message, priority) {
+            if (!confirm(`Send ${priority} alert to ${farmer.phone}?\n\nMessage: ${message}`)) return;
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/crop-alerts/send-alert`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        phone: farmer.phone,
+                        message: message,
+                        priority: priority
+                    })
+                });
+                const data = await res.json();
+                
+                let status = `SMS: ${data.smsStatus}`;
+                if (priority === 'HIGH') status += ` | Voice Call: ${data.callStatus}`;
+                alert(`Alert Status:\n${status}`);
+            } catch(e) {
+                alert('Failed to send alert.');
+            }
+        }
+
+        // Weather Visualization Charts
+        async function loadCharts() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/weather/forecast?lat=${loc[1]}&lon=${loc[0]}`);
+                const data = await res.json();
+                const items = data.list || [];
+
+                const labels = items.map(i => {
+                    const d = new Date(i.dt_txt);
+                    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString([], { hour: '2-digit' });
+                });
+
+                const temps = items.map(i => i.main.temp);
+                const humidity = items.map(i => i.main.humidity);
+                const wind = items.map(i => i.wind?.speed || 0);
+                const pressure = items.map(i => i.main.pressure);
+
+                const chartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: '#999', maxTicksLimit: 8, font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        y: { ticks: { color: '#999' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                    }
+                };
+
+                // Temperature Chart
+                charts.temp = new Chart(document.getElementById('tempChart'), {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [{
+                            data: temps,
+                            borderColor: '#ef5350',
+                            backgroundColor: 'rgba(239,83,80,0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 2,
+                            borderWidth: 2
+                        }]
+                    },
+                    options: chartOptions
+                });
+
+                // Humidity Chart
+                charts.humidity = new Chart(document.getElementById('humidityChart'), {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [{
+                            data: humidity,
+                            borderColor: '#4fc3f7',
+                            backgroundColor: 'rgba(79,195,247,0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 2,
+                            borderWidth: 2
+                        }]
+                    },
+                    options: chartOptions
+                });
+
+                // Wind Chart
+                charts.wind = new Chart(document.getElementById('windChart'), {
+                    type: 'bar',
+                    data: {
+                        labels,
+                        datasets: [{
+                            data: wind,
+                            backgroundColor: 'rgba(174,213,129,0.4)',
+                            borderColor: '#aed581',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: chartOptions
+                });
+
+                // Pressure Chart
+                charts.pressure = new Chart(document.getElementById('pressureChart'), {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [{
+                            data: pressure,
+                            borderColor: '#ffb74d',
+                            backgroundColor: 'rgba(255,183,77,0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 2,
+                            borderWidth: 2
+                        }]
+                    },
+                    options: chartOptions
+                });
+
+            } catch(e) {
+                console.error('Chart Error:', e);
+            }
+        }
+
+        // Initial load
+        analyzeCrop();
+        loadCharts();
+    </script>
+</body>
+</html>

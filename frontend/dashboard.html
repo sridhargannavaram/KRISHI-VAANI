@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | KRISHI VAANI</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        /* Premium Dashboard Styles */
+        .weather-hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background: linear-gradient(135deg, rgba(46,125,50,0.3), rgba(56,142,60,0.1));
+            border: 1px solid rgba(76,175,80,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .weather-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(76,175,80,0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Weather Stats */
+        .weather-stats {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .weather-stat {
+            flex: 1;
+            min-width: 100px;
+            background: rgba(255,255,255,0.05);
+            padding: 1rem 1.2rem;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .weather-stat:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.1);
+        }
+        .weather-stat i { font-size: 1.2rem; margin-bottom: 0.4rem; display: block; }
+        .weather-stat .stat-value { font-size: 1.4rem; font-weight: 700; }
+        .weather-stat .stat-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.2rem; }
+
+        /* Full-Width Map */
+        .map-container {
+            position: relative;
+            margin-top: 1.5rem;
+        }
+        #map {
+            height: 450px;
+            border-radius: 16px;
+            width: 100%;
+            border: 1px solid var(--glass-border);
+            z-index: 1;
+        }
+        .map-search-bar {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 0.5rem;
+            width: 90%;
+            max-width: 500px;
+        }
+        .map-search-bar input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            border: 2px solid rgba(76,175,80,0.3);
+            background: rgba(255,255,255,0.92);
+            color: #111;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .map-search-bar input:focus {
+            border-color: #4CAF50;
+        }
+        .map-search-bar button {
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
+            transition: transform 0.2s;
+        }
+        .map-search-bar button:hover { transform: scale(1.05); }
+
+        .map-search-results {
+            position: absolute;
+            top: 52px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255,255,255,0.97);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+        .map-search-results .result-item {
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            color: #111;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #eee;
+            transition: background 0.2s;
+        }
+        .map-search-results .result-item:hover { background: #e8f5e9; }
+        .map-search-results .result-item:last-child { border-bottom: none; }
+        .map-search-results .result-item i { color: #4CAF50; margin-right: 0.5rem; }
+
+        .map-location-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(8px);
+        }
+
+        /* Forecast below map */
+        .forecast-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 0.8rem;
+            padding: 0.5rem 0;
+            scrollbar-width: thin;
+        }
+        .forecast-item {
+            min-width: 90px;
+            text-align: center;
+            padding: 1rem 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.2s, background 0.2s;
+            flex-shrink: 0;
+        }
+        .forecast-item:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.12);
+        }
+
+        /* Seasonal Crop Card */
+        .crop-card {
+            background: linear-gradient(135deg, rgba(255,152,0,0.12), rgba(76,175,80,0.08));
+            border: 1px solid rgba(255,152,0,0.2);
+        }
+        .crop-recommendation-box {
+            background: rgba(0,0,0,0.12);
+            padding: 1.5rem;
+            border-radius: 14px;
+            min-height: 120px;
+            line-height: 1.7;
+            font-size: 1rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .crop-recommendation-box strong { color: var(--accent-color); }
+        [data-theme='light'] .crop-recommendation-box { background: rgba(0,0,0,0.04); }
+
+        .crop-input-group {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .crop-input-group .form-control {
+            flex: 1;
+            padding: 1rem;
+            font-size: 1rem;
+            border-radius: 12px;
+        }
+
+        /* Language Selector */
+        .lang-selector { display: flex; align-items: center; gap: 0.5rem; }
+        .lang-select {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+            outline: none;
+        }
+        .lang-select option { background: #1a1a1a; color: #fff; }
+        [data-theme='light'] .lang-select option { background: #fff; color: #111; }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(76,175,80,0.3); }
+            50% { box-shadow: 0 0 20px rgba(76,175,80,0.6); }
+        }
+        .auto-badge {
+            background: var(--accent-color);
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: pulse-glow 2s infinite;
+        }
+
+        .glass-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A, #CDDC39);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Profile Avatar */
+        .profile-avatar-wrap {
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .profile-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+            transition: transform 0.3s;
+        }
+        .profile-avatar:hover { transform: scale(1.08); }
+        .avatar-overlay {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.6rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .avatar-initials {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+        }
+        .avatar-initials:hover { transform: scale(1.08); }
+
+        /* Two column for crop sections */
+        .crop-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .crop-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="glass">
+        <a href="dashboard.html" class="logo">
+            <i class="fas fa-leaf"></i> KRISHI VAANI
+        </a>
+        <div class="nav-links">
+            <a href="alert-guard.html"><i class="fas fa-bell"></i> AlertGuard</a>
+            <a href="crop-alerts.html"><i class="fas fa-shield-alt"></i> Crop Alerts</a>
+            <a href="news.html"><i class="fas fa-newspaper"></i> Agri-News</a>
+            <div class="lang-selector">
+                <i class="fas fa-language" style="font-size: 1.2rem;"></i>
+                <select id="langSelect" class="lang-select" title="Translate">
+                    <option value="en">English</option>
+                    <option value="kn">ಕನ್ನಡ</option>
+                    <option value="ta">தமிழ்</option>
+                    <option value="te">తెలుగు</option>
+                    <option value="ml">മലയാളം</option>
+                    <option value="hi">हिन्दी</option>
+                </select>
+            </div>
+            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <button id="logoutBtn" class="btn btn-glass">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Weather Section -->
+        <div class="glass glass-card weather-hero" style="margin-top: 0;">
+            <!-- Profile Avatar -->
+            <div class="profile-avatar-wrap" id="avatarWrap" onclick="document.getElementById('profileUploadInput').click()">
+                <div class="avatar-initials" id="avatarDisplay">?</div>
+                <div class="avatar-overlay"><i class="fas fa-camera"></i></div>
+                <input type="file" id="profileUploadInput" accept="image/*" style="display:none;">
+            </div>
+            <div>
+                <h1 id="greeting" class="gradient-text" style="font-size: 2rem;">Welcome back!</h1>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 1.1rem;">
+                    <i class="fas fa-location-dot"></i> <span id="userCity">Loading location...</span>
+                </p>
+                <p style="color: var(--text-secondary); margin-top: 0.3rem; font-size: 0.85rem;">
+                    <i class="fas fa-calendar-day"></i> <span id="currentDate"></span>
+                </p>
+            </div>
+            <div id="currentWeatherBox" style="display: flex; align-items: center; gap: 1.5rem; min-width: 300px;">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <div>
+                   <h2 style="font-size: 3rem; font-weight: 200;">--°</h2>
+                   <p>Loading weather...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weather Stats Row -->
+        <div class="weather-stats" id="weatherStatsRow">
+            <div class="weather-stat"><i class="fas fa-tint" style="color: #4fc3f7;"></i><div class="stat-value" id="statHumidity">--%</div><div class="stat-label">Humidity</div></div>
+            <div class="weather-stat"><i class="fas fa-wind" style="color: #aed581;"></i><div class="stat-value" id="statWind">-- m/s</div><div class="stat-label">Wind</div></div>
+            <div class="weather-stat"><i class="fas fa-compress-arrows-alt" style="color: #ffb74d;"></i><div class="stat-value" id="statPressure">-- hPa</div><div class="stat-label">Pressure</div></div>
+            <div class="weather-stat"><i class="fas fa-eye" style="color: #ce93d8;"></i><div class="stat-value" id="statVisibility">-- km</div><div class="stat-label">Visibility</div></div>
+            <div class="weather-stat"><i class="fas fa-temperature-arrow-up" style="color: #ef5350;"></i><div class="stat-value" id="statFeelsLike">--°</div><div class="stat-label">Feels Like</div></div>
+        </div>
+
+        <!-- Full-Width Interactive Map with Search -->
+        <div class="map-container glass glass-card" style="padding: 0; overflow: hidden; margin-top: 1.5rem;">
+            <div class="map-search-bar">
+                <input type="text" id="mapSearch" placeholder="🔍 Search village, city, or district..." autocomplete="off">
+                <button id="mapSearchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="map-search-results" id="mapSearchResults"></div>
+            <div id="map"></div>
+            <div class="map-location-badge" id="mapBadge">
+                <i class="fas fa-crosshairs"></i> <span id="mapBadgeText">Loading...</span>
+            </div>
+        </div>
+
+        <!-- 24-Hour Forecast (Below Map) -->
+        <div class="glass glass-card" style="margin-top: 1.5rem;">
+            <div class="section-header">
+                <div class="section-title"><i class="fas fa-clock" style="color: #ffb74d;"></i> 24-Hour Forecast</div>
+            </div>
+            <div class="forecast-container" id="forecastBox">
+                <p>Loading forecast...</p>
+            </div>
+        </div>
+
+        <!-- Crop Sections Side by Side -->
+        <div class="crop-grid">
+            <!-- Seasonal Crop Recommendation (Auto) -->
+            <div class="glass glass-card crop-card">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fas fa-seedling" style="color: var(--accent-color);"></i>
+                        <span id="seasonalTitle">Seasonal Crops</span>
+                        <span class="auto-badge">AUTO</span>
+                    </div>
+                    <button id="refreshSeasonalBtn" class="btn btn-glass" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="crop-recommendation-box" id="seasonalCropBox">
+                    <i class="fas fa-spinner fa-spin"></i> Loading seasonal recommendations...
+                </div>
+            </div>
+
+            <!-- AI Crop Advisor (Manual Input) -->
+            <div class="glass glass-card">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fas fa-robot" style="color: #ce93d8;"></i>
+                        <span id="cropAdvisorTitle">AI Crop Advisor</span>
+                    </div>
+                </div>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;" id="cropAdvisorDesc">
+                    Enter any crop name for weather-based advice.
+                </p>
+                <div class="crop-input-group">
+                    <input type="text" id="cropInput" class="form-control" placeholder="e.g., Ragi, Tomato, Paddy...">
+                    <button id="getCropAdviceBtn" class="btn btn-primary"><i class="fas fa-magic"></i></button>
+                </div>
+                <div class="crop-recommendation-box" id="cropAdviceBox">
+                    <p style="color: var(--text-secondary);"><i>Type a crop name and click the button.</i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chatbot Bubble -->
+    <button class="fab" id="chatFab"><i class="fas fa-comment-dots"></i></button>
+    <div id="chatbot-widget" class="glass">
+        <div class="chat-header">
+            <span><i class="fas fa-robot"></i> Krishi AI</span>
+            <button class="chat-close" id="closeChat"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="chat-bubble bot">Hello! I am your Krishi AI Advisor. How can I help you?</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" class="form-control" placeholder="Ask about crops, weather...">
+            <button id="sendChat" class="btn btn-primary"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+        if (!isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+
+        const farmer = JSON.parse(localStorage.getItem('farmer'));
+        document.getElementById('greeting').innerText = `Welcome back, ${farmer.name.split(' ')[0]}! 🌱`;
+        document.getElementById('userCity').innerText = farmer.city;
+        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+        // ========== PROFILE AVATAR ==========
+        const avatarDisplay = document.getElementById('avatarDisplay');
+        const savedImage = localStorage.getItem('profileImage');
+        
+        function showAvatar(imageUrl) {
+            avatarDisplay.outerHTML = `<img class="profile-avatar" id="avatarDisplay" src="${imageUrl}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-initials\\' id=\\'avatarDisplay\\'>${farmer.name.charAt(0).toUpperCase()}</div>'">`;
+        }
+        
+        if (savedImage) {
+            showAvatar(`${API_BASE_URL.replace('/api','').replace(':4000',':4000')}/uploads/profiles/${savedImage}`);
+        } else {
+            avatarDisplay.innerText = farmer.name.charAt(0).toUpperCase();
+        }
+
+        // Upload handler
+        document.getElementById('profileUploadInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Image must be less than 5MB');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('profileImage', file);
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/profile/upload/${farmer.id}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    localStorage.setItem('profileImage', data.profileImage);
+                    showAvatar(`${API_BASE_URL.replace('/api','').replace(':4000',':4000')}/uploads/profiles/${data.profileImage}`);
+                } else {
+                    alert(data.error || 'Upload failed');
+                }
+            } catch(err) {
+                alert('Failed to upload image.');
+            }
+        });
+
+        let lastWeatherData = null;
+        // Default to stored coordinates, will be overridden by geolocation
+        let currentLat = farmer.location.coordinates[1];
+        let currentLon = farmer.location.coordinates[0];
+        let currentLocationName = farmer.city;
+        let currentLang = localStorage.getItem('krishiLang') || 'en';
+        document.getElementById('langSelect').value = currentLang;
+
+        // UI Translations
+        const uiTranslations = {
+            en: { greeting: 'Welcome back', seasonal: 'Seasonal Crops', advisor: 'AI Crop Advisor', advisorDesc: 'Enter any crop name for weather-based advice.', placeholder: 'e.g., Ragi, Tomato, Paddy...' },
+            kn: { greeting: 'ಮರಳಿ ಸ್ವಾಗತ', seasonal: 'ಋತುಮಾನದ ಬೆಳೆಗಳು', advisor: 'AI ಬೆಳೆ ಸಲಹೆಗಾರ', advisorDesc: 'ಹವಾಮಾನ ಆಧಾರಿತ ಸಲಹೆಗಾಗಿ ಬೆಳೆ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.', placeholder: 'ಉದಾ: ರಾಗಿ, ಟೊಮೆಟೊ...' },
+            ta: { greeting: 'மீண்டும் வரவேற்கிறோம்', seasonal: 'பருவகால பயிர்கள்', advisor: 'AI பயிர் ஆலோசகர்', advisorDesc: 'வானிலை அடிப்படையில் ஆலோசனைக்கு பயிர் பெயரை உள்ளிடவும்.', placeholder: 'எ.கா. ராகி, தக்காளி...' },
+            te: { greeting: 'తిరిగి స్వాగతం', seasonal: 'సీజనల్ పంటలు', advisor: 'AI పంట సలహాదారు', advisorDesc: 'వాతావరణ ఆధారిత సలహా కోసం పంట పేరు నమోదు చేయండి.', placeholder: 'ఉదా: రాగి, టమాటా...' },
+            ml: { greeting: 'തിരികെ സ്വാഗതം', seasonal: 'സീസണൽ വിളകൾ', advisor: 'AI വിള ഉപദേഷ്ടാവ്', advisorDesc: 'കാലാവസ്ഥാ അടിസ്ഥാന ഉപദേശത്തിന് വിള പേര് നൽകുക.', placeholder: 'ഉദാ: റാഗി, തക്കാളി...' },
+            hi: { greeting: 'वापसी पर स्वागत', seasonal: 'मौसमी फसलें', advisor: 'AI फसल सलाहकार', advisorDesc: 'मौसम आधारित सलाह के लिए फसल का नाम दर्ज करें.', placeholder: 'जैसे: रागी, टमाटर...' }
+        };
+
+        function updateUILanguage(lang) {
+            const t = uiTranslations[lang] || uiTranslations['en'];
+            document.getElementById('greeting').innerText = `${t.greeting}, ${farmer.name.split(' ')[0]}! 🌱`;
+            document.getElementById('seasonalTitle').innerText = t.seasonal;
+            document.getElementById('cropAdvisorTitle').innerText = t.advisor;
+            document.getElementById('cropAdvisorDesc').innerText = t.advisorDesc;
+            document.getElementById('cropInput').placeholder = t.placeholder;
+        }
+
+        document.getElementById('langSelect').addEventListener('change', (e) => {
+            currentLang = e.target.value;
+            localStorage.setItem('krishiLang', currentLang);
+            updateUILanguage(currentLang);
+            fetchSeasonalCrops();
+        });
+
+        updateUILanguage(currentLang);
+
+        // ========== INTERACTIVE MAP ==========
+        const map = L.map('map').setView([currentLat, currentLon], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        let currentMarker = L.marker([currentLat, currentLon]).addTo(map)
+            .bindPopup(`<b>${farmer.name}'s Farm</b><br>${farmer.city}`).openPopup();
+
+        document.getElementById('mapBadgeText').innerText = `${currentLocationName} (${currentLat.toFixed(4)}, ${currentLon.toFixed(4)})`;
+
+        // ========== AUTO-DETECT REAL LOCATION ==========
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                async (pos) => {
+                    const realLat = pos.coords.latitude;
+                    const realLon = pos.coords.longitude;
+                    console.log(`📍 Geolocation detected: ${realLat}, ${realLon}`);
+                    await updateLocation(realLat, realLon);
+                },
+                (err) => {
+                    console.log('⚠️ Geolocation denied, using stored coordinates.');
+                    // Use stored coordinates - already set above
+                }
+            );
+        }
+
+        // Click on map to change location & update weather
+        map.on('click', async (e) => {
+            const { lat, lng } = e.latlng;
+            await updateLocation(lat, lng);
+        });
+
+        async function updateLocation(lat, lng, name) {
+            currentLat = lat;
+            currentLon = lng;
+
+            // Move marker
+            if (currentMarker) map.removeLayer(currentMarker);
+            currentMarker = L.marker([lat, lng]).addTo(map);
+            map.setView([lat, lng], 12);
+
+            // Reverse geocode to get place name
+            if (!name) {
+                try {
+                    const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=en`);
+                    const geoData = await geoRes.json();
+                    name = geoData.address?.village || geoData.address?.town || geoData.address?.city || geoData.address?.county || 'Selected Location';
+                } catch(e) {
+                    name = 'Selected Location';
+                }
+            }
+            currentLocationName = name;
+            document.getElementById('userCity').innerText = name;
+            document.getElementById('mapBadgeText').innerText = `${name} (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+            currentMarker.bindPopup(`<b>${name}</b><br>Lat: ${lat.toFixed(4)}, Lon: ${lng.toFixed(4)}`).openPopup();
+
+            // Re-fetch ALL weather data for the new location
+            await fetchWeather(lat, lng);
+            await fetchForecast(lat, lng);
+            fetchSeasonalCrops();
+        }
+
+        // Map Search Functionality (Nominatim Geocoding)
+        const searchInput = document.getElementById('mapSearch');
+        const searchResults = document.getElementById('mapSearchResults');
+
+        document.getElementById('mapSearchBtn').addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+
+        // Live search as user types (debounced)
+        let searchTimeout;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            const q = searchInput.value.trim();
+            if (q.length < 3) {
+                searchResults.style.display = 'none';
+                return;
+            }
+            searchTimeout = setTimeout(() => performSearch(), 400);
+        });
+
+        async function performSearch() {
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            try {
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=5&countrycodes=in&accept-language=en`);
+                const results = await res.json();
+
+                if (results.length === 0) {
+                    searchResults.innerHTML = '<div class="result-item"><i class="fas fa-exclamation-circle"></i> No results found</div>';
+                    searchResults.style.display = 'block';
+                    return;
+                }
+
+                searchResults.innerHTML = results.map(r => `
+                    <div class="result-item" data-lat="${r.lat}" data-lon="${r.lon}" data-name="${r.display_name.split(',')[0]}">
+                        <i class="fas fa-map-marker-alt"></i> ${r.display_name}
+                    </div>
+                `).join('');
+                searchResults.style.display = 'block';
+
+                // Click on result
+                searchResults.querySelectorAll('.result-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const lat = parseFloat(item.dataset.lat);
+                        const lon = parseFloat(item.dataset.lon);
+                        const name = item.dataset.name;
+                        searchResults.style.display = 'none';
+                        searchInput.value = name;
+                        updateLocation(lat, lon, name);
+                    });
+                });
+            } catch(e) {
+                searchResults.innerHTML = '<div class="result-item"><i class="fas fa-exclamation-circle"></i> Search error</div>';
+                searchResults.style.display = 'block';
+            }
+        }
+
+        // Close search results on outside click
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.map-search-bar') && !e.target.closest('.map-search-results')) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // ========== WEATHER ==========
+        async function fetchWeather(lat, lon) {
+            lat = lat || currentLat;
+            lon = lon || currentLon;
+            try {
+                const res = await fetch(`${API_BASE_URL}/weather/current?lat=${lat}&lon=${lon}`);
+                const data = await res.json();
+                lastWeatherData = data;
+                
+                const temp = Math.round(data.main.temp);
+                const desc = data.weather[0].description;
+                const iconCode = data.weather[0].icon;
+                const feelsLike = Math.round(data.main.feels_like);
+                const visibility = data.visibility ? (data.visibility / 1000).toFixed(1) : '--';
+                
+                document.getElementById('currentWeatherBox').innerHTML = `
+                    <img src="https://openweathermap.org/img/wn/${iconCode}@4x.png" alt="weather" width="100" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                    <div>
+                        <h2 style="font-size: 4.5rem; font-weight: 200; line-height: 1;">${temp}°</h2>
+                        <p style="font-size: 1.1rem; font-weight: 600; text-transform: capitalize;">${desc}</p>
+                    </div>
+                `;
+                document.getElementById('statHumidity').innerText = `${data.main.humidity}%`;
+                document.getElementById('statWind').innerText = `${data.wind?.speed || 0} m/s`;
+                document.getElementById('statPressure').innerText = `${data.main.pressure} hPa`;
+                document.getElementById('statVisibility').innerText = `${visibility} km`;
+                document.getElementById('statFeelsLike').innerText = `${feelsLike}°`;
+            } catch(e) {
+                document.getElementById('currentWeatherBox').innerHTML = `<p>Error loading weather.</p>`;
+            }
+        }
+
+        async function fetchForecast(lat, lon) {
+            lat = lat || currentLat;
+            lon = lon || currentLon;
+            try {
+                const res = await fetch(`${API_BASE_URL}/weather/forecast?lat=${lat}&lon=${lon}`);
+                const data = await res.json();
+                
+                let html = '';
+                data.list.slice(0, 8).forEach(item => {
+                    const time = new Date(item.dt_txt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    const temp = Math.round(item.main.temp);
+                    const iconCode = item.weather[0].icon;
+                    html += `
+                        <div class="forecast-item">
+                            <div style="font-size: 0.8em; color: var(--text-secondary);">${time}</div>
+                            <img src="https://openweathermap.org/img/wn/${iconCode}.png" alt="icon" width="40">
+                            <div style="font-weight: 700; font-size: 1.1rem;">${temp}°</div>
+                        </div>
+                    `;
+                });
+                document.getElementById('forecastBox').innerHTML = html;
+            } catch(e) {
+                document.getElementById('forecastBox').innerHTML = `<p>Error loading forecast.</p>`;
+            }
+        }
+
+        // Initial load
+        fetchWeather();
+        fetchForecast();
+
+        // ========== SEASONAL CROPS ==========
+        async function fetchSeasonalCrops() {
+            const box = document.getElementById('seasonalCropBox');
+            box.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching recommendations...';
+            try {
+                const res = await fetch(`${API_BASE_URL}/ai-advisory/seasonal`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        weatherData: lastWeatherData,
+                        location: currentLocationName + ', South India',
+                        language: currentLang
+                    })
+                });
+                const data = await res.json();
+                let formatted = (data.recommendation || '').replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                box.innerHTML = `<div style="line-height: 1.8;">${formatted}</div>`;
+            } catch(e) {
+                box.innerHTML = '<p style="color: #ffb74d;">Failed to fetch recommendations.</p>';
+            }
+        }
+
+        // Fetch seasonal after weather loads
+        setTimeout(fetchSeasonalCrops, 2000);
+        document.getElementById('refreshSeasonalBtn').addEventListener('click', fetchSeasonalCrops);
+
+        // ========== CROP ADVISOR ==========
+        document.getElementById('getCropAdviceBtn').addEventListener('click', () => {
+            const crop = document.getElementById('cropInput').value.trim();
+            if (!crop) return alert('Please enter a crop name first!');
+            fetchCropAdvice(crop);
+        });
+
+        async function fetchCropAdvice(cropName) {
+            const btn = document.getElementById('getCropAdviceBtn');
+            const box = document.getElementById('cropAdviceBox');
+            if(btn) btn.disabled = true;
+            box.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/ai-advisory`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        weatherData: lastWeatherData,
+                        cropInfo: cropName,
+                        message: `I am a farmer in ${currentLocationName}, South India planning to grow ${cropName}. What precautions should I take given current weather?`,
+                        language: currentLang
+                    })
+                });
+                const data = await res.json();
+                let formatted = (data.advice || '').replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                box.innerHTML = `<div style="line-height: 1.7;">${formatted}</div>`;
+            } catch(e) {
+                box.innerHTML = '<p style="color: #ffb74d;">Failed to fetch advice.</p>';
+            }
+            if(btn) btn.disabled = false;
+        }
+
+        // ========== CHATBOT ==========
+        const chatFab = document.getElementById('chatFab');
+        const chatbotWidget = document.getElementById('chatbot-widget');
+        chatFab.addEventListener('click', () => chatbotWidget.classList.add('active'));
+        document.getElementById('closeChat').addEventListener('click', () => chatbotWidget.classList.remove('active'));
+
+        async function handleChat() {
+            const msg = document.getElementById('chatInput').value.trim();
+            if(!msg) return;
+            const chatBody = document.getElementById('chatBody');
+            chatBody.innerHTML += `<div class="chat-bubble user">${msg}</div>`;
+            document.getElementById('chatInput').value = '';
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            const typingId = 'typing-' + Date.now();
+            chatBody.innerHTML += `<div id="${typingId}" class="chat-bubble bot"><i class="fas fa-ellipsis-h fa-fade"></i></div>`;
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/ai-advisory`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ weatherData: lastWeatherData, message: msg, language: currentLang })
+                });
+                const data = await res.json();
+                document.getElementById(typingId).remove();
+                chatBody.innerHTML += `<div class="chat-bubble bot">${data.advice || 'Error'}</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            } catch(e) {
+                if(document.getElementById(typingId)) document.getElementById(typingId).remove();
+                chatBody.innerHTML += `<div class="chat-bubble bot" style="color: #ff6b6b;">Error getting advice.</div>`;
+            }
+        }
+
+        document.getElementById('sendChat').addEventListener('click', handleChat);
+        document.getElementById('chatInput').addEventListener('keypress', (e) => { if(e.key === 'Enter') handleChat(); });
+    </script>
+</body>
+</html>

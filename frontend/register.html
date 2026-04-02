@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | KRISHI VAANI</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="glass">
+        <a href="index.html" class="logo">
+            <i class="fas fa-leaf"></i> KRISHI VAANI
+        </a>
+        <div class="nav-links">
+            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <a href="login.html" class="btn btn-glass">Login</a>
+        </div>
+    </nav>
+
+    <div class="container flex-center">
+        <div class="glass glass-card" style="width: 100%; max-width: 500px;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="Ramesh Kumar" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="tel" id="phone" class="form-control" style="flex: 1;" placeholder="+91..." required>
+                        <button type="button" id="sendOtpBtn" class="btn btn-glass">Send OTP</button>
+                    </div>
+                </div>
+                <div class="form-group" id="otpGroup" style="display: none;">
+                    <label for="otp">Enter OTP</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="otp" class="form-control" style="flex: 1;" placeholder="123456">
+                        <button type="button" id="verifyOtpBtn" class="btn btn-primary">Verify</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City/Village</label>
+                    <input type="text" id="city" class="form-control" placeholder="Mysore" required>
+                </div>
+                <div class="form-group">
+                    <label>Location (Auto-detected)</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="lat" class="form-control" placeholder="Lat">
+                        <input type="text" id="lng" class="form-control" placeholder="Lng">
+                        <button type="button" id="getLocBtn" class="btn btn-glass" title="Get Location"><i class="fas fa-location-crosshairs"></i></button>
+                    </div>
+                </div>
+                <div id="regError" style="color: #ff6b6b; margin-bottom: 1rem; display: none; text-align: center; font-size: 0.9rem;"></div>
+                <div id="regSuccess" style="color: #4CAF50; margin-bottom: 1rem; display: none; text-align: center; font-size: 0.9rem;"></div>
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;" disabled>Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        let isPhoneVerified = false;
+
+        document.getElementById('getLocBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('getLocBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            const fallbackToIP = async () => {
+                try {
+                    const res = await fetch('https://ipapi.co/json/');
+                    const data = await res.json();
+                    if(data.latitude) document.getElementById('lat').value = data.latitude;
+                    if(data.longitude) document.getElementById('lng').value = data.longitude;
+                    if(data.city) document.getElementById('city').value = data.city;
+                } catch (e) {
+                    alert('Could not auto-detect location. Please enter manually.');
+                }
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            };
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((pos) => {
+                    document.getElementById('lat').value = pos.coords.latitude;
+                    document.getElementById('lng').value = pos.coords.longitude;
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                }, (err) => {
+                    fallbackToIP();
+                }, { timeout: 5000 });
+            } else {
+                fallbackToIP();
+            }
+        });
+
+        document.getElementById('sendOtpBtn').addEventListener('click', async () => {
+            const phone = document.getElementById('phone').value;
+            if(!phone) return alert('Enter phone number first');
+            
+            const btn = document.getElementById('sendOtpBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/auth/send-otp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone })
+                });
+                const data = await res.json();
+                if(data.success) {
+                    document.getElementById('otpGroup').style.display = 'block';
+                    btn.innerText = 'Resend';
+                    btn.disabled = false;
+                    
+                    if (data.otp) {
+                        // Simulated mode: auto-fill OTP and show it to user
+                        document.getElementById('otp').value = data.otp;
+                        alert(`Your OTP is: ${data.otp}\n(Twilio trial mode - OTP shown here)`);
+                    } else {
+                        // Real Twilio Verify: user checks their phone
+                        alert('OTP sent to your phone! Please check your SMS.');
+                    }
+                } else {
+                    alert(data.error || 'Failed to send OTP');
+                    btn.innerText = 'Send OTP';
+                    btn.disabled = false;
+                }
+            } catch(e) {
+                alert('Error connecting to server. Please ensure backend is running.');
+                btn.innerText = 'Send OTP';
+                btn.disabled = false;
+            }
+        });
+
+        document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
+            const phone = document.getElementById('phone').value;
+            const otp = document.getElementById('otp').value;
+            
+            try {
+                const res = await fetch(`${API_BASE_URL}/auth/verify-otp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, otp })
+                });
+                const data = await res.json();
+                if(data.success) {
+                    isPhoneVerified = true;
+                    document.getElementById('verifyOtpBtn').innerText = 'Verified';
+                    document.getElementById('verifyOtpBtn').classList.replace('btn-primary', 'btn-glass');
+                    document.getElementById('verifyOtpBtn').disabled = true;
+                    document.getElementById('submitBtn').disabled = false;
+                }
+            } catch(e) {
+                alert('Invalid OTP');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if(!isPhoneVerified) return alert('Please verify your phone number first.');
+
+            const payload = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value,
+                city: document.getElementById('city').value,
+                lat: document.getElementById('lat').value || 0,
+                lng: document.getElementById('lng').value || 0
+            };
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    document.getElementById('regSuccess').style.display = 'block';
+                    document.getElementById('regSuccess').innerText = 'Registration successful! Redirecting to login...';
+                    setTimeout(() => window.location.href = 'login.html', 2000);
+                } else {
+                    document.getElementById('regError').style.display = 'block';
+                    document.getElementById('regError').innerText = data.error || 'Registration failed';
+                }
+            } catch(err) {
+                document.getElementById('regError').style.display = 'block';
+                document.getElementById('regError').innerText = 'Server Error';
+            }
+        });
+    </script>
+</body>
+</html>

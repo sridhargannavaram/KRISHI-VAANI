@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-News | KRISHI VAANI</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .news-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .news-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .news-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Category Filter Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .category-tab {
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .category-tab:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+        .category-tab.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* News Card */
+        .news-card {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .news-card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .news-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(8px);
+        }
+        .badge-crops { background: rgba(76,175,80,0.85); color: white; }
+        .badge-weather { background: rgba(33,150,243,0.85); color: white; }
+        .badge-schemes { background: rgba(255,152,0,0.85); color: white; }
+        .badge-technology { background: rgba(156,39,176,0.85); color: white; }
+
+        .news-img-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .news-img-wrap::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.3));
+            pointer-events: none;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .news-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+        }
+        .news-desc {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin-bottom: 1rem;
+            flex: 1;
+            line-height: 1.5;
+        }
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .news-source { font-weight: 600; }
+
+        .read-more-btn {
+            padding: 0.6rem 1.2rem;
+            text-align: center;
+            border-radius: 8px;
+            background: rgba(76,175,80,0.15);
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+            border: 1px solid rgba(76,175,80,0.2);
+        }
+        .read-more-btn:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Agri-icon placeholders */
+        .news-icon-placeholder {
+            width: 100%;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .icon-crops { background: linear-gradient(135deg, #1b5e20, #4CAF50); color: rgba(255,255,255,0.5); }
+        .icon-weather { background: linear-gradient(135deg, #0d47a1, #2196F3); color: rgba(255,255,255,0.5); }
+        .icon-schemes { background: linear-gradient(135deg, #e65100, #FF9800); color: rgba(255,255,255,0.5); }
+        .icon-technology { background: linear-gradient(135deg, #4a148c, #9C27B0); color: rgba(255,255,255,0.5); }
+    </style>
+</head>
+<body>
+    <nav class="glass">
+        <a href="dashboard.html" class="logo">
+            <i class="fas fa-leaf"></i> KRISHI VAANI
+        </a>
+        <div class="nav-links">
+            <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
+            <a href="alert-guard.html"><i class="fas fa-bell"></i> AlertGuard</a>
+            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <button id="logoutBtn" class="btn btn-glass">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="news-header">
+            <h2><i class="fas fa-tractor" style="color: var(--accent-color);"></i> Farmer News & Updates</h2>
+            <p>Stay informed with the latest agricultural news, government schemes, weather alerts & farming technology</p>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div class="category-tabs">
+            <button class="category-tab active" data-cat="all"><i class="fas fa-th-large"></i> All News</button>
+            <button class="category-tab" data-cat="crops"><i class="fas fa-seedling"></i> Crops & Market</button>
+            <button class="category-tab" data-cat="weather"><i class="fas fa-cloud-sun-rain"></i> Weather</button>
+            <button class="category-tab" data-cat="schemes"><i class="fas fa-hand-holding-usd"></i> Govt Schemes</button>
+            <button class="category-tab" data-cat="technology"><i class="fas fa-microchip"></i> Agri-Tech</button>
+        </div>
+
+        <div class="news-grid" id="newsBox">
+            <p><i class="fas fa-spinner fa-spin"></i> Loading farmer news...</p>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        if (!isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+
+        let currentCategory = 'all';
+
+        const categoryIcons = {
+            crops: 'fa-seedling',
+            weather: 'fa-cloud-sun-rain',
+            schemes: 'fa-hand-holding-usd',
+            technology: 'fa-microchip'
+        };
+
+        // Category tab click handlers
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentCategory = tab.dataset.cat;
+                fetchNews(currentCategory);
+            });
+        });
+
+        async function fetchNews(category = 'all') {
+            const newsBox = document.getElementById('newsBox');
+            newsBox.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Loading farmer news...</p>';
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/news?category=${category}`);
+                const data = await res.json();
+                
+                if (data.articles && data.articles.length > 0) {
+                    let html = '';
+                    data.articles.forEach(article => {
+                        const cat = article.category || guessCategory(article.title + ' ' + article.description);
+                        const badgeClass = `badge-${cat}`;
+                        const iconClass = `icon-${cat}`;
+                        const icon = categoryIcons[cat] || 'fa-newspaper';
+                        const catLabel = cat.charAt(0).toUpperCase() + cat.slice(1);
+                        
+                        const timeAgo = article.publishedAt ? getTimeAgo(article.publishedAt) : '';
+                        const source = article.source?.name || 'Krishi Vaani';
+
+                        const imgSection = article.urlToImage && article.urlToImage !== '' 
+                            ? `<div class="news-img-wrap">
+                                    <img class="news-card-img" src="${article.urlToImage}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'news-icon-placeholder ${iconClass}\\'><i class=\\'fas ${icon}\\'></i></div>'">
+                                    <span class="news-badge ${badgeClass}">${catLabel}</span>
+                               </div>`
+                            : `<div class="news-img-wrap">
+                                    <div class="news-icon-placeholder ${iconClass}"><i class="fas ${icon}"></i></div>
+                                    <span class="news-badge ${badgeClass}">${catLabel}</span>
+                               </div>`;
+
+                        html += `
+                            <div class="glass news-card">
+                                ${imgSection}
+                                <div class="news-content">
+                                    <div class="news-title">${article.title}</div>
+                                    <div class="news-desc">${article.description || 'Read more for details.'}</div>
+                                    <div class="news-meta">
+                                        <span class="news-source"><i class="fas fa-rss"></i> ${source}</span>
+                                        <span>${timeAgo}</span>
+                                    </div>
+                                    <a href="${article.url}" target="_blank" class="read-more-btn"><i class="fas fa-arrow-right"></i> Read Full Article</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    newsBox.innerHTML = html;
+                } else {
+                    newsBox.innerHTML = '<p style="text-align:center; color: var(--text-secondary);">No farmer news found for this category.</p>';
+                }
+            } catch(e) {
+                newsBox.innerHTML = '<p style="color:#ff6b6b;">Failed to load news. Please try again later.</p>';
+            }
+        }
+
+        function guessCategory(text) {
+            text = text.toLowerCase();
+            if (text.includes('crop') || text.includes('price') || text.includes('mandi') || text.includes('harvest') || text.includes('seed')) return 'crops';
+            if (text.includes('weather') || text.includes('monsoon') || text.includes('rain') || text.includes('forecast') || text.includes('drought')) return 'weather';
+            if (text.includes('scheme') || text.includes('subsidy') || text.includes('government') || text.includes('pm-kisan') || text.includes('policy')) return 'schemes';
+            if (text.includes('technology') || text.includes('drone') || text.includes('organic') || text.includes('innovation') || text.includes('iot')) return 'technology';
+            return 'crops';
+        }
+
+        function getTimeAgo(dateStr) {
+            const now = new Date();
+            const then = new Date(dateStr);
+            const diff = Math.floor((now - then) / 1000);
+            if (diff < 3600) return `${Math.floor(diff/60)}m ago`;
+            if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
+            return `${Math.floor(diff/86400)}d ago`;
+        }
+
+        fetchNews();
+    </script>
+</body>
+</html>
