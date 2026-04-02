@@ -481,11 +481,17 @@
         const savedImage = localStorage.getItem('profileImage');
         
         function showAvatar(imageUrl) {
-            avatarDisplay.outerHTML = `<img class="profile-avatar" id="avatarDisplay" src="${imageUrl}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-initials\\' id=\\'avatarDisplay\\'>${farmer.name.charAt(0).toUpperCase()}</div>'">`;
+            // Check if input is a filename (old style) or Base64 (new style)
+            let src = imageUrl;
+            if (imageUrl && !imageUrl.startsWith('data:')) {
+                // If it's a legacy filename, attempt to load from local uploads (only works on Dev, not Vercel)
+                src = `${API_BASE_URL.replace('/api','')}/uploads/profiles/${imageUrl}`;
+            }
+            avatarDisplay.outerHTML = `<img class="profile-avatar" id="avatarDisplay" src="${src}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-initials\\' id=\\'avatarDisplay\\'>${farmer.name.charAt(0).toUpperCase()}</div>'">`;
         }
         
         if (savedImage) {
-            showAvatar(`${API_BASE_URL.replace('/api','').replace(':4000',':4000')}/uploads/profiles/${savedImage}`);
+            showAvatar(savedImage);
         } else {
             avatarDisplay.innerText = farmer.name.charAt(0).toUpperCase();
         }
@@ -512,7 +518,7 @@
                 
                 if (data.success) {
                     localStorage.setItem('profileImage', data.profileImage);
-                    showAvatar(`${API_BASE_URL.replace('/api','').replace(':4000',':4000')}/uploads/profiles/${data.profileImage}`);
+                    showAvatar(data.profileImage);
                 } else {
                     alert(data.error || 'Upload failed');
                 }

@@ -4,20 +4,12 @@ const multer = require('multer');
 const path = require('path');
 const Farmer = require('../models/Farmer');
 
-// Configure multer storage
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, '../uploads/profiles'));
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        cb(null, `profile_${req.params.id}_${Date.now()}${ext}`);
-    }
-});
+// Configure multer storage in memory (Vercel has read-only filesystem)
+const storage = multer.memoryStorage();
 
 const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
+    limits: { fileSize: 2 * 1024 * 1024 }, // 2MB max for Base64 efficiency
     fileFilter: (req, file, cb) => {
         const allowed = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
         const ext = path.extname(file.originalname).toLowerCase();
@@ -29,7 +21,7 @@ const upload = multer({
     }
 });
 
-// Upload profile image
+// Upload profile image as Base64 string
 router.post('/upload/:id', upload.single('profileImage'), async (req, res) => {
     try {
         if (!req.file) {
@@ -39,17 +31,20 @@ router.post('/upload/:id', upload.single('profileImage'), async (req, res) => {
         const farmer = await Farmer.findById(req.params.id);
         if (!farmer) return res.status(404).json({ error: 'Farmer not found.' });
 
-        farmer.profileImage = req.file.filename;
+        // Convert buffer to Base64 data URI
+        const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+        
+        farmer.profileImage = base64Image;
         await farmer.save();
 
         res.json({
             success: true,
-            profileImage: req.file.filename,
-            message: 'Profile image uploaded successfully!'
+            profileImage: base64Image,
+            message: 'Profile image uploaded successfully (saved to DB)!'
         });
     } catch (error) {
         console.error('Profile Upload Error:', error.message);
-        res.status(500).json({ error: 'Failed to upload image.' });
+        res.status(500).json({ error: 'Failed to upload image: ' + error.message });
     }
 });
 
