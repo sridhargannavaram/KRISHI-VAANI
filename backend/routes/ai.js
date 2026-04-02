@@ -102,6 +102,48 @@ Keep it concise. Use local South Indian crop names (Ragi, Jowar, Urad Dal, etc.)
     }
 });
 
+// Dedicated Chatbot Agent endpoint
+router.post('/chat', async (req, res) => {
+    try {
+        const { message, language, weatherData } = req.body;
+        
+        const systemPrompt = `You are Krishi AI, a helpful, friendly, and expert South Indian agricultural assistant.
+Your goal is to help farmers with scientific advice, crop management, and pest control.
+Context:
+- Current Weather: ${JSON.stringify(weatherData || 'Unknown')}
+- Tone: Professional yet empathetic, like a knowledgeable local agricultural officer.
+- Languages: You fluently speak English, Kannada, Tamil, Telugu, Malayalam, and Hindi.
+- Knowledge: Deep expertise in South Indian crops like Ragi, Paddy, Coconut, Arecanut, Ginger, Coffee, and Pepper.
+
+STRICT INSTRUCTIONS:
+1. If the farmer asks in a specific language, ALWAYS respond using that language and its native script.
+2. Be concise but practical. Provide step-by-step guidance when possible.
+3. If weather data is provided, incorporate it into your advice.`;
+
+        const response = await axios.post(OPENROUTER_URL, {
+            model: 'google/gemini-2.0-flash-001',
+            messages: [
+                { role: 'system', content: systemPrompt },
+                { role: 'user', content: message }
+            ],
+            max_tokens: 1000
+        }, {
+            headers: {
+                'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+                'Content-Type': 'application/json',
+                'HTTP-Referer': 'https://krishi-vaani-iota.vercel.app',
+                'X-Title': 'Krishi Vaani Agent'
+            }
+        });
+
+        const chatResult = response.data?.choices?.[0]?.message?.content || "I am having trouble connecting to the advisory service. Please try again.";
+        res.json({ advice: chatResult });
+    } catch (error) {
+        console.error('Chat API Error:', error.response?.data || error.message);
+        res.status(500).json({ error: 'Failed to generate AI chat response: ' + error.message });
+    }
+});
+
 // Intelligent offline fallback for South India
 function generateOfflineFallback(weatherData, cropInfo) {
     const currentMonth = new Date().toLocaleString('default', { month: 'long' });

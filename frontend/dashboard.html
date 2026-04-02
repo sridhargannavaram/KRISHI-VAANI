@@ -832,7 +832,7 @@
             chatBody.scrollTop = chatBody.scrollHeight;
 
             try {
-                const res = await fetch(`${API_BASE_URL}/ai-advisory`, {
+                const res = await fetch(`${API_BASE_URL}/ai-advisory/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ weatherData: lastWeatherData, message: msg, language: currentLang })
