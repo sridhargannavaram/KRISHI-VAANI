@@ -13,7 +13,8 @@ const PORT = process.env.PORT || 4000;
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:8080',
-  /^https:\/\/.*\.netlify\.app$/
+  /^https:\/\/.*\.netlify\.app$/,
+  /^https:\/\/.*\.vercel\.app$/
 ];
 
 app.use(cors({
