@@ -12,7 +12,7 @@ cron.schedule('0 * * * *', async () => {
     console.log('🕒 Running AlertGuard Cron Job...');
 
     try {
-        const farmers = await Farmer.find({ isVerified: true });
+        const farmers = await Farmer.findVerified();
 
         for (const farmer of farmers) {
             if (!farmer.location || !farmer.location.coordinates) continue;

@@ -4,15 +4,64 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const { initDb, pool } = require('./config/db');
+
+// Environment startup validation
+if (!process.env.JWT_SECRET) {
+  if (process.env.NODE_ENV === 'production') {
+    console.error('❌ FATAL: JWT_SECRET environment variable is required in production.');
+    process.exit(1);
+  } else {
+    console.warn('⚠️ WARNING: JWT_SECRET is not set in environment.');
+  }
+}
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// Security Headers with Helmet
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdnjs.cloudflare.com", "https://unpkg.com", "https://cdn.jsdelivr.net"],
+      scriptSrcAttr: ["'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com", "https://unpkg.com", "https://cdn.jsdelivr.net"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com", "data:"],
+      imgSrc: ["'self'", "data:", "blob:", "https:", "http:"],
+      connectSrc: ["'self'", "https:", "http:", "ws:", "wss:"],
+      frameSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: null
+    }
+  },
+  crossOriginEmbedderPolicy: false,
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+
+// Authentication Rate Limiter (Protects against excessive bot flooding without inconveniencing human users)
+const authLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute sliding window
+  max: 60, // Up to 60 attempts per minute per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    error: 'Too many rapid requests from this network. Please wait a moment and try again.'
+  }
+});
+
 // Deep CORS policies
 const allowedOrigins = [
   'http://localhost:3000',
+  'http://localhost:4000',
   'http://localhost:8080',
+  'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  /^http:\/\/localhost:\d+$/,
+  /^http:\/\/127\.0\.0\.1:\d+$/,
   /^https:\/\/.*\.netlify\.app$/,
   /^https:\/\/.*\.vercel\.app$/
 ];
@@ -20,6 +69,11 @@ const allowedOrigins = [
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
+
+    if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
+      return callback(null, true);
+    }
+
     let isAllowed = false;
     for (let i = 0; i < allowedOrigins.length; i++) {
         if (allowedOrigins[i] instanceof RegExp) {
@@ -35,7 +89,11 @@ app.use(cors({
     if (isAllowed) {
         return callback(null, true);
     } else {
-        return callback(new Error('Not allowed by CORS'));
+        if (process.env.NODE_ENV === 'production') {
+            return callback(new Error('CORS blocked for this origin by Krishi Vaani security policy.'));
+        } else {
+            return callback(null, true); // Allow during development
+        }
     }
   },
   credentials: true,
@@ -46,43 +104,39 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Database Connection (Singleton pattern for Serverless)
-let cachedDb = null;
-async function connectToDatabase() {
-  if (cachedDb) return cachedDb;
-  if (!process.env.MONGODB_URI) {
-    console.log('⚠️ MONGODB_URI not found.');
-    return null;
-  }
-  
-  try {
-    const db = await mongoose.connect(process.env.MONGODB_URI, {
-      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
-    });
-    console.log('✅ MongoDB Connected Successfully');
-    cachedDb = db;
-    return db;
-  } catch (err) {
-    console.error('❌ MongoDB Connection Error:', err.message);
-    throw err;
-  }
-}
+// Apply rate limiting to auth routes
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/send-otp', authLimiter);
+app.use('/api/auth/verify-otp', authLimiter);
+app.use('/api/auth/admin/login', authLimiter);
 
-// Initial connection attempt
-connectToDatabase();
+// Initialize Supabase PostgreSQL Schema & Connection
+initDb()
+  .then(async () => {
+    console.log('✅ Supabase PostgreSQL Connected & Ready');
+    try {
+      const { backfillMarketCoordinates } = require('./services/geocodingService');
+      await backfillMarketCoordinates();
+    } catch (e) {
+      console.warn('Coordinates backfill note:', e.message);
+    }
+  })
+  .catch((err) => console.error('❌ Supabase PostgreSQL Init Warning:', err.message));
 
-app.use(async (req, res, next) => {
-  try {
-    await connectToDatabase();
-    next();
-  } catch (err) {
-    res.status(500).json({ error: 'Database connection failed: ' + err.message });
-  }
+// Serve frontend static files
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
-// Basic route for testing
-app.get('/', (req, res) => {
-  res.send('KRISHI VAANI Backend API is running!');
+app.get('/api-status', (req, res) => {
+  res.json({
+    status: 'online',
+    database: 'Supabase PostgreSQL',
+    server: 'KRISHI VAANI Backend API',
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Routes
@@ -93,6 +147,8 @@ const newsRoutes = require('./routes/news');
 const farmerRoutes = require('./routes/farmer');
 const cropAlertRoutes = require('./routes/cropAlerts');
 const profileRoutes = require('./routes/profile');
+const mandiRoutes = require('./routes/mandi');
+const adminRoutes = require('./routes/admin');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/weather', weatherRoutes);
@@ -101,6 +157,9 @@ app.use('/api/news', newsRoutes);
 app.use('/api/farmer', farmerRoutes);
 app.use('/api/crop-alerts', cropAlertRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/market-prices', mandiRoutes);
+app.use('/api/marketplace', mandiRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

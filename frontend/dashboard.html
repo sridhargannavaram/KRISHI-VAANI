@@ -9,17 +9,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        /* Premium Dashboard Styles */
         .weather-hero {
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 2rem;
-            background: linear-gradient(135deg, rgba(46, 125, 50, 0.3), rgba(56, 142, 60, 0.1));
-            border: 1px solid rgba(76, 175, 80, 0.2);
+            background: linear-gradient(135deg, var(--bg-surface) 0%, var(--primary-light) 100%);
+            border: 1px solid var(--primary-border);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 20px -2px rgba(22, 163, 74, 0.08);
         }
 
         .weather-hero::before {
@@ -30,123 +30,148 @@
             width: 400px;
             height: 400px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(76, 175, 80, 0.15), transparent 70%);
+            background: radial-gradient(circle, rgba(74, 222, 128, 0.12), transparent 70%);
             pointer-events: none;
         }
 
-        /* Weather Stats */
         .weather-stats {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 0.75rem;
             margin-top: 1rem;
         }
 
         .weather-stat {
-            flex: 1;
-            min-width: 100px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem 1.2rem;
+            background: var(--bg-surface);
+            padding: 0.85rem 0.65rem;
             border-radius: 14px;
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--border-color);
             text-align: center;
-            transition: transform 0.2s, background 0.2s;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .weather-stat:hover {
-            transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-border);
         }
 
         .weather-stat i {
-            font-size: 1.2rem;
-            margin-bottom: 0.4rem;
-            display: block;
+            font-size: 1.25rem;
+            margin-bottom: 0.35rem;
         }
 
         .weather-stat .stat-value {
-            font-size: 1.4rem;
+            font-size: 1.15rem;
             font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
         }
 
         .weather-stat .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.74rem;
             color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 0.2rem;
+            margin-top: 0.25rem;
+            font-weight: 500;
+            line-height: 1.3;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
         }
 
-        /* Full-Width Map */
+        @media (max-width: 640px) {
+            .weather-stats {
+                grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+                gap: 0.5rem;
+            }
+            .weather-stat {
+                padding: 0.7rem 0.4rem;
+            }
+            .weather-stat .stat-value {
+                font-size: 1rem;
+            }
+            .weather-stat .stat-label {
+                font-size: 0.7rem;
+            }
+        }
+
         .map-container {
             position: relative;
-            margin-top: 1.5rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
         }
 
         #map {
-            height: 450px;
-            border-radius: 16px;
+            height: 235px;
             width: 100%;
-            border: 1px solid var(--glass-border);
             z-index: 1;
         }
 
         .map-search-bar {
             position: absolute;
             top: 12px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 50px;
+            right: 12px;
             z-index: 1000;
             display: flex;
             gap: 0.5rem;
-            width: 90%;
-            max-width: 500px;
+            max-width: 380px;
         }
 
         .map-search-bar input {
             flex: 1;
-            padding: 0.8rem 1.2rem;
+            padding: 0.7rem 1rem;
             border-radius: 25px;
-            border: 2px solid rgba(76, 175, 80, 0.3);
-            background: rgba(255, 255, 255, 0.92);
-            color: #111;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            box-shadow: var(--shadow-md);
             outline: none;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .map-search-bar input:focus {
-            border-color: #4CAF50;
+            border-color: var(--primary);
         }
 
         .map-search-bar button {
-            padding: 0.8rem 1.2rem;
-            border-radius: 25px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             border: none;
-            background: #4CAF50;
+            background: var(--primary);
             color: white;
             cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
-            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            transition: background 0.2s;
         }
 
         .map-search-bar button:hover {
-            transform: scale(1.05);
+            background: var(--primary-dark);
         }
 
         .map-search-results {
             position: absolute;
-            top: 52px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1001;
-            width: 90%;
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.97);
+            top: 55px;
+            left: 50px;
+            max-width: 380px;
+            width: calc(100% - 62px);
+            z-index: 1000;
+            background: var(--bg-surface);
             border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
             max-height: 200px;
             overflow-y: auto;
             display: none;
@@ -155,14 +180,14 @@
         .map-search-results .result-item {
             padding: 0.8rem 1.2rem;
             cursor: pointer;
-            color: #111;
+            color: var(--text-primary);
             font-size: 0.9rem;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-color);
             transition: background 0.2s;
         }
 
         .map-search-results .result-item:hover {
-            background: #e8f5e9;
+            background: var(--bg-subtle);
         }
 
         .map-search-results .result-item:last-child {
@@ -170,7 +195,7 @@
         }
 
         .map-search-results .result-item i {
-            color: #4CAF50;
+            color: var(--primary);
             margin-right: 0.5rem;
         }
 
@@ -179,15 +204,59 @@
             bottom: 12px;
             left: 12px;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(15, 23, 42, 0.85);
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.8rem;
             backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Forecast below map */
+        .location-control-strip {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-top: 0.6rem;
+        }
+
+        .loc-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .loc-pill:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-border);
+            color: var(--primary-dark);
+        }
+
+        .loc-accuracy-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            padding: 0.3rem 0.65rem;
+            border-radius: 9999px;
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
+            color: var(--primary-dark);
+        }
+
         .forecast-container {
             display: flex;
             overflow-x: auto;
@@ -200,85 +269,364 @@
             min-width: 90px;
             text-align: center;
             padding: 1rem 0.8rem;
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--bg-surface);
             border-radius: 14px;
-            border: 1px solid var(--glass-border);
-            transition: transform 0.2s, background 0.2s;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
             flex-shrink: 0;
         }
 
         .forecast-item:hover {
             transform: translateY(-3px);
-            background: rgba(255, 255, 255, 0.12);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-border);
         }
 
-        /* Seasonal Crop Card */
-        .crop-card {
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.12), rgba(76, 175, 80, 0.08));
-            border: 1px solid rgba(255, 152, 0, 0.2);
+        /* Enhanced Crop Cards & Advisory Section */
+        .crop-card,
+        .advisor-card {
+            background: var(--bg-surface, #ffffff);
+            border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 16px;
+            padding: 1.35rem 1.4rem;
+            box-shadow: var(--shadow-card, 0 2px 8px rgba(15, 23, 42, 0.05));
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .crop-recommendation-box {
-            background: rgba(0, 0, 0, 0.12);
-            padding: 1.5rem;
-            border-radius: 14px;
-            min-height: 120px;
-            line-height: 1.7;
-            font-size: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .auto-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: rgba(22, 163, 74, 0.12);
+            color: var(--primary, #16a34a);
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 0.18rem 0.5rem;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
         }
 
-        .crop-recommendation-box strong {
-            color: var(--accent-color);
+        .btn-refresh-clean {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--bg-subtle, #f8fafc);
+            border: 1px solid var(--border-color, #e2e8f0);
+            color: var(--text-secondary, #64748b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
         }
 
-        [data-theme='light'] .crop-recommendation-box {
-            background: rgba(0, 0, 0, 0.04);
+        .btn-refresh-clean:hover {
+            background: var(--primary-light, #dcfce7);
+            border-color: var(--primary-border, #bbf7d0);
+            color: var(--primary-dark, #15803d);
+        }
+
+        /* Seasonal Crops Component Layout */
+        .seasonal-crops-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            flex: 1;
+        }
+
+        .seasonal-crops-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .seasonal-crop-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
+            padding: 0.6rem 0.8rem;
+            background: var(--bg-subtle, #f8fafc);
+            border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 10px;
+            transition: border-color 0.15s ease, background 0.15s ease;
+        }
+
+        .seasonal-crop-item:hover {
+            border-color: var(--primary-border, #bbf7d0);
+            background: var(--bg-surface, #ffffff);
+        }
+
+        .crop-num-badge {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: rgba(22, 163, 74, 0.12);
+            color: var(--primary-dark, #15803d);
+            font-size: 0.72rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .crop-info-body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .crop-name-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-primary, #0f172a);
+            line-height: 1.3;
+        }
+
+        .crop-reason-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary, #64748b);
+            line-height: 1.4;
+            margin-top: 0.1rem;
+        }
+
+        .seasonal-tip-card {
+            margin-top: 0.4rem;
+            padding: 0.65rem 0.8rem;
+            background: rgba(22, 163, 74, 0.06);
+            border: 1px solid rgba(22, 163, 74, 0.2);
+            border-left: 3.5px solid var(--primary, #16a34a);
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-start;
+        }
+
+        .seasonal-tip-card i {
+            color: var(--primary, #16a34a);
+            font-size: 0.9rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .seasonal-tip-content {
+            flex: 1;
+        }
+
+        .seasonal-tip-title {
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--primary-dark, #15803d);
+            letter-spacing: 0.4px;
+        }
+
+        .seasonal-tip-desc {
+            font-size: 0.8rem;
+            color: var(--text-primary, #0f172a);
+            line-height: 1.4;
+            margin-top: 0.05rem;
+        }
+
+        .seasonal-caution-card {
+            margin-top: 0.2rem;
+            padding: 0.55rem 0.8rem;
+            background: rgba(234, 88, 12, 0.06);
+            border: 1px solid rgba(234, 88, 12, 0.18);
+            border-left: 3.5px solid #ea580c;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-start;
+        }
+
+        .seasonal-caution-card i {
+            color: #ea580c;
+            font-size: 0.85rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .seasonal-caution-desc {
+            font-size: 0.78rem;
+            color: var(--text-primary, #0f172a);
+            line-height: 1.35;
+        }
+
+        /* AI Crop Advisor Component */
+        .advisor-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-secondary, #64748b);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
         }
 
         .crop-input-group {
             display: flex;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
+            gap: 0.45rem;
+            margin-bottom: 0.75rem;
+            align-items: center;
         }
 
         .crop-input-group .form-control {
             flex: 1;
-            padding: 1rem;
-            font-size: 1rem;
-            border-radius: 12px;
-        }
-
-        /* Language Selector */
-        .lang-selector {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .lang-select {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            padding: 0.5rem 0.8rem;
+            min-width: 0;
+            height: 38px;
+            padding: 0 0.85rem;
+            font-size: 0.86rem;
             border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            cursor: pointer;
+            border: 1px solid var(--border-color, #e2e8f0);
+            background: var(--bg-surface, #ffffff);
+            color: var(--text-primary, #0f172a);
+            transition: all 0.2s;
+        }
+
+        .crop-input-group .form-control:focus {
+            border-color: var(--primary, #16a34a);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
             outline: none;
         }
 
-        .lang-select option {
-            background: #1a1a1a;
-            color: #fff;
+        .crop-input-group .btn-advisor-submit {
+            height: 38px;
+            padding: 0 0.95rem;
+            background: var(--primary, #16a34a);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            white-space: nowrap;
+            transition: background 0.2s;
+            flex-shrink: 0;
         }
 
-        [data-theme='light'] .lang-select option {
-            background: #fff;
-            color: #111;
+        .crop-input-group .btn-advisor-submit:hover {
+            background: var(--primary-dark, #15803d);
         }
 
-        /* Section Headers */
+        .crop-input-group .btn-advisor-submit:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 520px) {
+            .crop-input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .crop-input-group .btn-advisor-submit {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+
+        .advisor-output-box {
+            flex: 1;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .advisor-empty-placeholder {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1.25rem 1rem;
+            background: var(--bg-subtle, #f8fafc);
+            border: 1px dashed var(--border-color, #e2e8f0);
+            border-radius: 10px;
+            color: var(--text-secondary, #64748b);
+            gap: 0.35rem;
+        }
+
+        .advisor-empty-placeholder i {
+            font-size: 1.35rem;
+            color: var(--primary, #16a34a);
+            opacity: 0.75;
+        }
+
+        .advisor-empty-placeholder span {
+            font-size: 0.8rem;
+            max-width: 260px;
+            line-height: 1.4;
+        }
+
+        .advisor-result-card {
+            background: var(--bg-subtle, #f8fafc);
+            border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 10px;
+            padding: 0.75rem 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .advisor-meta-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            padding-bottom: 0.45rem;
+            border-bottom: 1px solid var(--border-color, #e2e8f0);
+        }
+
+        .advisor-crop-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--primary-dark, #15803d);
+            background: rgba(22, 163, 74, 0.12);
+            padding: 0.18rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .advisor-weather-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.74rem;
+            color: var(--text-secondary, #64748b);
+            font-weight: 500;
+        }
+
+        .advisor-points-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .advisor-point-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.81rem;
+            color: var(--text-primary, #0f172a);
+            line-height: 1.45;
+        }
+
+        .advisor-point-item i {
+            color: var(--primary, #16a34a);
+            font-size: 0.75rem;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
         .section-header {
             display: flex;
             align-items: center;
@@ -291,53 +639,15 @@
             align-items: center;
             gap: 0.6rem;
             font-size: 1.15rem;
-            font-weight: 600;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
-        @keyframes pulse-glow {
-
-            0%,
-            100% {
-                box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-            }
-
-            50% {
-                box-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
-            }
-        }
-
-        .auto-badge {
-            background: var(--accent-color);
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            animation: pulse-glow 2s infinite;
-        }
-
-        .glass-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #4CAF50, #8BC34A, #CDDC39);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Profile Avatar */
         .profile-avatar-wrap {
             position: relative;
             cursor: pointer;
+            width: 74px;
+            height: 74px;
             flex-shrink: 0;
         }
 
@@ -346,8 +656,8 @@
             height: 70px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--accent-color);
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            border: 3px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.25);
             transition: transform 0.3s;
         }
 
@@ -362,37 +672,36 @@
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            background: var(--accent-color);
+            background: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 0.6rem;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
         .avatar-initials {
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            border: 3px solid var(--accent-color);
+            border: 3px solid var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.6rem;
             font-weight: 700;
             color: white;
-            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            background: linear-gradient(135deg, #22c55e, #16a34a);
             cursor: pointer;
             transition: transform 0.3s;
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.25);
         }
 
         .avatar-initials:hover {
             transform: scale(1.08);
         }
 
-        /* Two column for crop sections */
         .crop-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -400,59 +709,994 @@
             margin-top: 1.5rem;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .crop-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+        }
+
+        /* Location Confirmation Modal */
+        .loc-modal-backdrop {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .loc-modal-backdrop.active {
+            display: flex;
+        }
+
+        .loc-modal-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--text-primary);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.94); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .loc-modal-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-subtle);
+        }
+
+        .loc-modal-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .loc-modal-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .loc-detail-row {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.9rem 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .loc-detail-row .place-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .loc-detail-row .full-addr {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .loc-detail-row .accuracy-note {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.3rem;
+        }
+
+        .loc-modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-subtle);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-loc-confirm {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: background 0.15s;
+        }
+
+        .btn-loc-confirm:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-loc-secondary {
+            padding: 0.6rem 1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .btn-loc-secondary:hover {
+            background: var(--bg-subtle);
+        }
+
+        .manual-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .manual-form-group label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .manual-input {
+            padding: 0.65rem 0.9rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-family: inherit;
+        }
+
+        .manual-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+        }
+
+        /* Location Control Strip & Accuracy Badges */
+        .location-control-strip {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+            margin-top: 0.45rem;
+        }
+
+        .loc-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.7rem;
+            background: var(--bg-surface);
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .loc-pill:hover {
+            border-color: #22c55e;
+            color: #16a34a;
+            background: #f0fdf4;
+        }
+
+        .loc-accuracy-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.65rem;
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #15803d;
+        }
+
+        /* Dark Theme Specific Overrides for Dashboard */
+        [data-theme='dark'] .weather-hero {
+            background: linear-gradient(135deg, #1B2B33 0%, #152824 100%);
+            border-color: rgba(34, 197, 94, 0.25);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme='dark'] .weather-stat {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .weather-stat:hover {
+            background: #22363F;
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+
+        [data-theme='dark'] .forecast-item {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .forecast-item:hover {
+            background: #22363F;
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+
+        [data-theme='dark'] .crop-card {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .crop-recommendation-box {
+            background: #16242B;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .crop-recommendation-box strong {
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .map-container {
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .map-search-bar input {
+            background: #16242B;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .map-search-results {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .map-search-results .result-item {
+            color: #F1F5F9;
+            border-bottom-color: #2E404B;
+        }
+
+        [data-theme='dark'] .map-search-results .result-item:hover {
+            background: #22363F;
+        }
+
+        [data-theme='dark'] .loc-pill {
+            background: #1B2B33;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .loc-pill:hover {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .loc-accuracy-pill {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .loc-modal-box {
+            background: #1B2B33;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .loc-modal-header,
+        [data-theme='dark'] .loc-modal-footer {
+            background: #16242B;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .loc-detail-row {
+            background: #16242B;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .loc-detail-row .place-name {
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .btn-loc-secondary {
+            background: #22363F;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .btn-loc-secondary:hover {
+            background: #29424E;
+            border-color: #3B5361;
+        }
+
+        [data-theme='dark'] .manual-input {
+            background: #16242B;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        /* ================= TODAY'S AGRICULTURAL STATUS: EXECUTIVE INTELLIGENCE PANEL ================= */
+        .agri-intel-panel {
+            background: rgba(22, 36, 43, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem;
+            margin-top: 1.25rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.25);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        [data-theme='light'] .agri-intel-panel {
+            background: #ffffff;
+            border-color: #e2e8f0;
+            box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.06);
+        }
+
+        .agri-intel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+        [data-theme='light'] .agri-intel-header {
+            border-bottom-color: #edf2f7;
+        }
+
+        .agri-intel-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.15rem;
+        }
+        .agri-intel-title {
+            font-size: 0.92rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        [data-theme='light'] .agri-intel-title {
+            color: #0f172a;
+        }
+
+        .agri-intel-live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            color: #4ade80;
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+        .agri-intel-live-dot {
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #22c55e;
+            animation: intel-pulse 2s infinite;
+        }
+        @keyframes intel-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.35); opacity: 0.5; }
+        }
+
+        .agri-intel-location {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary, #94a3b8);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .agri-intel-location i {
+            color: #22c55e;
+            font-size: 0.78rem;
+        }
+
+        .agri-intel-telemetry-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--text-secondary, #94a3b8);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+        }
+        [data-theme='light'] .agri-intel-telemetry-chip {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+            color: #475569;
+        }
+
+        /* 3-Column Balanced Intelligence Grid */
+        .agri-intel-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.85rem;
+        }
+        @media (max-width: 1100px) {
+            .agri-intel-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .agri-intel-grid {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+        }
+
+        .agri-intel-col {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 0.9rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 0.55rem;
+            min-width: 0;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        [data-theme='light'] .agri-intel-col {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+        .agri-intel-col:hover {
+            border-color: rgba(34, 197, 94, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        [data-theme='light'] .agri-intel-col:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .agri-intel-col-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        .agri-intel-category-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-secondary, #94a3b8);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .agri-intel-category-label i {
+            font-size: 0.75rem;
+            opacity: 0.85;
+        }
+
+        .agri-intel-status-pill {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.18rem 0.55rem;
+            border-radius: 6px;
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            white-space: nowrap;
+            text-transform: uppercase;
+        }
+        .status-pill-low {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        [data-theme='light'] .status-pill-low {
+            background: #dcfce7;
+            color: #15803d;
+            border-color: #bbf7d0;
+        }
+        .status-pill-moderate {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        [data-theme='light'] .status-pill-moderate {
+            background: #fef3c7;
+            color: #b45309;
+            border-color: #fde68a;
+        }
+        .status-pill-high {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        [data-theme='light'] .status-pill-high {
+            background: #fee2e2;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+        .status-pill-action {
+            background: rgba(14, 165, 233, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+        }
+        [data-theme='light'] .status-pill-action {
+            background: #e0f2fe;
+            color: #0369a1;
+            border-color: #bae6fd;
+        }
+
+        .agri-intel-highlight-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary, #ffffff);
+            line-height: 1.25;
+            margin-bottom: 0.2rem;
+        }
+        [data-theme='light'] .agri-intel-highlight-title {
+            color: #0f172a;
+        }
+
+        .agri-intel-desc-text {
+            font-size: 0.78rem;
+            line-height: 1.45;
+            color: var(--text-secondary, #94a3b8);
+            margin: 0;
+            flex-grow: 1;
+        }
+        [data-theme='light'] .agri-intel-desc-text {
+            color: #475569;
+        }
+
+        .agri-intel-action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            font-size: 0.78rem;
+            line-height: 1.4;
+            color: var(--text-secondary, #94a3b8);
+        }
+        [data-theme='light'] .agri-intel-action-list {
+            color: #475569;
+        }
+        .agri-intel-action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.45rem;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            min-width: 0;
+        }
+        .agri-intel-action-num {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            font-size: 0.62rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+        [data-theme='light'] .agri-intel-action-num {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        /* Improved Full-Width Forecast Grid */
+        .forecast-grid-full {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+            gap: 0.7rem;
+            width: 100%;
+            margin-top: 0.75rem;
+        }
+        @media (max-width: 768px) {
+            .forecast-grid-full {
+                display: flex;
+                overflow-x: auto;
+                gap: 0.6rem;
+                padding-bottom: 0.35rem;
+                scrollbar-width: thin;
+            }
+            .forecast-grid-full .forecast-item {
+                min-width: 90px;
+                flex-shrink: 0;
+            }
+        }
+
+        /* Compact AI Crop Advisor Empty State */
+        .advisor-empty-compact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1.25rem 1rem;
+            gap: 0.35rem;
+            color: var(--text-secondary, #94a3b8);
+        }
+        .advisor-empty-compact i {
+            font-size: 1.4rem;
+            color: #9333ea;
+            margin-bottom: 0.2rem;
+        }
+        .advisor-empty-title {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-primary, #ffffff);
+        }
+        [data-theme='light'] .advisor-empty-title {
+            color: #0f172a;
+        }
+        .advisor-empty-desc {
+            font-size: 0.78rem;
+            max-width: 320px;
+            line-height: 1.35;
+        }
+
+        /* Dashboard Preview Sections: Mandi & News */
+        .dashboard-preview-card {
+            background: rgba(22, 36, 43, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.2rem 1.35rem;
+            margin-top: 1.5rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.25);
+        }
+        [data-theme='light'] .dashboard-preview-card {
+            background: #ffffff;
+            border-color: #e2e8f0;
+            box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.06);
+        }
+
+        .mandi-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.85rem;
+            margin-top: 0.9rem;
+        }
+        @media (max-width: 1024px) {
+            .mandi-preview-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .mandi-preview-grid {
                 grid-template-columns: 1fr;
             }
         }
+
+        .mandi-preview-item {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 0.75rem 0.85rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.85rem;
+            min-width: 0;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        .mandi-preview-thumb {
+            width: 52px;
+            height: 52px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .mandi-item-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            overflow: hidden;
+        }
+        [data-theme='light'] .mandi-preview-item {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+        .mandi-preview-item:hover {
+            border-color: rgba(74, 222, 128, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .mandi-item-top {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            min-width: 0;
+        }
+        .mandi-commodity-name {
+            font-weight: 600;
+            font-size: 0.88rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text-primary, #ffffff);
+        }
+        [data-theme='light'] .mandi-commodity-name {
+            color: #0f172a;
+        }
+        .mandi-market-tag {
+            font-size: 0.72rem;
+            color: var(--text-secondary, #94a3b8);
+        }
+        .mandi-price-val {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #4ade80;
+            margin-top: 0.1rem;
+        }
+        [data-theme='light'] .mandi-price-val {
+            color: #16a34a;
+        }
+
+        .news-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.95rem;
+            margin-top: 0.9rem;
+        }
+        @media (max-width: 900px) {
+            .news-preview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .news-preview-item {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        [data-theme='light'] .news-preview-item {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+        .news-preview-item:hover {
+            border-color: rgba(34, 197, 94, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .news-preview-img {
+            height: 120px;
+            width: 100%;
+            object-fit: cover;
+            background: #111c24;
+        }
+        .news-preview-body {
+            padding: 0.75rem 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            flex-grow: 1;
+        }
+        .news-preview-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-primary, #ffffff);
+            line-height: 1.35;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        [data-theme='light'] .news-preview-title {
+            color: #0f172a;
+        }
+        .news-preview-meta {
+            font-size: 0.7rem;
+            color: var(--text-secondary, #94a3b8);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+        }
     </style>
+    <script src="assets/js/commodityImages.js"></script>
 </head>
 
 <body>
-    <nav class="glass">
-        <a href="dashboard.html" class="logo">
-            <i class="fas fa-leaf"></i> KRISHI VAANI
-        </a>
-        <div class="nav-links">
-            <a href="alert-guard.html"><i class="fas fa-bell"></i> AlertGuard</a>
-            <a href="crop-alerts.html"><i class="fas fa-shield-alt"></i> Crop Alerts</a>
-            <a href="news.html"><i class="fas fa-newspaper"></i> Agri-News</a>
-            <div class="lang-selector">
-                <i class="fas fa-language" style="font-size: 1.2rem;"></i>
-                <select id="langSelect" class="lang-select" title="Translate">
-                    <option value="en">English</option>
-                    <option value="te">తెలుగు</option>
-                    <option value="kn">ಕನ್ನಡ</option>
-                    <option value="ta">தமிழ்</option>
-                    <option value="ml">മലയാളം</option>
-                    <option value="hi">हिन्दी</option>
-                </select>
+    <!-- Modern AgriTech / SaaS Navbar -->
+    <header class="app-header">
+        <div class="header-container">
+            <!-- Left: Brand Logo -->
+            <a href="dashboard.html" class="brand-logo" title="KRISHI VAANI">
+                <div class="brand-icon-wrap">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <span class="brand-name">KRISHI VAANI</span>
+            </a>
+
+            <!-- Center: Navigation Items (Cleanly Aligned) -->
+            <nav class="header-nav-center">
+                <a href="dashboard.html" class="nav-tab active">
+                    <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+                </a>
+                <a href="marketplace.html" class="nav-tab">
+                    <i class="fas fa-store"></i> <span>Marketplace</span>
+                </a>
+                <a href="crop-alerts.html" class="nav-tab">
+                    <i class="fas fa-bell"></i> <span>Crop Alerts</span>
+                </a>
+                <a href="alert-guard.html" class="nav-tab">
+                    <i class="fas fa-shield-alt"></i> <span>AlertGuard</span>
+                </a>
+                <a href="news.html" class="nav-tab">
+                    <i class="fas fa-newspaper"></i> <span>Agri-News</span>
+                </a>
+            </nav>
+
+            <!-- Right: Language + Profile -->
+            <div class="header-nav-right">
+                <!-- Language Selector -->
+                <div class="nav-lang-box">
+                    <i class="fas fa-globe"></i>
+                    <select id="langSelect" class="nav-lang-select" aria-label="Select Language">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="ta">தமிழ்</option>
+                        <option value="te">తెలుగు</option>
+                        <option value="ml">മലയാളം</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </div>
+
+                <!-- Profile Dropdown (Displays only 'Profile') -->
+                <div class="nav-profile-container">
+                    <button class="nav-profile-button" id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Account Menu">
+                        <span>Profile</span>
+                        <i class="fas fa-chevron-down nav-caret"></i>
+                    </button>
+                    <div class="nav-profile-popover" id="navProfileDropdown">
+                        <a href="#" onclick="openFarmerProfileModal(event)" class="popover-item">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                        <div class="popover-theme-row">
+                            <div class="popover-theme-label">
+                                <i class="fas fa-palette"></i>
+                                <span>Appearance</span>
+                            </div>
+                            <div class="popover-theme-pills">
+                                <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                                <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                                <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                            </div>
+                        </div>
+                        <a href="alert-guard.html" class="popover-item">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                        </a>
+                        <a href="#" onclick="openFarmerSettingsModal(event)" class="popover-item">
+                            <i class="fas fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                        <div class="popover-divider"></div>
+                        <a href="#" onclick="logout(event)" class="popover-item popover-logout">
+                            <i class="fas fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile Navigation Toggle -->
+                <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-            <button id="logoutBtn" class="btn btn-glass">Logout</button>
         </div>
-    </nav>
+
+        <!-- Mobile Drawer -->
+        <div class="mobile-nav-drawer" id="mobileNavDrawer">
+            <a href="dashboard.html" class="mobile-drawer-link active">
+                <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+            </a>
+            <a href="marketplace.html" class="mobile-drawer-link">
+                <i class="fas fa-store"></i> <span>Marketplace</span>
+            </a>
+            <a href="crop-alerts.html" class="mobile-drawer-link">
+                <i class="fas fa-bell"></i> <span>Crop Alerts</span>
+            </a>
+            <a href="alert-guard.html" class="mobile-drawer-link">
+                <i class="fas fa-shield-alt"></i> <span>AlertGuard</span>
+            </a>
+            <a href="news.html" class="mobile-drawer-link">
+                <i class="fas fa-newspaper"></i> <span>Agri-News</span>
+            </a>
+        </div>
+    </header>
 
     <div class="container">
         <!-- Hero Weather Section -->
-        <div class="glass glass-card weather-hero" style="margin-top: 0;">
-            <!-- Profile Avatar -->
-            <div class="profile-avatar-wrap" id="avatarWrap"
-                onclick="document.getElementById('profileUploadInput').click()">
-                <div class="avatar-initials" id="avatarDisplay">?</div>
-                <div class="avatar-overlay"><i class="fas fa-camera"></i></div>
-                <input type="file" id="profileUploadInput" accept="image/*" style="display:none;">
-            </div>
+        <div class="glass glass-card weather-hero">
+            <input type="file" id="profileUploadInput" accept="image/*" style="display: none;">
             <div>
-                <h1 id="greeting" class="gradient-text" style="font-size: 2rem;">Welcome back!</h1>
-                <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 1.1rem;">
-                    <i class="fas fa-location-dot"></i> <span id="userCity">Loading location...</span>
+                <h1 id="greeting" class="gradient-text">Welcome back!</h1>
+                
+                <!-- Location & Location Controls -->
+                <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+                    <i class="fas fa-location-dot" style="color: #4ade80;"></i>
+                    <strong id="userCity" style="color: var(--text-primary);">Loading location...</strong>
+                    <span id="userStateDistrict" style="font-size: 0.85rem; color: #94a3b8;"></span>
                 </p>
-                <p style="color: var(--text-secondary); margin-top: 0.3rem; font-size: 0.85rem;">
+
+                <div class="location-control-strip">
+                    <button class="loc-pill" id="btnRefreshGpsLocation" onclick="detectFarmerGpsLocation(true)" title="Request current GPS coordinates">
+                        <i class="fas fa-arrows-rotate"></i> Refresh Location
+                    </button>
+                </div>
+
+                <p style="color: var(--text-secondary); margin-top: 0.4rem; font-size: 0.82rem;">
                     <i class="fas fa-calendar-day"></i> <span id="currentDate"></span>
                 </p>
             </div>
-            <div id="currentWeatherBox" style="display: flex; align-items: center; gap: 1.5rem; min-width: 300px;">
+            <div id="currentWeatherBox" style="display: flex; align-items: center; gap: 1.2rem; min-width: 0; flex-shrink: 0; flex-wrap: wrap;">
                 <i class="fas fa-spinner fa-spin fa-2x"></i>
                 <div>
                     <h2 style="font-size: 3rem; font-weight: 200;">--°</h2>
@@ -462,7 +1706,7 @@
         </div>
 
         <!-- Weather Stats Row -->
-        <div class="weather-stats" id="weatherStatsRow">
+        <div class="weather-stats">
             <div class="weather-stat"><i class="fas fa-tint" style="color: #4fc3f7;"></i>
                 <div class="stat-value" id="statHumidity">--%</div>
                 <div class="stat-label">Humidity</div>
@@ -485,71 +1729,255 @@
             </div>
         </div>
 
-        <!-- Full-Width Interactive Map with Search -->
+        <!-- Today's Agricultural Status Section (Executive Agricultural Intelligence Panel) -->
+        <div class="agri-intel-panel" id="todayAgriStatusSection">
+            <div class="agri-intel-header">
+                <div>
+                    <div class="agri-intel-title-group">
+                        <span class="agri-intel-title" id="agriStatusTitle">
+                            <i class="fas fa-satellite-dish" style="color: #22c55e;"></i> Today's Agricultural Status
+                        </span>
+                        <span class="agri-intel-live-badge" id="agriStatusLivePill"><span class="agri-intel-live-dot"></span>LIVE</span>
+                    </div>
+                    <div class="agri-intel-location" id="agriStatusLocSummary">
+                        <i class="fas fa-location-dot"></i> <span id="agriStatusPlaceName">Local Farm</span>
+                    </div>
+                </div>
+                <div class="agri-intel-telemetry-chip" id="agriStatusTelemetryChip">
+                    <i class="fas fa-cloud-sun" style="color: #22c55e;"></i> <span id="intelTelemTemp">--°C</span> • <span id="intelTelemHum">--% Humidity</span>
+                </div>
+            </div>
+
+            <div class="agri-intel-grid">
+                <!-- 1. Crop & Disease Risk -->
+                <div class="agri-intel-col" id="cardCropAlerts">
+                    <div>
+                        <div class="agri-intel-col-head">
+                            <span class="agri-intel-category-label" id="lblCropAlerts">
+                                <i class="fas fa-shield-virus" style="color: #ea580c;"></i> Crop Alerts
+                            </span>
+                            <span class="agri-intel-status-pill status-pill-moderate" id="badgeCropAlerts">Moderate</span>
+                        </div>
+                        <div class="agri-intel-highlight-title" id="subCropAlerts">Pest & Moisture Risk</div>
+                    </div>
+                    <p class="agri-intel-desc-text" id="descCropAlerts">
+                        Analyzing crop susceptibility for current humidity and temperature...
+                    </p>
+                </div>
+
+                <!-- 2. Weather / Rain Risk -->
+                <div class="agri-intel-col" id="cardWeatherRisk">
+                    <div>
+                        <div class="agri-intel-col-head">
+                            <span class="agri-intel-category-label" id="lblWeatherRisk">
+                                <i class="fas fa-cloud-sun-rain" style="color: #3b82f6;"></i> Rain & Weather Risk
+                            </span>
+                            <span class="agri-intel-status-pill status-pill-low" id="badgeWeatherRisk">Low</span>
+                        </div>
+                        <div class="agri-intel-highlight-title" id="subWeatherRisk">Clear Conditions</div>
+                    </div>
+                    <p class="agri-intel-desc-text" id="descWeatherRisk">
+                        Calculating 24-48 hour rainfall probability and atmospheric trends...
+                    </p>
+                </div>
+
+                <!-- 3. Recommended Action -->
+                <div class="agri-intel-col" id="cardRecAction">
+                    <div>
+                        <div class="agri-intel-col-head">
+                            <span class="agri-intel-category-label" id="lblRecAction">
+                                <i class="fas fa-list-check" style="color: #10b981;"></i> Recommended Action
+                            </span>
+                            <span class="agri-intel-status-pill status-pill-action" id="badgeRecAction">Recommended</span>
+                        </div>
+                        <div class="agri-intel-highlight-title" id="subRecAction">Monitor + Irrigate</div>
+                    </div>
+                    <div class="agri-intel-action-list" id="descRecAction">
+                        Preparing field operation advisory based on verified weather conditions...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 24-Hour Forecast (Efficient Horizontal Grid) -->
+        <div class="glass glass-card" style="margin-top: 1.5rem;" id="forecastSectionCard">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-clock" style="color: var(--primary);"></i>
+                    <span id="forecastTitle">24-Hour Weather Forecast</span>
+                </div>
+            </div>
+            <div class="forecast-grid-full" id="forecastBox">
+                <p style="padding: 1rem; color: var(--text-secondary);">Loading forecast...</p>
+            </div>
+        </div>
+
+        <!-- Full-Width Interactive Map with Reduced Height (Compact & Functional) -->
         <div class="map-container glass glass-card" style="padding: 0; overflow: hidden; margin-top: 1.5rem;">
             <div class="map-search-bar">
-                <input type="text" id="mapSearch" placeholder="🔍 Search village, city, or district..."
-                    autocomplete="off">
+                <input type="text" id="mapSearch" placeholder="Search village, city, or district..." autocomplete="off">
                 <button id="mapSearchBtn"><i class="fas fa-search"></i></button>
             </div>
             <div class="map-search-results" id="mapSearchResults"></div>
             <div id="map"></div>
-            <div class="map-location-badge" id="mapBadge">
-                <i class="fas fa-crosshairs"></i> <span id="mapBadgeText">Loading...</span>
-            </div>
         </div>
 
-        <!-- 24-Hour Forecast (Below Map) -->
-        <div class="glass glass-card" style="margin-top: 1.5rem;">
-            <div class="section-header">
-                <div class="section-title"><i class="fas fa-clock" style="color: #ffb74d;"></i> 24-Hour Forecast</div>
-            </div>
-            <div class="forecast-container" id="forecastBox">
-                <p>Loading forecast...</p>
-            </div>
-        </div>
-
-        <!-- Crop Sections Side by Side -->
-        <div class="crop-grid">
+        <!-- Crop Sections Side by Side (Seasonal Crops + AI Crop Advisor) -->
+        <div class="crop-grid" style="margin-top: 1.5rem;">
             <!-- Seasonal Crop Recommendation (Auto) -->
-            <div class="glass glass-card crop-card">
+            <div class="crop-card">
                 <div class="section-header">
                     <div class="section-title">
-                        <i class="fas fa-seedling" style="color: var(--accent-color);"></i>
+                        <i class="fas fa-seedling" style="color: var(--primary);"></i>
                         <span id="seasonalTitle">Seasonal Crops</span>
-                        <span class="auto-badge">AUTO</span>
+                        <span class="auto-badge"><i class="fas fa-bolt-auto" style="font-size: 0.65rem;"></i> AUTO</span>
                     </div>
-                    <button id="refreshSeasonalBtn" class="btn btn-glass"
-                        style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">
+                    <button id="refreshSeasonalBtn" class="btn-refresh-clean" title="Refresh Seasonal Crops" aria-label="Refresh Seasonal Crops">
                         <i class="fas fa-sync-alt"></i>
                     </button>
                 </div>
-                <div class="crop-recommendation-box" id="seasonalCropBox">
-                    <i class="fas fa-spinner fa-spin"></i> Loading seasonal recommendations...
+                <div class="seasonal-crops-container" id="seasonalCropBox">
+                    <div style="padding: 1.5rem 1rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
+                        <i class="fas fa-spinner fa-spin" style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.4rem;"></i><br>
+                        Fetching seasonal recommendations...
+                    </div>
                 </div>
             </div>
 
-            <!-- AI Crop Advisor (Manual Input) -->
-            <div class="glass glass-card">
+            <!-- AI Crop Advisor (Compact Empty State + Natural Expand) -->
+            <div class="advisor-card">
                 <div class="section-header">
                     <div class="section-title">
-                        <i class="fas fa-robot" style="color: #ce93d8;"></i>
+                        <i class="fas fa-robot" style="color: #9333ea;"></i>
                         <span id="cropAdvisorTitle">AI Crop Advisor</span>
                     </div>
                 </div>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;" id="cropAdvisorDesc">
-                    Enter any crop name for weather-based advice.
+                <p class="advisor-subtitle" id="cropAdvisorDesc">
+                    Get location and weather-based advice for your crop.
                 </p>
                 <div class="crop-input-group">
-                    <input type="text" id="cropInput" class="form-control" placeholder="e.g., Ragi, Tomato, Paddy...">
-                    <button id="getCropAdviceBtn" class="btn btn-primary"><i class="fas fa-magic"></i></button>
+                    <input type="text" id="cropInput" class="form-control" placeholder="e.g., Ragi, Tomato, Paddy, Cotton..." autocomplete="off">
+                    <button id="getCropAdviceBtn" class="btn-advisor-submit"><i class="fas fa-wand-magic-sparkles"></i> <span>Get Advice</span></button>
                 </div>
-                <div class="crop-recommendation-box" id="cropAdviceBox">
-                    <p style="color: var(--text-secondary);"><i>Type a crop name and click the button.</i></p>
+                <div class="advisor-output-box" id="cropAdviceBox">
+                    <div class="advisor-empty-compact">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <div class="advisor-empty-title">AI Crop Advisor</div>
+                        <div class="advisor-empty-desc">Enter any crop name above for instant agronomic and weather-tailored guidance.</div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Nearby Markets / Mandi Prices (Compact & Production-Level with Real Commodity Images) -->
+        <div class="dashboard-preview-card" id="mandiSummarySection">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-store" style="color: #4ade80;"></i>
+                    <span id="mandiSummaryTitle">Nearby Markets / Mandi Prices</span>
+                </div>
+                <a href="marketplace.html" class="btn-loc-secondary" id="btnViewMarketplace" style="padding: 0.35rem 0.75rem; font-size: 0.78rem; text-decoration: none; border-radius: 6px;">
+                    <span id="txtViewMarketplace">View Marketplace</span> <i class="fas fa-arrow-right" style="font-size: 0.7rem; margin-left: 0.2rem;"></i>
+                </a>
+            </div>
+            <div class="mandi-preview-grid" id="mandiPreviewGrid">
+                <div class="mandi-preview-item">
+                    <img src="assets/images/commodities/ragi.webp" alt="Ragi" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Ragi')">
+                    <div class="mandi-item-content">
+                        <div class="mandi-item-top">
+                            <span class="mandi-commodity-name">Ragi (Finger Millet)</span>
+                            <span class="mandi-market-tag" id="mandiLoc1">Bengaluru APMC</span>
+                        </div>
+                        <div class="mandi-price-val">₹3,450 <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-secondary);">/ Qtl</span></div>
+                        <div style="font-size: 0.72rem; color: #4ade80;"><i class="fas fa-arrow-trend-up"></i> Stable Demand</div>
+                    </div>
+                </div>
+
+                <div class="mandi-preview-item">
+                    <img src="assets/images/commodities/paddy.webp" alt="Paddy" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Paddy')">
+                    <div class="mandi-item-content">
+                        <div class="mandi-item-top">
+                            <span class="mandi-commodity-name">Paddy (Rice)</span>
+                            <span class="mandi-market-tag" id="mandiLoc2">Local Mandi</span>
+                        </div>
+                        <div class="mandi-price-val">₹2,320 <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-secondary);">/ Qtl</span></div>
+                        <div style="font-size: 0.72rem; color: #4ade80;"><i class="fas fa-circle-check"></i> Government MSP Active</div>
+                    </div>
+                </div>
+
+                <div class="mandi-preview-item">
+                    <img src="assets/images/commodities/tomato.webp" alt="Tomato" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Tomato')">
+                    <div class="mandi-item-content">
+                        <div class="mandi-item-top">
+                            <span class="mandi-commodity-name">Tomato (Hybrid)</span>
+                            <span class="mandi-market-tag" id="mandiLoc3">Kolar / APMC</span>
+                        </div>
+                        <div class="mandi-price-val">₹1,850 <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-secondary);">/ Qtl</span></div>
+                        <div style="font-size: 0.72rem; color: #38bdf8;"><i class="fas fa-arrow-right"></i> High Daily Arrivals</div>
+                    </div>
+                </div>
+
+                <div class="mandi-preview-item">
+                    <img src="assets/images/commodities/soybean.webp" alt="Soybean" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Soybean')">
+                    <div class="mandi-item-content">
+                        <div class="mandi-item-top">
+                            <span class="mandi-commodity-name">Soybean</span>
+                            <span class="mandi-market-tag" id="mandiLoc4">Regional Market</span>
+                        </div>
+                        <div class="mandi-price-val">₹4,800 <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-secondary);">/ Qtl</span></div>
+                        <div style="font-size: 0.72rem; color: #4ade80;"><i class="fas fa-arrow-trend-up"></i> Strong Procurement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Latest Agricultural News (Dynamic Publisher Feed) -->
+        <div class="dashboard-preview-card" id="agriNewsSummarySection">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-newspaper" style="color: #60a5fa;"></i>
+                    <span id="newsSummaryTitle">Latest Agricultural News</span>
+                </div>
+                <a href="news.html" class="btn-loc-secondary" id="btnReadAllNews" style="padding: 0.35rem 0.75rem; font-size: 0.78rem; text-decoration: none; border-radius: 6px;">
+                    <span id="txtReadAllNews">Read All News</span> <i class="fas fa-arrow-right" style="font-size: 0.7rem; margin-left: 0.2rem;"></i>
+                </a>
+            </div>
+            <div class="news-preview-grid" id="dashboardNewsGrid">
+                <div style="grid-column: 1 / -1; padding: 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
+                    <i class="fas fa-spinner fa-spin" style="color: #60a5fa; margin-right: 0.4rem;"></i> Loading verified agricultural news...
+                </div>
+            </div>
+        </div>
+<!-- Location Confirmation Modal -->
+    <div class="loc-modal-backdrop" id="locationConfirmModal">
+        <div class="loc-modal-box">
+            <div class="loc-modal-header">
+                <h3><i class="fas fa-location-dot" style="color: #4ade80;"></i> Location Detected</h3>
+            </div>
+            <div class="loc-modal-body">
+                <div class="loc-detail-row">
+                    <div class="place-name" id="modalDetectedPlace">Detecting...</div>
+                    <div class="full-addr" id="modalDetectedAddress">...</div>
+                    <div class="accuracy-note" id="modalDetectedAccuracy">
+                        <i class="fas fa-circle-check" style="color: #4ade80;"></i> Location accuracy: approximately 25 m
+                    </div>
+                </div>
+                <p style="font-size: 0.82rem; color: #94a3b8;">
+                    This location will be used to provide precise OpenWeather telemetry, automated crop alerts, and nearby market intelligence.
+                </p>
+            </div>
+            <div class="loc-modal-footer">
+                <button class="btn-loc-secondary" onclick="detectFarmerGpsLocation(true)">
+                    <i class="fas fa-rotate"></i> Try Again
+                </button>
+                <button class="btn-loc-confirm" id="btnAcceptLocation" onclick="confirmAndSaveDetectedLocation()">
+                    <i class="fas fa-check"></i> Use This Location
+                </button>
+            </div>
+        </div>
     </div>
+
+
 
     <!-- AI Chatbot Bubble -->
     <button class="fab" id="chatFab"><i class="fas fa-comment-dots"></i></button>
@@ -570,167 +1998,451 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         if (!isAuthenticated()) {
             window.location.href = 'login.html';
         }
 
-        const farmer = JSON.parse(localStorage.getItem('farmer'));
-        document.getElementById('greeting').innerText = `Welcome back, ${farmer.name.split(' ')[0]}! 🌱`;
-        document.getElementById('userCity').innerText = farmer.city;
-        document.getElementById('currentDate').innerText = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        let farmer = JSON.parse(localStorage.getItem('farmer') || '{}');
+        const token = localStorage.getItem('token');
+        let currentLang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
 
-        // ========== PROFILE AVATAR ==========
+        function updateDateDisplay(lang) {
+            const activeLang = lang || currentLang || (typeof getAppLanguage === 'function' ? getAppLanguage() : 'en');
+            const localeMap = { en: 'en-IN', kn: 'kn-IN', ta: 'ta-IN', te: 'te-IN', ml: 'ml-IN', hi: 'hi-IN' };
+            const dateEl = document.getElementById('currentDate');
+            if (dateEl) {
+                try {
+                    dateEl.innerText = new Date().toLocaleDateString(localeMap[activeLang] || 'en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                } catch(e) {
+                    dateEl.innerText = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                }
+            }
+        }
+        updateDateDisplay(currentLang);
+
+        // Location State
+        let currentLat = farmer.location?.coordinates?.[1] || 17.3850;
+        let currentLon = farmer.location?.coordinates?.[0] || 78.4867;
+        let currentCity = farmer.city || 'Hyderabad';
+        let currentState = farmer.state || 'Telangana';
+        let currentDistrict = farmer.district || '';
+        let currentAccuracy = farmer.accuracy || 0;
+        let pendingDetectedLoc = null;
+
+        // Display current location
+        updateLocationUI(currentCity, currentState, currentDistrict, currentLat, currentLon, currentAccuracy, farmer.locationSource);
+
+        function updateLocationUI(city, state, district, lat, lon, accuracy, source) {
+            const userCityEl = document.getElementById('userCity');
+            if (userCityEl) userCityEl.innerText = city || district || 'India';
+            
+            let subtitle = [];
+            if (district && district !== city) subtitle.push(district);
+            if (state) subtitle.push(state);
+            const userStateDistEl = document.getElementById('userStateDistrict');
+            if (userStateDistEl) userStateDistEl.innerText = subtitle.length > 0 ? `(${subtitle.join(', ')})` : '';
+
+            const badge = document.getElementById('locationAccuracyBadge');
+            if (badge) {
+                if (source === 'MANUAL') {
+                    badge.innerHTML = '<i class="fas fa-pen-to-square"></i> Manual Location';
+                    badge.style.background = 'rgba(234, 179, 8, 0.15)';
+                    badge.style.color = '#facc15';
+                    badge.style.borderColor = 'rgba(234, 179, 8, 0.3)';
+                } else if (accuracy && accuracy > 0) {
+                    badge.innerHTML = `<i class="fas fa-crosshairs"></i> Accuracy: ~${Math.round(accuracy)}m`;
+                    badge.style.background = 'rgba(34, 197, 94, 0.15)';
+                    badge.style.color = '#4ade80';
+                    badge.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+                } else {
+                    badge.innerHTML = '<i class="fas fa-crosshairs"></i> GPS Verified';
+                    badge.style.background = 'rgba(34, 197, 94, 0.15)';
+                    badge.style.color = '#4ade80';
+                    badge.style.borderColor = 'rgba(34, 197, 94, 0.3)';
+                }
+            }
+
+            const mapBadge = document.getElementById('mapBadgeText');
+            if (mapBadge) {
+                mapBadge.innerText = `${city || 'Farm'} (${lat.toFixed(4)}, ${lon.toFixed(4)})`;
+            }
+        }
+
+        // Profile Avatar Display
         const avatarDisplay = document.getElementById('avatarDisplay');
-
         function showAvatar(imageUrl) {
             if (!imageUrl) {
-                avatarDisplay.innerText = farmer.name.charAt(0).toUpperCase();
+                if (avatarDisplay) avatarDisplay.innerText = getInitials(farmer.name || 'Farmer');
                 return;
             }
-            // Check if input is a filename (old style) or Base64 (new style)
             let src = imageUrl;
-            if (imageUrl && !imageUrl.startsWith('data:')) {
+            if (imageUrl && !imageUrl.startsWith('data:') && !imageUrl.startsWith('http')) {
                 src = `${API_BASE_URL.replace('/api', '')}/uploads/profiles/${imageUrl}`;
             }
-            avatarDisplay.outerHTML = `<img class="profile-avatar" id="avatarDisplay" src="${src}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-initials\\' id=\\'avatarDisplay\\'>${farmer.name.charAt(0).toUpperCase()}</div>'">`;
+            if (avatarDisplay) {
+                avatarDisplay.outerHTML = `<img class="profile-avatar" id="avatarDisplay" src="${src}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-initials\\' id=\\'avatarDisplay\\'>${getInitials(farmer.name || 'Farmer')}</div>'">`;
+            }
         }
 
-        // Load initially from the farmer object (refreshed at login)
         showAvatar(farmer.profileImage);
 
-        // Upload handler
-        document.getElementById('profileUploadInput').addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
+        // Upload Profile Photo
+        const profileInput = document.getElementById('profileUploadInput');
+        if (profileInput) {
+            profileInput.addEventListener('change', async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
 
-            if (file.size > 5 * 1024 * 1024) {
-                alert('Image must be less than 5MB');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('profileImage', file);
-
-            try {
-                const res = await fetch(`${API_BASE_URL}/profile/upload/${farmer.id}`, {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await res.json();
-
-                if (data.success) {
-                    // Update the local farmer object with the new image
-                    farmer.profileImage = data.profileImage;
-                    localStorage.setItem('farmer', JSON.stringify(farmer));
-                    showAvatar(data.profileImage);
-                } else {
-                    alert(data.error || 'Upload failed');
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('Image must be less than 5MB');
+                    return;
                 }
-            } catch (err) {
-                alert('Failed to upload image.');
-            }
-        });
 
-        let lastWeatherData = null;
-        // Default to stored coordinates, will be overridden by geolocation
-        let currentLat = farmer.location.coordinates[1];
-        let currentLon = farmer.location.coordinates[0];
-        let currentLocationName = farmer.city;
-        let currentLang = localStorage.getItem('krishiLang') || 'en';
-        document.getElementById('langSelect').value = currentLang;
+                const formData = new FormData();
+                formData.append('profileImage', file);
 
-        // UI Translations
-        const uiTranslations = {
-            en: { greeting: 'Welcome back', seasonal: 'Seasonal Crops', advisor: 'AI Crop Advisor', advisorDesc: 'Enter any crop name for weather-based advice.', placeholder: 'e.g., Ragi, Tomato, Paddy...' },
-            kn: { greeting: 'ಮರಳಿ ಸ್ವಾಗತ', seasonal: 'ಋತುಮಾನದ ಬೆಳೆಗಳು', advisor: 'AI ಬೆಳೆ ಸಲಹೆಗಾರ', advisorDesc: 'ಹವಾಮಾನ ಆಧಾರಿತ ಸಲಹೆಗಾಗಿ ಬೆಳೆ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.', placeholder: 'ಉದಾ: ರಾಗಿ, ಟೊಮೆಟೊ...' },
-            ta: { greeting: 'மீண்டும் வரவேற்கிறோம்', seasonal: 'பருவகால பயிர்கள்', advisor: 'AI பயிர் ஆலோசகர்', advisorDesc: 'வானிலை அடிப்படையில் ஆலோசனைக்கு பயிர் பெயரை உள்ளிடவும்.', placeholder: 'எ.கா. ராகி, தக்காளி...' },
-            te: { greeting: 'తిరిగి స్వాగతం', seasonal: 'సీజనల్ పంటలు', advisor: 'AI పంట సలహాదారు', advisorDesc: 'వాతావరణ ఆధారిత సలహా కోసం పంట పేరు నమోదు చేయండి.', placeholder: 'ఉదా: రాగి, టమాటా...' },
-            ml: { greeting: 'തിരികെ സ്വാഗതം', seasonal: 'സീസണൽ വിളകൾ', advisor: 'AI വിള ഉപദേഷ്ടാവ്', advisorDesc: 'കാലാവസ്ഥാ അടിസ്ഥാന ഉപദേശത്തിന് വിള പേര് നൽകുക.', placeholder: 'ഉദാ: റാഗി, തക്കാളി...' },
-            hi: { greeting: 'वापसी पर स्वागत', seasonal: 'मौसमी फसलें', advisor: 'AI फसल सलाहकार', advisorDesc: 'मौसम आधारित सलाह के लिए फसल का नाम दर्ज करें.', placeholder: 'जैसे: रागी, टमाटर...' }
-        };
+                try {
+                    const res = await fetch(`${API_BASE_URL}/profile/upload/${farmer.id}`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await res.json();
 
-        function updateUILanguage(lang) {
-            const t = uiTranslations[lang] || uiTranslations['en'];
-            document.getElementById('greeting').innerText = `${t.greeting}, ${farmer.name.split(' ')[0]}! 🌱`;
-            document.getElementById('seasonalTitle').innerText = t.seasonal;
-            document.getElementById('cropAdvisorTitle').innerText = t.advisor;
-            document.getElementById('cropAdvisorDesc').innerText = t.advisorDesc;
-            document.getElementById('cropInput').placeholder = t.placeholder;
+                    if (data.success) {
+                        farmer.profileImage = data.profileImage;
+                        localStorage.setItem('farmer', JSON.stringify(farmer));
+                        showAvatar(data.profileImage);
+                    } else {
+                        alert(data.error || 'Upload failed');
+                    }
+                } catch (err) {
+                    alert('Failed to upload image.');
+                }
+            });
         }
 
-        document.getElementById('langSelect').addEventListener('change', (e) => {
-            currentLang = e.target.value;
-            localStorage.setItem('krishiLang', currentLang);
-            updateUILanguage(currentLang);
-            fetchSeasonalCrops();
-        });
+        let lastWeatherData = null;
+
+        function updateUILanguage(lang) {
+            currentLang = lang || getAppLanguage();
+            
+            // 1. Hero greeting & date
+            const greetingEl = document.getElementById('greeting');
+            if (greetingEl) greetingEl.innerText = `${t('dash_welcome')}, ${(farmer.name || 'Farmer').split(' ')[0]}!`;
+            
+            updateDateDisplay(currentLang);
+
+            // 2. Section Titles & Descriptions
+            const seasonalTitle = document.getElementById('seasonalTitle');
+            if (seasonalTitle) seasonalTitle.innerText = t('dash_seasonal_title');
+            
+            const advisorTitle = document.getElementById('cropAdvisorTitle');
+            if (advisorTitle) advisorTitle.innerText = t('dash_advisor_title');
+            
+            const advisorDesc = document.getElementById('cropAdvisorDesc');
+            if (advisorDesc) advisorDesc.innerText = t('dash_advisor_desc');
+            
+            const cropInput = document.getElementById('cropInput');
+            if (cropInput) cropInput.placeholder = t('dash_crop_placeholder');
+            
+            const getAdviceBtn = document.getElementById('getCropAdviceBtn');
+            if (getAdviceBtn) {
+                const btnSpan = getAdviceBtn.querySelector('span');
+                if (btnSpan) btnSpan.innerText = t('dash_get_advice');
+            }
+
+            const mapSearch = document.getElementById('mapSearch');
+            if (mapSearch) mapSearch.placeholder = t('dash_map_search');
+
+            // 3. Chatbot Initial Message
+            const chatBotFirst = document.querySelector('#chatBody .chat-bubble.bot');
+            if (chatBotFirst && (!chatBotFirst.dataset.userMessaged || chatBotFirst.dataset.userMessaged === 'false')) {
+                chatBotFirst.innerText = t('dash_chat_greeting');
+            }
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) chatInput.placeholder = t('dash_chat_placeholder');
+
+            // 4. Weather stats labels
+            const statLabels = {
+                statHumidity: 'dash_humidity',
+                statWind: 'dash_wind',
+                statPressure: 'dash_pressure',
+                statVisibility: 'dash_visibility',
+                statFeelsLike: 'dash_feels_like'
+            };
+            Object.keys(statLabels).forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.nextElementSibling) el.nextElementSibling.innerText = t(statLabels[id]);
+            });
+
+            // 5. Marketplace & News Section Titles & Action Buttons
+            const mandiTitle = document.getElementById('mandiSummaryTitle');
+            if (mandiTitle) mandiTitle.innerText = t('dash_mandi_title');
+
+            const txtViewMkt = document.getElementById('txtViewMarketplace');
+            if (txtViewMkt) txtViewMkt.innerText = t('dash_view_marketplace');
+
+            const newsTitle = document.getElementById('newsSummaryTitle');
+            if (newsTitle) newsTitle.innerText = t('dash_news_title');
+
+            const txtReadNews = document.getElementById('txtReadAllNews');
+            if (txtReadNews) txtReadNews.innerText = t('dash_read_all_news');
+        }
 
         updateUILanguage(currentLang);
 
+        // Global language change listener
+        window.addEventListener('krishi:languageChanged', (e) => {
+            currentLang = e.detail.language || getAppLanguage();
+            updateUILanguage(currentLang);
+            fetchSeasonalCrops();
+            // Refresh Today's Agricultural Status with new language
+            refreshAgriculturalTelemetry(true);
+            // Refresh Marketplace preview immediately in new language
+            if (typeof fetchDashboardMarketPrices === 'function') fetchDashboardMarketPrices();
+            // Refresh News preview in new language
+            if (typeof fetchDashboardNews === 'function') fetchDashboardNews();
+            // Auto-regenerate AI Crop Advisor if an advisory was already generated
+            const cropInput = document.getElementById('cropInput');
+            const adviceBox = document.getElementById('cropAdviceBox');
+            if (cropInput && cropInput.value.trim() && adviceBox && adviceBox.querySelector('.advisor-result-card')) {
+                fetchCropAdvice(cropInput.value.trim());
+            }
+        });
+
         // ========== INTERACTIVE MAP ==========
-        const map = L.map('map').setView([currentLat, currentLon], 10);
+        const map = L.map('map').setView([currentLat, currentLon], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
+            attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
         let currentMarker = L.marker([currentLat, currentLon]).addTo(map)
-            .bindPopup(`<b>${farmer.name}'s Farm</b><br>${farmer.city}`).openPopup();
+            .bindPopup(`<b>${farmer.name || 'Farmer'}'s Farm</b><br>${currentCity}`).openPopup();
 
-        document.getElementById('mapBadgeText').innerText = `${currentLocationName} (${currentLat.toFixed(4)}, ${currentLon.toFixed(4)})`;
+        setTimeout(() => map.invalidateSize(), 400);
+        window.addEventListener('resize', () => map.invalidateSize());
 
-        // ========== AUTO-DETECT REAL LOCATION ==========
-        if (navigator.geolocation) {
+        map.on('click', async (e) => {
+            const { lat, lng } = e.latlng;
+            await syncLocationToDatabase(lat, lng, { source: 'MANUAL' });
+        });
+
+        async function detectFarmerGpsLocation(promptUser = false) {
+            const refreshBtn = document.getElementById('btnRefreshGpsLocation');
+            if (refreshBtn) {
+                refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Detecting...';
+                refreshBtn.disabled = true;
+            }
+
+            if (!navigator.geolocation) {
+                if (promptUser) {
+                    alert('Geolocation is not supported by your browser. Please select your location manually.');
+                } else {
+                    console.info('Geolocation not supported, using fallback location.');
+                }
+                if (refreshBtn) { refreshBtn.innerHTML = '<i class="fas fa-arrows-rotate"></i> Refresh Location'; refreshBtn.disabled = false; }
+                return;
+            }
+
             navigator.geolocation.getCurrentPosition(
                 async (pos) => {
-                    const realLat = pos.coords.latitude;
-                    const realLon = pos.coords.longitude;
-                    console.log(`📍 Geolocation detected: ${realLat}, ${realLon}`);
-                    await updateLocation(realLat, realLon);
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    const accuracy = pos.coords.accuracy || 0;
+
+                    let geoData = {};
+                    try {
+                        const geoRes = await fetch(`${API_BASE_URL}/farmer/location/reverse-geocode?lat=${lat}&lon=${lng}`);
+                        const geoJson = await geoRes.json();
+                        if (geoJson.success && geoJson.location) {
+                            geoData = geoJson.location;
+                        }
+                    } catch (e) {
+                        console.warn('Geocode proxy note:', e);
+                    }
+
+                    pendingDetectedLoc = {
+                        lat,
+                        lng,
+                        accuracy,
+                        state: geoData.state || '',
+                        district: geoData.district || '',
+                        city: geoData.city || 'My Farm',
+                        village: geoData.village || '',
+                        postalCode: geoData.postalCode || '',
+                        formattedAddress: geoData.formattedAddress || `${lat.toFixed(4)}, ${lng.toFixed(4)}`,
+                        source: 'GPS'
+                    };
+
+                    if (promptUser) {
+                        showLocationConfirmModal(pendingDetectedLoc);
+                    } else {
+                        await syncLocationToDatabase(lat, lng, pendingDetectedLoc);
+                    }
+
+                    if (refreshBtn) {
+                        refreshBtn.innerHTML = '<i class="fas fa-arrows-rotate"></i> Refresh Location';
+                        refreshBtn.disabled = false;
+                    }
                 },
                 (err) => {
-                    console.log('⚠️ Geolocation denied, using stored coordinates.');
-                    // Use stored coordinates - already set above
+                    if (refreshBtn) {
+                        refreshBtn.innerHTML = '<i class="fas fa-arrows-rotate"></i> Refresh Location';
+                        refreshBtn.disabled = false;
+                    }
+
+                    console.info('Geolocation note (using fallback):', err.message);
+                    if (promptUser) {
+                        let errorMsg = 'Could not access GPS location. Please try again.';
+                        if (err.code === err.PERMISSION_DENIED) {
+                            errorMsg = 'Location permission is disabled in your browser settings. Please enable it and try again.';
+                        }
+                        alert(errorMsg);
+                    }
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0 // Always request fresh physical coordinates
                 }
             );
         }
 
-        // Click on map to change location & update weather
-        map.on('click', async (e) => {
-            const { lat, lng } = e.latlng;
-            await updateLocation(lat, lng);
-        });
+        function showLocationConfirmModal(loc) {
+            document.getElementById('modalDetectedPlace').innerText = `${loc.city || loc.district || 'Detected Place'}${loc.state ? ', ' + loc.state : ''}`;
+            document.getElementById('modalDetectedAddress').innerText = `${loc.formattedAddress || 'Coordinates verified'} (${loc.lat.toFixed(4)}°N, ${loc.lng.toFixed(4)}°E)`;
+            document.getElementById('modalDetectedAccuracy').innerHTML = `<i class="fas fa-circle-check" style="color: #4ade80;"></i> Location accuracy: ~${Math.round(loc.accuracy || 25)} meters`;
+            document.getElementById('locationConfirmModal').classList.add('active');
+        }
 
-        async function updateLocation(lat, lng, name) {
+        function closeLocationConfirmModal() {
+            document.getElementById('locationConfirmModal').classList.remove('active');
+        }
+
+        async function confirmAndSaveDetectedLocation() {
+            closeLocationConfirmModal();
+            if (pendingDetectedLoc) {
+                await syncLocationToDatabase(pendingDetectedLoc.lat, pendingDetectedLoc.lng, pendingDetectedLoc);
+            }
+        }
+
+        async function syncLocationToDatabase(lat, lng, locMeta = {}) {
             currentLat = lat;
             currentLon = lng;
+            currentCity = locMeta.city || currentCity;
+            currentState = locMeta.state || currentState;
+            currentDistrict = locMeta.district || currentDistrict;
+            currentAccuracy = locMeta.accuracy || 0;
 
-            // Move marker
             if (currentMarker) map.removeLayer(currentMarker);
             currentMarker = L.marker([lat, lng]).addTo(map);
             map.setView([lat, lng], 12);
+            currentMarker.bindPopup(`<b>${farmer.name || 'Farmer'}'s Farm</b><br>${currentCity}, ${currentState}`).openPopup();
 
-            // Reverse geocode to get place name
-            if (!name) {
-                try {
-                    const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=en`);
-                    const geoData = await geoRes.json();
-                    name = geoData.address?.village || geoData.address?.town || geoData.address?.city || geoData.address?.county || 'Selected Location';
-                } catch (e) {
-                    name = 'Selected Location';
+            updateLocationUI(currentCity, currentState, currentDistrict, lat, lng, currentAccuracy, locMeta.source || 'GPS');
+
+            try {
+                if (token) {
+                    const res = await fetch(`${API_BASE_URL}/farmer/location`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            lat,
+                            lng,
+                            accuracy: locMeta.accuracy || 0,
+                            state: locMeta.state || '',
+                            district: locMeta.district || '',
+                            city: locMeta.city || '',
+                            village: locMeta.village || '',
+                            postalCode: locMeta.postalCode || '',
+                            formattedAddress: locMeta.formattedAddress || '',
+                            source: locMeta.source || 'GPS'
+                        })
+                    });
+
+                    const data = await res.json();
+                    if (data.success && data.farmer) {
+                        farmer = { ...farmer, ...data.farmer };
+                        localStorage.setItem('farmer', JSON.stringify(farmer));
+                        
+                        currentCity = data.farmer.city || currentCity;
+                        currentState = data.farmer.state || currentState;
+                        currentDistrict = data.farmer.district || currentDistrict;
+                        currentAccuracy = data.farmer.accuracy || currentAccuracy;
+
+                        updateLocationUI(currentCity, currentState, currentDistrict, lat, lng, currentAccuracy, data.farmer.locationSource);
+                    }
                 }
+            } catch (err) {
+                console.warn('Sync location API note:', err);
             }
-            currentLocationName = name;
-            document.getElementById('userCity').innerText = name;
-            document.getElementById('mapBadgeText').innerText = `${name} (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
-            currentMarker.bindPopup(`<b>${name}</b><br>Lat: ${lat.toFixed(4)}, Lon: ${lng.toFixed(4)}`).openPopup();
 
-            // Re-fetch ALL weather data for the new location
-            await fetchWeather(lat, lng);
-            await fetchForecast(lat, lng);
+            // Always update localStorage caches with fresh verified coordinates
+            farmer = {
+                ...farmer,
+                city: currentCity,
+                state: currentState,
+                district: currentDistrict,
+                accuracy: currentAccuracy,
+                locationSource: locMeta.source || 'GPS',
+                location: { type: 'Point', coordinates: [lng, lat] }
+            };
+            localStorage.setItem('farmer', JSON.stringify(farmer));
+            localStorage.setItem('farmer_gps_location', JSON.stringify({
+                lat,
+                lon: lng,
+                city: currentCity,
+                state: currentState,
+                district: currentDistrict,
+                accuracy: currentAccuracy,
+                source: locMeta.source || 'GPS',
+                timestamp: Date.now()
+            }));
+
+            // Refresh all location-dependent telemetry and views
+            await refreshAgriculturalTelemetry(true);
             fetchSeasonalCrops();
+            if (typeof fetchDashboardMarketPrices === 'function') {
+                fetchDashboardMarketPrices();
+            }
+
+            // Auto-refresh AI crop advisor if active
+            const cropInput = document.getElementById('cropInput');
+            if (cropInput && cropInput.value.trim() && lastAdvisedCrop) {
+                fetchCropAdvice(lastAdvisedCrop);
+            }
+
+            window.dispatchEvent(new CustomEvent('krishi:locationUpdated', {
+                detail: { lat, lon: lng, city: currentCity, state: currentState, district: currentDistrict, accuracy: currentAccuracy, source: locMeta.source || 'GPS' }
+            }));
         }
 
-        // Map Search Functionality (Nominatim Geocoding)
+
+
+        // Programmatic Event Bindings for Location UI
+        const btnRefGps = document.getElementById('btnRefreshGpsLocation');
+        if (btnRefGps) {
+            btnRefGps.addEventListener('click', () => detectFarmerGpsLocation(true));
+        }
+        const btnAccLoc = document.getElementById('btnAcceptLocation');
+        if (btnAccLoc) {
+            btnAccLoc.addEventListener('click', confirmAndSaveDetectedLocation);
+        }
+
+        // Map Search
         const searchInput = document.getElementById('mapSearch');
         const searchResults = document.getElementById('mapSearchResults');
 
@@ -739,7 +2451,6 @@
             if (e.key === 'Enter') performSearch();
         });
 
-        // Live search as user types (debounced)
         let searchTimeout;
         searchInput.addEventListener('input', () => {
             clearTimeout(searchTimeout);
@@ -760,27 +2471,33 @@
                 const results = await res.json();
 
                 if (results.length === 0) {
-                    searchResults.innerHTML = '<div class="result-item"><i class="fas fa-exclamation-circle"></i> No results found</div>';
+                    searchResults.innerHTML = '<div class="result-item"><i class="fas fa-exclamation-circle"></i> No results found in India</div>';
                     searchResults.style.display = 'block';
                     return;
                 }
 
                 searchResults.innerHTML = results.map(r => `
-                    <div class="result-item" data-lat="${r.lat}" data-lon="${r.lon}" data-name="${r.display_name.split(',')[0]}">
+                    <div class="result-item" data-lat="${r.lat}" data-lon="${r.lon}" data-name="${r.display_name.split(',')[0]}" data-full="${r.display_name}">
                         <i class="fas fa-map-marker-alt"></i> ${r.display_name}
                     </div>
                 `).join('');
                 searchResults.style.display = 'block';
 
-                // Click on result
                 searchResults.querySelectorAll('.result-item').forEach(item => {
-                    item.addEventListener('click', () => {
+                    item.addEventListener('click', async () => {
                         const lat = parseFloat(item.dataset.lat);
                         const lon = parseFloat(item.dataset.lon);
                         const name = item.dataset.name;
+                        const full = item.dataset.full;
                         searchResults.style.display = 'none';
                         searchInput.value = name;
-                        updateLocation(lat, lon, name);
+                        
+                        await syncLocationToDatabase(lat, lon, {
+                            city: name,
+                            formattedAddress: full,
+                            source: 'MANUAL',
+                            accuracy: 100
+                        });
                     });
                 });
             } catch (e) {
@@ -789,146 +2506,902 @@
             }
         }
 
-        // Close search results on outside click
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.map-search-bar') && !e.target.closest('.map-search-results')) {
-                searchResults.style.display = 'none';
+                const searchResults = document.getElementById('mapSearchResults');
+                if (searchResults) searchResults.style.display = 'none';
             }
         });
 
-        // ========== WEATHER ==========
-        async function fetchWeather(lat, lon) {
-            lat = lat || currentLat;
-            lon = lon || currentLon;
+        // ================= TODAY'S AGRICULTURAL STATUS ENGINE & MANAGER =================
+        // Data Identity: Date (YYYY-MM-DD) + Coordinates (Lat, Lon) + Weather Freshness + Language
+
+        function getTodayDateString() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function getCoordsDistanceKm(lat1, lon1, lat2, lon2) {
+            if (lat1 === undefined || lon1 === undefined || lat2 === undefined || lon2 === undefined) return 999;
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = 
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        function getAgriStatusStorageKey(lat, lon, dateStr, lang) {
+            const rLat = parseFloat(lat || currentLat || 0).toFixed(2);
+            const rLon = parseFloat(lon || currentLon || 0).toFixed(2);
+            const d = dateStr || getTodayDateString();
+            const l = lang || (typeof getAppLanguage === 'function' ? getAppLanguage() : 'en');
+            return `krishi_agri_status_${d}_${rLat}_${rLon}_${l}`;
+        }
+
+        function purgeStaleAgriStatusCaches() {
+            const todayStr = getTodayDateString();
+            const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('krishi_agri_status_')) {
+                    // Invalidate any cache whose key does not contain today's date
+                    if (!key.includes(`_${todayStr}_`)) {
+                        keysToRemove.push(key);
+                    }
+                }
+            }
+            keysToRemove.forEach(k => localStorage.removeItem(k));
+
             try {
-                const res = await fetch(`${API_BASE_URL}/weather/current?lat=${lat}&lon=${lon}`);
-                const data = await res.json();
-                lastWeatherData = data;
+                const cur = JSON.parse(localStorage.getItem('krishi_current_agri_status') || 'null');
+                if (cur && cur.dateStr && cur.dateStr !== todayStr) {
+                    localStorage.removeItem('krishi_current_agri_status');
+                }
+            } catch(e) {}
+        }
 
-                const temp = Math.round(data.main.temp);
-                const desc = data.weather[0].description;
-                const iconCode = data.weather[0].icon;
-                const feelsLike = Math.round(data.main.feels_like);
-                const visibility = data.visibility ? (data.visibility / 1000).toFixed(1) : '--';
+        let activeCalendarDate = getTodayDateString();
+        let lastWeatherFetchTime = 0;
+        const WEATHER_FRESHNESS_TTL = 30 * 60 * 1000; // 30 minutes
 
-                document.getElementById('currentWeatherBox').innerHTML = `
-                    <img src="https://openweathermap.org/img/wn/${iconCode}@4x.png" alt="weather" width="100" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+        function isWeatherStale() {
+            if (!lastWeatherData || !lastWeatherFetchTime) return true;
+            return (Date.now() - lastWeatherFetchTime) > WEATHER_FRESHNESS_TTL;
+        }
+
+        function checkCalendarDateRollover() {
+            const todayStr = getTodayDateString();
+            if (todayStr !== activeCalendarDate) {
+                console.info('🌅 Calendar date rolled over:', activeCalendarDate, '->', todayStr);
+                activeCalendarDate = todayStr;
+                purgeStaleAgriStatusCaches();
+                updateDateDisplay();
+                refreshAgriculturalTelemetry(true);
+                return true;
+            }
+            return false;
+        }
+
+        // Render Current Weather in Hero Card
+        function renderCurrentWeatherBox(data) {
+            if (!data || !data.main) return;
+            const temp = Math.round(data.main.temp);
+            const desc = data.weather?.[0]?.description || 'Clear';
+            const iconCode = data.weather?.[0]?.icon || '01d';
+            const feelsLike = Math.round(data.main.feels_like);
+            const visibility = data.visibility ? (data.visibility / 1000).toFixed(1) : '--';
+
+            const box = document.getElementById('currentWeatherBox');
+            if (box) {
+                box.innerHTML = `
+                    <img src="https://openweathermap.org/img/wn/${iconCode}@4x.png" alt="weather" width="90" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
                     <div>
-                        <h2 style="font-size: 4.5rem; font-weight: 200; line-height: 1;">${temp}°</h2>
-                        <p style="font-size: 1.1rem; font-weight: 600; text-transform: capitalize;">${desc}</p>
+                        <h2 style="font-size: 4.2rem; font-weight: 200; line-height: 1;">${temp}°</h2>
+                        <p style="font-size: 1.05rem; font-weight: 600; text-transform: capitalize;">${desc}</p>
                     </div>
                 `;
-                document.getElementById('statHumidity').innerText = `${data.main.humidity}%`;
-                document.getElementById('statWind').innerText = `${data.wind?.speed || 0} m/s`;
-                document.getElementById('statPressure').innerText = `${data.main.pressure} hPa`;
-                document.getElementById('statVisibility').innerText = `${visibility} km`;
-                document.getElementById('statFeelsLike').innerText = `${feelsLike}°`;
-            } catch (e) {
-                document.getElementById('currentWeatherBox').innerHTML = `<p>Error loading weather.</p>`;
+            }
+
+            const elHum = document.getElementById('statHumidity');
+            if (elHum) elHum.innerText = `${data.main.humidity}%`;
+            const elWind = document.getElementById('statWind');
+            if (elWind) elWind.innerText = `${data.wind?.speed || 0} m/s`;
+            const elPress = document.getElementById('statPressure');
+            if (elPress) elPress.innerText = `${data.main.pressure} hPa`;
+            const elVis = document.getElementById('statVisibility');
+            if (elVis) elVis.innerText = `${visibility} km`;
+            const elFeels = document.getElementById('statFeelsLike');
+            if (elFeels) elFeels.innerText = `${feelsLike}°`;
+        }
+
+        // Render 24h Forecast
+        function renderForecastBox(forecastData) {
+            if (!forecastData || !Array.isArray(forecastData.list)) return;
+            let html = '';
+            forecastData.list.slice(0, 8).forEach(item => {
+                const time = new Date(item.dt_txt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const temp = Math.round(item.main.temp);
+                const iconCode = item.weather?.[0]?.icon || '01d';
+                html += `
+                    <div class="forecast-item">
+                        <div style="font-size: 0.8em; color: var(--text-secondary);">${time}</div>
+                        <img src="https://openweathermap.org/img/wn/${iconCode}.png" alt="icon" width="40">
+                        <div style="font-weight: 700; font-size: 1.1rem;">${temp}°</div>
+                    </div>
+                `;
+            });
+            const fb = document.getElementById('forecastBox');
+            if (fb) fb.innerHTML = html;
+        }
+
+        // Apply evaluated Agricultural Status to DOM
+        function applyAgriStatusToUI(status) {
+            if (!status) return;
+
+            const titleEl = document.getElementById('agriStatusTitle');
+            if (titleEl && typeof t === 'function') {
+                titleEl.innerHTML = `<i class="fas fa-satellite-dish" style="color: #22c55e;"></i> ${t('dash_agri_status_title') || "Today's Agricultural Status"}`;
+            }
+            const lblCropEl = document.getElementById('lblCropAlerts');
+            if (lblCropEl && typeof t === 'function') {
+                lblCropEl.innerHTML = `<i class="fas fa-shield-virus" style="color: #ea580c;"></i> ${t('dash_crop_alerts') || "Crop & Disease Risk"}`;
+            }
+            const lblWeatherEl = document.getElementById('lblWeatherRisk');
+            if (lblWeatherEl && typeof t === 'function') {
+                lblWeatherEl.innerHTML = `<i class="fas fa-cloud-sun-rain" style="color: #3b82f6;"></i> ${t('dash_weather_risk') || "Weather / Rain Risk"}`;
+            }
+            const lblRecEl = document.getElementById('lblRecAction');
+            if (lblRecEl && typeof t === 'function') {
+                lblRecEl.innerHTML = `<i class="fas fa-list-check" style="color: #10b981;"></i> ${t('dash_rec_action') || "Recommended Action"}`;
+            }
+
+            const placeEl = document.getElementById('agriStatusPlaceName');
+            if (placeEl) {
+                placeEl.innerText = status.locationName || [currentCity, currentDistrict, currentState].filter(Boolean).join(', ') || 'Local Farm';
+            }
+
+            const telemTemp = document.getElementById('intelTelemTemp');
+            const telemHum = document.getElementById('intelTelemHum');
+            if (telemTemp && status.temp !== undefined) telemTemp.innerText = `${status.temp}°C`;
+            if (telemHum && status.humidity !== undefined) telemHum.innerText = `${status.humidity}% Humidity`;
+
+            // 1. Crop Alerts
+            const badgeCropAlerts = document.getElementById('badgeCropAlerts');
+            const subCropAlerts = document.getElementById('subCropAlerts');
+            const descCropAlerts = document.getElementById('descCropAlerts');
+            if (badgeCropAlerts && status.cropRisk) {
+                badgeCropAlerts.className = `agri-intel-status-pill ${status.cropRisk.badgeClass}`;
+                badgeCropAlerts.innerText = status.cropRisk.badge;
+            }
+            if (subCropAlerts && status.cropRisk) subCropAlerts.innerText = status.cropRisk.sub;
+            if (descCropAlerts && status.cropRisk) descCropAlerts.innerText = status.cropRisk.desc;
+
+            // 2. Weather Risk
+            const badgeWeatherRisk = document.getElementById('badgeWeatherRisk');
+            const subWeatherRisk = document.getElementById('subWeatherRisk');
+            const descWeatherRisk = document.getElementById('descWeatherRisk');
+            if (badgeWeatherRisk && status.weatherRisk) {
+                badgeWeatherRisk.className = `agri-intel-status-pill ${status.weatherRisk.badgeClass}`;
+                badgeWeatherRisk.innerText = status.weatherRisk.badge;
+            }
+            if (subWeatherRisk && status.weatherRisk) subWeatherRisk.innerText = status.weatherRisk.sub;
+            if (descWeatherRisk && status.weatherRisk) descWeatherRisk.innerText = status.weatherRisk.desc;
+
+            // 3. Recommended Action
+            const badgeRecAction = document.getElementById('badgeRecAction');
+            const subRecAction = document.getElementById('subRecAction');
+            const descRecAction = document.getElementById('descRecAction');
+            if (badgeRecAction && status.recAction) {
+                badgeRecAction.className = `agri-intel-status-pill ${status.recAction.badgeClass}`;
+                badgeRecAction.innerText = status.recAction.badge;
+            }
+            if (subRecAction && status.recAction) subRecAction.innerText = status.recAction.sub;
+            if (descRecAction && status.recAction && Array.isArray(status.recAction.actions)) {
+                descRecAction.innerHTML = status.recAction.actions.map((act, idx) => `
+                    <div class="agri-intel-action-item">
+                        <span class="agri-intel-action-num">${idx + 1}</span>
+                        <span>${escapeHtml(act)}</span>
+                    </div>
+                `).join('');
             }
         }
 
-        async function fetchForecast(lat, lon) {
-            lat = lat || currentLat;
-            lon = lon || currentLon;
-            try {
-                const res = await fetch(`${API_BASE_URL}/weather/forecast?lat=${lat}&lon=${lon}`);
-                const data = await res.json();
+        // Evaluate Rules and Save Today's Agricultural Status
+        function evaluateAndSaveTodayAgriStatus(weatherData, forecastData, lat, lon, dateStr, lang) {
+            if (!weatherData || !weatherData.main) return;
 
+            const temp = Math.round(weatherData.main.temp);
+            const humidity = weatherData.main.humidity || 0;
+            const wind = weatherData.wind?.speed || 0;
+            const weatherMain = (weatherData.weather?.[0]?.main || '').toLowerCase();
+
+            // 1. Crop Risk Evaluation
+            let cropBadgeText = '';
+            let cropBadgeClass = '';
+            let cropSubText = '';
+            let cropDescText = '';
+
+            if (humidity >= 80) {
+                cropBadgeText = lang === 'kn' ? 'ಹೆಚ್ಚು' : lang === 'te' ? 'అధికం' : lang === 'ta' ? 'அதிகம்' : lang === 'ml' ? 'ഉയർന്നത്' : lang === 'hi' ? 'उच्च' : 'High';
+                cropBadgeClass = 'status-pill-high';
+                cropSubText = lang === 'kn' ? 'ಶಿಲೀಂಧ್ರ ರೋಗದ ಅಪಾಯ' : lang === 'te' ? 'శిలీంధ్ర వ్యాధి ముప్పు' : lang === 'ta' ? 'பூஞ்சை நோய் ஆபத்து' : lang === 'ml' ? 'കുമിൾ രോഗ സാധ്യത' : lang === 'hi' ? 'फफूंद रोग जोखिम' : 'High Fungal Spore Risk';
+                cropDescText = lang === 'kn' ? `ಹೆಚ್ಚಿನ ತೇವಾಂಶ (${humidity}%) ನಿಂದ ಎಲೆ ಚುಕ್ಕೆ ಮತ್ತು ಬೂದಿ ರೋಗ ಹರಡುವ ಸಾಧ್ಯತೆ ಹೆಚ್ಚು. ಎಲೆಗಳ ಕೆಳಭಾಗವನ್ನು ಪರೀಕ್ಷಿಸಿ.` :
+                               lang === 'te' ? `అధిక తేమ (${humidity}%) కారణంగా ఆకుమచ్చ మరియు బూడిద తెగులు వ్యాపించే అవకాశం ఉంది. ఆకుల అడుగు భాగాన్ని గమనించండి.` :
+                               lang === 'ta' ? `அதிக ஈரப்பதம் (${humidity}%) காரணமாக இலைப்புள்ளி மற்றும் பூஞ்சை நோய் பரவ வாய்ப்புள்ளது. இலைகளின் அடிப்பகுதியை கண்காணிக்கவும்.` :
+                               lang === 'ml' ? `കൂടിയ ഈർപ്പം (${humidity}%) കാരണം ഇലപ്പുള്ളി, കുമിൾ രോഗങ്ങൾ പടരാൻ സാധ്യത. ഇലകളുടെ അടിഭാഗം പരിശോധിക്കുക.` :
+                               lang === 'hi' ? `अत्यधिक नमी (${humidity}%) के कारण पत्तियों पर धब्बा व फफूंद जनित रोगों का जोखिम अधिक है। निचली पत्तियों का निरीक्षण करें।` :
+                               `Elevated humidity (${humidity}%) creates prime conditions for foliar fungal pathogens and leaf spots. Inspect lower canopy.`;
+            } else if (humidity >= 65 || temp >= 34) {
+                cropBadgeText = lang === 'kn' ? 'ಮಧ್ಯಮ' : lang === 'te' ? 'మధ్యస్థం' : lang === 'ta' ? 'மிதமான' : lang === 'ml' ? 'മിതമായത്' : lang === 'hi' ? 'मध्यम' : 'Moderate';
+                cropBadgeClass = 'status-pill-moderate';
+                cropSubText = lang === 'kn' ? 'ತೇವಾಂಶ ಮತ್ತು ಕೀಟ ನಿಗಾ' : lang === 'te' ? 'తేమ మరియు కీటక నిఘా' : lang === 'ta' ? 'ஈரப்பதம் மற்றும் பூச்சி கண்காணிப்பு' : lang === 'ml' ? 'കീട നിരീക്ഷണം' : lang === 'hi' ? 'कीट व नमी निगरानी' : 'Pest & Moisture Risk';
+                cropDescText = lang === 'kn' ? `ಪ್ರಸ್ತುತ ${temp}°C ತಾಪಮಾನ ಮತ್ತು ${humidity}% ತೇವಾಂಶವಿದ್ದು ಕೀಟಗಳ ಬಾಧೆ ಸಾಧಾರಣವಾಗಿದೆ. ಬೆಳೆಗೆ ನಿಯಮಿತ ನೀರೊದಗಿಸಿ.` :
+                               lang === 'te' ? `ప్రస్తుత ${temp}°C ఉష్ణోగ్రత మరియు ${humidity}% తేమతో రసం పీల్చే పురుగుల ప్రభావం మోస్తరుగా ఉంది. పంటను నిరంతరం గమనించండి.` :
+                               lang === 'ta' ? `தற்போதைய ${temp}°C வெப்பநிலை மற்றும் ${humidity}% ஈரப்பதத்தில் பூச்சி தாக்குதல் மிதமாக இருக்கும். பயிரை தொடர்ந்து கண்காணிக்கவும்.` :
+                               lang === 'ml' ? `നിലവിലെ ${temp}°C താപനിലയിലും ${humidity}% ഈർപ്പത്തിലും കീടബാധ മിതമായ തോതിൽ ഉണ്ടാകാം. നിരീക്ഷണം തുടരുക.` :
+                               lang === 'hi' ? `वर्तमान ${temp}°C तापमान और ${humidity}% नमी में कीट प्रकोप मध्यम स्तर पर है। नियमित खेत निरीक्षण बनाए रखें।` :
+                               `Current conditions (${temp}°C, ${humidity}% humidity) show moderate pest activity. Monitor field boundaries regularly.`;
+            } else {
+                cropBadgeText = lang === 'kn' ? 'ಕಡಿಮೆ' : lang === 'te' ? 'తక్కువ' : lang === 'ta' ? 'குறைவு' : lang === 'ml' ? 'കുറഞ്ഞത്' : lang === 'hi' ? 'निम्न' : 'Low';
+                cropBadgeClass = 'status-pill-low';
+                cropSubText = lang === 'kn' ? 'ಸಾಮಾನ್ಯ ಬೆಳೆ ಆರೋಗ್ಯ' : lang === 'te' ? 'సాధారణ పంట ఆరోగ్యం' : lang === 'ta' ? 'சாதாரண பயிர் நிலை' : lang === 'ml' ? 'സാധാരണ വിള ആരോഗ്യം' : lang === 'hi' ? 'सामान्य फसल स्वास्थ्य' : 'Normal Crop Health';
+                cropDescText = lang === 'kn' ? `ತಾಪಮಾನ (${temp}°C) ಮತ್ತು ತೇವಾಂಶ (${humidity}%) ಹತೋಟಿಯಲ್ಲಿದ್ದು ಬೆಳೆಗಳ ಬೆಳವಣಿಗೆಗೆ ಅನುಕೂಲಕರ ವಾತಾವರಣವಿದೆ.` :
+                               lang === 'te' ? `ఉష్ణోగ్రత (${temp}°C) మరియు తేమ (${humidity}%) సాధారణంగా ఉండి పంట ఆరోగ్యకరమైన ఎదుగుదలకు అనుకూలంగా ఉంది.` :
+                               lang === 'ta' ? `வெப்பநிலை (${temp}°C) மற்றும் ஈரப்பதம் (${humidity}%) கட்டுக்குள் உள்ளதால் பயிர்கள் ஆரோக்கியமாக வளர உகந்தது.` :
+                               lang === 'ml' ? `താപനിലയും (${temp}°C) ഈർപ്പവും (${humidity}%) അനുകൂലമായതിനാൽ വിളകൾക്ക് കാര്യമായ രോഗസാധ്യതയില്ല.` :
+                               lang === 'hi' ? `तापमान (${temp}°C) और नमी (${humidity}%) अनुकूल स्तर पर हैं। फसलों में किसी गंभीर रोग का खतरा नहीं है।` :
+                               `Balanced weather conditions (${temp}°C, ${humidity}% RH) support healthy vegetative development without immediate threat.`;
+            }
+
+            // 2. Weather Risk Evaluation
+            let weatherBadgeText = '';
+            let weatherBadgeClass = '';
+            let weatherSubText = '';
+            let weatherDescText = '';
+
+            let forecastRainCount = 0;
+            let forecastRainVol = 0;
+            if (forecastData && Array.isArray(forecastData.list)) {
+                forecastData.list.slice(0, 8).forEach(item => {
+                    const r = item.rain?.['3h'] || 0;
+                    forecastRainVol += r;
+                    if (r > 0 || (item.weather?.[0]?.main || '').toLowerCase().includes('rain')) {
+                        forecastRainCount++;
+                    }
+                });
+            }
+
+            const isCurrentlyRaining = weatherMain.includes('rain') || weatherMain.includes('drizzle') || weatherMain.includes('thunderstorm');
+
+            if (isCurrentlyRaining || forecastRainCount >= 4 || forecastRainVol >= 15) {
+                weatherBadgeText = lang === 'kn' ? 'ಹೆಚ್ಚು' : lang === 'te' ? 'అధికం' : lang === 'ta' ? 'அதிகம்' : lang === 'ml' ? 'ഉയർന്നത്' : lang === 'hi' ? 'उच्च' : 'High';
+                weatherBadgeClass = 'status-pill-high';
+                weatherSubText = lang === 'kn' ? 'ಭಾರೀ ಮಳೆಯ ಎಚ್ಚರಿಕೆ' : lang === 'te' ? 'భారీ వర్ష సూచన' : lang === 'ta' ? 'கனமழை எச்சரிக்கை' : lang === 'ml' ? 'ശക്തമായ മഴ മുന്നറിയിപ്പ്' : lang === 'hi' ? 'भारी वर्षा चेतावनी' : 'Heavy Rainfall Alert';
+                weatherDescText = lang === 'kn' ? `ಮುಂದಿನ 24 ಗಂಟೆಗಳಲ್ಲಿ ಗಮನಾರ್ಹ ಮಳೆಯಾಗುವ ಸಾಧ್ಯತೆ ಇದೆ. ಜಮೀನಿನಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ಕಾಲುವೆಗಳನ್ನು ತೆರೆಯಿರಿ.` :
+                                  lang === 'te' ? `రాబోయే 24 గంటల్లో భారీ వర్ష సూచన ఉంది. పొలంలో మురుగునీరు నిల్వ ఉండకుండా తక్షణ చర్యలు తీసుకోండి.` :
+                                  lang === 'ta' ? `அடுத்த 24 மணி நேரத்தில் கனமழை பெய்ய வாய்ப்புள்ளது. வயலில் நீர் தேங்குவதை தவிர்க்க வடிகால்களை சரிசெய்யவும்.` :
+                                  lang === 'ml' ? `അടുത്ത 24 മണിക്കൂറിൽ കനത്ത മഴയ്ക്ക് സാധ്യത. പാടങ്ങളിൽ വെള്ളം കയറാതെ ഡ്രെയിനേജ് സുഗമമാക്കുക.` :
+                                  lang === 'hi' ? `अगले 24 घंटों में भारी बारिश की संभावना है। खेतों से पानी निकासी के लिए तुरंत नालियां साफ रखें।` :
+                                  `Significant rainfall projected in the next 24-48 hours. Ensure field drainage channels are clear of debris.`;
+            } else if (forecastRainCount > 0 || forecastRainVol > 0 || weatherMain.includes('cloud')) {
+                weatherBadgeText = lang === 'kn' ? 'ಮಧ್ಯಮ' : lang === 'te' ? 'ಮಧ್ಯಸ್ಥಂ' : lang === 'ta' ? 'மிதமான' : lang === 'ml' ? 'மிതമായത്' : lang === 'hi' ? 'मध्यम' : 'Moderate';
+                weatherBadgeClass = 'status-pill-moderate';
+                weatherSubText = lang === 'kn' ? 'ಮಳೆ ಮತ್ತು ಮೋಡ ಕವಿದ ವಾತಾವರಣ' : lang === 'te' ? 'తేలికపాటి జల్లులు' : lang === 'ta' ? 'மிதமான மழை வாய்ப்பு' : lang === 'ml' ? 'ചെറിയ മഴ സാധ്യത' : lang === 'hi' ? 'हल्की बारिश व बादल' : 'Light Showers Expected';
+                weatherDescText = lang === 'kn' ? `ಮೋಡ ಕವಿದ ವಾತಾವರಣ ಮತ್ತು ಅಲ್ಲಲ್ಲಿ ಲಘು ಮಳೆಯ ಸಾಧ್ಯತೆ ಇದೆ. ಕೀಟನಾಶಕ ಸಿಂಪಡಣೆಗೆ ಮಳೆಯಿಲ್ಲದ ಸಮಯವನ್ನು ಆರಿಸಿ.` :
+                                  lang === 'te' ? `మేఘావృత వాతావరణం మరియు తేలికపాటి జల్లులు కురిసే అవకాశం ఉంది. పురుగుమందుల పిచికారీని వాయిదా వేయండి.` :
+                                  lang === 'ta' ? `மேகமூட்டத்துடன் லேசான மழை பெய்ய வாய்ப்புள்ளது. பூச்சிக்கொல்லி தெளிப்பதை தற்காலிகமாக தள்ளிப்போடவும்.` :
+                                  lang === 'ml' ? `മേഘാവൃതമായ അന്തരീക്ഷവും ചെറിയ മഴയും ഉണ്ടാകാം. മരുന്ന് തളിക്കുന്നത് മഴ ഒഴിഞ്ഞ സമയത്തേക്ക് മാറ്റുക.` :
+                                  lang === 'hi' ? `बादल छाए रहने और हल्की बूंदाबांदी की संभावना है। कीटनाशक छिड़काव के लिए वर्षा रहित समय चुनें।` :
+                                  `Intermittent cloud cover and scattered light showers expected. Plan pesticide spraying during dry intervals.`;
+            } else {
+                weatherBadgeText = lang === 'kn' ? 'ಕಡಿಮೆ' : lang === 'te' ? 'తక్కువ' : lang === 'ta' ? 'குறைவு' : lang === 'ml' ? 'കുറഞ്ഞത്' : lang === 'hi' ? 'निम्न' : 'Low';
+                weatherBadgeClass = 'status-pill-low';
+                weatherSubText = lang === 'kn' ? 'ಸ್ವಚ್ಛ ಹವಾಮಾನ' : lang === 'te' ? 'అనుకూల వాతావరణಂ' : lang === 'ta' ? 'தெளிவான வானிலை' : lang === 'ml' ? 'തെളിഞ്ഞ കാലാവസ്ഥ' : lang === 'hi' ? 'स्वच्छ मौसम' : 'Clear Conditions';
+                weatherDescText = lang === 'kn' ? `ಹವಾಮಾನ ಸ್ವಚ್ಛವಾಗಿದ್ದು ಮಳೆಯ ಮುನ್ಸೂಚನೆ ಇಲ್ಲ. ಕಟಾವು, ಉಳುಮೆ ಹಾಗೂ ರಸಗೊಬ್ಬರ ಹಾಕಲು ಅತ್ಯಂತ ಸೂಕ್ತವಾಗಿದೆ.` :
+                                  lang === 'te' ? `వాతావరణం స్వచ్ఛంగా ఉంది మరియు వర్ష సూచన లేదు. పంట కోత మరియు ఎరువుల నిర్వహణకు అనువైన రోజు.` :
+                                  lang === 'ta' ? `வானிலை சீராகவும் தெளிவாகவும் உள்ளது. அறுவடை மற்றும் உரமிடுதல் பணிகளை தடையின்றி செய்யலாம்.` :
+                                  lang === 'ml' ? `തെളിഞ്ഞ കാലാവസ്ഥയാണ് നിലവിലുള്ളത്. കൊയ്ത്ത്, വളപ്രയോഗം എന്നിവയ്ക്ക് ഏറ്റവും അനുയോജ്യം.` :
+                                  lang === 'hi' ? `मौसम साफ है और बारिश की संभावना नहीं है। कटाई, जुताई और उर्वरक देने के लिए दिन अनुकूल है।` :
+                                  `Clear to stable skies with no rain interference. Ideal for harvesting, field preparation, and fertilizing.`;
+            }
+
+            // 3. Recommended Action Evaluation
+            let recBadgeText = lang === 'kn' ? 'ಶಿಫಾರಸು' : lang === 'te' ? 'సిఫార్సు' : lang === 'ta' ? 'பரிந்துரை' : lang === 'ml' ? 'നിർദ്ദേശം' : lang === 'hi' ? 'अनुशंसित' : 'Recommended';
+            let recBadgeClass = 'status-pill-action';
+            let recSubText = '';
+            let recActions = [];
+
+            if (weatherBadgeClass === 'status-pill-high') {
+                recSubText = lang === 'kn' ? 'ನೀರು ಬಸಿದು ಹೋಗುವಿಕೆ' : lang === 'te' ? 'మురుగు నీటి యాజమాన్యం' : lang === 'ta' ? 'வடிகால் மேலாண்மை' : lang === 'ml' ? 'ഡ്രെയിനേജ് ക്രമീകരണം' : lang === 'hi' ? 'जल निकासी प्रबंधन' : 'Drainage & Sheltering';
+                recActions = lang === 'kn' ? [
+                    'ಜಮೀನಿನಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ಕಾಲುವೆಗಳನ್ನು ಸಿದ್ಧಪಡಿಸಿ.',
+                    'ಕೀಟನಾಶಕ ಸಿಂಪಡಣೆ ಮತ್ತು ಮೇಲುಗೊಬ್ಬರ ಹಾಕುವುದನ್ನು ನಿಲ್ಲಿಸಿ.',
+                    'ಕಟಾವು ಮಾಡಿದ ಬೆಳೆಗಳನ್ನು ಸುರಕ್ಷಿತ ಸ್ಥಳದಲ್ಲಿ ರಕ್ಷಿಸಿ.'
+                ] : lang === 'te' ? [
+                    'పొలంలో నీరు నిల్వ ఉండకుండా మురుగు కాలువలు శుభ్రం చేయండి.',
+                    'పురుగుమందులు మరియు పైపాటు ఎరువుల వాడకాన్ని నిలిపివేయండి.',
+                    'కోత కోసిన ధాన్యాన్ని సురక్షితమైన ప్రదేశంలో నిల్వ చేయండి.'
+                ] : lang === 'ta' ? [
+                    'வயலில் நீர் தேங்காமல் வடிகால் அமைக்கவும்.',
+                    'பூச்சிக்கொல்லி தெளிப்பதை தவிர்க்கவும்.',
+                    'அறுவடை செய்த பயிர்களை பாதுகாப்பாக வைக்கவும்.'
+                ] : lang === 'ml' ? [
+                    'വെള്ളക്കെട്ട് ഒഴിവാക്കാൻ ചാലുകൾ വൃത്തിയാക്കുക.',
+                    'മരുന്ന് തളിക്കുന്നത് മാറ്റിവെക്കുക.',
+                    'വിളവെടുത്ത ധാന്യങ്ങൾ സുരക്ഷിതമായി സൂക്ഷിക്കുക.'
+                ] : lang === 'hi' ? [
+                    'खेतों से अतिरिक्त पानी निकासी की व्यवस्था करें।',
+                    'किसी भी प्रकार का रासायनिक छिड़काव रोकें।',
+                    'कटी हुई फसल को सुरक्षित सूखे स्थान पर रखें।'
+                ] : [
+                    'Ensure clear field drainage to prevent waterlogging.',
+                    'Suspend foliar spray and top-dressing fertilizers.',
+                    'Secure harvested crops under waterproof shelter.'
+                ];
+            } else if (humidity >= 75) {
+                recSubText = lang === 'kn' ? 'ಕಳೆ ಕೀಳುವಿಕೆ ಮತ್ತು ನಿಗಾ' : lang === 'te' ? 'కలుపు తీత & పర్యవేక్షణ' : lang === 'ta' ? 'களை மேலாண்மை & கவனிப்பு' : lang === 'ml' ? 'കളപറി & നിരീക്ഷണം' : lang === 'hi' ? 'निराई व निगरानी' : 'Weeding & Monitoring';
+                recActions = lang === 'kn' ? [
+                    'ಸಸ್ಯಗಳ ನಡುವೆ ಉತ್ತಮ ಗಾಳಿ ಬೀಸಲು ಕಳೆ ಕೀಳಿರಿ.',
+                    'ಎಲೆಗಳ ತಳಭಾಗದಲ್ಲಿ ಬೂದಿ ರೋಗ ಲಕ್ಷಣಗಳನ್ನು ಗಮನಿಸಿ.',
+                    'ಅಗತ್ಯವಿದ್ದರೆ ಮಾತ್ರ ಮುನ್ನೆಚ್ಚರಿಕೆಯಾಗಿ ಜೈವಿಕ ಶಿಲೀಂಧ್ರನಾಶಕ ಬಳಸಿ.'
+                ] : lang === 'te' ? [
+                    'గాలి ప్రసరణ మెరుగుపరచడానికి కలుపు మొక్కలను తొలగించండి.',
+                    'తెగుళ్ల ఆనవాళ్లను ఎప్పటికప్పుడు గమనించండి.',
+                    'అవసరమైతే జీవ శిలీంధ్రనాశిని పిచికారీ చేయండి.'
+                ] : lang === 'ta' ? [
+                    'காற்றோட்டத்திற்காக களையெடுப்பு செய்யவும்.',
+                    'இலைகளில் பூஞ்சை தாக்குதல் உள்ளதா என பார்க்கவும்.',
+                    'தேவைப்பட்டால் உயிரியல் பூஞ்சாணக்கொல்லி தெளிக்கவும்.'
+                ] : lang === 'ml' ? [
+                    'കാറ്റ് കടക്കാൻ കളകൾ നീക്കം ചെയ്യുക.',
+                    'കുമിൾ രോഗങ്ങൾ ശ്രദ്ധിക്കുക.',
+                    'ആവശ്യമെങ്കിൽ ജൈവ കുമിൾനാശിനി ഉപയോഗിക്കുക.'
+                ] : lang === 'hi' ? [
+                    'पौधों के बीच हवा के संचार के लिए खरपतवार निकालें।',
+                    'पत्तियों पर फफूंद के लक्षणों की जांच करें।',
+                    'आवश्यकतानुसार ट्राइकोडर्मा या जैविक फफूंदनाशी का उपयोग करें।'
+                ] : [
+                    'Perform weeding to improve aeration between crop rows.',
+                    'Inspect lower foliage for fungal spots or white powder.',
+                    'Consider preventive bio-fungicide if symptoms emerge.'
+                ];
+            } else {
+                recSubText = lang === 'kn' ? 'ನೀರಾವರಿ ಮತ್ತು ಮಲ್ಚಿಂಗ್' : lang === 'te' ? 'నీటితడులు & మల్చింగ్' : lang === 'ta' ? 'பாசனம் & மூடாக்கு' : lang === 'ml' ? 'നന & പുതയിടൽ' : lang === 'hi' ? 'संतुलित सिंचाई' : 'Monitor + Irrigate';
+                recActions = lang === 'kn' ? [
+                    'ಬೆಳೆಗಳಿಗೆ ಅಗತ್ಯಕ್ಕೆ ತಕ್ಕಂತೆ ಲಘು ನೀರಾವರಿ ಒದಗಿಸಿ.',
+                    'ಹೊಲದಲ್ಲಿ ಕಳೆ ತೆಗೆಯುವಿಕೆ ಹಾಗೂ ಮಣ್ಣು ಸಡಿಲಗೊಳಿಸುವ ಕೆಲಸ ಮುಗಿಸಿ.',
+                    'ಮಣ್ಣಿನ ತೇವಾಂಶ ಕಾಪಾಡಲು ಸಾವಯವ ಹೊದಿಕೆ ಬಳಸಿ.'
+                ] : lang === 'te' ? [
+                    'పంట అవసరాన్ని బట్టి సమతుల్య నీటి తడులు అందించండి.',
+                    'ಕಲುపు తీత మరియు అంతరకృషి పనులను పూర్తి చేయండి.',
+                    'నేలలో తేమ ఆరిపోకుండా రక్షక ಕವಚం (ಮಲ್ಚಿಂಗ್) ఏర్పాటు చేయండి.'
+                ] : lang === 'ta' ? [
+                    'பயிர்களுக்கு தேவையான அளவு பாசனம் செய்யவும்.',
+                    'களையெடுத்தல் மற்றும் மண் தளர்த்துதல் பணிகளை மேற்கொள்ளவும்.',
+                    'மண்ணின் ஈரப்பதத்தை காக்க மூடாக்கு இடவும்.'
+                ] : lang === 'ml' ? [
+                    'ആവശ്യാനുസരണം നന നൽകുക.',
+                    'കളപറി, ഇടയിളക്കൽ ജോലികൾ പൂർത്തിയാക്കുക.',
+                    'ഈർപ്പം നിലനിർത്താൻ പുതയിടുക.'
+                ] : lang === 'hi' ? [
+                    'आवश्यकतानुसार हल्की एवं संतुलित सिंचाई करें।',
+                    'निराई-गुड़ाई और खेत की तैयारी के कार्य निपटाएं।',
+                    'मिट्टी में नमी बनाए रखने के लिए पलवार (मल्चिंग) का प्रयोग करें।'
+                ] : [
+                    'Apply scheduled protective irrigation during early morning.',
+                    'Carry out intercultural operations and weed management.',
+                    'Maintain soil mulch to conserve root zone moisture.'
+                ];
+            }
+
+            const locParts = [currentCity, currentDistrict, currentState].filter(Boolean);
+            const locationName = locParts.length > 0 ? locParts.join(', ') : 'Local Farm';
+
+            // Construct Data Identity object
+            const statusData = {
+                dateStr: dateStr || getTodayDateString(),
+                lat: lat,
+                lon: lon,
+                locationName: locationName,
+                lang: lang,
+                evaluatedAt: Date.now(),
+                weatherDt: weatherData.dt || Math.floor(Date.now() / 1000),
+                temp: temp,
+                humidity: humidity,
+                wind: wind,
+                cropRisk: {
+                    badge: cropBadgeText,
+                    badgeClass: cropBadgeClass,
+                    sub: cropSubText,
+                    desc: cropDescText
+                },
+                weatherRisk: {
+                    badge: weatherBadgeText,
+                    badgeClass: weatherBadgeClass,
+                    sub: weatherSubText,
+                    desc: weatherDescText
+                },
+                recAction: {
+                    badge: recBadgeText,
+                    badgeClass: recBadgeClass,
+                    sub: recSubText,
+                    actions: recActions
+                }
+            };
+
+            // Store in localStorage tagged with Date + Location + Lang identity
+            const storageKey = getAgriStatusStorageKey(lat, lon, statusData.dateStr, lang);
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(statusData));
+                localStorage.setItem('krishi_current_agri_status', JSON.stringify(statusData));
+            } catch(e) {}
+
+            // Apply immediately to UI
+            applyAgriStatusToUI(statusData);
+            return statusData;
+        }
+
+        // Synchronized Parallel Fetch & Evaluation
+        async function refreshAgriculturalTelemetry(force = false) {
+            const lat = currentLat;
+            const lon = currentLon;
+            const lang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
+            const todayStr = getTodayDateString();
+            const storageKey = getAgriStatusStorageKey(lat, lon, todayStr, lang);
+
+            // 1. Check if calendar day rolled over (midnight pass)
+            checkCalendarDateRollover();
+
+            // 2. If not forcing fresh network call, check valid cached status for today
+            if (!force) {
+                try {
+                    const cachedRaw = localStorage.getItem(storageKey);
+                    if (cachedRaw) {
+                        const cached = JSON.parse(cachedRaw);
+                        const isSameDay = cached.dateStr === todayStr;
+                        const isFresh = (Date.now() - (cached.evaluatedAt || 0)) < WEATHER_FRESHNESS_TTL;
+                        const dist = getCoordsDistanceKm(lat, lon, cached.lat, cached.lon);
+
+                        if (isSameDay && isFresh && dist < 2.0) {
+                            applyAgriStatusToUI(cached);
+                            if (lastWeatherData) return;
+                        }
+                    }
+                } catch(e) {}
+            }
+
+            // 3. Concurrently fetch fresh current weather and 24-48h forecast
+            try {
+                const [weatherRes, forecastRes] = await Promise.all([
+                    fetch(`${API_BASE_URL}/weather/current?lat=${lat}&lon=${lon}`),
+                    fetch(`${API_BASE_URL}/weather/forecast?lat=${lat}&lon=${lon}`)
+                ]);
+
+                if (!weatherRes.ok) throw new Error('Weather API error');
+                const weatherData = await weatherRes.json();
+                const forecastData = forecastRes.ok ? await forecastRes.json() : null;
+
+                lastWeatherData = weatherData;
+                lastForecastData = forecastData;
+                lastWeatherFetchTime = Date.now();
+
+                renderCurrentWeatherBox(weatherData);
+                if (forecastData) renderForecastBox(forecastData);
+
+                evaluateAndSaveTodayAgriStatus(weatherData, forecastData, lat, lon, todayStr, lang);
+            } catch (err) {
+                console.warn('Weather telemetry refresh note:', err);
+                if (lastWeatherData) {
+                    evaluateAndSaveTodayAgriStatus(lastWeatherData, lastForecastData, lat, lon, todayStr, lang);
+                }
+            }
+        }
+
+        // Backwards compatibility wrappers
+        async function fetchWeather(lat, lon) {
+            return refreshAgriculturalTelemetry(true);
+        }
+        async function fetchForecast(lat, lon) {
+            return refreshAgriculturalTelemetry(true);
+        }
+        function updateTodayAgriStatus(wData, fData) {
+            const todayStr = getTodayDateString();
+            const lang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
+            if (wData && wData.main) {
+                evaluateAndSaveTodayAgriStatus(wData, fData || lastForecastData, currentLat, currentLon, todayStr, lang);
+            } else {
+                refreshAgriculturalTelemetry(false);
+            }
+        }
+
+        // Initial fetch on page load
+        purgeStaleAgriStatusCaches();
+        refreshAgriculturalTelemetry(false);
+
+        // Heartbeat timer: checks every 30s for calendar day rollover or 30-min weather expiration
+        setInterval(() => {
+            const rolledOver = checkCalendarDateRollover();
+            if (!rolledOver && isWeatherStale()) {
+                refreshAgriculturalTelemetry(false);
+            }
+        }, 30000);
+
+        // Visibility & focus listeners: instant check when user reopens or returns to the dashboard tab
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                const rolledOver = checkCalendarDateRollover();
+                if (!rolledOver && isWeatherStale()) {
+                    refreshAgriculturalTelemetry(false);
+                }
+            }
+        });
+        window.addEventListener('focus', () => {
+            const rolledOver = checkCalendarDateRollover();
+            if (!rolledOver && isWeatherStale()) {
+                refreshAgriculturalTelemetry(false);
+            }
+        });
+
+        // Fresh login prompt mode vs silent mode
+        setTimeout(() => {
+            if (sessionStorage.getItem('freshLogin') === 'true') {
+                sessionStorage.removeItem('freshLogin');
+                detectFarmerGpsLocation(true); // Prompt mode: shows location confirmation modal
+            } else {
+                detectFarmerGpsLocation(false); // Silent mode: updates in background
+            }
+        }, 150);
+
+        // ================= STRUCTURED UI RENDERER FOR SEASONAL CROPS =================
+        function renderSeasonalCropsUI(rawText) {
+            if (!rawText || !rawText.trim()) {
+                return '<p style="color: var(--text-secondary); padding: 0.5rem 0;">No seasonal recommendations available at this time.</p>';
+            }
+
+            // Remove decorative emojis
+            let cleanText = rawText
+                .replace(/🌾|🌿|⚠️|🧑‍🌾|🌱|☀️|💧|🌧️|🚜/g, '')
+                .trim();
+
+            const lines = cleanText.split('\n').map(l => l.trim()).filter(Boolean);
+            
+            let headline = '';
+            const crops = [];
+            let tip = '';
+            let caution = '';
+
+            lines.forEach(line => {
+                // Headline match
+                if (line.match(/^(\**|#|\s*)*(Top|Recommended|Kharif|Rabi|Summer|Seasonal|ಶಿಫಾರಸು|ಸಿಫಾರ್ಸು|பரிந்துரை|मौसमी)/i) && !line.match(/^\d+[\.\)]/)) {
+                    headline = line.replace(/[*#]/g, '').trim();
+                    return;
+                }
+
+                // Numbered crop items: "1. Ragi - reason"
+                const numMatch = line.match(/^(\d+)[\.\)]\s*(.+)/);
+                if (numMatch) {
+                    const fullContent = numMatch[2].trim();
+                    let cropName = '';
+                    let cropReason = '';
+
+                    const dashSplit = fullContent.split(/\s*[-–—:]\s*(.+)/);
+                    if (dashSplit.length > 1) {
+                        cropName = dashSplit[0].replace(/[*_]/g, '').trim();
+                        cropReason = dashSplit[1].replace(/[*_]/g, '').trim();
+                    } else {
+                        const boldMatch = fullContent.match(/^\*\*(.*?)\*\*(.*)/);
+                        if (boldMatch) {
+                            cropName = boldMatch[1].trim();
+                            cropReason = boldMatch[2].replace(/^[-\s:]+/, '').trim();
+                        } else {
+                            cropName = fullContent.replace(/[*_]/g, '').trim();
+                        }
+                    }
+
+                    crops.push({
+                        num: numMatch[1],
+                        name: cropName,
+                        reason: cropReason
+                    });
+                    return;
+                }
+
+                // Farming Tip match
+                if (line.match(/Tip|Farming Tip|ರೈತರ ಸಲಹೆ|రైతు సూచన|விவசாய குறிப்பு|किसान सलाह/i)) {
+                    tip = line.replace(/^.*?(Tip|Farming Tip|ರೈತರ ಸಲಹೆ|రైತು సూచన|விவசாய குறிப்பு|किसान सलाह)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
+                    return;
+                }
+
+                // Caution / Alert match
+                if (line.match(/Caution|Warning|Alert|ಎಚ್ಚರಿಕೆ|హెచ్చరిక|எச்சரிக்கை|सावधानी/i)) {
+                    caution = line.replace(/^.*?(Caution|Warning|Alert|ಎಚ್ಚರಿಕೆ|హెచ్చరిక|எச்சரிக்கை|सावधानी)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
+                    return;
+                }
+            });
+
+            // Dynamic Location String for Title
+            const locParts = [currentDistrict, currentState].filter(Boolean);
+            const dynamicLocTitle = locParts.length > 0 ? locParts.join(', ') : (currentState || 'India');
+
+            // If parsed structured crops successfully
+            if (crops.length > 0) {
                 let html = '';
-                data.list.slice(0, 8).forEach(item => {
-                    const time = new Date(item.dt_txt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    const temp = Math.round(item.main.temp);
-                    const iconCode = item.weather[0].icon;
+                html += `<div class="seasonal-headline"><i class="fas fa-calendar-check"></i> <span>Top Recommended Crops — ${escapeHtml(dynamicLocTitle)}</span></div>`;
+                html += '<div class="seasonal-crops-list">';
+                crops.forEach((c, idx) => {
                     html += `
-                        <div class="forecast-item">
-                            <div style="font-size: 0.8em; color: var(--text-secondary);">${time}</div>
-                            <img src="https://openweathermap.org/img/wn/${iconCode}.png" alt="icon" width="40">
-                            <div style="font-weight: 700; font-size: 1.1rem;">${temp}°</div>
+                        <div class="seasonal-crop-item">
+                            <div class="crop-num-badge">${c.num || (idx + 1)}</div>
+                            <div class="crop-info-body">
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+                                    <span class="crop-name-title">${escapeHtml(c.name)}</span>
+                                    <span class="agri-intel-status-pill status-pill-low" style="font-size: 0.62rem; padding: 0.1rem 0.45rem;">Suitable</span>
+                                </div>
+                                ${c.reason ? `<div class="crop-reason-text" style="margin-top: 0.2rem;">${escapeHtml(c.reason)}</div>` : ''}
+                            </div>
                         </div>
                     `;
                 });
-                document.getElementById('forecastBox').innerHTML = html;
-            } catch (e) {
-                document.getElementById('forecastBox').innerHTML = `<p>Error loading forecast.</p>`;
+                html += '</div>';
+
+                if (tip) {
+                    html += `
+                        <div class="seasonal-tip-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <div class="seasonal-tip-content">
+                                <div class="seasonal-tip-title">Farming Tip</div>
+                                <div class="seasonal-tip-desc">${escapeHtml(tip)}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (caution) {
+                    html += `
+                        <div class="seasonal-caution-card">
+                            <i class="fas fa-triangle-exclamation"></i>
+                            <div class="seasonal-caution-content">
+                                <div class="seasonal-caution-title">Advisory Note</div>
+                                <div class="seasonal-caution-desc">${escapeHtml(caution)}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                return html;
             }
+
+            // Fallback plain markdown renderer
+            return `<div class="seasonal-fallback-box"><p style="line-height: 1.5; font-size: 0.86rem;">${escapeHtml(cleanText).replace(/\n/g, '<br>')}</p></div>`;
+        }
+function renderCropAdviceUI(rawText, cropName) {
+            if (!rawText || !rawText.trim()) {
+                return `
+                    <div class="advisor-empty-placeholder">
+                        <i class="fas fa-seedling"></i>
+                        <span>Enter any crop name above to get agronomic & weather-tailored guidance.</span>
+                    </div>
+                `;
+            }
+
+            const temp = lastWeatherData?.main?.temp ? Math.round(lastWeatherData.main.temp) : '--';
+            const humidity = lastWeatherData?.main?.humidity || '--';
+
+            // Format clean agricultural report text
+            function formatReportText(text) {
+                // Strip any remaining markdown symbols
+                let clean = text.replace(/^#+\s*/gm, '');
+                clean = clean.replace(/^[-\*_]{3,}\s*$/gm, '');
+                clean = clean.replace(/\*\*(.*?)\*\*/g, '$1');
+                clean = clean.replace(/\*([^*]+)\*/g, '$1');
+                clean = clean.replace(/^>\s*/gm, '');
+
+                const knownHeadings = [
+                    'Crop Suitability', 'Soil & Water', 'Weather Impact', 'Weather Conditions', 'What to Do Now', 'What You Should Do Now', 'Risks to Watch', 'Market Information',
+                    'ಬೆಳೆಯ ಸೂಕ್ತತೆ', 'ಮಣ್ಣು ಮತ್ತು ನೀರು', 'ಹವಾಮಾನ ಪರಿಣಾಮ', 'ಹವಾಮಾನ ಪರಿಸ್ಥಿತಿಗಳು', 'ಈಗ ಮಾಡಬೇಕಾದ ಕೆಲಸಗಳು', 'ನೀವು ಈಗ ಮಾಡಬೇಕಾದ ಕೆಲಸಗಳು', 'ಎಚ್ಚರಿಕೆ ವಹಿಸಬೇಕಾದ ಅಪಾಯಗಳು', 'ಮಾರುಕಟ್ಟೆ ಮಾಹಿತಿ',
+                    'పంట అనుకూలత', 'నేల మరియు నీరు', 'వాతావరణ ప్రభావం', 'వాతావరణ పరిస్థితులు', 'ఇప్పుడు చేయవలసిన పనులు', 'మీరు ఇప్పుడు చేయవలసిన పనులు', 'గమనించవలసిన సమస్యలు', 'గమనించవలసిన సమస్యలు మరియు తెగుళ్లు', 'మార్కెట్ సమాచారం',
+                    'பயிர் பொருத்தம்', 'மண் மற்றும் நீர்', 'மண் மற்றும் நீர் மேலாண்மை', 'வானிலை தாக்கம்', 'வானிலை சூழல்', 'இப்போது செய்ய வேண்டியவை', 'தற்போது செய்ய வேண்டிய பணிகள்', 'கவனிக்க வேண்டிய பாதிப்புகள்', 'சந்தை நிலவரம்',
+                    'കൃഷി അനുയോജ്യത', 'മണ്ണും ജലവും', 'കാലാവസ്ഥ സ്വാധീനം', 'കാലാവസ്ഥ സ്ഥിതി', 'ഇപ്പോൾ ചെയ്യേണ്ട കാര്യങ്ങൾ', 'ശ്രദ്ധിക്കേണ്ട രോഗങ്ങളും കീടങ്ങളും', 'വിപണി വിവരം',
+                    'फसल की उपयुक्तता', 'मिट्टी और जल प्रबंधन', 'मौसम का प्रभाव', 'मौसम की स्थिति', 'अभी क्या करें', 'अभी क्या करना चाहिए', 'संभावित खतरे', 'संभावित खतरे और सावधानियां', 'मंडी और बाजार जानकारी'
+                ];
+
+                const lines = clean.split('\n');
+                let html = '';
+
+                lines.forEach(rawLine => {
+                    const line = rawLine.trim();
+                    if (!line) {
+                        html += '<div style="height: 0.35rem;"></div>';
+                        return;
+                    }
+
+                    // Metadata headers (Crop:, Location:, Weather:)
+                    if (line.match(/^(Crop|Location|Weather|ಬೆಳೆ|ಸ್ಥಳ|ಹವಾಮಾನ|పంట|ప్రాంతం|వాతావరణం|பயிர்|இடம்|வானிலை|വിള|സ്ഥലം|കാലാവസ്ഥ|फसल|स्थान|मौसम)\s*:/i)) {
+                        html += `<div style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.15rem;">${escapeHtml(line)}</div>`;
+                        return;
+                    }
+
+                    // Section titles
+                    const isHeading = knownHeadings.some(h => line.toLowerCase() === h.toLowerCase() || line.toLowerCase().startsWith(h.toLowerCase()));
+                    if (isHeading) {
+                        html += `<div style="font-size: 0.88rem; font-weight: 700; color: var(--primary-dark, #15803d); margin-top: 0.75rem; margin-bottom: 0.25rem; padding-bottom: 0.15rem; border-bottom: 1px solid var(--border-color, #e2e8f0);">${escapeHtml(line)}</div>`;
+                        return;
+                    }
+
+                    // Numbered action items
+                    const numMatch = line.match(/^(\d+)[\.)\]]\s+(.+)$/);
+                    if (numMatch) {
+                        html += `<div style="display: flex; gap: 0.45rem; margin: 0.2rem 0; font-size: 0.82rem; line-height: 1.5;"><span style="color: var(--primary, #16a34a); font-weight: 700; flex-shrink: 0;">${numMatch[1]}.</span><span style="color: var(--text-primary);">${escapeHtml(numMatch[2])}</span></div>`;
+                        return;
+                    }
+
+                    // Bullet risk items
+                    const bulletMatch = line.match(/^[-•–—]\s+(.+)$/);
+                    if (bulletMatch) {
+                        html += `<div style="display: flex; gap: 0.45rem; margin: 0.18rem 0; font-size: 0.82rem; line-height: 1.5;"><span style="color: #ea580c; font-weight: 700; flex-shrink: 0;">•</span><span style="color: var(--text-primary);">${escapeHtml(bulletMatch[1])}</span></div>`;
+                        return;
+                    }
+
+                    // Standard paragraph
+                    html += `<p style="font-size: 0.82rem; line-height: 1.55; color: var(--text-primary); margin: 0.2rem 0;">${escapeHtml(line)}</p>`;
+                });
+
+                return html;
+            }
+
+            const formattedContent = formatReportText(rawText.trim());
+
+            return `
+                <div class="advisor-result-card">
+                    <div class="advisor-meta-strip">
+                        <span class="advisor-crop-badge"><i class="fas fa-leaf"></i> ${escapeHtml(cropName)}</span>
+                        <span class="advisor-weather-badge"><i class="fas fa-cloud-sun"></i> ${temp}°C • ${humidity}% Humidity</span>
+                    </div>
+                    <div style="font-size: 0.82rem; line-height: 1.55; color: var(--text-primary); padding: 0.3rem 0;">
+                        ${formattedContent}
+                    </div>
+                </div>
+            `;
         }
 
-        // Initial load
-        fetchWeather();
-        fetchForecast();
-
-        // ========== SEASONAL CROPS ==========
+        // Seasonal Crops (supports dynamic language & location)
         async function fetchSeasonalCrops() {
             const box = document.getElementById('seasonalCropBox');
-            box.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching recommendations...';
+            if (!box) return;
+            box.innerHTML = `
+                <div style="padding: 1.5rem 1rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
+                    <i class="fas fa-spinner fa-spin" style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.4rem;"></i><br>
+                    Analyzing seasonal crop recommendations...
+                </div>
+            `;
             try {
+                const locParts = [currentCity, currentDistrict, currentState].filter(Boolean);
+                const locString = locParts.length > 0 ? `${locParts.join(', ')}, India` : (currentState ? `${currentState}, India` : 'Karnataka, India');
+                const lang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
+
                 const res = await fetch(`${API_BASE_URL}/ai-advisory/seasonal`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         weatherData: lastWeatherData,
-                        location: currentLocationName + ', South India',
-                        language: currentLang
+                        location: locString,
+                        state: currentState || '',
+                        district: currentDistrict || currentCity || '',
+                        language: lang
                     })
                 });
                 const data = await res.json();
-                let formatted = (data.recommendation || '').replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                box.innerHTML = `<div style="line-height: 1.8;">${formatted}</div>`;
+                if (data.recommendation) {
+                    box.innerHTML = renderSeasonalCropsUI(data.recommendation);
+                } else {
+                    box.innerHTML = '<p style="color: var(--text-secondary); padding: 0.5rem 0; font-size: 0.84rem;">No seasonal recommendations available at this time.</p>';
+                }
             } catch (e) {
-                box.innerHTML = '<p style="color: #ffb74d;">Failed to fetch recommendations.</p>';
+                box.innerHTML = '<p style="color: #ea580c; padding: 0.5rem 0; font-size: 0.84rem;"><i class="fas fa-triangle-exclamation"></i> Could not load seasonal recommendations. Please click refresh to retry.</p>';
             }
         }
 
-        // Fetch seasonal after weather loads
-        setTimeout(fetchSeasonalCrops, 2000);
+        setTimeout(fetchSeasonalCrops, 1500);
         document.getElementById('refreshSeasonalBtn').addEventListener('click', fetchSeasonalCrops);
 
-        // ========== CROP ADVISOR ==========
+        // Crop Advisor (supports dynamic language)
         document.getElementById('getCropAdviceBtn').addEventListener('click', () => {
             const crop = document.getElementById('cropInput').value.trim();
             if (!crop) return alert('Please enter a crop name first!');
             fetchCropAdvice(crop);
         });
 
+        document.getElementById('cropInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const crop = document.getElementById('cropInput').value.trim();
+                if (crop) fetchCropAdvice(crop);
+            }
+        });
+
+        let lastAdvisedCrop = '';
+
         async function fetchCropAdvice(cropName) {
             const btn = document.getElementById('getCropAdviceBtn');
             const box = document.getElementById('cropAdviceBox');
             if (btn) btn.disabled = true;
-            box.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+            lastAdvisedCrop = cropName;
+            box.innerHTML = `
+                <div style="padding: 1.5rem 1rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
+                    <i class="fas fa-spinner fa-spin" style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.4rem;"></i><br>
+                    Analyzing ${escapeHtml(cropName)} for current local climate...
+                </div>
+            `;
 
             try {
+                const locParts = [currentCity, currentDistrict, currentState].filter(Boolean);
+                const locString = locParts.length > 0 ? `${locParts.join(', ')}, India` : 'India';
+
                 const res = await fetch(`${API_BASE_URL}/ai-advisory`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
                     body: JSON.stringify({
                         weatherData: lastWeatherData,
                         cropInfo: cropName,
-                        message: `I am a farmer in ${currentLocationName}, South India planning to grow ${cropName}. What precautions should I take given current weather?`,
+                        location: locString,
+                        lat: currentLat,
+                        lon: currentLon,
+                        city: currentCity,
+                        district: currentDistrict,
+                        state: currentState,
+                        message: `I am a farmer in ${locString} planning to grow ${cropName}. What precautions and advice should I follow given current weather?`,
                         language: currentLang
                     })
                 });
                 const data = await res.json();
-                let formatted = (data.advice || '').replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                box.innerHTML = `<div style="line-height: 1.7;">${formatted}</div>`;
+                box.innerHTML = renderCropAdviceUI(data.advice || '', cropName);
             } catch (e) {
-                box.innerHTML = '<p style="color: #ffb74d;">Failed to fetch advice.</p>';
+                box.innerHTML = '<p style="color: #ea580c; padding: 0.5rem 0; font-size: 0.84rem;"><i class="fas fa-triangle-exclamation"></i> Failed to fetch crop advice. Please try again.</p>';
             }
             if (btn) btn.disabled = false;
         }
 
-        // ========== CHATBOT ==========
+        // AI Chatbot (supports dynamic language)
         const chatFab = document.getElementById('chatFab');
         const chatbotWidget = document.getElementById('chatbot-widget');
         chatFab.addEventListener('click', () => chatbotWidget.classList.add('active'));
         document.getElementById('closeChat').addEventListener('click', () => chatbotWidget.classList.remove('active'));
 
+        let chatPending = false; // Prevent duplicate sends
+
+        function formatBotMessage(text) {
+            if (!text) return '';
+            // Convert markdown bold **text** to <strong>
+            let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            // Convert newlines to <br>
+            html = html.replace(/\n/g, '<br>');
+            return html;
+        }
+
         async function handleChat() {
-            const msg = document.getElementById('chatInput').value.trim();
+            if (chatPending) return; // Block duplicate sends while request is in-flight
+            const chatInputEl = document.getElementById('chatInput');
+            const msg = chatInputEl.value.trim();
             if (!msg) return;
+
+            chatPending = true;
+            const sendBtn = document.getElementById('sendChat');
+            if (sendBtn) sendBtn.disabled = true;
+
             const chatBody = document.getElementById('chatBody');
-            chatBody.innerHTML += `<div class="chat-bubble user">${msg}</div>`;
-            document.getElementById('chatInput').value = '';
+            // Escape user message to prevent XSS
+            chatBody.innerHTML += `<div class="chat-bubble user">${escapeHtml(msg)}</div>`;
+            chatInputEl.value = '';
             chatBody.scrollTop = chatBody.scrollHeight;
 
             const typingId = 'typing-' + Date.now();
@@ -936,23 +3409,390 @@
             chatBody.scrollTop = chatBody.scrollHeight;
 
             try {
+                // Build location string from verified app state
+                const locParts = [currentCity, currentDistrict, currentState].filter(Boolean);
+                const locString = locParts.length > 0 ? `${locParts.join(', ')}, India` : 'India';
+
                 const res = await fetch(`${API_BASE_URL}/ai-advisory/chat`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ weatherData: lastWeatherData, message: msg, language: currentLang })
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        weatherData: lastWeatherData,
+                        message: msg,
+                        language: currentLang,
+                        location: locString
+                    })
                 });
-                const data = await res.json();
-                document.getElementById(typingId).remove();
-                chatBody.innerHTML += `<div class="chat-bubble bot">${data.advice || 'Error'}</div>`;
+
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+
+                if (!res.ok) {
+                    const errData = await res.json().catch(() => ({}));
+                    const errMsg = errData.error || `Server error (${res.status}). Please try again.`;
+                    chatBody.innerHTML += `<div class="chat-bubble bot" style="color: #ef4444;"><i class="fas fa-triangle-exclamation"></i> ${escapeHtml(errMsg)}</div>`;
+                } else {
+                    const data = await res.json();
+                    const advice = data.advice;
+                    if (advice && advice.trim()) {
+                        chatBody.innerHTML += `<div class="chat-bubble bot">${formatBotMessage(advice)}</div>`;
+                    } else {
+                        chatBody.innerHTML += `<div class="chat-bubble bot" style="color: #f59e0b;"><i class="fas fa-info-circle"></i> No response received. Please try rephrasing your question.</div>`;
+                    }
+                }
                 chatBody.scrollTop = chatBody.scrollHeight;
             } catch (e) {
-                if (document.getElementById(typingId)) document.getElementById(typingId).remove();
-                chatBody.innerHTML += `<div class="chat-bubble bot" style="color: #ff6b6b;">Error getting advice.</div>`;
+                const typingEl = document.getElementById(typingId);
+                if (typingEl) typingEl.remove();
+                chatBody.innerHTML += `<div class="chat-bubble bot" style="color: #ef4444;"><i class="fas fa-wifi"></i> Network error. Please check your connection and try again.</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            } finally {
+                chatPending = false;
+                if (sendBtn) sendBtn.disabled = false;
+                chatInputEl.focus();
             }
         }
 
         document.getElementById('sendChat').addEventListener('click', handleChat);
         document.getElementById('chatInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') handleChat(); });
+
+        // Theme pill UI sync (app.js handles the actual theme logic)
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        updateThemePills(savedTheme);
+
+        // Modals
+        function openFarmerProfileModal(e) {
+            if (e) e.preventDefault();
+            const _dd = document.getElementById('navProfileDropdown');
+            const _btn = document.getElementById('profileDropdownBtn');
+            if (_dd) _dd.classList.remove('show');
+            if (_btn) _btn.classList.remove('active');
+            
+            const modalAvatar = document.getElementById('modalAvatarDisplay');
+            if (modalAvatar) modalAvatar.innerText = getInitials(farmer.name || 'Farmer');
+            
+            document.getElementById('modalProfileName').innerText = farmer.name || 'Farmer';
+            document.getElementById('modalProfilePhone').innerText = farmer.mobile ? `+91 ${farmer.mobile}` : '--';
+            document.getElementById('modalProfileLocation').innerText = `${currentCity}, ${currentState}`;
+            document.getElementById('modalProfileCoords').innerText = `${currentLat.toFixed(4)}, ${currentLon.toFixed(4)}`;
+            
+            document.getElementById('farmerProfileModal').classList.add('active');
+        }
+
+        function closeFarmerProfileModal() {
+            const modal = document.getElementById('farmerProfileModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function openFarmerSettingsModal(e) {
+            if (e) e.preventDefault();
+            const _dd = document.getElementById('navProfileDropdown');
+            const _btn = document.getElementById('profileDropdownBtn');
+            if (_dd) _dd.classList.remove('show');
+            if (_btn) _btn.classList.remove('active');
+            document.getElementById('farmerSettingsModal').classList.add('active');
+        }
+
+        function closeFarmerSettingsModal() {
+            const modal = document.getElementById('farmerSettingsModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        window.addEventListener('krishi:languageChanged', () => {
+            fetchSeasonalCrops();
+            if (lastAdvisedCrop) {
+                fetchCropAdvice(lastAdvisedCrop);
+            }
+            updateTodayAgriStatus(lastWeatherData, lastForecastData);
+        });
+    </script>
+
+    <!-- Clean Farmer Profile Modal -->
+    <div class="loc-modal-backdrop" id="farmerProfileModal">
+        <div class="loc-modal-box">
+            <div class="loc-modal-header">
+                <h3><i class="fas fa-user-circle" style="color: #4ade80;"></i> Farmer Profile</h3>
+                <button style="background:transparent; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;" onclick="closeFarmerProfileModal()">&times;</button>
+            </div>
+            <div class="loc-modal-body">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                    <div class="avatar-initials" id="modalAvatarDisplay" style="width: 60px; height: 60px; font-size: 1.4rem;" onclick="document.getElementById('profileUploadInput').click()" title="Change Profile Photo">
+                        F
+                    </div>
+                    <div>
+                        <h4 id="modalProfileName" style="font-size: 1.15rem; margin-bottom: 0.2rem; color: #ffffff;">Farmer Name</h4>
+                        <p style="font-size: 0.8rem; color: #4ade80; font-weight: 600;"><i class="fas fa-circle-check"></i> Verified Krishi Account</p>
+                    </div>
+                </div>
+                <div class="loc-detail-row">
+                    <span style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Registered Mobile</span>
+                    <strong id="modalProfilePhone" style="font-size: 0.95rem; color: #ffffff;">--</strong>
+                </div>
+                <div class="loc-detail-row">
+                    <span style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">Farm Location</span>
+                    <strong id="modalProfileLocation" style="font-size: 0.95rem; color: #ffffff;">--</strong>
+                </div>
+                <div class="loc-detail-row">
+                    <span style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase;">GPS Coordinates</span>
+                    <strong id="modalProfileCoords" style="font-size: 0.9rem; color: #cbd5e1;">--</strong>
+                </div>
+            </div>
+            <div class="loc-modal-footer">
+                <button class="btn-loc-secondary" onclick="document.getElementById('profileUploadInput').click(); closeFarmerProfileModal();">
+                    <i class="fas fa-camera"></i> Change Photo
+                </button>
+                <button class="btn-loc-confirm" onclick="closeFarmerProfileModal()">
+                    <i class="fas fa-check"></i> Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clean Settings Modal -->
+    <div class="loc-modal-backdrop" id="farmerSettingsModal">
+        <div class="loc-modal-box">
+            <div class="loc-modal-header">
+                <h3><i class="fas fa-gear" style="color: #60a5fa;"></i> Settings & Preferences</h3>
+                <button style="background:transparent; border:none; color:#94a3b8; font-size:1.2rem; cursor:pointer;" onclick="closeFarmerSettingsModal()">&times;</button>
+            </div>
+            <div class="loc-modal-body">
+                <div class="manual-form-group">
+                    <label>Language Preference</label>
+                    <select class="manual-input" id="settingsLangSelect" onchange="setAppLanguage(this.value);">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                        <option value="ta">தமிழ் (Tamil)</option>
+                        <option value="te">తెలుగు (Telugu)</option>
+                        <option value="ml">മലയാളം (Malayalam)</option>
+                        <option value="hi">हिन्दी (Hindi)</option>
+                    </select>
+                </div>
+                <div class="manual-form-group">
+                    <label>Telemetry & Weather Refresh Interval</label>
+                    <select class="manual-input">
+                        <option value="auto">Automatic (Every 30 mins)</option>
+                        <option value="hourly">Hourly</option>
+                        <option value="manual">Manual Refresh Only</option>
+                    </select>
+                </div>
+                <div class="manual-form-group">
+                    <label>Smart Crop Alerts</label>
+                    <div style="font-size: 0.85rem; color: #94a3b8; display: flex; align-items: center; gap: 0.5rem; margin-top: 0.2rem;">
+                        <input type="checkbox" checked id="settingAlertToggle" style="accent-color: #4CAF50;"> Enable SMS & Weather Advisory notifications
+                    </div>
+                </div>
+            </div>
+            <div class="loc-modal-footer">
+                <button class="btn-loc-secondary" onclick="closeFarmerSettingsModal()">Cancel</button>
+                <button class="btn-loc-confirm" onclick="closeFarmerSettingsModal()">
+                    <i class="fas fa-check"></i> Save Preferences
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================= DYNAMIC NEWS & MARKETPLACE PREVIEWS =================
+        let newsFetchAbortController = null;
+        let lastNewsArticles = null;
+        let lastNewsLang = null;
+        
+        let lastMarketRecords = null;
+        let marketFetchAbortController = null;
+
+        // Render functions for Mandi Previews
+        function renderDefaultMandiFallbackItems(lang) {
+            const defaultItems = [
+                { commodity: 'Ragi', market: 'Bengaluru APMC', price: '3,450', statusKey: 'dash_stable_demand', statusDefault: 'Stable Demand', icon: 'fa-arrow-trend-up', color: '#4ade80' },
+                { commodity: 'Paddy', market: 'Local Mandi', price: '2,320', statusKey: 'dash_msp_active', statusDefault: 'Government MSP Active', icon: 'fa-circle-check', color: '#4ade80' },
+                { commodity: 'Tomato', market: 'Kolar APMC', price: '1,850', statusKey: 'dash_high_arrivals', statusDefault: 'High Daily Arrivals', icon: 'fa-arrow-right', color: '#38bdf8' },
+                { commodity: 'Soybean', market: 'Regional Market', price: '4,800', statusKey: 'dash_strong_procurement', statusDefault: 'Strong Procurement', icon: 'fa-arrow-trend-up', color: '#4ade80' }
+            ];
+
+            const grid = document.getElementById('mandiPreviewGrid');
+            if (!grid) return;
+
+            const activeLang = lang || (typeof getAppLanguage === 'function' ? getAppLanguage() : 'en');
+            const perQtlText = typeof t === 'function' ? t('dash_per_qtl', '/ Qtl') : '/ Qtl';
+
+            grid.innerHTML = defaultItems.map(item => {
+                const translatedComm = typeof translateCommodityName === 'function' 
+                    ? translateCommodityName(item.commodity, activeLang) 
+                    : item.commodity;
+                const imgUrl = (window.CommodityImageService && CommodityImageService.getCommodityImageUrl)
+                    ? CommodityImageService.getCommodityImageUrl(item.commodity)
+                    : `assets/images/commodities/${item.commodity.toLowerCase()}.webp`;
+                const statusText = typeof t === 'function' ? t(item.statusKey, item.statusDefault) : item.statusDefault;
+                
+                return `
+                    <div class="mandi-preview-item">
+                        <img src="${imgUrl}" alt="${escapeHtml(translatedComm)}" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, '${escapeHtml(item.commodity)}')">
+                        <div class="mandi-item-content">
+                            <div class="mandi-item-top">
+                                <span class="mandi-commodity-name">${escapeHtml(translatedComm)}</span>
+                                <span class="mandi-market-tag">${escapeHtml(item.market)}</span>
+                            </div>
+                            <div class="mandi-price-val">₹${item.price} <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-secondary);">${escapeHtml(perQtlText)}</span></div>
+                            <div style="font-size: 0.72rem; color: ${item.color};"><i class="fas ${item.icon}"></i> ${escapeHtml(statusText)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderMandiPreviewItems(records, lang) {
+            const grid = document.getElementById('mandiPreviewGrid');
+            if (!grid) return;
+            if (!Array.isArray(records) || records.length === 0) {
+                renderDefaultMandiFallbackItems(lang);
+                return;
+            }
+
+            const activeLang = lang || (typeof getAppLanguage === 'function' ? getAppLanguage() : 'en');
+            const liveModalPriceText = typeof t === 'function' ? t('dash_live_modal_price', 'Live Modal Price') : 'Live Modal Price';
+            const perQtlText = typeof t === 'function' ? t('dash_per_qtl', '/ Qtl') : '/ Qtl';
+
+            grid.innerHTML = records.map(r => {
+                const rawCommodity = r.commodity || 'Commodity';
+                const translatedComm = typeof translateCommodityName === 'function' 
+                    ? translateCommodityName(rawCommodity, activeLang) 
+                    : rawCommodity;
+                const imgUrl = (window.CommodityImageService && CommodityImageService.getCommodityImageUrl)
+                    ? CommodityImageService.getCommodityImageUrl(rawCommodity)
+                    : 'assets/images/commodities/paddy.webp';
+                const safeCommodity = escapeHtml(translatedComm);
+                const safeMarket = escapeHtml(r.market || 'Local Mandi');
+                const price = Number(r.modal_price || r.max_price || 0).toLocaleString('en-IN');
+                
+                return `
+                    <div class="mandi-preview-item">
+                        <img src="${imgUrl}" alt="${safeCommodity}" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, '${escapeHtml(rawCommodity)}')">
+                        <div class="mandi-item-content">
+                            <div class="mandi-item-top">
+                                <span class="mandi-commodity-name">${safeCommodity}</span>
+                                <span class="mandi-market-tag">${safeMarket}</span>
+                            </div>
+                            <div class="mandi-price-val">₹${price} <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-secondary);">${escapeHtml(perQtlText)}</span></div>
+                            <div style="font-size: 0.72rem; color: #4ade80;"><i class="fas fa-circle-check"></i> ${escapeHtml(liveModalPriceText)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function fetchDashboardMarketPrices() {
+            const grid = document.getElementById('mandiPreviewGrid');
+            if (!grid) return;
+            const lang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
+
+            // If records were previously fetched, re-render immediately with new translations
+            if (lastMarketRecords && lastMarketRecords.length > 0) {
+                renderMandiPreviewItems(lastMarketRecords, lang);
+                return;
+            }
+
+            renderDefaultMandiFallbackItems(lang);
+
+            try {
+                if (marketFetchAbortController) marketFetchAbortController.abort();
+                marketFetchAbortController = new AbortController();
+
+                const queryState = currentState || 'Karnataka';
+                const res = await fetch(`${API_BASE_URL}/market-prices?state=${encodeURIComponent(queryState)}&limit=4`, {
+                    signal: marketFetchAbortController.signal
+                });
+                const data = await res.json();
+                if (data.success && Array.isArray(data.records) && data.records.length > 0) {
+                    lastMarketRecords = data.records.slice(0, 4);
+                    renderMandiPreviewItems(lastMarketRecords, lang);
+                }
+            } catch(e) {
+                if (e.name !== 'AbortError') {
+                    renderDefaultMandiFallbackItems(lang);
+                }
+            }
+        }
+
+        function renderNewsPreviewItems(articles, lang) {
+            const grid = document.getElementById('dashboardNewsGrid');
+            if (!grid) return;
+
+            const activeLang = lang || (typeof getAppLanguage === 'function' ? getAppLanguage() : 'en');
+            const noNewsMsg = typeof t === 'function' ? t('dash_no_news', 'No agricultural news available at this time.') : 'No agricultural news available at this time.';
+            
+            if (!Array.isArray(articles) || articles.length === 0) {
+                grid.innerHTML = `<p style="grid-column: 1/-1; padding: 1rem; color: var(--text-secondary); text-align: center;">${escapeHtml(noNewsMsg)}</p>`;
+                return;
+            }
+
+            const todayText = typeof t === 'function' ? t('dash_today', 'Today') : 'Today';
+            const defaultSource = typeof t === 'function' ? t('dash_agri_news_source', 'Agri News') : 'Agri News';
+            const imgUnavailable = typeof t === 'function' ? t('dash_image_unavailable', 'Image unavailable') : 'Image unavailable';
+
+            grid.innerHTML = articles.map(art => {
+                const imgHtml = art.urlToImage
+                    ? `<img src="${escapeHtml(art.urlToImage)}" class="news-preview-img" alt="News Image" onerror="this.outerHTML='<div class=\\'news-no-img-placeholder\\' style=\\'height:120px; display:flex; align-items:center; justify-content:center; background:#1e293b; color:#94a3b8; font-size:0.75rem;\\'><i class=\\'fas fa-image\\'></i>&nbsp;${escapeHtml(imgUnavailable)}</div>'">`
+                    : `<div class="news-no-img-placeholder" style="height:120px; display:flex; align-items:center; justify-content:center; background:#1e293b; color:#94a3b8; font-size:0.75rem;"><i class="fas fa-image"></i>&nbsp;${escapeHtml(imgUnavailable)}</div>`;
+                
+                const pubDateStr = art.publishedAt ? new Date(art.publishedAt).toLocaleDateString() : todayText;
+                const sourceName = art.source?.name || defaultSource;
+
+                return `
+                    <a href="news.html" class="news-preview-item">
+                        ${imgHtml}
+                        <div class="news-preview-body">
+                            <div class="news-preview-title">${escapeHtml(art.title)}</div>
+                            <div class="news-preview-meta">
+                                <span><i class="fas fa-newspaper" style="color: #60a5fa;"></i> ${escapeHtml(sourceName)}</span>
+                                <span>${escapeHtml(pubDateStr)}</span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        async function fetchDashboardNews() {
+            const grid = document.getElementById('dashboardNewsGrid');
+            if (!grid) return;
+            const lang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
+
+            if (newsFetchAbortController) {
+                newsFetchAbortController.abort();
+            }
+            newsFetchAbortController = new AbortController();
+
+            const loadingMsg = typeof t === 'function' ? t('dash_loading_news', 'Loading verified agricultural news...') : 'Loading verified agricultural news...';
+            grid.innerHTML = `
+                <div style="grid-column: 1 / -1; padding: 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
+                    <i class="fas fa-spinner fa-spin" style="color: #60a5fa; margin-right: 0.4rem;"></i> ${escapeHtml(loadingMsg)}
+                </div>
+            `;
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/news?category=all&lang=${encodeURIComponent(lang)}`, {
+                    signal: newsFetchAbortController.signal
+                });
+                const data = await res.json();
+                const rawArticles = Array.isArray(data) ? data : (Array.isArray(data.articles) ? data.articles : []);
+                lastNewsArticles = rawArticles.slice(0, 3);
+                lastNewsLang = lang;
+                renderNewsPreviewItems(lastNewsArticles, lang);
+            } catch(e) {
+                if (e.name === 'AbortError') return;
+                const errMsg = typeof t === 'function' ? t('dash_failed_news', 'Could not load news preview.') : 'Could not load news preview.';
+                grid.innerHTML = `<p style="grid-column: 1/-1; padding: 1rem; color: var(--text-secondary); text-align: center;">${escapeHtml(errMsg)}</p>`;
+            }
+        }
+
+        // Initialize and listen to events
+        setTimeout(fetchDashboardMarketPrices, 800);
+        window.addEventListener('krishi:locationUpdated', fetchDashboardMarketPrices);
+
+        setTimeout(fetchDashboardNews, 1000);
     </script>
 </body>
 

@@ -88,14 +88,28 @@
             };
 
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((pos) => {
-                    document.getElementById('lat').value = pos.coords.latitude;
-                    document.getElementById('lng').value = pos.coords.longitude;
+                navigator.geolocation.getCurrentPosition(async (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    document.getElementById('lat').value = lat.toFixed(4);
+                    document.getElementById('lng').value = lng.toFixed(4);
+
+                    try {
+                        const geoRes = await fetch(`${API_BASE_URL}/farmer/location/reverse-geocode?lat=${lat}&lon=${lng}`);
+                        const geoData = await geoRes.json();
+                        if (geoData.success && geoData.location) {
+                            const loc = geoData.location;
+                            document.getElementById('city').value = loc.city || loc.district || loc.state || 'India';
+                        }
+                    } catch (e) {
+                        console.warn('Geocode error:', e);
+                    }
+
                     btn.innerHTML = originalHTML;
                     btn.disabled = false;
                 }, (err) => {
                     fallbackToIP();
-                }, { timeout: 5000 });
+                }, { enableHighAccuracy: true, timeout: 10000 });
             } else {
                 fallbackToIP();
             }

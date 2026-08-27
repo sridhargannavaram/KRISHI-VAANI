@@ -3,18 +3,223 @@ const router = express.Router();
 const axios = require('axios');
 const Farmer = require('../models/Farmer');
 const twilio = require('twilio');
+const { requireFarmerAuth, optionalFarmerAuth } = require('../middleware/farmerAuth');
 
 const twilioClient = (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN)
     ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
     : null;
 
+/**
+ * Helper: Reverse Geocode via OpenStreetMap Nominatim with retry and timeout
+ */
+async function reverseGeocode(lat, lon) {
+    try {
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=en&addressdetails=1`;
+        const response = await axios.get(url, {
+            headers: {
+                'User-Agent': 'KrishiVaani-App/1.0 (Agriculture Telemetry Platform; contact@krishivaani.in)',
+                'Accept': 'application/json'
+            },
+            timeout: 6000
+        });
+
+        const address = response.data?.address || {};
+        const state = address.state || address.state_district || '';
+        const district = address.district || address.state_district || address.county || '';
+        
+        // Priority order for Indian urban/rural settlements
+        let city = address.city || 
+                   address.town || 
+                   address.municipality || 
+                   address.suburb || 
+                   address.neighbourhood || 
+                   address.residential || 
+                   address.village || 
+                   address.hamlet || 
+                   address.city_district || 
+                   district || 
+                   'My Farm';
+                   
+        // Clean up common suffix noise if present
+        if (city && typeof city === 'string') {
+            city = city.replace(/ taluku?$/i, '').replace(/ district$/i, '').trim();
+        }
+
+        const village = address.village || address.hamlet || address.isolated_dwelling || '';
+        const postalCode = address.postcode || '';
+        const formattedAddress = response.data?.display_name || '';
+
+        return {
+            state,
+            district,
+            city,
+            village,
+            postalCode,
+            formattedAddress,
+            raw: address
+        };
+    } catch (err) {
+        console.warn('⚠️ Reverse geocoding fallback note:', err.message);
+        return {
+            state: '',
+            district: '',
+            city: '',
+            village: '',
+            postalCode: '',
+            formattedAddress: '',
+            raw: {}
+        };
+    }
+}
+
+/**
+ * GET /api/farmer/location/reverse-geocode
+ * Proxy reverse-geocoding to avoid browser CORS/rate limiting
+ */
+router.get('/location/reverse-geocode', optionalFarmerAuth, async (req, res) => {
+    try {
+        const { lat, lon } = req.query;
+        if (lat === undefined || lon === undefined || isNaN(parseFloat(lat)) || isNaN(parseFloat(lon))) {
+            return res.status(400).json({ success: false, error: 'Valid latitude and longitude required.' });
+        }
+
+        const latitude = parseFloat(lat);
+        const longitude = parseFloat(lon);
+
+        if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+            return res.status(400).json({ success: false, error: 'Coordinates out of geographical bounds.' });
+        }
+
+        const geo = await reverseGeocode(latitude, longitude);
+        res.json({
+            success: true,
+            location: {
+                latitude,
+                longitude,
+                ...geo
+            }
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+/**
+ * GET /api/farmer/location
+ * Get authenticated farmer's saved location from database
+ */
+router.get('/location', requireFarmerAuth, async (req, res) => {
+    try {
+        const farmer = req.farmer;
+        const [lng, lat] = farmer.location.coordinates;
+        res.json({
+            success: true,
+            location: {
+                latitude: lat,
+                longitude: lng,
+                accuracy: farmer.accuracy,
+                state: farmer.state,
+                district: farmer.district,
+                city: farmer.city,
+                village: farmer.village,
+                postalCode: farmer.postalCode,
+                formattedAddress: farmer.formattedAddress,
+                locationSource: farmer.locationSource,
+                locationUpdatedAt: farmer.locationUpdatedAt
+            }
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+/**
+ * PUT /api/farmer/location
+ * Update farmer's authoritative location, coordinates, address & PostGIS geom
+ */
+router.put('/location', requireFarmerAuth, async (req, res) => {
+    try {
+        const latRaw = req.body.lat !== undefined ? req.body.lat : req.body.latitude;
+        const lngRaw = req.body.lng !== undefined ? req.body.lng : (req.body.lon !== undefined ? req.body.lon : req.body.longitude);
+        const { accuracy, state, district, city, village, postalCode, formattedAddress, source } = req.body;
+
+        if (latRaw === undefined || lngRaw === undefined || isNaN(parseFloat(latRaw)) || isNaN(parseFloat(lngRaw))) {
+            return res.status(400).json({ success: false, error: 'Valid latitude and longitude coordinates are required.' });
+        }
+
+        const latitude = parseFloat(latRaw);
+        const longitude = parseFloat(lngRaw);
+
+        if (latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+            return res.status(400).json({ success: false, error: 'Coordinates out of bounds (-90 to 90 lat, -180 to 180 lon).' });
+        }
+
+        let locState = (state || '').trim();
+        let locDistrict = (district || '').trim();
+        let locCity = (city || '').trim();
+        let locVillage = (village || '').trim();
+        let locPostal = (postalCode || '').trim();
+        let locFormatted = (formattedAddress || '').trim();
+
+        // If location address metadata is incomplete, reverse geocode on server
+        if (!locState || !locDistrict || !locCity) {
+            const geo = await reverseGeocode(latitude, longitude);
+            if (!locState) locState = geo.state;
+            if (!locDistrict) locDistrict = geo.district;
+            if (!locCity) locCity = geo.city;
+            if (!locVillage) locVillage = geo.village;
+            if (!locPostal) locPostal = geo.postalCode;
+            if (!locFormatted) locFormatted = geo.formattedAddress;
+        }
+
+        const validSource = ['GPS', 'MANUAL', 'IP_FALLBACK'].includes(source) ? source : 'GPS';
+
+        const updatedFarmer = await Farmer.updateLocation(req.farmer.id, {
+            lat: latitude,
+            lng: longitude,
+            accuracy: parseFloat(accuracy) || 0,
+            state: locState,
+            district: locDistrict,
+            city: locCity || 'India',
+            village: locVillage,
+            postalCode: locPostal,
+            formattedAddress: locFormatted,
+            source: validSource
+        });
+
+        if (!updatedFarmer) {
+            return res.status(404).json({ success: false, error: 'Farmer account not found.' });
+        }
+
+        res.json({
+            success: true,
+            message: 'Location saved and synchronized successfully.',
+            farmer: {
+                id: updatedFarmer.id,
+                name: updatedFarmer.name,
+                phone: updatedFarmer.phone,
+                city: updatedFarmer.city,
+                state: updatedFarmer.state,
+                district: updatedFarmer.district,
+                village: updatedFarmer.village,
+                postalCode: updatedFarmer.postalCode,
+                formattedAddress: updatedFarmer.formattedAddress,
+                location: updatedFarmer.location,
+                accuracy: updatedFarmer.accuracy,
+                locationSource: updatedFarmer.locationSource,
+                locationUpdatedAt: updatedFarmer.locationUpdatedAt
+            }
+        });
+    } catch (err) {
+        console.error('Location Update Route Error:', err);
+        res.status(500).json({ success: false, error: 'Internal server error updating location: ' + err.message });
+    }
+});
+
 router.put('/alerts/:id', async (req, res) => {
     try {
-        const farmer = await Farmer.findById(req.params.id);
+        const farmer = await Farmer.updateAlertPreferences(req.params.id, req.body.alertPreferences);
         if(!farmer) return res.status(404).json({error: 'Farmer not found'});
-
-        farmer.alertPreferences = req.body.alertPreferences;
-        await farmer.save();
 
         // -------------------------------------------------------------
         // IMMEDIATE ALERT EXECUTION LOGIC (Added per user request)

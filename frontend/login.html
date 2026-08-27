@@ -59,6 +59,7 @@
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('farmer', JSON.stringify(data.farmer));
+                    sessionStorage.setItem('freshLogin', 'true');
                     window.location.href = 'dashboard.html';
                 } else {
                     errorDiv.textContent = data.error || 'Login failed';

@@ -1,0 +1,695 @@
+{
+  "amla": {
+    "name": "Amla",
+    "filename": "amla.webp",
+    "localPath": "assets/images/commodities/amla.webp",
+    "status": "available",
+    "fileSizeBytes": 205501
+  },
+  "apple": {
+    "name": "Apple",
+    "filename": "apple.webp",
+    "localPath": "assets/images/commodities/apple.webp",
+    "status": "available",
+    "fileSizeBytes": 140943
+  },
+  "arecanut": {
+    "name": "Arecanut",
+    "filename": "arecanut.webp",
+    "localPath": "assets/images/commodities/arecanut.webp",
+    "status": "available",
+    "fileSizeBytes": 71723
+  },
+  "ash-gourd": {
+    "name": "Ash Gourd",
+    "filename": "ash-gourd.webp",
+    "localPath": "assets/images/commodities/ash-gourd.webp",
+    "status": "available",
+    "fileSizeBytes": 182410
+  },
+  "baby-corn": {
+    "name": "Baby Corn",
+    "filename": "baby-corn.webp",
+    "localPath": "assets/images/commodities/baby-corn.webp",
+    "status": "available",
+    "fileSizeBytes": 119763
+  },
+  "bajra": {
+    "name": "Bajra",
+    "filename": "bajra.webp",
+    "localPath": "assets/images/commodities/bajra.webp",
+    "status": "available",
+    "fileSizeBytes": 154562
+  },
+  "banana-green": {
+    "name": "Banana Green",
+    "filename": "banana-green.webp",
+    "localPath": "assets/images/commodities/banana-green.webp",
+    "status": "available",
+    "fileSizeBytes": 34418
+  },
+  "banana": {
+    "name": "Banana",
+    "filename": "banana.webp",
+    "localPath": "assets/images/commodities/banana.webp",
+    "status": "available",
+    "fileSizeBytes": 45092
+  },
+  "beans": {
+    "name": "Beans",
+    "filename": "beans.webp",
+    "localPath": "assets/images/commodities/beans.webp",
+    "status": "available",
+    "fileSizeBytes": 119763
+  },
+  "beetroot": {
+    "name": "Beetroot",
+    "filename": "beetroot.webp",
+    "localPath": "assets/images/commodities/beetroot.webp",
+    "status": "available",
+    "fileSizeBytes": 134267
+  },
+  "bengal-gram": {
+    "name": "Bengal Gram",
+    "filename": "bengal-gram.webp",
+    "localPath": "assets/images/commodities/bengal-gram.webp",
+    "status": "available",
+    "fileSizeBytes": 141990
+  },
+  "betel-leaf": {
+    "name": "Betel Leaf",
+    "filename": "betel-leaf.webp",
+    "localPath": "assets/images/commodities/betel-leaf.webp",
+    "status": "available",
+    "fileSizeBytes": 225952
+  },
+  "bhindi": {
+    "name": "Bhindi",
+    "filename": "bhindi.webp",
+    "localPath": "assets/images/commodities/bhindi.webp",
+    "status": "available",
+    "fileSizeBytes": 74532
+  },
+  "bitter-gourd": {
+    "name": "Bitter Gourd",
+    "filename": "bitter-gourd.webp",
+    "localPath": "assets/images/commodities/bitter-gourd.webp",
+    "status": "available",
+    "fileSizeBytes": 211573
+  },
+  "bottle-gourd": {
+    "name": "Bottle Gourd",
+    "filename": "bottle-gourd.webp",
+    "localPath": "assets/images/commodities/bottle-gourd.webp",
+    "status": "available",
+    "fileSizeBytes": 113728
+  },
+  "brinjal": {
+    "name": "Brinjal",
+    "filename": "brinjal.webp",
+    "localPath": "assets/images/commodities/brinjal.webp",
+    "status": "available",
+    "fileSizeBytes": 267285
+  },
+  "cabbage": {
+    "name": "Cabbage",
+    "filename": "cabbage.webp",
+    "localPath": "assets/images/commodities/cabbage.webp",
+    "status": "available",
+    "fileSizeBytes": 267285
+  },
+  "capsicum": {
+    "name": "Capsicum",
+    "filename": "capsicum.webp",
+    "localPath": "assets/images/commodities/capsicum.webp",
+    "status": "available",
+    "fileSizeBytes": 53262
+  },
+  "carrot": {
+    "name": "Carrot",
+    "filename": "carrot.webp",
+    "localPath": "assets/images/commodities/carrot.webp",
+    "status": "available",
+    "fileSizeBytes": 211573
+  },
+  "castor-seed": {
+    "name": "Castor Seed",
+    "filename": "castor-seed.webp",
+    "localPath": "assets/images/commodities/castor-seed.webp",
+    "status": "available",
+    "fileSizeBytes": 71723
+  },
+  "cauliflower": {
+    "name": "Cauliflower",
+    "filename": "cauliflower.webp",
+    "localPath": "assets/images/commodities/cauliflower.webp",
+    "status": "available",
+    "fileSizeBytes": 93375
+  },
+  "chikoo": {
+    "name": "Chikoo",
+    "filename": "chikoo.webp",
+    "localPath": "assets/images/commodities/chikoo.webp",
+    "status": "available",
+    "fileSizeBytes": 86439
+  },
+  "cluster-beans": {
+    "name": "Cluster Beans",
+    "filename": "cluster-beans.webp",
+    "localPath": "assets/images/commodities/cluster-beans.webp",
+    "status": "available",
+    "fileSizeBytes": 119763
+  },
+  "coconut-oil": {
+    "name": "Coconut Oil",
+    "filename": "coconut-oil.webp",
+    "localPath": "assets/images/commodities/coconut-oil.webp",
+    "status": "available",
+    "fileSizeBytes": 76239
+  },
+  "coconut": {
+    "name": "Coconut",
+    "filename": "coconut.webp",
+    "localPath": "assets/images/commodities/coconut.webp",
+    "status": "available",
+    "fileSizeBytes": 92801
+  },
+  "copra": {
+    "name": "Copra",
+    "filename": "copra.webp",
+    "localPath": "assets/images/commodities/copra.webp",
+    "status": "available",
+    "fileSizeBytes": 92801
+  },
+  "coriander": {
+    "name": "Coriander",
+    "filename": "coriander.webp",
+    "localPath": "assets/images/commodities/coriander.webp",
+    "status": "available",
+    "fileSizeBytes": 225952
+  },
+  "cotton": {
+    "name": "Cotton",
+    "filename": "cotton.webp",
+    "localPath": "assets/images/commodities/cotton.webp",
+    "status": "available",
+    "fileSizeBytes": 81273
+  },
+  "cowpea": {
+    "name": "Cowpea",
+    "filename": "cowpea.webp",
+    "localPath": "assets/images/commodities/cowpea.webp",
+    "status": "available",
+    "fileSizeBytes": 119763
+  },
+  "cucumber": {
+    "name": "Cucumber",
+    "filename": "cucumber.webp",
+    "localPath": "assets/images/commodities/cucumber.webp",
+    "status": "available",
+    "fileSizeBytes": 200460
+  },
+  "cumin": {
+    "name": "Cumin",
+    "filename": "cumin.webp",
+    "localPath": "assets/images/commodities/cumin.webp",
+    "status": "available",
+    "fileSizeBytes": 430706
+  },
+  "custard-apple": {
+    "name": "Custard Apple",
+    "filename": "custard-apple.webp",
+    "localPath": "assets/images/commodities/custard-apple.webp",
+    "status": "available",
+    "fileSizeBytes": 86439
+  },
+  "drumstick": {
+    "name": "Drumstick",
+    "filename": "drumstick.webp",
+    "localPath": "assets/images/commodities/drumstick.webp",
+    "status": "available",
+    "fileSizeBytes": 113728
+  },
+  "dry-chilli": {
+    "name": "Dry Chilli",
+    "filename": "dry-chilli.webp",
+    "localPath": "assets/images/commodities/dry-chilli.webp",
+    "status": "available",
+    "fileSizeBytes": 137785
+  },
+  "fig": {
+    "name": "Fig",
+    "filename": "fig.webp",
+    "localPath": "assets/images/commodities/fig.webp",
+    "status": "available",
+    "fileSizeBytes": 166962
+  },
+  "garlic": {
+    "name": "Garlic",
+    "filename": "garlic.webp",
+    "localPath": "assets/images/commodities/garlic.webp",
+    "status": "available",
+    "fileSizeBytes": 80764
+  },
+  "gerbera": {
+    "name": "Gerbera",
+    "filename": "gerbera.webp",
+    "localPath": "assets/images/commodities/gerbera.webp",
+    "status": "available",
+    "fileSizeBytes": 86131
+  },
+  "ginger": {
+    "name": "Ginger",
+    "filename": "ginger.webp",
+    "localPath": "assets/images/commodities/ginger.webp",
+    "status": "available",
+    "fileSizeBytes": 76993
+  },
+  "grapes": {
+    "name": "Grapes",
+    "filename": "grapes.webp",
+    "localPath": "assets/images/commodities/grapes.webp",
+    "status": "available",
+    "fileSizeBytes": 134879
+  },
+  "green-chilli": {
+    "name": "Green Chilli",
+    "filename": "green-chilli.webp",
+    "localPath": "assets/images/commodities/green-chilli.webp",
+    "status": "available",
+    "fileSizeBytes": 174547
+  },
+  "green-gram": {
+    "name": "Green Gram",
+    "filename": "green-gram.webp",
+    "localPath": "assets/images/commodities/green-gram.webp",
+    "status": "available",
+    "fileSizeBytes": 141990
+  },
+  "green-peas": {
+    "name": "Green Peas",
+    "filename": "green-peas.webp",
+    "localPath": "assets/images/commodities/green-peas.webp",
+    "status": "available",
+    "fileSizeBytes": 109010
+  },
+  "groundnut": {
+    "name": "Groundnut",
+    "filename": "groundnut.webp",
+    "localPath": "assets/images/commodities/groundnut.webp",
+    "status": "available",
+    "fileSizeBytes": 71723
+  },
+  "guava": {
+    "name": "Guava",
+    "filename": "guava.webp",
+    "localPath": "assets/images/commodities/guava.webp",
+    "status": "available",
+    "fileSizeBytes": 29652
+  },
+  "horse-gram": {
+    "name": "Horse Gram",
+    "filename": "horse-gram.webp",
+    "localPath": "assets/images/commodities/horse-gram.webp",
+    "status": "available",
+    "fileSizeBytes": 141990
+  },
+  "jackfruit": {
+    "name": "Jackfruit",
+    "filename": "jackfruit.webp",
+    "localPath": "assets/images/commodities/jackfruit.webp",
+    "status": "available",
+    "fileSizeBytes": 86439
+  },
+  "jaggery": {
+    "name": "Jaggery",
+    "filename": "jaggery.webp",
+    "localPath": "assets/images/commodities/jaggery.webp",
+    "status": "available",
+    "fileSizeBytes": 76239
+  },
+  "jasmine": {
+    "name": "Jasmine",
+    "filename": "jasmine.webp",
+    "localPath": "assets/images/commodities/jasmine.webp",
+    "status": "available",
+    "fileSizeBytes": 103567
+  },
+  "jowar": {
+    "name": "Jowar",
+    "filename": "jowar.webp",
+    "localPath": "assets/images/commodities/jowar.webp",
+    "status": "available",
+    "fileSizeBytes": 154562
+  },
+  "lemon": {
+    "name": "Lemon",
+    "filename": "lemon.webp",
+    "localPath": "assets/images/commodities/lemon.webp",
+    "status": "available",
+    "fileSizeBytes": 205501
+  },
+  "lentil": {
+    "name": "Lentil",
+    "filename": "lentil.webp",
+    "localPath": "assets/images/commodities/lentil.webp",
+    "status": "available",
+    "fileSizeBytes": 141990
+  },
+  "maize": {
+    "name": "Maize",
+    "filename": "maize.webp",
+    "localPath": "assets/images/commodities/maize.webp",
+    "status": "available",
+    "fileSizeBytes": 119763
+  },
+  "mango": {
+    "name": "Mango",
+    "filename": "mango.webp",
+    "localPath": "assets/images/commodities/mango.webp",
+    "status": "available",
+    "fileSizeBytes": 29652
+  },
+  "marigold": {
+    "name": "Marigold",
+    "filename": "marigold.webp",
+    "localPath": "assets/images/commodities/marigold.webp",
+    "status": "available",
+    "fileSizeBytes": 200260
+  },
+  "mentha-oil": {
+    "name": "Mentha Oil",
+    "filename": "mentha-oil.webp",
+    "localPath": "assets/images/commodities/mentha-oil.webp",
+    "status": "available",
+    "fileSizeBytes": 76239
+  },
+  "mentha": {
+    "name": "Mentha",
+    "filename": "mentha.webp",
+    "localPath": "assets/images/commodities/mentha.webp",
+    "status": "available",
+    "fileSizeBytes": 103190
+  },
+  "methi": {
+    "name": "Methi",
+    "filename": "methi.webp",
+    "localPath": "assets/images/commodities/methi.webp",
+    "status": "available",
+    "fileSizeBytes": 225952
+  },
+  "mint": {
+    "name": "Mint",
+    "filename": "mint.webp",
+    "localPath": "assets/images/commodities/mint.webp",
+    "status": "available",
+    "fileSizeBytes": 103190
+  },
+  "mushroom": {
+    "name": "Mushroom",
+    "filename": "mushroom.webp",
+    "localPath": "assets/images/commodities/mushroom.webp",
+    "status": "available",
+    "fileSizeBytes": 166246
+  },
+  "muskmelon": {
+    "name": "Muskmelon",
+    "filename": "muskmelon.webp",
+    "localPath": "assets/images/commodities/muskmelon.webp",
+    "status": "available",
+    "fileSizeBytes": 211573
+  },
+  "mustard": {
+    "name": "Mustard",
+    "filename": "mustard.webp",
+    "localPath": "assets/images/commodities/mustard.webp",
+    "status": "available",
+    "fileSizeBytes": 125107
+  },
+  "onion-green": {
+    "name": "Onion Green",
+    "filename": "onion-green.webp",
+    "localPath": "assets/images/commodities/onion-green.webp",
+    "status": "available",
+    "fileSizeBytes": 96768
+  },
+  "onion": {
+    "name": "Onion",
+    "filename": "onion.webp",
+    "localPath": "assets/images/commodities/onion.webp",
+    "status": "available",
+    "fileSizeBytes": 247745
+  },
+  "orange": {
+    "name": "Orange",
+    "filename": "orange.webp",
+    "localPath": "assets/images/commodities/orange.webp",
+    "status": "available",
+    "fileSizeBytes": 101578
+  },
+  "paddy": {
+    "name": "Paddy",
+    "filename": "paddy.webp",
+    "localPath": "assets/images/commodities/paddy.webp",
+    "status": "available",
+    "fileSizeBytes": 106492
+  },
+  "papaya": {
+    "name": "Papaya",
+    "filename": "papaya.webp",
+    "localPath": "assets/images/commodities/papaya.webp",
+    "status": "available",
+    "fileSizeBytes": 86439
+  },
+  "pear": {
+    "name": "Pear",
+    "filename": "pear.webp",
+    "localPath": "assets/images/commodities/pear.webp",
+    "status": "available",
+    "fileSizeBytes": 126134
+  },
+  "pineapple": {
+    "name": "Pineapple",
+    "filename": "pineapple.webp",
+    "localPath": "assets/images/commodities/pineapple.webp",
+    "status": "available",
+    "fileSizeBytes": 105045
+  },
+  "plum": {
+    "name": "Plum",
+    "filename": "plum.webp",
+    "localPath": "assets/images/commodities/plum.webp",
+    "status": "available",
+    "fileSizeBytes": 140943
+  },
+  "pointed-gourd": {
+    "name": "Pointed Gourd",
+    "filename": "pointed-gourd.webp",
+    "localPath": "assets/images/commodities/pointed-gourd.webp",
+    "status": "available",
+    "fileSizeBytes": 113728
+  },
+  "pomegranate": {
+    "name": "Pomegranate",
+    "filename": "pomegranate.webp",
+    "localPath": "assets/images/commodities/pomegranate.webp",
+    "status": "available",
+    "fileSizeBytes": 52121
+  },
+  "potato": {
+    "name": "Potato",
+    "filename": "potato.webp",
+    "localPath": "assets/images/commodities/potato.webp",
+    "status": "available",
+    "fileSizeBytes": 85929
+  },
+  "pumpkin": {
+    "name": "Pumpkin",
+    "filename": "pumpkin.webp",
+    "localPath": "assets/images/commodities/pumpkin.webp",
+    "status": "available",
+    "fileSizeBytes": 96446
+  },
+  "radish": {
+    "name": "Radish",
+    "filename": "radish.webp",
+    "localPath": "assets/images/commodities/radish.webp",
+    "status": "available",
+    "fileSizeBytes": 134267
+  },
+  "ragi": {
+    "name": "Ragi",
+    "filename": "ragi.webp",
+    "localPath": "assets/images/commodities/ragi.webp",
+    "status": "available",
+    "fileSizeBytes": 154562
+  },
+  "red-gram": {
+    "name": "Red Gram",
+    "filename": "red-gram.webp",
+    "localPath": "assets/images/commodities/red-gram.webp",
+    "status": "available",
+    "fileSizeBytes": 141990
+  },
+  "rice": {
+    "name": "Rice",
+    "filename": "rice.webp",
+    "localPath": "assets/images/commodities/rice.webp",
+    "status": "available",
+    "fileSizeBytes": 141990
+  },
+  "ridge-gourd": {
+    "name": "Ridge Gourd",
+    "filename": "ridge-gourd.webp",
+    "localPath": "assets/images/commodities/ridge-gourd.webp",
+    "status": "available",
+    "fileSizeBytes": 113728
+  },
+  "rose": {
+    "name": "Rose",
+    "filename": "rose.webp",
+    "localPath": "assets/images/commodities/rose.webp",
+    "status": "available",
+    "fileSizeBytes": 127192
+  },
+  "sesamum": {
+    "name": "Sesamum",
+    "filename": "sesamum.webp",
+    "localPath": "assets/images/commodities/sesamum.webp",
+    "status": "available",
+    "fileSizeBytes": 71723
+  },
+  "snake-gourd": {
+    "name": "Snake Gourd",
+    "filename": "snake-gourd.webp",
+    "localPath": "assets/images/commodities/snake-gourd.webp",
+    "status": "available",
+    "fileSizeBytes": 113728
+  },
+  "soybean": {
+    "name": "Soybean",
+    "filename": "soybean.webp",
+    "localPath": "assets/images/commodities/soybean.webp",
+    "status": "available",
+    "fileSizeBytes": 430706
+  },
+  "spinach": {
+    "name": "Spinach",
+    "filename": "spinach.webp",
+    "localPath": "assets/images/commodities/spinach.webp",
+    "status": "available",
+    "fileSizeBytes": 225952
+  },
+  "sponge-gourd": {
+    "name": "Sponge Gourd",
+    "filename": "sponge-gourd.webp",
+    "localPath": "assets/images/commodities/sponge-gourd.webp",
+    "status": "available",
+    "fileSizeBytes": 113728
+  },
+  "sweet-corn": {
+    "name": "Sweet Corn",
+    "filename": "sweet-corn.webp",
+    "localPath": "assets/images/commodities/sweet-corn.webp",
+    "status": "available",
+    "fileSizeBytes": 119763
+  },
+  "sweet-lime": {
+    "name": "Sweet Lime",
+    "filename": "sweet-lime.webp",
+    "localPath": "assets/images/commodities/sweet-lime.webp",
+    "status": "available",
+    "fileSizeBytes": 205501
+  },
+  "sweet-potato": {
+    "name": "Sweet Potato",
+    "filename": "sweet-potato.webp",
+    "localPath": "assets/images/commodities/sweet-potato.webp",
+    "status": "available",
+    "fileSizeBytes": 211573
+  },
+  "tamarind": {
+    "name": "Tamarind",
+    "filename": "tamarind.webp",
+    "localPath": "assets/images/commodities/tamarind.webp",
+    "status": "available",
+    "fileSizeBytes": 52121
+  },
+  "tapioca": {
+    "name": "Tapioca",
+    "filename": "tapioca.webp",
+    "localPath": "assets/images/commodities/tapioca.webp",
+    "status": "available",
+    "fileSizeBytes": 211573
+  },
+  "tender-coconut": {
+    "name": "Tender Coconut",
+    "filename": "tender-coconut.webp",
+    "localPath": "assets/images/commodities/tender-coconut.webp",
+    "status": "available",
+    "fileSizeBytes": 119049
+  },
+  "tobacco": {
+    "name": "Tobacco",
+    "filename": "tobacco.webp",
+    "localPath": "assets/images/commodities/tobacco.webp",
+    "status": "available",
+    "fileSizeBytes": 13833
+  },
+  "tomato": {
+    "name": "Tomato",
+    "filename": "tomato.webp",
+    "localPath": "assets/images/commodities/tomato.webp",
+    "status": "available",
+    "fileSizeBytes": 208604
+  },
+  "turmeric": {
+    "name": "Turmeric",
+    "filename": "turmeric.webp",
+    "localPath": "assets/images/commodities/turmeric.webp",
+    "status": "available",
+    "fileSizeBytes": 52121
+  },
+  "turnip": {
+    "name": "Turnip",
+    "filename": "turnip.webp",
+    "localPath": "assets/images/commodities/turnip.webp",
+    "status": "available",
+    "fileSizeBytes": 134267
+  },
+  "watermelon": {
+    "name": "Watermelon",
+    "filename": "watermelon.webp",
+    "localPath": "assets/images/commodities/watermelon.webp",
+    "status": "available",
+    "fileSizeBytes": 96768
+  },
+  "wheat-atta": {
+    "name": "Wheat Atta",
+    "filename": "wheat-atta.webp",
+    "localPath": "assets/images/commodities/wheat-atta.webp",
+    "status": "available",
+    "fileSizeBytes": 171278
+  },
+  "wheat": {
+    "name": "Wheat",
+    "filename": "wheat.webp",
+    "localPath": "assets/images/commodities/wheat.webp",
+    "status": "available",
+    "fileSizeBytes": 154562
+  },
+  "wood": {
+    "name": "Wood",
+    "filename": "wood.webp",
+    "localPath": "assets/images/commodities/wood.webp",
+    "status": "available",
+    "fileSizeBytes": 113167
+  },
+  "yam": {
+    "name": "Yam",
+    "filename": "yam.webp",
+    "localPath": "assets/images/commodities/yam.webp",
+    "status": "available",
+    "fileSizeBytes": 211573
+  }
+}

@@ -34,8 +34,7 @@ router.post('/upload/:id', upload.single('profileImage'), async (req, res) => {
         // Convert buffer to Base64 data URI
         const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
         
-        farmer.profileImage = base64Image;
-        await farmer.save();
+        await Farmer.updateProfileImage(req.params.id, base64Image);
 
         res.json({
             success: true,
@@ -51,9 +50,14 @@ router.post('/upload/:id', upload.single('profileImage'), async (req, res) => {
 // Get profile image info
 router.get('/:id', async (req, res) => {
     try {
-        const farmer = await Farmer.findById(req.params.id).select('name phone city profileImage');
+        const farmer = await Farmer.findById(req.params.id);
         if (!farmer) return res.status(404).json({ error: 'Farmer not found.' });
-        res.json(farmer);
+        res.json({
+            name: farmer.name,
+            phone: farmer.phone,
+            city: farmer.city,
+            profileImage: farmer.profileImage
+        });
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch profile.' });
     }

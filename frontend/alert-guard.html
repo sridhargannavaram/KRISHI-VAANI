@@ -51,10 +51,10 @@
             gap: 0.8rem;
             transition: background 0.2s;
         }
-        .crop-suggestion-item:hover { background: #e8f5e9; }
+        .crop-suggestion-item:hover { background: var(--bg-subtle); }
         .crop-suggestion-item:last-child { border-bottom: none; }
         .crop-suggestion-item .crop-emoji { font-size: 1.3rem; }
-        .crop-suggestion-item .crop-details { font-size: 0.75rem; color: #666; }
+        .crop-suggestion-item .crop-details { font-size: 0.75rem; color: var(--text-secondary); }
 
         /* Active Crop Badge */
         .active-crop-badge {
@@ -64,13 +64,13 @@
             padding: 1rem 1.5rem;
             border-radius: 14px;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, rgba(76,175,80,0.15), rgba(139,195,74,0.1));
-            border: 1px solid rgba(76,175,80,0.3);
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
         }
         .active-crop-badge .crop-name {
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--accent-color);
+            color: var(--primary-dark);
         }
         .active-crop-badge .crop-tolerance {
             font-size: 0.8rem;
@@ -85,7 +85,7 @@
             font-size: 1rem;
             transition: color 0.2s;
         }
-        .clear-crop-btn:hover { color: #f44336; }
+        .clear-crop-btn:hover { color: #ef4444; }
 
         /* Threshold Cards */
         .threshold-grid {
@@ -98,17 +98,22 @@
         .threshold-card {
             padding: 1.2rem;
             border-radius: 14px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
         }
-        .threshold-card:hover { background: rgba(255,255,255,0.1); }
+        .threshold-card:hover { 
+            border-color: var(--primary-border);
+            box-shadow: var(--shadow-md); 
+        }
         .threshold-card label {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.85rem;
             font-weight: 600;
+            color: var(--text-primary);
             margin-bottom: 0.6rem;
         }
         .threshold-card input {
@@ -118,16 +123,19 @@
             font-weight: 700;
             text-align: center;
             border-radius: 10px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
         }
         .threshold-card .threshold-help {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
             margin-top: 0.4rem;
             text-align: center;
         }
         .threshold-changed {
-            border-color: var(--accent-color) !important;
-            box-shadow: 0 0 10px rgba(76,175,80,0.2);
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
         }
 
         /* Rain toggle */
@@ -137,8 +145,9 @@
             gap: 1rem;
             padding: 1rem 1.5rem;
             border-radius: 14px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
             margin-bottom: 1.5rem;
         }
 
@@ -149,21 +158,188 @@
             margin-bottom: 1rem;
             display: none;
         }
-        .status-success { background: rgba(76,175,80,0.15); border: 1px solid rgba(76,175,80,0.3); }
-        .status-alert { background: rgba(255,152,0,0.15); border: 1px solid rgba(255,152,0,0.3); }
+        .status-success { 
+            background: #dcfce7; 
+            border: 1px solid #bbf7d0; 
+            color: #15803d;
+        }
+        .status-alert { 
+            background: #fef3c7; 
+            border: 1px solid #fde68a; 
+            color: #b45309;
+        }
+
+        /* Dark Theme Specific Overrides for AlertGuard */
+        [data-theme='dark'] .crop-suggestions {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .crop-suggestion-item {
+            border-bottom-color: #2E404B;
+        }
+
+        [data-theme='dark'] .crop-suggestion-item:hover {
+            background: #22363F;
+        }
+
+        [data-theme='dark'] .crop-suggestion-item .crop-name {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .active-crop-badge {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        [data-theme='dark'] .active-crop-badge .crop-name {
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .threshold-card {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .threshold-card:hover {
+            border-color: rgba(34, 197, 94, 0.4);
+            background: #22363F;
+        }
+
+        [data-theme='dark'] .threshold-card input {
+            background: #16242B;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .rain-toggle {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .status-success {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .status-alert {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #FBBF24;
+        }
     </style>
 </head>
 <body>
-    <nav class="glass">
-        <a href="dashboard.html" class="logo"><i class="fas fa-leaf"></i> KRISHI VAANI</a>
-        <div class="nav-links">
-            <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
-            <a href="crop-alerts.html"><i class="fas fa-shield-alt"></i> Crop Alerts</a>
-            <a href="news.html"><i class="fas fa-newspaper"></i> Agri-News</a>
-            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-            <button id="logoutBtn" class="btn btn-glass">Logout</button>
+    <!-- Modern AgriTech / SaaS Navbar -->
+    <header class="app-header">
+        <div class="header-container">
+            <!-- Left: Brand Logo -->
+            <a href="dashboard.html" class="brand-logo" title="KRISHI VAANI">
+                <div class="brand-icon-wrap">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <span class="brand-name">KRISHI VAANI</span>
+            </a>
+
+            <!-- Center: Navigation Items -->
+            <nav class="header-nav-center">
+                <a href="dashboard.html" class="nav-tab">
+                    <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+                </a>
+                <a href="marketplace.html" class="nav-tab">
+                    <i class="fas fa-store"></i> <span>Marketplace</span>
+                </a>
+                <a href="crop-alerts.html" class="nav-tab">
+                    <i class="fas fa-bell"></i> <span>Crop Alerts</span>
+                </a>
+                <a href="alert-guard.html" class="nav-tab active">
+                    <i class="fas fa-shield-alt"></i> <span>AlertGuard</span>
+                </a>
+                <a href="news.html" class="nav-tab">
+                    <i class="fas fa-newspaper"></i> <span>Agri-News</span>
+                </a>
+            </nav>
+
+            <!-- Right: Language + Profile -->
+            <div class="header-nav-right">
+                <!-- Language Selector -->
+                <div class="nav-lang-box">
+                    <i class="fas fa-globe"></i>
+                    <select id="langSelect" class="nav-lang-select" aria-label="Select Language">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                        <option value="ta">தமிழ்</option>
+                        <option value="te">తెలుగు</option>
+                        <option value="ml">മലയാളം</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </div>
+
+                <!-- Profile Dropdown (Displays only 'Profile') -->
+                <div class="nav-profile-container">
+                    <button class="nav-profile-button" id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Account Menu">
+                        <span>Profile</span>
+                        <i class="fas fa-chevron-down nav-caret"></i>
+                    </button>
+                    <div class="nav-profile-popover" id="navProfileDropdown">
+                        <a href="dashboard.html" class="popover-item">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                        <div class="popover-theme-row">
+                            <div class="popover-theme-label">
+                                <i class="fas fa-palette"></i>
+                                <span>Appearance</span>
+                            </div>
+                            <div class="popover-theme-pills">
+                                <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                                <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                                <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                            </div>
+                        </div>
+                        <a href="alert-guard.html" class="popover-item">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                        </a>
+                        <a href="dashboard.html" class="popover-item">
+                            <i class="fas fa-gear"></i>
+                            <span>Settings</span>
+                        </a>
+                        <div class="popover-divider"></div>
+                        <a href="#" onclick="logout(event)" class="popover-item popover-logout">
+                            <i class="fas fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mobile Navigation Toggle -->
+                <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
-    </nav>
+
+        <!-- Mobile Drawer -->
+        <div class="mobile-nav-drawer" id="mobileNavDrawer">
+            <a href="dashboard.html" class="mobile-drawer-link">
+                <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+            </a>
+            <a href="marketplace.html" class="mobile-drawer-link">
+                <i class="fas fa-store"></i> <span>Marketplace</span>
+            </a>
+            <a href="crop-alerts.html" class="mobile-drawer-link">
+                <i class="fas fa-bell"></i> <span>Crop Alerts</span>
+            </a>
+            <a href="alert-guard.html" class="mobile-drawer-link active">
+                <i class="fas fa-shield-alt"></i> <span>AlertGuard</span>
+            </a>
+            <a href="news.html" class="mobile-drawer-link">
+                <i class="fas fa-newspaper"></i> <span>Agri-News</span>
+            </a>
+        </div>
+    </header>
 
     <div class="container" style="align-items: flex-start; min-height: auto; margin-top: 1rem;">
         <div class="glass glass-card alert-page">
@@ -413,13 +589,13 @@
                 
                 if (data.triggered) {
                     statusBox.className = 'status-box status-alert';
-                    let info = `🚨 <strong>Alert Triggered!</strong><br>${data.message}`;
-                    if (data.smsStatus) info += `<br>📱 SMS: ${data.smsStatus}`;
-                    if (data.callStatus) info += `<br>📞 Call: ${data.callStatus}`;
+                    let info = `<i class="fas fa-triangle-exclamation"></i> <strong>Alert Triggered!</strong><br>${data.message}`;
+                    if (data.smsStatus) info += `<br><i class="fas fa-comment-sms"></i> SMS: ${data.smsStatus}`;
+                    if (data.callStatus) info += `<br><i class="fas fa-phone-volume"></i> Call: ${data.callStatus}`;
                     statusBox.innerHTML = info;
                 } else {
                     statusBox.className = 'status-box status-success';
-                    statusBox.innerHTML = `✅ <strong>${data.message || 'Settings saved!'}</strong>`;
+                    statusBox.innerHTML = `<i class="fas fa-circle-check"></i> <strong>${data.message || 'Settings saved successfully.'}</strong>`;
                     if (selectedCropKey) {
                         statusBox.innerHTML += `<br><small>Thresholds optimized for ${cropProfiles[selectedCropKey].name}</small>`;
                     }
@@ -428,8 +604,42 @@
             } catch(e) {
                 alert('Failed to save preferences.');
             }
-            btn.innerHTML = ogBtn;
+            btn.innerHTML = `<i class="fas fa-save"></i> ${t('ag_save_btn')}`;
             btn.disabled = false;
+        });
+
+        function updateAlertGuardTranslations() {
+            const h2 = document.querySelector('.alert-page h2');
+            if (h2) h2.innerHTML = `<i class="fas fa-bell" style="color: var(--accent-color);"></i> ${t('ag_title')}`;
+            const p = document.querySelector('.alert-page p');
+            if (p) p.innerText = t('ag_subtitle');
+
+            const cropInputEl = document.getElementById('cropNameInput');
+            if (cropInputEl) cropInputEl.placeholder = t('ag_crop_placeholder');
+
+            const tempHelp = document.getElementById('tempHelp');
+            if (tempHelp && !selectedCropKey) tempHelp.innerText = t('ag_temp_help');
+            const humidityHelp = document.getElementById('humidityHelp');
+            if (humidityHelp && !selectedCropKey) humidityHelp.innerText = t('ag_humidity_help');
+            const windHelp = document.getElementById('windHelp');
+            if (windHelp && !selectedCropKey) windHelp.innerText = t('ag_wind_help');
+
+            const rainLabel = document.querySelector('.rain-toggle span');
+            if (rainLabel) rainLabel.innerText = t('ag_heavy_rain');
+            const rainHelp = document.getElementById('rainHelp');
+            if (rainHelp && !selectedCropKey) rainHelp.innerText = t('ag_rain_help');
+
+            const saveBtnEl = document.getElementById('saveBtn');
+            if (saveBtnEl) saveBtnEl.innerHTML = `<i class="fas fa-save"></i> ${t('ag_save_btn')}`;
+        }
+
+        window.addEventListener('krishi:languageChanged', () => {
+            updateAlertGuardTranslations();
+        });
+
+        // Initialize translations on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAlertGuardTranslations();
         });
     </script>
 </body>

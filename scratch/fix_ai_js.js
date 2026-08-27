@@ -1,0 +1,517 @@
+const fs = require('fs');
+const path = require('path');
+
+const aiJsPath = path.join(__dirname, '..', 'backend', 'routes', 'ai.js');
+const currentCode = fs.readFileSync(aiJsPath, 'utf8');
+
+// Find the start of generateOfflineFallback
+const marker = '// Intelligent offline fallback';
+const splitIndex = currentCode.indexOf(marker);
+if (splitIndex === -1) {
+    console.error('Marker not found!');
+    process.exit(1);
+}
+
+const topPart = currentCode.substring(0, splitIndex);
+
+const bottomPart = `// Intelligent offline fallback for AI Advisory
+function generateOfflineFallback(weatherData, cropInfo, lang = 'en', locName = '') {
+    const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+    let temp = weatherData?.main?.temp ? Math.round(weatherData.main.temp) : 28;
+    let humidity = weatherData?.main?.humidity || 65;
+    const locationDisplay = locName || 'India';
+    
+    if (cropInfo) {
+        if (lang === 'kn') {
+            return \`ಬೆಳೆ: \${cropInfo}
+ಸ್ಥಳ: \${locationDisplay}
+ಹವಾಮಾನ: \${temp}°C | ತೇವಾಂಶ: \${humidity}%
+
+ಬೆಳೆಯ ಸೂಕ್ತತೆ
+ಪ್ರಸ್ತುತ \${currentMonth} ತಿಂಗಳಲ್ಲಿ \${cropInfo} ಬೆಳೆಗೆ ತಾಪಮಾನ ಮತ್ತು ವಾತಾವರಣ ಅನುಕೂಲಕರವಾಗಿದೆ.
+
+ಮಣ್ಣು ಮತ್ತು ನೀರು
+ನಿರ್ದಿಷ್ಟ ಭೂಮಿಯ ಮಣ್ಣು ಮತ್ತು ನೀರಿನ ಪರೀಕ್ಷಾ ವರದಿ ಲಭ್ಯವಿಲ್ಲ. ಪೋಷಕಾಂಶ ನಿರ್ವಹಣೆಗಾಗಿ ಕೃಷಿ ಇಲಾಖೆ ಅಥವಾ ಕೆವಿಕೆಯಲ್ಲಿ ಮಣ್ಣಿನ ಆರೋಗ್ಯ ಕಾರ್ಡ್ ಪರೀಕ್ಷೆ ಮಾಡಿಸಿಕೊಳ್ಳಿ.
+
+ಹವಾಮಾನ ಪರಿಣಾಮ
+ಪ್ರಸ್ತುತ \${temp}°C ತಾಪಮಾನ ಮತ್ತು \${humidity}% ತೇವಾಂಶವಿದೆ. ಮಳೆಯ ಮುನ್ಸೂಚನೆ ಗಮನಿಸಿ ನೀರಾವರಿ ನಿರ್ವಹಣೆ ಮಾಡಿ.
+
+ಈಗ ಮಾಡಬೇಕಾದ ಕೆಲಸಗಳು
+1. ಜಮೀನಿನಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ಕಾಲುವೆಗಳನ್ನು ಸಿದ್ಧಪಡಿಸಿ.
+2. ಶಿಫಾರಸು ಮಾಡಿದ ಪ್ರಮಾಣದಲ್ಲಿ ಸಾವಯವ ಗೊಬ್ಬರ ಬಳಸಿ.
+3. ಬಿತ್ತನೆಗೆ ಮುನ್ನ ಜೈವಿಕ ಬೀಜೋಪಚಾರ ಮಾಡಿ.
+4. ನಿರ್ದಿಷ್ಟ ಔಷಧ ಪ್ರಮಾಣಕ್ಕೆ ಸ್ಥಳೀಯ ಕೃಷಿ ಅಧಿಕಾರಿಗಳನ್ನು ಸಂಪರ್ಕಿಸಿ.
+
+ಎಚ್ಚರಿಕೆ ವಹಿಸಬೇಕಾದ ಅಪಾಯಗಳು
+- ಹೆಚ್ಚಿನ ತೇವಾಂಶದಿಂದ ಬರುವ ಶಿಲೀಂಧ್ರ ರೋಗಗಳ ಬಗ್ಗೆ ನಿಗಾ ವಹಿಸಿ.
+- ಜಮೀನಿನಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ಎಚ್ಚರವಹಿಸಿ.
+
+ಮಾರುಕಟ್ಟೆ ಮಾಹಿತಿ
+ಸ್ಥಳೀಯ ಮಂಡಿಗಳಲ್ಲಿ ಗುಣಮಟ್ಟದ ಗ್ರೇಡಿಂಗ್ ಮತ್ತು ತೇವಾಂಶ ನಿಯಂತ್ರಣದಿಂದ ಉತ್ತಮ ಬೆಲೆ ಪಡೆಯಬಹುದು.\`;
+        }
+        if (lang === 'te') {
+            return \`పంట: \${cropInfo}
+ప్రాంతం: \${locationDisplay}
+వాతావరణం: \${temp}°C | తేమ: \${humidity}%
+
+పంట అనుకూలత
+ప్రస్తుత \${currentMonth} సీజన్ లో \${cropInfo} పంట సాగుకు వాతావరణ పరిస్థితులు అనుకూలంగా ఉన్నాయి.
+
+నేల మరియు నీరు
+క్షేత్ర స్థాయి నేల మరియు నీటి పరీక్ష డేటా అందుబాటులో లేదు. ఎరువుల వాడకానికి ముందు స్థానిక కేవీకే లేదా వ్యవసాయ శాఖ ద్వారా భూసార పరీక్ష చేయించుకోండి.
+
+వాతావరణ ప్రభావం
+ప్రస్తుత \${temp}°C ఉష్ణోగ్రత మరియు \${humidity}% తేమ పంట ఎదుగుదలకు సహకరిస్తాయి.
+
+ఇప్పుడు చేయవలసిన పనులు
+1. పొలంలో నీరు నిల్వ ఉండకుండా మురుగు కాలువలు శుభ్రం చేయండి.
+2. తగినంత పశువుల ఎరువు లేదా వర్మీకంపోస్ట్ వాడండి.
+3. నాణ్యమైన విత్తన శుద్ధి తప్పనిసరిగా చేయండి.
+4. రసాయన మోతాదుల కోసం స్థానిక వ్యవసాయ అధికారిని సంప్రదించండి.
+
+గమనించవలసిన సమస్యలు
+- అధిక తేమ వల్ల వచ్చే శిలీంధ్ర తెగుళ్లను గమనించండి.
+- నీటి నిల్వ సమస్య రాకుండా జాగ్రత్త పడండి.
+
+మార్కెట్ సమాచారం
+నాణ్యమైన గ్రేడింగ్ మరియు తేమ శాతం నియంత్రణతో మార్కెట్ లో మంచి ధర లభిస్తుంది.\`;
+        }
+        if (lang === 'ta') {
+            return \`பயிர்: \${cropInfo}
+இடம்: \${locationDisplay}
+வானிலை: \${temp}°C | ஈரப்பதம்: \${humidity}%
+
+பயிர் பொருத்தம்
+தற்போதைய \${currentMonth} பருவத்தில் \${cropInfo} சாகுபடிக்கு உகந்த சூழல் நிலவுகிறது.
+
+மண் மற்றும் நீர்
+நிலத்திற்கான மண் மற்றும் நீர் ஆய்வக பரிசோதனை விவரங்கள் கிடைக்கப்பெறவில்லை. உர நிர்வாகத்திற்கு முன் மண்வள அட்டை பரிசோதனை செய்ய பரிந்துரைக்கப்படுகிறது.
+
+வானிலை தாக்கம்
+தற்போதைய \${temp}°C வெப்பநிலை மற்றும் \${humidity}% ஈரப்பதம் வளர்ச்சிக்கு ஏற்றது.
+
+இப்போது செய்ய வேண்டியவை
+1. நிலத்தில் தண்ணீர் தேங்காமல் வடிகால் வசதி செய்யவும்.
+2. பரிந்துரைக்கப்பட்ட அளவு மக்கிய தொழுவுரம் இடவும்.
+3. விதை நேர்த்தி செய்து விதைக்கவும்.
+4. குறிப்பிட்ட மருந்து அளவுகளுக்கு உள்ளூர் வேளாண்மை அலுவலரை அணுகவும்.
+
+கவனிக்க வேண்டிய பாதிப்புகள்
+- அதிக ஈரப்பதத்தால் ஏற்படும் பூஞ்சை நோய்களை கண்காணிக்கவும்.
+- நிலத்தில் தண்ணீர் தேங்க விடாதீர்கள்.
+
+சந்தை நிலவரம்
+சரியான தரம் பிரித்தல் மற்றும் ஈரப்பத கட்டுப்பாடு மூலம் சந்தையில் நல்ல விலை பெறலாம்.\`;
+        }
+        if (lang === 'ml') {
+            return \`വിള: \${cropInfo}
+സ്ഥലം: \${locationDisplay}
+കാലാവസ്ഥ: \${temp}°C | ഈർപ്പം: \${humidity}%
+
+കൃഷി അനുയോജ്യത
+നിലവിലെ \${currentMonth} മാസത്തിൽ \${cropInfo} കൃഷിക്ക് അനുയോജ്യമായ അന്തരീക്ഷമാണ്.
+
+മണ്ണും ജലവും
+മണ്ണ്-ജല പരിശോധന റിപ്പോർട്ട് ലഭ്യമല്ല. കൃത്യമായ വളപ്രയോഗത്തിന് മുൻപ് സോയിൽ ഹെൽത്ത് കാർഡ് പരിശോധന നടത്തുക.
+
+കാലാവസ്ഥ സ്വാധീനം
+നിലവിലെ \${temp}°C താപനിലയും \${humidity}% ഈർപ്പവും വളർച്ചയ്ക്ക് അനുകൂലമാണ്.
+
+ഇപ്പോൾ ചെയ്യേണ്ട കാര്യങ്ങൾ
+1. തടങ്ങളിൽ വെള്ളം കെട്ടിനിൽക്കാതെ ഡ്രെയിനേജ് ചാലുകൾ വൃത്തിയാക്കുക.
+2. ജൈവവളങ്ങൾ അല്ലെങ്കിൽ കമ്പോസ്റ്റ് ആവശ്യാനുസരണം ചേർക്കുക.
+3. വിത്ത് പാകുന്നതിന് മുൻപ് ട്രൈക്കോഡെർമ ഉപയോഗിച്ച് വിത്ത് സംസ്കരണം നടത്തുക.
+4. മരുന്നുകളുടെ അളവിന് കൃഷിഭവനുമായി ബന്ധപ്പെടുക.
+
+ശ്രദ്ധിക്കേണ്ട രോഗങ്ങളും കീടങ്ങളും
+- ഈർപ്പം കൂടുമ്പോൾ കുമിൾ രോഗങ്ങൾ ഉണ്ടാകാതെ ശ്രദ്ധിക്കുക.
+- വേരുകളിൽ വെള്ളം കെട്ടിക്കിടക്കാൻ അനുവദിക്കരുത്.
+
+വിപണി വിവരം
+ഗുണമേന്മ അനുസരിച്ച് തരംതിരിച്ച് വിൽക്കുന്നത് വഴി വിപണിയിൽ ഉയർന്ന വില ലഭിക്കും.\`;
+        }
+        if (lang === 'hi') {
+            return \`फसल: \${cropInfo}
+स्थान: \${locationDisplay}
+मौसम: \${temp}°C | नमी: \${humidity}%
+
+फसल की उपयुक्तता
+वर्तमान \${currentMonth} माह में \${cropInfo} की खेती के लिए मौसम और तापमान अनुकूल है।
+
+मिट्टी और जल प्रबंधन
+सटीक उर्वरक प्रबंधन के लिए मृदा स्वास्थ्य कार्ड जांच अवश्य कराएं।
+
+मौसम का प्रभाव
+वर्तमान \${temp}°C तापमान और \${humidity}% नमी फसल की प्रारंभिक वृद्धि के लिए उपयुक्त है।
+
+अभी क्या करें
+1. खेत में जलभराव रोकने के लिए उचित जल निकासी नालियां बनाएं।
+2. अंतिम जुताई के समय अच्छी तरह सड़ी हुई गोबर की खाद मिलाएं।
+3. बुवाई से पहले बीजोपचार अवश्य करें।
+4. दवाओं की सही मात्रा के लिए स्थानीय कृषि विज्ञान केंद्र से संपर्क करें।
+
+संभावित खतरे
+- अधिक नमी में फफूंद जनित रोगों पर नजर रखें।
+- खेत में पानी रुकने न दें।
+
+मंडी और बाजार जानकारी
+फसल की उचित ग्रेडिंग और नमी नियंत्रण करने पर नजदीकी मंडियों में बेहतर भाव मिलता है।\`;
+        }
+        return \`Crop: \${cropInfo}
+Location: \${locationDisplay}
+Weather: \${temp}°C | Humidity: \${humidity}%
+
+Crop Suitability
+Current conditions in \${currentMonth} are favorable for growing \${cropInfo} with steady vegetative growth potential.
+
+Soil & Water
+Obtain a Soil Health Card test from your local KVK before applying major fertilizer doses.
+
+Weather Impact
+Current temperature of \${temp}°C and humidity of \${humidity}% support healthy crop development.
+
+What to Do Now
+1. Clear drainage channels to prevent water stagnation in the root zone.
+2. Apply well-decomposed organic manure or FYM during soil preparation.
+3. Complete recommended bio-fertilizer seed treatment before sowing.
+4. Consult your local KVK or Agriculture Officer for exact dosage recommendations.
+
+Risks to Watch
+- Monitor for fungal leaf spots under high relative humidity.
+- Prevent water accumulation around plant roots.
+
+Market Information
+Cleaning, grading, and maintaining proper moisture levels will help achieve optimal prices in nearby mandis.\`;
+    }
+    
+    // If no cropInfo, fallback to seasonal recommendations
+    return generateSeasonalRecommendations(weatherData, locationDisplay, '', '', lang);
+}
+
+// Comprehensive State-aware, Season-aware, Weather-adaptive Seasonal Recommendations
+function generateSeasonalRecommendations(weatherData, locName = '', state = '', district = '', lang = 'en') {
+    const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+    const monthNum = new Date().getMonth();
+    const temp = weatherData?.main?.temp ? Math.round(weatherData.main.temp) : 28;
+    const humidity = weatherData?.main?.humidity || 65;
+
+    // Detect Season
+    let seasonKey = 'kharif';
+    let seasonNameEn = 'Kharif';
+    if (monthNum >= 9 || monthNum <= 1) {
+        seasonKey = 'rabi';
+        seasonNameEn = 'Rabi';
+    } else if (monthNum >= 2 && monthNum <= 4) {
+        seasonKey = 'summer';
+        seasonNameEn = 'Summer';
+    }
+
+    // Detect State/Region
+    const combinedLoc = \`\${district} \${state} \${locName}\`.toLowerCase();
+    let regionKey = 'karnataka';
+    let displayLoc = state || 'Karnataka';
+
+    if (combinedLoc.includes('maharashtra') || combinedLoc.includes('pune') || combinedLoc.includes('nagpur') || combinedLoc.includes('nashik') || combinedLoc.includes('kolhapur')) {
+        regionKey = 'maharashtra';
+        displayLoc = 'Maharashtra';
+    } else if (combinedLoc.includes('andhra') || combinedLoc.includes('telangana') || combinedLoc.includes('hyderabad') || combinedLoc.includes('guntur') || combinedLoc.includes('vijayawada') || combinedLoc.includes('kurnool')) {
+        regionKey = 'andhra_telangana';
+        displayLoc = state || 'Andhra Pradesh / Telangana';
+    } else if (combinedLoc.includes('tamil') || combinedLoc.includes('chennai') || combinedLoc.includes('coimbatore') || combinedLoc.includes('madurai') || combinedLoc.includes('thanjavur')) {
+        regionKey = 'tamil_nadu';
+        displayLoc = 'Tamil Nadu';
+    } else if (combinedLoc.includes('kerala') || combinedLoc.includes('kochi') || combinedLoc.includes('thiruvananthapuram') || combinedLoc.includes('palakkad') || combinedLoc.includes('wayanad')) {
+        regionKey = 'kerala';
+        displayLoc = 'Kerala';
+    } else if (combinedLoc.includes('punjab') || combinedLoc.includes('haryana') || combinedLoc.includes('uttar pradesh') || combinedLoc.includes('bihar') || combinedLoc.includes('rajasthan') || combinedLoc.includes('madhya pradesh') || combinedLoc.includes('delhi')) {
+        regionKey = 'north_india';
+        displayLoc = state || 'North India';
+    } else if (combinedLoc.includes('karnataka') || combinedLoc.includes('bengaluru') || combinedLoc.includes('mysuru') || combinedLoc.includes('belagavi') || combinedLoc.includes('dharwad') || combinedLoc.includes('mandya') || combinedLoc.includes('tumakuru')) {
+        regionKey = 'karnataka';
+        displayLoc = 'Karnataka';
+    }
+
+    // Curated Agronomic Data Matrix per Region & Season
+    const CROPS_DB = {
+        karnataka: {
+            kharif: {
+                en: [
+                    'Ragi (Finger Millet - GPU-28 / ML-365) - Highly drought-tolerant, optimal for current temperatures and soil conditions.',
+                    'Paddy (Rice - Jyothi / Jaya) - Ideal for medium rainfall zones with assured water drainage.',
+                    'Tur Dal (Pigeon Pea - BRG-2) - High-value pulse crop, excellent for intercropping with Ragi or Maize.'
+                ],
+                kn: [
+                    'ರಾಗಿ (GPU-28 / ML-365) - ಮುಂಗಾರು ಹಂಗಾಮಿಗೆ ಅತ್ಯಂತ ಸೂಕ್ತ, ಕಡಿಮೆ ನೀರು ಸಾಕು ಮತ್ತು ಅಧಿಕ ಇಳುವರಿ ನೀಡುತ್ತದೆ.',
+                    'ಭತ್ತ (ಜ್ಯೋತಿ / ಜಯ) - ಮಧ್ಯಮ ಮಳೆ ಹಾಗೂ ಕಾಲುವೆ ನೀರಾವರಿ ಪ್ರದೇಶಗಳಿಗೆ ಅತ್ಯುತ್ತಮ ಆಯ್ಕೆ.',
+                    'ತೊಗರಿ ಬೇಳೆ (BRG-2) - ರಾಗಿ ಅಥವಾ ಮುಸುಕಿನ ಜೋಳದೊಂದಿಗೆ ಉತ್ತಮ ಮಿಶ್ರ ಬೆಳೆಯಾಗಿದ್ದು ಮಣ್ಣಿನ ಸಾರ ಹೆಚ್ಚಿಸುತ್ತದೆ.'
+                ],
+                ta: [
+                    'கேழ்வரகு (GPU-28 / ML-365) - குறைந்த நீர்தேவை, தற்போதைய வெப்பநிலைக்கு ஏற்ற அதிக சத்துமிக்க பயிர்.',
+                    'நெல் (ஜோதி / ஜெயா) - பாசன வசதி கொண்ட நிலங்களுக்கு ஏற்ற சிறந்த தேர்வு.',
+                    'துவரம் பருப்பு (BRG-2) - ஊடுபயிராக பயிரிட ஏற்றது, மண்ணின் நைட்ரஜன் சத்தை கூட்டும்.'
+                ],
+                te: [
+                    'రాగులు (GPU-28 / ML-365) - తక్కువ నీటితో అధిక దిగుబడి, ప్రస్తుత ఉష్ణోగ్రతలకు అనుకూలం.',
+                    'వరి (జ్యోతి / జయ) - నీటి పారుదల గల భూములకు అత్యంత అనువైన రకం.',
+                    'కంది (BRG-2) - అంతర పంటగా సాగు చేయడానికి అనువైన అధిక ఆదాయం ఇచ్చే పప్పుధాన్యం.'
+                ],
+                ml: [
+                    'റാഗി (GPU-28) - കുറഞ്ഞ വെള്ളത്തിൽ മികച്ച വിളവ്, കാലാവസ്ഥയ്ക്ക് ഏറ്റവും അനുയോജ്യം.',
+                    'നെല്ല് (ജ്യോതി / ജയ) - നല്ല നീർവാർച്ചയുള്ള നിലങ്ങൾക്ക് അനുയോജ്യമായ വിള.',
+                    'തുവരപ്പയർ (BRG-2) - ഇടവിളയായി കൃഷി ചെയ്യാൻ മികച്ച പയറുവർഗ്ഗം.'
+                ],
+                hi: [
+                    'रागी (GPU-28 / ML-365) - सूखा प्रतिरोधी, वर्तमान तापमान में कम पानी में भरपूर पैदावार।',
+                    'धान (ज्योति / जया) - वर्षा आधारित व सिंचित क्षेत्रों के लिए सर्वोत्तम फसल।',
+                    'अरहर / तुअर (BRG-2) - रागी या मक्का के साथ अंतःफसल के लिए उत्तम दलहन फसल।'
+                ],
+                tip: {
+                    en: 'Perform seed treatment with Trichoderma (4g/kg) and Azospirillum bio-fertilizers before sowing to enhance seedling vigor.',
+                    kn: 'ಬಿತ್ತನೆ ಮಾಡುವ ಮುನ್ನ ಬೀಜಗಳಿಗೆ ಟ್ರೈಕೋಡರ್ಮಾ (೪ ಗ್ರಾಂ/ಕೆಜಿ) ಹಾಗೂ ಅಜೋಸ್ಪಿರಿಲಮ್ ಜೈವಿಕ ಗೊಬ್ಬರದಿಂದ ಬೀಜೋಪಚಾರ ಮಾಡಿ.',
+                    ta: 'விதைப்பதற்கு முன் ட்ரைக்கோடெர்மா (4 கிராம்/கிலோ) கொண்டு விதை நேர்த்தி செய்து விதைக்கவும்.',
+                    te: 'విత్తన శుద్ధి కోసం ట్రైకోడెర్మా (4 గ్రా/కిలో) లేదా జీవ ఎరువులను విత్తనాలకు పట్టించి నాటండి.',
+                    ml: 'വിത്ത് പാകുന്നതിന് മുൻപ് ട്രൈക്കോഡെർമ ഉപയോഗിച്ച് വിത്ത് സംസ്കരണം നടത്തുക.',
+                    hi: 'बुवाई से पहले ट्राइकोडर्मा (4 ग्राम/किग्रा) और जैव उर्वरकों से बीजोपचार अवश्य करें।'
+                },
+                caution: {
+                    en: \`Current humidity is \${humidity}%. Ensure clean drainage channels around fields to avoid root rot and fungal leaf blight.\`,
+                    kn: \`ಪ್ರಸ್ತುತ ತೇವಾಂಶವು \${humidity}% ಇದೆ. ಬೇರು ಕೊಳೆ ರೋಗ ಮತ್ತು ಶಿಲೀಂಧ್ರ ಬಾಧೆ ತಡೆಯಲು ಜಮೀನಿನಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ಬಸಿದು ಹೋಗಲು ಕಾಲುವೆ ಮಾಡಿ.\`,
+                    ta: \`தற்போதைய ஈரப்பதம் \${humidity}%. வேரழுகல் மற்றும் பூஞ்சை நோய்களைத் தவிர்க்க வயலில் தண்ணீர் தேங்காமல் வடிகால் அமைக்கவும்.\`,
+                    te: \`ప్రస్తుత తేమ \${humidity}%. వేరుకుళ్ళు మరియు బూజు తెగుళ్ళను నివారించడానికి పొలంలో నీరు నిల్వ ఉండకుండా డ్రైనేజీ కాలువలు తీయండి.\`,
+                    ml: \`നിലവിലെ ഈർപ്പം \${humidity}%. വേരുചീയൽ ഒഴിവാക്കാൻ പാടങ്ങളിൽ വെള്ളം കെട്ടിക്കിടക്കാതെ ശ്രദ്ധിക്കുക.\`,
+                    hi: \`वर्तमान आर्द्रता \${humidity}% है। जड़ गलन व फफूंद जनित रोगों से बचाव के लिए खेत में जल निकासी की उचित व्यवस्था करें।\`
+                }
+            },
+            rabi: {
+                en: [
+                    'Rabi Jowar (Sorghum - M-35-1 / Maldandi) - Highly adapted to post-monsoon residual soil moisture.',
+                    'Bengal Gram (Chickpea - JG-11 / Annigeri-1) - Requires minimal irrigation, fixes atmospheric nitrogen.',
+                    'Sunflower (KBHS-44) - Strong market demand with excellent oil recovery.'
+                ],
+                kn: [
+                    'ಹಿಂಗಾರು ಜೋಳ (ಮಾಲ್ದಂಡಿ M-35-1) - ಮಣ್ಣಿನಲ್ಲಿರುವ ತೇವಾಂಶದಲ್ಲಿಯೇ ಸಮೃದ್ಧವಾಗಿ ಬೆಳೆಯುತ್ತದೆ.',
+                    'ಕಡಲೆ (JG-11 / ಅಣ್ಣಿಗೇರಿ-1) - ಕಡಿಮೆ ನೀರಾವರಿ ಸಾಕು, ಮಣ್ಣಿನ ಸಾರಜನಕ ಹೆಚ್ಚಿಸುತ್ತದೆ.',
+                    'ಸೂರ್ಯಕಾಂತಿ (KBHS-44) - ಮಾರುಕಟ್ಟೆಯಲ್ಲಿ ಉತ್ತಮ ಧಾರಣೆ ಮತ್ತು ಎಣ್ಣೆ ಇಳುವರಿ ನೀಡುತ್ತದೆ.'
+                ],
+                tip: {
+                    en: 'Sow in conserved soil moisture and maintain proper spacing for optimal canopy development.',
+                    kn: 'ಮಣ್ಣಿನಲ್ಲಿ ತೇವಾಂಶವಿರುವಾಗಲೇ ಬಿತ್ತನೆ ಪೂರ್ಣಗೊಳಿಸಿ ಮತ್ತು ಸರಿಯಾದ ಸಾಲಿನ ಅಂತರ ಕಾಪಾಡಿಕೊಳ್ಳಿ.'
+                },
+                caution: {
+                    en: 'Monitor early mornings for pod borer (Helicoverpa) on Bengal Gram and aphid buildup.',
+                    kn: 'ಕಡಲೆ ಬೆಳೆಯಲ್ಲಿ ಕಾಯಿಕೊರೆಯುವ ಹುಳು (ಹೆಲಿಕೋವರ್ಪಾ) ಬಾಧೆಯ ಬಗ್ಗೆ ಮುಂಜಾನೆ ಪರಿಶೀಲಿಸಿ.'
+                }
+            },
+            summer: {
+                en: [
+                    'Groundnut (KCG-2 / TMV-2) - High yield potential under assured summer micro-irrigation.',
+                    'Watermelon (Sugar Baby / Kiran) - 75-80 day duration with peak summer market profitability.',
+                    'Green Gram (Moong) - Short duration summer pulse that restores soil vitality.'
+                ],
+                kn: [
+                    'ಬೇಸಿಗೆ ಕಡಲೆಕಾಯಿ (KCG-2) - ಹನಿ ನೀರಾವರಿ ಸೌಲಭ್ಯವಿರುವ ಜಮೀನುಗಳಿಗೆ ಅಧಿಕ ಇಳುವರಿ ನೀಡುವ ಬೆಳೆ.',
+                    'ಕಲ್ಲಂಗಡಿ (ಶುಗರ್ ಬೇಬಿ) - 75-80 ದಿನಗಳಲ್ಲಿ ಕಟಾವಿಗೆ ಬರುವ ಲಾಭದಾಯಕ ಬೇಸಿಗೆ ಹಣ್ಣಿನ ಬೆಳೆ.',
+                    'ಹೆಸರು ಕಾಳು - ಅಲ್ಪಾವಧಿಯ ಬೆಳೆಯಾಗಿದ್ದು ಮಣ್ಣಿನ ಫಲವತ್ತತೆ ಸುಧಾರಿಸುತ್ತದೆ.'
+                ],
+                tip: {
+                    en: 'Adopt drip irrigation and organic mulching to conserve root zone moisture.',
+                    kn: 'ಮಣ್ಣಿನ ತೇವಾಂಶ ಸಂರಕ್ಷಿಸಲು ಹನಿ ನೀರಾವರಿ ಮತ್ತು ಸಾವಯವ ಹೊದಿಕೆ (ಮಲ್ಚಿಂಗ್) ಪದ್ಧತಿ ಅನುಸರಿಸಿ.'
+                },
+                caution: {
+                    en: 'Schedule irrigations during early morning or evening hours to avoid thermal stress.',
+                    kn: 'ಬೇಸಿಗೆ ಬಿಸಿಲಿನಿಂದ ಗಿಡಗಳು ಬಾಡದಂತೆ ಮುಂಜಾನೆ ಅಥವಾ ಸಂಜೆ ವೇಳೆ ನೀರು ಹಾಯಿಸಿ.'
+                }
+            }
+        },
+        maharashtra: {
+            kharif: {
+                en: [
+                    'Soybean (JS-335 / JS-9305) - Core Kharif crop with excellent oil recovery and stable mandi prices.',
+                    'Cotton (Bt Hybrid) - Suitable for medium to deep black soils with good water retention.',
+                    'Tur / Arhar (BDN-711) - High-yielding wilt resistant pigeon pea variety.'
+                ],
+                hi: [
+                    'सोयाबीन (JS-335 / JS-9305) - प्रमुख खरीफ फसल, मंडियों में निरंतर मांग और अच्छा भाव।',
+                    'कपास (Bt हाइब्रिड) - काली मिट्टी के लिए उपयुक्त, बेहतर पैदावार।',
+                    'तुअर / अरहर (BDN-711) - उकठा प्रतिरोधी एवं अधिक उत्पादन देने वाली किस्म।'
+                ],
+                tip: {
+                    en: 'Ensure broad bed furrow (BBF) planting for soybean to handle excess rain and moisture stress.',
+                    hi: 'सोयाबीन में जलभराव व सूखे से बचाव के लिए बीबीएफ (BBF) विधि से बुवाई करें।'
+                },
+                caution: {
+                    en: \`Current humidity is \${humidity}%. Watch for stem fly and girdle beetle infestation in young crops.\`,
+                    hi: \`वर्तमान आर्द्रता \${humidity}% है। गर्डल बीटल और तना मक्खी के प्रकोप पर सतर्क नजर रखें।\`
+                }
+            }
+        },
+        andhra_telangana: {
+            kharif: {
+                en: [
+                    'Paddy (BPT-5204 Samba Mahsuri / MTU-1010) - High market premium rice varieties for current season.',
+                    'Cotton - Suitable for black and red soils under current monsoon pattern.',
+                    'Red Gram (LRG-41 / ICPL-87119) - Ideal sole crop or intercrop with Maize/Cotton.'
+                ],
+                te: [
+                    'వరి (సాంబ మసూరి BPT-5204 / MTU-1010) - మార్కెట్లో మంచి ధర పలికే ఖరీఫ్ వరి రకాలు.',
+                    'పత్తి - ప్రస్తుత వర్షపాత పరిస్థితులకు నల్లరేగడి నేలలకు అనుకూలమైన రకం.',
+                    'కంది (LRG-41 / ఆశా) - పత్తి లేదా మక్కజొన్నతో అంతర పంటగా సాగుకు అనుకూలం.'
+                ],
+                tip: {
+                    en: 'Ensure seed treatment with Imidacloprid and Carbendazim to protect against early sucking pests.',
+                    te: 'మొలక దశలో రసం పీల్చే పురుగుల నివారణకు విత్తన శుద్ధి తప్పనిసరిగా చేయండి.'
+                },
+                caution: {
+                    en: 'Avoid stagnant water in cotton and red gram fields during heavy rainfall spells.',
+                    te: 'భారీ వర్షాలు పడినప్పుడు పత్తి, కంది చేలల్లో నీరు నిల్వ ఉండకుండా వెంటనే తీసివేయండి.'
+                }
+            }
+        },
+        tamil_nadu: {
+            kharif: {
+                en: [
+                    'Paddy (ADT-43 / CO-51 / CR-1009) - High-yielding varieties suited for current Kuruvai / Samba planting.',
+                    'Groundnut (VRI-2 / TMV-13) - Well-suited for sandy loams with short duration.',
+                    'Black Gram (VBN-8) - Rapid maturity pulse crop ideal for rice-fallows.'
+                ],
+                ta: [
+                    'நெல் (ADT-43 / CO-51) - நடப்பு குருவை / சம்பா பருவத்திற்கு ஏற்ற அதிக விளைச்சல் தரும் ரகங்கள்.',
+                    'நிலக்கடலை (VRI-2 / TMV-13) - செம்மண் மற்றும் மணற்பாங்கான நிலங்களுக்கு சிறந்த தேர்வு.',
+                    'உளுந்து (VBN-8) - குறுகிய காலத்தில் அறுவடைக்கு வரும் தரமான பயறு வகை.'
+                ],
+                tip: {
+                    en: 'Incorporate green manure (Daincha/Sunnhemp) into paddy fields during puddled soil preparation.',
+                    ta: 'நெல் நடவுக்கு முன் தக்கைப்பூண்டு அல்லது சணப்பை போன்ற பசுந்தாள் உரங்களை மடக்கி உழவும்.'
+                },
+                caution: {
+                    en: 'Monitor paddy nurseries for blast and leaf folder activity under humid weather.',
+                    ta: 'ஈரப்பதமான வானிலையில் நெல் நாற்றங்காலில் குலைநோய் மற்றும் இலைசுருட்டு புழுவை கண்காணிக்கவும்.'
+                }
+            }
+        },
+        kerala: {
+            kharif: {
+                en: [
+                    'Paddy (Uma / Jyothi) - High-performing Virippu season varieties resilient to waterlogging.',
+                    'Banana (Nendran / Robusta) - Profitable plantation crop suited for fertile alluvial soils.',
+                    'Ginger (Rio-de-Janeiro / Maran) - High value spice crop flourishing in humid tropical warmth.'
+                ],
+                ml: [
+                    'നെല്ല് (ഉമ / ജ്യോതി) - വിരിപ്പ് കൃഷിക്ക് ഏറ്റവും അനുയോജ്യമായ കൂടുതൽ വിളവ് തരുന്ന ഇനങ്ങൾ.',
+                    'വാഴ (നേന്ത്രൻ / റോബസ്റ്റ) - നല്ല നീർവാർച്ചയുള്ള മണ്ണിൽ മികച്ച ആദായം തരുന്ന വിള.',
+                    'ഇഞ്ചി (മാരൻ / റിയോ ഡി ജനീറോ) - ഉയർന്ന വിപണി മൂല്യമുള്ള സുഗന്ധവ്യഞ്ജന വിള.'
+                ],
+                tip: {
+                    en: 'Ensure earthing up and adequate drainage trenches around banana and ginger beds.',
+                    ml: 'വാഴയ്ക്കും ഇഞ്ചിക്കും തടങ്ങളിൽ വെള്ളം കെട്ടിക്കിടക്കാതെ ചാലുകൾ കീറി നീർവാർച്ച ഉറപ്പാക്കുക.'
+                },
+                caution: {
+                    en: 'Apply Trichoderma-enriched manure to prevent rhizome rot in ginger during monsoons.',
+                    ml: 'ഇഞ്ചിയിൽ മൂടുചീയൽ രോഗം തടയാൻ ട്രൈക്കോഡെർമ ചേർത്ത ചാണകപ്പൊടി ഉപയോഗിക്കുക.'
+                }
+            }
+        },
+        north_india: {
+            kharif: {
+                en: [
+                    'Paddy (Basmati Pusa 1509 / PR-126) - Premium grain quality suited for current monsoon window.',
+                    'Maize (PMH-1 / HQPM-1) - Resilient Kharif crop with steady industrial feed demand.',
+                    'Bajra / Pearl Millet - Highly drought-hardy with low irrigation inputs.'
+                ],
+                hi: [
+                    'धान (बासमती पूसा 1509 / PR-126) - उत्कृष्ट गुणवत्ता व मंडियों में बेहतरीन भाव देने वाली किस्म।',
+                    'मक्का (PMH-1 / HQPM-1) - खरीफ मौसम की मजबूत फसल, औद्योगिक मांग और अच्छा मुनाफा।',
+                    'बाजरा (पूसा 1201) - कम पानी और कम लागत में भरपूर पैदावार देने वाली पौष्टिक फसल।'
+                ],
+                tip: {
+                    en: 'Use laser land leveling and direct seeded rice (DSR) techniques to save up to 25% irrigation water.',
+                    hi: 'लेजर लैंड लेवलर और सीधी बिजाई (DSR) तकनीक अपनाकर 25% तक पानी की बचत करें।'
+                },
+                caution: {
+                    en: 'Watch for sheath blight in dense paddy stands during humid, warm periods.',
+                    hi: 'अधिक नमी और उमस भरे मौसम में धान में शीथ ब्लाइट (झुलसा) रोग पर सतर्क नजर रखें।'
+                }
+            }
+        }
+    };
+
+    // Retrieve region data, fallback to Karnataka if specific region season missing
+    const regionData = CROPS_DB[regionKey] || CROPS_DB.karnataka;
+    const seasonData = regionData[seasonKey] || regionData.kharif || CROPS_DB.karnataka.kharif;
+
+    // Resolve language text
+    const cropsList = seasonData[lang] || seasonData['en'] || CROPS_DB.karnataka.kharif['en'];
+    const farmingTip = seasonData.tip?.[lang] || seasonData.tip?.['en'] || CROPS_DB.karnataka.kharif.tip['en'];
+    const cautionText = seasonData.caution?.[lang] || seasonData.caution?.['en'] || CROPS_DB.karnataka.kharif.caution['en'];
+
+    // Multilingual Headings
+    if (lang === 'kn') {
+        return \`🌾 **\${currentMonth} ತಿಂಗಳಿಗೆ ಶಿಫಾರಸು ಮಾಡಲಾದ ಬೆಳೆಗಳು (\${displayLoc}):**
+1. \${cropsList[0]}
+2. \${cropsList[1]}
+3. \${cropsList[2]}
+
+🌿 **ರೈತರ ಸಲಹೆ:** \${farmingTip}
+
+⚠️ **ಎಚ್ಚರಿಕೆ:** \${cautionText}\`;
+    }
+
+    if (lang === 'te') {
+        return \`🌾 **\${currentMonth} నెల కొరకు సిఫార్సు చేయబడిన పంటలు (\${displayLoc}):**
+1. \${cropsList[0]}
+2. \${cropsList[1]}
+3. \${cropsList[2]}
+
+🌿 **రైతు సూచన:** \${farmingTip}
+
+⚠️ **హెచ్చరిక:** \${cautionText}\`;
+    }
+
+    if (lang === 'ta') {
+        return \`🌾 **\${currentMonth} மாதத்திற்கான பரிந்துரைக்கப்பட்ட பயிர்கள் (\${displayLoc}):**
+1. \${cropsList[0]}
+2. \${cropsList[1]}
+3. \${cropsList[2]}
+
+🌿 **விவசாய குறிப்பு:** \${farmingTip}
+
+⚠️ **எச்சரிக்கை:** \${cautionText}\`;
+    }
+
+    if (lang === 'ml') {
+        return \`🌾 **\${currentMonth} മാസത്തിൽ ശുപാർശ ചെയ്യുന്ന സീസണൽ വിളകൾ (\${displayLoc}):**
+1. \${cropsList[0]}
+2. \${cropsList[1]}
+3. \${cropsList[2]}
+
+🌿 **കർഷക നിർദ്ദേശം:** \${farmingTip}
+
+⚠️ **മുന്നറിയിപ്പ്:** \${cautionText}\`;
+    }
+
+    if (lang === 'hi') {
+        return \`🌾 **\${currentMonth} के लिए अनुशंसित मौसमी फसलें (\${displayLoc}):**
+1. \${cropsList[0]}
+2. \${cropsList[1]}
+3. \${cropsList[2]}
+
+🌿 **किसान सलाह:** \${farmingTip}
+
+⚠️ **सावधानी:** \${cautionText}\`;
+    }
+
+    return \`🌾 **Top 3 Recommended Crops for \${currentMonth} (\${seasonNameEn} Season - \${displayLoc}):**
+1. \${cropsList[0]}
+2. \${cropsList[1]}
+3. \${cropsList[2]}
+
+🌿 **Farming Tip:** \${farmingTip}
+
+⚠️ **Caution:** \${cautionText}\`;
+}
+
+module.exports = router;
+`;
+
+fs.writeFileSync(aiJsPath, topPart + bottomPart, 'utf8');
+console.log('Successfully updated backend/routes/ai.js!');
