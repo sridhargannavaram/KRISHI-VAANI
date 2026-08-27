@@ -18,6 +18,27 @@ function authenticateToken(req, res, next) {
   });
 }
 
+// In-memory cache for mandi queries with TTL
+const mandiCache = new Map();
+const MANDI_CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+
+function getFromMandiCache(key) {
+  const cached = mandiCache.get(key);
+  if (cached && (Date.now() - cached.timestamp) < MANDI_CACHE_TTL) {
+    return cached.data;
+  }
+  if (cached) mandiCache.delete(key);
+  return null;
+}
+
+function setInMandiCache(key, data, customTtl) {
+  if (mandiCache.size > 200) {
+    const oldestKey = mandiCache.keys().next().value;
+    if (oldestKey) mandiCache.delete(oldestKey);
+  }
+  mandiCache.set(key, { data, timestamp: Date.now(), ttl: customTtl || MANDI_CACHE_TTL });
+}
+
 // -------------------------------------------------------------
 // 1. GET /api/market-prices (Search, Filter, Paginate)
 // -------------------------------------------------------------
@@ -183,13 +204,19 @@ router.get('/', async (req, res) => {
 // -------------------------------------------------------------
 const getStatesHandler = async (req, res) => {
   try {
+    const cacheKey = 'filter_states';
+    const cached = getFromMandiCache(cacheKey);
+    if (cached) return res.json(cached);
+
     const data = await query(`
       SELECT state, COUNT(DISTINCT market) as market_count, COUNT(*) as record_count
       FROM market_prices
       GROUP BY state
       ORDER BY state ASC
     `);
-    res.json({ states: data.rows });
+    const result = { states: data.rows };
+    setInMandiCache(cacheKey, result, 30 * 60 * 1000); // 30 mins
+    res.json(result);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch states.' });
   }
@@ -203,6 +230,10 @@ router.get('/filters/states', getStatesHandler);
 const getDistrictsHandler = async (req, res) => {
   try {
     const { state } = req.query;
+    const cacheKey = `filter_districts_${(state || '').toLowerCase()}`;
+    const cached = getFromMandiCache(cacheKey);
+    if (cached) return res.json(cached);
+
     let sql = 'SELECT district, state, COUNT(DISTINCT market) as market_count FROM market_prices ';
     const params = [];
     if (state) {
@@ -212,7 +243,9 @@ const getDistrictsHandler = async (req, res) => {
     sql += 'GROUP BY district, state ORDER BY district ASC';
 
     const data = await query(sql, params);
-    res.json({ districts: data.rows });
+    const result = { districts: data.rows };
+    setInMandiCache(cacheKey, result, 30 * 60 * 1000);
+    res.json(result);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch districts.' });
   }
@@ -226,6 +259,10 @@ router.get('/filters/districts', getDistrictsHandler);
 const getMarketsHandler = async (req, res) => {
   try {
     const { state, district } = req.query;
+    const cacheKey = `filter_markets_${(state || '').toLowerCase()}_${(district || '').toLowerCase()}`;
+    const cached = getFromMandiCache(cacheKey);
+    if (cached) return res.json(cached);
+
     const conditions = [];
     const params = [];
     let p = 1;
@@ -249,7 +286,9 @@ const getMarketsHandler = async (req, res) => {
     `;
 
     const data = await query(sql, params);
-    res.json({ markets: data.rows });
+    const result = { markets: data.rows };
+    setInMandiCache(cacheKey, result, 30 * 60 * 1000);
+    res.json(result);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch markets.' });
   }
@@ -263,6 +302,10 @@ router.get('/filters/markets', getMarketsHandler);
 const getCommoditiesHandler = async (req, res) => {
   try {
     const { state, district } = req.query;
+    const cacheKey = `filter_commodities_${(state || '').toLowerCase()}_${(district || '').toLowerCase()}`;
+    const cached = getFromMandiCache(cacheKey);
+    if (cached) return res.json(cached);
+
     const conditions = [];
     const params = [];
     let p = 1;
@@ -290,7 +333,9 @@ const getCommoditiesHandler = async (req, res) => {
       ORDER BY record_count DESC, commodity ASC
     `;
     const data = await query(sql, params);
-    res.json({ commodities: data.rows });
+    const result = { commodities: data.rows };
+    setInMandiCache(cacheKey, result, 30 * 60 * 1000);
+    res.json(result);
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch commodities.' });
   }
@@ -433,6 +478,9 @@ router.get('/nearby', async (req, res) => {
     }
 
     const radiusMeters = (parseFloat(radius_km) || 300) * 1000;
+    const cacheKey = `nearby_${latitude.toFixed(2)}_${longitude.toFixed(2)}_${(commodity || '').toLowerCase()}_${radius_km}`;
+    const cached = getFromMandiCache(cacheKey);
+    if (cached) return res.json(cached);
 
     let commodityFilter = '';
     const params = [longitude, latitude, radiusMeters];
@@ -458,7 +506,7 @@ router.get('/nearby', async (req, res) => {
     `;
 
     const data = await query(sql, params);
-    res.json({
+    const result = {
       location: { lat: latitude, lon: longitude },
       radius_km: parseFloat(radius_km) || 300,
       count: data.rows.length,
@@ -476,7 +524,9 @@ router.get('/nearby', async (req, res) => {
           formatted_distance: formatNaturalDistance(dKm, dMeters)
         };
       })
-    });
+    };
+    setInMandiCache(cacheKey, result, 10 * 60 * 1000); // 10 mins
+    res.json(result);
   } catch (error) {
     console.error('Nearby Mandi API Error:', error.message);
     res.status(500).json({ error: 'Failed to retrieve nearby markets.' });

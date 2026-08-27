@@ -3734,7 +3734,7 @@ function renderCropAdviceUI(rawText, cropName) {
 
             grid.innerHTML = articles.map(art => {
                 const imgHtml = art.urlToImage
-                    ? `<img src="${escapeHtml(art.urlToImage)}" class="news-preview-img" alt="News Image" onerror="this.outerHTML='<div class=\\'news-no-img-placeholder\\' style=\\'height:120px; display:flex; align-items:center; justify-content:center; background:#1e293b; color:#94a3b8; font-size:0.75rem;\\'><i class=\\'fas fa-image\\'></i>&nbsp;${escapeHtml(imgUnavailable)}</div>'">`
+                    ? `<img src="${escapeHtml(art.urlToImage)}" loading="lazy" class="news-preview-img" alt="News Image" onerror="this.outerHTML='<div class=\\'news-no-img-placeholder\\' style=\\'height:120px; display:flex; align-items:center; justify-content:center; background:#1e293b; color:#94a3b8; font-size:0.75rem;\\'><i class=\\'fas fa-image\\'></i>&nbsp;${escapeHtml(imgUnavailable)}</div>'">`
                     : `<div class="news-no-img-placeholder" style="height:120px; display:flex; align-items:center; justify-content:center; background:#1e293b; color:#94a3b8; font-size:0.75rem;"><i class="fas fa-image"></i>&nbsp;${escapeHtml(imgUnavailable)}</div>`;
                 
                 const pubDateStr = art.publishedAt ? new Date(art.publishedAt).toLocaleDateString() : todayText;
@@ -3788,11 +3788,17 @@ function renderCropAdviceUI(rawText, cropName) {
             }
         }
 
-        // Initialize and listen to events
-        setTimeout(fetchDashboardMarketPrices, 800);
-        window.addEventListener('krishi:locationUpdated', fetchDashboardMarketPrices);
-
-        setTimeout(fetchDashboardNews, 1000);
+        // Initialize dashboard services immediately in non-blocking parallel pipelines
+        Promise.allSettled([
+            fetchDashboardMarketPrices(),
+            fetchDashboardNews()
+        ]);
+        window.addEventListener('krishi:locationUpdated', () => {
+            Promise.allSettled([
+                fetchDashboardMarketPrices(),
+                fetchDashboardNews()
+            ]);
+        });
     </script>
 </body>
 

@@ -5,6 +5,27 @@ const axios = require('axios');
 // Use OpenRouter API (supports Gemini and other models)
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
+// In-memory cache for AI responses with 2-hour TTL
+const aiCache = new Map();
+const AI_CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
+
+function getFromAiCache(key) {
+    const cached = aiCache.get(key);
+    if (cached && (Date.now() - cached.timestamp) < AI_CACHE_TTL) {
+        return cached.data;
+    }
+    if (cached) aiCache.delete(key);
+    return null;
+}
+
+function setInAiCache(key, data) {
+    if (aiCache.size > 200) {
+        const oldestKey = aiCache.keys().next().value;
+        if (oldestKey) aiCache.delete(oldestKey);
+    }
+    aiCache.set(key, { data, timestamp: Date.now() });
+}
+
 async function callAI(prompt, lang) {
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) return null;
@@ -36,7 +57,7 @@ async function callAI(prompt, lang) {
                     'HTTP-Referer': 'https://krishi-vaani-iota.vercel.app',
                     'X-Title': 'Krishi Vaani'
                 },
-                timeout: 30000
+                timeout: 9000 // Fast 9s timeout for responsive model fallback
             });
 
             const content = response.data?.choices?.[0]?.message?.content;
@@ -246,6 +267,13 @@ router.post('/', async (req, res) => {
         const { weatherData, cropInfo, message, location, language, lat, lon, city, district, state } = req.body;
         const locName = location || [city, district, state].filter(Boolean).join(', ') || 'India';
         const cropName = cropInfo || 'General farming';
+        const todayKey = new Date().toISOString().split('T')[0];
+        const cacheKey = `advice_${cropName.toLowerCase().trim()}_${locName.toLowerCase().trim()}_${language || 'en'}_${todayKey}`;
+
+        const cachedAdvice = getFromAiCache(cacheKey);
+        if (cachedAdvice) {
+            return res.json({ advice: cachedAdvice, _cached: true });
+        }
 
         const langMap = { 'en': 'English', 'kn': 'Kannada', 'ta': 'Tamil', 'te': 'Telugu', 'ml': 'Malayalam', 'hi': 'Hindi' };
         const targetLang = langMap[language] || 'English';
@@ -405,6 +433,10 @@ CRITICAL WRITING RULES:
             adviceText = generateOfflineFallback(weatherData, cropInfo, language, locName);
         }
 
+        if (adviceText) {
+            setInAiCache(cacheKey, adviceText);
+        }
+
         if (req.farmerId) {
             Farmer.logActivity(req.farmerId, 'AI_ADVISORY', { 
                 query: (message || '').substring(0, 100), 
@@ -428,6 +460,13 @@ router.post('/seasonal', async (req, res) => {
         const temp = weatherData?.main?.temp ? Math.round(weatherData.main.temp) : 28;
         const humidity = weatherData?.main?.humidity || 65;
         const locName = location || (state ? `${district ? district + ', ' : ''}${state}, India` : 'India');
+        const todayKey = new Date().toISOString().split('T')[0];
+        const seasonalCacheKey = `seasonal_${locName.toLowerCase().trim()}_${lang}_${todayKey}`;
+
+        const cachedSeasonal = getFromAiCache(seasonalCacheKey);
+        if (cachedSeasonal) {
+            return res.json({ recommendation: cachedSeasonal, _cached: true });
+        }
 
         const monthNum = new Date().getMonth();
         let seasonName = 'Kharif';
@@ -457,6 +496,10 @@ Keep it concise, actionable, and strictly accurate for ${locName}.`;
         
         if (!recommendation) {
             recommendation = generateSeasonalRecommendations(weatherData, locName, state, district, lang);
+        }
+
+        if (recommendation) {
+            setInAiCache(seasonalCacheKey, recommendation);
         }
 
         res.json({ recommendation });

@@ -16,6 +16,7 @@ function logWeatherActivity(req, lat, lon, city = '') {
 
 // In-memory cache for weather data (TTL: 10 mins for current, 30 mins for forecast)
 const weatherCache = new Map();
+const inFlightWeather = new Map(); // In-flight request deduplication
 const CACHE_TTL_CURRENT = 10 * 60 * 1000; // 10 minutes
 const CACHE_TTL_FORECAST = 30 * 60 * 1000; // 30 minutes
 
