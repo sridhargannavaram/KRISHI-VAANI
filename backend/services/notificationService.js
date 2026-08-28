@@ -402,7 +402,7 @@ async function sendNotificationToUsers(farmerIds, payload) {
 }
 
 /**
- * Helper: Send Weather Alert to a Farmer
+ * Helper: Send Weather Alert to a Farmer (Smart & Multi-Language)
  */
 async function sendWeatherAlert(farmerId, {
     temp,
@@ -410,14 +410,24 @@ async function sendWeatherAlert(farmerId, {
     wind,
     isRaining,
     alertText,
+    district = '',
     priority = 'HIGH'
 }) {
+    const templateKey = isRaining ? 'WEATHER_RAIN' : (temp > 35 ? 'WEATHER_HEAT' : (wind > 15 ? 'WEATHER_WIND' : null));
     const title = isRaining ? '🌧️ Heavy Rain Alert — Krishi Vaani' : '⚠️ Weather Alert — Krishi Vaani';
-    return await sendNotificationToUser(farmerId, {
+
+    return await sendSmartNotification(farmerId, {
+        templateKey,
+        templateVars: {
+            district: district || 'your area',
+            hours: '3',
+            temp: String(temp || 35),
+            wind: String(wind || 15)
+        },
         title,
         message: alertText,
         type: 'WEATHER',
-        priority,
+        priority: priority || (isRaining ? 'CRITICAL' : 'HIGH'),
         source: 'ALERT_GUARD',
         actionUrl: '/dashboard.html#weather',
         metadata: { temp, humidity, wind, isRaining }
@@ -425,7 +435,7 @@ async function sendWeatherAlert(farmerId, {
 }
 
 /**
- * Helper: Send Crop Advisory / Pest Alert to a Farmer
+ * Helper: Send Crop Advisory / Pest Alert to a Farmer (Smart & Multi-Language)
  */
 async function sendCropAlert(farmerId, {
     crop,
@@ -434,7 +444,12 @@ async function sendCropAlert(farmerId, {
     priority = 'MEDIUM'
 }) {
     const title = `🌾 ${crop || 'Crop'} Alert — ${riskType || 'Field Risk'}`;
-    return await sendNotificationToUser(farmerId, {
+    return await sendSmartNotification(farmerId, {
+        templateKey: 'CROP_DISEASE_RISK',
+        templateVars: {
+            crop: crop || 'Crop',
+            risk: riskType || 'Field Risk'
+        },
         title,
         message: alertText,
         type: 'CROP',
@@ -445,8 +460,250 @@ async function sendCropAlert(farmerId, {
     });
 }
 
+const { formatTemplate } = require('./notificationTemplates');
+
 // -------------------------------------------------------------
-// 6. Public Firebase Web Configuration (Safe Placeholders & Env Exposure)
+// 6. Farmer Notification Preferences & Language Management
+// -------------------------------------------------------------
+
+const DEFAULT_PREFERENCES = {
+    weather_alerts: true,
+    crop_alerts: true,
+    mandi_alerts: true,
+    ai_advisory: true,
+    news_alerts: false,
+    scheme_alerts: false,
+    critical_always: true,
+    quiet_hours_enabled: false,
+    quiet_start_hour: 22,
+    quiet_end_hour: 6
+};
+
+/**
+ * Fetch a farmer's notification preferences (with safe defaults)
+ */
+async function getFarmerNotificationPreferences(farmerId) {
+    if (!farmerId) return { ...DEFAULT_PREFERENCES };
+    try {
+        const res = await query(
+            `SELECT weather_alerts, crop_alerts, mandi_alerts, ai_advisory, news_alerts, scheme_alerts, critical_always, quiet_hours_enabled, quiet_start_hour, quiet_end_hour
+             FROM notification_preferences WHERE farmer_id = $1`,
+            [farmerId]
+        );
+        if (res.rows.length > 0) {
+            return { ...DEFAULT_PREFERENCES, ...res.rows[0] };
+        }
+    } catch (err) {
+        console.warn('⚠️ Could not fetch farmer notification preferences:', err.message);
+    }
+    return { ...DEFAULT_PREFERENCES };
+}
+
+/**
+ * Update or insert a farmer's notification preferences
+ */
+async function updateFarmerNotificationPreferences(farmerId, prefs = {}) {
+    if (!farmerId) throw new Error('farmerId is required');
+
+    const weatherAlerts = prefs.weather_alerts !== undefined ? !!prefs.weather_alerts : true;
+    const cropAlerts = prefs.crop_alerts !== undefined ? !!prefs.crop_alerts : true;
+    const mandiAlerts = prefs.mandi_alerts !== undefined ? !!prefs.mandi_alerts : true;
+    const aiAdvisory = prefs.ai_advisory !== undefined ? !!prefs.ai_advisory : true;
+    const newsAlerts = prefs.news_alerts !== undefined ? !!prefs.news_alerts : false;
+    const schemeAlerts = prefs.scheme_alerts !== undefined ? !!prefs.scheme_alerts : false;
+    const criticalAlways = prefs.critical_always !== undefined ? !!prefs.critical_always : true;
+    const quietHoursEnabled = prefs.quiet_hours_enabled !== undefined ? !!prefs.quiet_hours_enabled : false;
+    const quietStartHour = Number.isInteger(prefs.quiet_start_hour) ? prefs.quiet_start_hour : 22;
+    const quietEndHour = Number.isInteger(prefs.quiet_end_hour) ? prefs.quiet_end_hour : 6;
+
+    const sql = `
+        INSERT INTO notification_preferences (
+            farmer_id, weather_alerts, crop_alerts, mandi_alerts, ai_advisory, news_alerts, scheme_alerts,
+            critical_always, quiet_hours_enabled, quiet_start_hour, quiet_end_hour, updated_at
+        )
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW())
+        ON CONFLICT (farmer_id)
+        DO UPDATE SET
+            weather_alerts = EXCLUDED.weather_alerts,
+            crop_alerts = EXCLUDED.crop_alerts,
+            mandi_alerts = EXCLUDED.mandi_alerts,
+            ai_advisory = EXCLUDED.ai_advisory,
+            news_alerts = EXCLUDED.news_alerts,
+            scheme_alerts = EXCLUDED.scheme_alerts,
+            critical_always = EXCLUDED.critical_always,
+            quiet_hours_enabled = EXCLUDED.quiet_hours_enabled,
+            quiet_start_hour = EXCLUDED.quiet_start_hour,
+            quiet_end_hour = EXCLUDED.quiet_end_hour,
+            updated_at = NOW()
+        RETURNING *;
+    `;
+
+    const res = await query(sql, [
+        farmerId, weatherAlerts, cropAlerts, mandiAlerts, aiAdvisory, newsAlerts, schemeAlerts,
+        criticalAlways, quietHoursEnabled, quietStartHour, quietEndHour
+    ]);
+    return res.rows[0];
+}
+
+/**
+ * Fetch a farmer's preferred language
+ */
+async function getFarmerPreferredLanguage(farmerId) {
+    if (!farmerId) return 'en';
+    try {
+        const res = await query(`SELECT preferred_language FROM farmers WHERE id = $1`, [farmerId]);
+        if (res.rows.length > 0 && res.rows[0].preferred_language) {
+            return res.rows[0].preferred_language;
+        }
+    } catch (err) {
+        console.warn('⚠️ Could not fetch farmer preferred language:', err.message);
+    }
+    return 'en';
+}
+
+/**
+ * Update a farmer's preferred language in PostgreSQL
+ */
+async function updateFarmerPreferredLanguage(farmerId, lang = 'en') {
+    if (!farmerId) return false;
+    const validLang = ['en', 'kn', 'ta', 'te', 'ml', 'hi'].includes(lang) ? lang : 'en';
+    try {
+        await query(`UPDATE farmers SET preferred_language = $1, updated_at = NOW() WHERE id = $2`, [validLang, farmerId]);
+        return true;
+    } catch (err) {
+        console.error('Failed to update farmer preferred language:', err.message);
+        return false;
+    }
+}
+
+/**
+ * Check if a notification type & priority is allowed by farmer's preferences
+ */
+function isNotificationAllowed(prefs, type = 'GENERAL', priority = 'MEDIUM') {
+    const p = (priority || 'MEDIUM').toUpperCase();
+    if (p === 'CRITICAL' && prefs.critical_always !== false) {
+        return true; // Critical disaster & safety alerts always bypass filters
+    }
+
+    const t = (type || 'GENERAL').toUpperCase();
+    switch (t) {
+        case 'WEATHER':
+            return prefs.weather_alerts !== false;
+        case 'CROP':
+            return prefs.crop_alerts !== false;
+        case 'MANDI':
+            return prefs.mandi_alerts !== false;
+        case 'AI':
+        case 'IRRIGATION':
+            return prefs.ai_advisory !== false;
+        case 'NEWS':
+            return prefs.news_alerts === true;
+        case 'SCHEME':
+            return prefs.scheme_alerts === true;
+        default:
+            return true;
+    }
+}
+
+/**
+ * Check if current time falls in farmer's Quiet Hours (computed in IST UTC+5:30)
+ */
+function isInQuietHours(prefs) {
+    if (!prefs || !prefs.quiet_hours_enabled) return false;
+
+    // Convert to Indian Standard Time (IST = UTC + 5h 30m)
+    const now = new Date();
+    const utcHours = now.getUTCHours();
+    const utcMinutes = now.getUTCMinutes();
+    const istHour = (utcHours + 5 + Math.floor((utcMinutes + 30) / 60)) % 24;
+
+    const start = prefs.quiet_start_hour !== undefined ? prefs.quiet_start_hour : 22; // 10 PM
+    const end = prefs.quiet_end_hour !== undefined ? prefs.quiet_end_hour : 6;      // 6 AM
+
+    if (start > end) {
+        // Overnight quiet hours (e.g. 22 to 6)
+        return istHour >= start || istHour < end;
+    } else {
+        return istHour >= start && istHour < end;
+    }
+}
+
+/**
+ * Smart Notification Wrapper:
+ * Applies farmer preferences, quiet hours filter, and multi-language template resolution
+ * before delegating to the existing, verified sendNotificationToUser() core.
+ */
+async function sendSmartNotification(farmerId, {
+    templateKey = null,
+    templateVars = {},
+    title,
+    message,
+    type = 'GENERAL',
+    priority = 'MEDIUM',
+    source = 'SYSTEM',
+    actionUrl = '/dashboard.html',
+    metadata = {},
+    preventSpamHours = 3,
+    icon = '/assets/images/logo.png'
+}) {
+    if (!farmerId) return null;
+
+    try {
+        // 1. Check Farmer Preferences
+        const prefs = await getFarmerNotificationPreferences(farmerId);
+        if (!isNotificationAllowed(prefs, type, priority)) {
+            console.log(`ℹ️ Suppressed notification (${type}/${priority}) for farmer ${farmerId} based on preferences.`);
+            return null;
+        }
+
+        // 2. Check Quiet Hours (CRITICAL always bypasses)
+        if (priority !== 'CRITICAL' && isInQuietHours(prefs)) {
+            console.log(`🌙 Suppressed notification (${type}/${priority}) for farmer ${farmerId} during quiet hours.`);
+            return null;
+        }
+
+        // 3. Resolve Farmer Language & Template
+        let finalTitle = title;
+        let finalMessage = message;
+
+        if (templateKey) {
+            const lang = await getFarmerPreferredLanguage(farmerId);
+            const localized = formatTemplate(templateKey, lang, templateVars);
+            finalTitle = localized.title || title;
+            finalMessage = localized.body || message;
+        }
+
+        // 4. Delegate to EXISTING, UNTOUCHED sendNotificationToUser Core
+        return await sendNotificationToUser(farmerId, {
+            title: finalTitle,
+            message: finalMessage,
+            type,
+            priority,
+            source,
+            actionUrl,
+            metadata,
+            preventSpamHours,
+            icon
+        });
+    } catch (err) {
+        console.error('⚠️ Smart notification fallback to direct send:', err.message);
+        // Fail-safe fallback to ensure no critical notification is ever lost
+        return await sendNotificationToUser(farmerId, {
+            title,
+            message,
+            type,
+            priority,
+            source,
+            actionUrl,
+            metadata,
+            preventSpamHours,
+            icon
+        });
+    }
+}
+
+// -------------------------------------------------------------
+// 7. Public Firebase Web Configuration (Safe Placeholders & Env Exposure)
 // -------------------------------------------------------------
 function getPublicFirebaseWebConfig() {
     return {
@@ -475,6 +732,14 @@ module.exports = {
     sendNotificationToUsers,
     sendWeatherAlert,
     sendCropAlert,
+    sendSmartNotification,
+    getFarmerNotificationPreferences,
+    updateFarmerNotificationPreferences,
+    getFarmerPreferredLanguage,
+    updateFarmerPreferredLanguage,
+    isNotificationAllowed,
+    isInQuietHours,
     getPublicFirebaseWebConfig,
     getIsFirebaseConfigured: () => isFirebaseConfigured
 };
+

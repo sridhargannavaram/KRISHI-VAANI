@@ -163,4 +163,52 @@ router.post('/test-alert', requireFarmerAuth, async (req, res) => {
     }
 });
 
+// -------------------------------------------------------------
+// 8. GET /api/notifications/preferences (Get Farmer Notification Settings)
+// -------------------------------------------------------------
+router.get('/preferences', requireFarmerAuth, async (req, res) => {
+    try {
+        const prefs = await notificationService.getFarmerNotificationPreferences(req.farmerId);
+        const lang = await notificationService.getFarmerPreferredLanguage(req.farmerId);
+        res.json({ preferences: prefs, preferredLanguage: lang });
+    } catch (error) {
+        console.error('Fetch Preferences Error:', error);
+        res.status(500).json({ error: 'Failed to fetch notification preferences.' });
+    }
+});
+
+// -------------------------------------------------------------
+// 9. PUT /api/notifications/preferences (Update Farmer Notification Settings)
+// -------------------------------------------------------------
+router.put('/preferences', requireFarmerAuth, async (req, res) => {
+    try {
+        const updated = await notificationService.updateFarmerNotificationPreferences(req.farmerId, req.body);
+        if (req.body.preferred_language) {
+            await notificationService.updateFarmerPreferredLanguage(req.farmerId, req.body.preferred_language);
+        }
+        res.json({
+            message: 'Notification preferences updated successfully.',
+            preferences: updated
+        });
+    } catch (error) {
+        console.error('Update Preferences Error:', error);
+        res.status(500).json({ error: 'Failed to update notification preferences.' });
+    }
+});
+
+// -------------------------------------------------------------
+// 10. PATCH /api/notifications/language (Sync Language Preference)
+// -------------------------------------------------------------
+router.patch('/language', requireFarmerAuth, async (req, res) => {
+    try {
+        const { language = 'en' } = req.body;
+        await notificationService.updateFarmerPreferredLanguage(req.farmerId, language);
+        res.json({ message: 'Preferred language synced successfully.', language });
+    } catch (error) {
+        console.error('Language Sync Error:', error);
+        res.status(500).json({ error: 'Failed to sync preferred language.' });
+    }
+});
+
 module.exports = router;
+

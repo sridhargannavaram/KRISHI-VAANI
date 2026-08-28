@@ -1336,6 +1336,19 @@ function setAppLanguage(lang) {
 
     // Notify any page-specific listeners
     window.dispatchEvent(new CustomEvent('krishi:languageChanged', { detail: { language: lang } }));
+
+    // Non-blocking background sync to PostgreSQL if farmer is authenticated
+    const authToken = localStorage.getItem('token');
+    if (authToken) {
+        fetch('/api/notifications/language', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({ language: lang })
+        }).catch(() => {});
+    }
 }
 
 /**

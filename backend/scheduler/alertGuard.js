@@ -79,6 +79,7 @@ cron.schedule('0 * * * *', async () => {
                         wind: currentWind,
                         isRaining: isRaining,
                         alertText: fullMessage,
+                        district: farmer.district || farmer.city || 'your area',
                         priority: isRaining ? 'CRITICAL' : 'HIGH'
                     });
                 } catch (notifErr) {

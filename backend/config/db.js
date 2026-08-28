@@ -87,6 +87,7 @@ async function initDb() {
       ALTER TABLE farmers ADD COLUMN IF NOT EXISTS last_activity_at TIMESTAMPTZ DEFAULT NOW();
       ALTER TABLE farmers ADD COLUMN IF NOT EXISTS login_count INTEGER DEFAULT 1;
       ALTER TABLE farmers ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE;
+      ALTER TABLE farmers ADD COLUMN IF NOT EXISTS preferred_language VARCHAR(10) DEFAULT 'en';
     `);
 
     // Indexes on Farmers
@@ -179,6 +180,27 @@ async function initDb() {
     `);
     await client.query(`CREATE INDEX IF NOT EXISTS idx_in_app_notifications_farmer ON in_app_notifications(farmer_id, created_at DESC);`);
     await client.query(`CREATE INDEX IF NOT EXISTS idx_in_app_notifications_unread ON in_app_notifications(farmer_id, is_read);`);
+
+    // Notification Preferences Table (Farmer-controlled alert settings)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS notification_preferences (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        farmer_id UUID UNIQUE REFERENCES farmers(id) ON DELETE CASCADE,
+        weather_alerts BOOLEAN DEFAULT TRUE,
+        crop_alerts BOOLEAN DEFAULT TRUE,
+        mandi_alerts BOOLEAN DEFAULT TRUE,
+        ai_advisory BOOLEAN DEFAULT TRUE,
+        news_alerts BOOLEAN DEFAULT FALSE,
+        scheme_alerts BOOLEAN DEFAULT FALSE,
+        critical_always BOOLEAN DEFAULT TRUE,
+        quiet_hours_enabled BOOLEAN DEFAULT FALSE,
+        quiet_start_hour INTEGER DEFAULT 22,
+        quiet_end_hour INTEGER DEFAULT 6,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        updated_at TIMESTAMPTZ DEFAULT NOW()
+      );
+    `);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_notification_preferences_farmer ON notification_preferences(farmer_id);`);
 
     // Farmer Crops Table
     await client.query(`
