@@ -737,6 +737,129 @@
         }
 
         /* Detailed Crop Modal Styles */
+        
+        /* Advisory & Weather Caution Warning Card Styles */
+        .seasonal-advisory-wrapper {
+            margin-top: 1.15rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .seasonal-caution-card {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.28);
+            border-left: 4px solid #f59e0b;
+            border-radius: 12px;
+            padding: 0.85rem 1.1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            transition: transform 0.2s ease;
+        }
+
+        .seasonal-caution-card:hover {
+            transform: translateY(-2px);
+        }
+
+        [data-theme='light'] .seasonal-caution-card {
+            background: #fffbeb;
+            border-color: #fde68a;
+            border-left-color: #d97706;
+        }
+
+        .seasonal-caution-card i {
+            color: #f59e0b;
+            font-size: 1.25rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .seasonal-caution-content {
+            flex: 1;
+        }
+
+        .seasonal-caution-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        [data-theme='light'] .seasonal-caution-title {
+            color: #b45309;
+        }
+
+        .seasonal-caution-desc {
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            line-height: 1.45;
+        }
+
+        [data-theme='light'] .seasonal-caution-desc {
+            color: #334155;
+        }
+
+        .seasonal-tip-card {
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.28);
+            border-left: 4px solid #22c55e;
+            border-radius: 12px;
+            padding: 0.85rem 1.1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            transition: transform 0.2s ease;
+        }
+
+        .seasonal-tip-card:hover {
+            transform: translateY(-2px);
+        }
+
+        [data-theme='light'] .seasonal-tip-card {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            border-left-color: #16a34a;
+        }
+
+        .seasonal-tip-card i {
+            color: #22c55e;
+            font-size: 1.25rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .seasonal-tip-content {
+            flex: 1;
+        }
+
+        .seasonal-tip-title {
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: #4ade80;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        [data-theme='light'] .seasonal-tip-title {
+            color: #15803d;
+        }
+
+        .seasonal-tip-desc {
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            line-height: 1.45;
+        }
+
+        [data-theme='light'] .seasonal-tip-desc {
+            color: #334155;
+        }
+
         .crop-modal-dialog {
             background: var(--bg-surface, #ffffff);
             width: 92%;
@@ -3991,7 +4114,7 @@
             }
 
             let cleanText = rawText
-                .replace(/🌾|🌿|⚠️|🧑‍🌾|🌱|☀️|💧|🌧️|🚜/g, '')
+                .replace(/🌾|🌿|🧑‍🌾|🌱|☀️|💧|🌧️|🚜/g, '')
                 .trim();
 
             const lines = cleanText.split('\n').map(l => l.trim()).filter(Boolean);
@@ -4029,13 +4152,13 @@
                     return;
                 }
 
-                if (line.match(/Tip|Farming Tip|రైతర ಸಲಹೆ|రైతు సూచన|వివరణ|விவசாய குறிப்பு|കർഷക കുറിപ്പ്|किसान सलाह/i)) {
-                    tip = line.replace(/^.*?(Tip|Farming Tip|రైతర ಸಲಹೆ|రైతు సూచన|వివరణ|விவசாய குறிப்பு|കർഷക കുറിപ്പ്|किसान सलाह)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
+                if (line.match(/Tip|Farming Tip|రైతర ಸಲಹೆ|రైతు సూచన|వివరణ|విவசாய குறிப்பு|കർഷക കുറിപ്പ്|किसान सलाह/i)) {
+                    tip = line.replace(/^.*?(Tip|Farming Tip|రైతర ಸಲಹೆ|రైతు సూచన|వివరణ|విவசாய குறிப்பு|കർഷക കുറിപ്പ്|किसान सलाह)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
                     return;
                 }
 
-                if (line.match(/Caution|Warning|Alert|ಎಚ್ಚರಿಕೆ|హెచ్చరిక|எச்சரிக்கை|ജാഗ്രത|सावधानी/i)) {
-                    caution = line.replace(/^.*?(Caution|Warning|Alert|ಎಚ್ಚರಿಕೆ|హెచ్చరిక|எச்சரிக்கை|ജാഗ്രത|सावधानी)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
+                if (line.match(/Caution|Warning|Alert|ఎచ్చరికే|హెచ్చరిక|జాగ్రత్త|எச்சரிக்கை|ജാഗ്രത|सावधानी/i)) {
+                    caution = line.replace(/^.*?(Caution|Warning|Alert|ఎచ్చరికే|హెచ్చరిక|జాగ్రత్త|எச்சரிக்கை|ജാഗ്രത|सावधानी)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
                     return;
                 }
             });
@@ -4044,6 +4167,24 @@
 
             const locParts = [currentDistrict || currentCity, currentState].filter(Boolean);
             const dynamicLoc = locParts.length > 0 ? locParts.join(', ') : (currentState || 'India');
+
+            // Default localized Caution/Warning based on live weather if not in raw text
+            if (!caution) {
+                const humidity = lastWeatherData?.main?.humidity || 75;
+                if (lang === 'te') {
+                    caution = `ప్రస్తుత వాతావరణంలో అధిక తేమ (${humidity}%) మరియు వర్ష సూచన దృష్ట్యా పంట పొలాల్లో నీరు నిలవకుండా మురుగు కాలువలను సిద్ధం చేయండి. చీడపీడల ఉధృతిని గమనిస్తూ ఉండండి.`;
+                } else if (lang === 'kn') {
+                    caution = `ಪ್ರಸ್ತುತ ಹವಾಮಾನದಲ್ಲಿ ಹೆಚ್ಚಿನ ಆರ್ದ್ರತೆ (${humidity}%) ಇರುವ ಕಾರಣ ಜಮೀನಿನಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ಕಾಲುವೆ ನಿರ್ವಹಣೆ ಮಾಡಿ ಮತ್ತು ಕೀಟ ಬಾಧೆಗಳನ್ನು ಗಮನಿಸಿ.`;
+                } else if (lang === 'hi') {
+                    caution = `वर्तमान मौसम में उच्च आर्द्रता (${humidity}%) के कारण खेतों में जल निकासी की उचित व्यवस्था रखें और कीट प्रकोप की नियमित निगरानी करें।`;
+                } else if (lang === 'ta') {
+                    caution = `தற்போதைய அதிக ஈரப்பதம் (${humidity}%) காரணமாக வயல்களில் நீர் தேங்காமல் வடிகால் வசதி செய்து, பூச்சி தாக்குதலை கண்காணிக்கவும்.`;
+                } else if (lang === 'ml') {
+                    caution = `നിലവിലെ ഉയർന്ന ഈർപ്പം (${humidity}%) കാരണം പാടങ്ങളിൽ വെള്ളക്കെട്ട് ഒഴിവാക്കാൻ ഡ്രെയിനേജ് സൗകര്യം ഒരുക്കുക.`;
+                } else {
+                    caution = `Given high humidity (${humidity}%) and seasonal weather, ensure proper field drainage and regularly inspect for fungal pests or water stagnation.`;
+                }
+            }
 
             if (crops.length > 0) {
                 let html = `
@@ -4106,21 +4247,45 @@
 
                 html += '</div>'; // close .seasonal-cards-container-grid
 
+                // Advisory & Warning Section Rendered Below Crop Cards
+                html += '<div class="seasonal-advisory-wrapper">';
+                
+                // ⚠️ Current Advisory / Weather Warning Card
+                if (caution) {
+                    const cautionTitle = lang === 'te' ? '⚠️ ప్రస్తుత హెచ్చరిక & వాతావరణ జాగ్రత్త' : lang === 'kn' ? '⚠️ ಪ್ರಸ್ತುತ ಮುನ್ನೆಚ್ಚರಿಕೆ & ಹವಾಮಾನ ಎಚ್ಚರಿಕೆ' : lang === 'hi' ? '⚠️ वर्तमान चेतावनी एवं मौसम सावधानी' : lang === 'ta' ? '⚠️ தற்போதைய எச்சரிக்கை & வானிலை வழிகாட்டல்' : lang === 'ml' ? '⚠️ നിലവിലെ ജാഗ്രത & കാലാവസ്ഥാ മുന്നറിയിപ്പ്' : '⚠️ Current Advisory & Weather Warning';
+                    html += `
+                        <div class="seasonal-caution-card">
+                            <i class="fas fa-triangle-exclamation"></i>
+                            <div class="seasonal-caution-content">
+                                <div class="seasonal-caution-title">${escapeHtml(cautionTitle)}</div>
+                                <div class="seasonal-caution-desc">${escapeHtml(caution)}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // 💡 Today's Farming Tip Card
+                if (tip) {
+                    const tipTitle = lang === 'te' ? '💡 నేటి రైతు సూచన' : lang === 'kn' ? '💡 ಇಂದಿನ ರೈತರ ಸಲಹೆ' : lang === 'hi' ? '💡 आज की किसान सलाह' : lang === 'ta' ? '💡 இன்றைய விவசாய குறிப்பு' : lang === 'ml' ? '💡 ഇന്നത്തെ കർഷക കുറിപ്പ്' : "💡 Today's Farming Tip";
+                    html += `
+                        <div class="seasonal-tip-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <div class="seasonal-tip-content">
+                                <div class="seasonal-tip-title">${escapeHtml(tipTitle)}</div>
+                                <div class="seasonal-tip-desc">${escapeHtml(tip)}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                html += '</div>'; // close .seasonal-advisory-wrapper
+
                 return html;
             }
 
             return `<div class="seasonal-fallback-box"><p style="line-height: 1.5; font-size: 0.86rem; padding: 1rem;">${escapeHtml(cleanText).replace(/\n/g, '<br>')}</p></div>`;
         }
 
-        function setSeasonalFilterCategory(cat) {
-            window.currentSeasonalCategoryFilter = cat;
-            if (window.lastSeasonalRecommendationRaw) {
-                const box = document.getElementById('seasonalCropBox');
-                if (box) box.innerHTML = renderSeasonalCropsUI(window.lastSeasonalRecommendationRaw);
-            }
-        }
-
-        // Open Fully Localized Detailed Crop Modal
         function openCropDetailsModal(idx) {
             const crop = window.lastSeasonalCropsList?.[idx];
             if (!crop) return;
