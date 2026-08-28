@@ -3418,50 +3418,336 @@
             }
         }, 150);
 
-        // ================= CROP METADATA CATALOG & VISUAL ASSETS =================
-        const CROP_CATALOG = {
-            'ragi': { slug: 'ragi', secondary: 'Finger Millet (Eleusine coracana)', varieties: ['GPU-28', 'ML-365', 'MR-1', 'KMR-301'], sowing: 'June – August (Kharif)', soil: 'Well-drained red sandy loam or gravelly soil', water: 'Low to Medium (350–500 mm), highly drought hardy', icon: 'fa-wheat-awn' },
-            'finger millet': { slug: 'ragi', secondary: 'Finger Millet (Ragi)', varieties: ['GPU-28', 'ML-365', 'MR-1'], sowing: 'June – August', soil: 'Red sandy loam', water: 'Low to Medium', icon: 'fa-wheat-awn' },
-            'paddy': { slug: 'paddy', secondary: 'Rice (Oryza sativa)', varieties: ['IR-64', 'Jaya', 'MTU-1010', 'Sona Masoori', 'BPT-5204'], sowing: 'June – July (Kharif) / Nov – Dec (Rabi)', soil: 'Clayey or clay loam with high water holding capacity', water: 'High (1100–1250 mm), standing water preferred', icon: 'fa-wheat-awn' },
-            'rice': { slug: 'paddy', secondary: 'Paddy (Oryza sativa)', varieties: ['IR-64', 'Jaya', 'MTU-1010', 'Sona Masoori'], sowing: 'June – July / Nov – Dec', soil: 'Heavy clay or clay loam', water: 'High (1100–1250 mm)', icon: 'fa-wheat-awn' },
-            'maize': { slug: 'maize', secondary: 'Corn (Zea mays)', varieties: ['Deccan-103', 'Ganga-11', 'HQPM-1', 'Bio-9681'], sowing: 'June – July / Oct – Nov', soil: 'Deep, rich loamy soil with good drainage', water: 'Medium (500–600 mm)', icon: 'fa-wheat-awn' },
-            'corn': { slug: 'maize', secondary: 'Maize (Zea mays)', varieties: ['Deccan-103', 'Ganga-11', 'HQPM-1'], sowing: 'June – July', soil: 'Loamy soil with good organic matter', water: 'Medium (500–600 mm)', icon: 'fa-wheat-awn' },
-            'groundnut': { slug: 'groundnut', secondary: 'Peanut (Arachis hypogaea)', varieties: ['TMV-2', 'JL-24', 'K-6', 'Kadiri-6', 'GPBD-4'], sowing: 'June – July (Rainfed) / Jan – Feb (Irrigated)', soil: 'Well-aerated sandy loam with pH 6.0–7.5', water: 'Medium (450–550 mm)', icon: 'fa-seedling' },
-            'cotton': { slug: 'cotton', secondary: 'Kapas (Gossypium hirsutum)', varieties: ['Bt-Cotton', 'DCH-32', 'MCU-5', 'Surabhi'], sowing: 'May – June (Kharif)', soil: 'Deep black cotton soil (Vertisols) or alluvial soil', water: 'Medium to High (600–800 mm)', icon: 'fa-leaf' },
-            'sugarcane': { slug: 'jaggery', secondary: 'Saccharum officinarum', varieties: ['Co-86032', 'Co-0238', 'Co-62175'], sowing: 'Jan – March / Oct – Nov', soil: 'Deep, well-drained loam or clay loam', water: 'High (1500–2500 mm)', icon: 'fa-seedling' },
-            'mustard': { slug: 'mustard', secondary: 'Sarson (Brassica juncea)', varieties: ['Pusa Bold', 'Varuna (T-59)', 'Kranti', 'NRCHB-101'], sowing: 'October – November (Rabi)', soil: 'Light to heavy loam soil with good drainage', water: 'Low (250–350 mm)', icon: 'fa-seedling' },
-            'wheat': { slug: 'wheat', secondary: 'Triticum aestivum', varieties: ['HD-2967', 'PBW-343', 'HD-3086', 'GW-322', 'Lok-1'], sowing: 'November – December (Rabi)', soil: 'Well-drained fertile clay loam or loam', water: 'Medium (400–450 mm)', icon: 'fa-wheat-awn' },
-            'tomato': { slug: 'tomato', secondary: 'Solanum lycopersicum', varieties: ['Arka Rakshak', 'Arka Vikas', 'Pusa Ruby', 'Abhinav'], sowing: 'Year-round (Aug–Sep, Nov–Dec, Feb–Mar)', soil: 'Rich sandy loam with good drainage and pH 6.0–7.0', water: 'Medium (400–600 mm), drip recommended', icon: 'fa-seedling' },
-            'onion': { slug: 'onion', secondary: 'Allium cepa', varieties: ['Bhima Super', 'Bhima Red', 'Arka Kalyan', 'Pusa Red'], sowing: 'May – June (Kharif) / Oct – Nov (Rabi)', soil: 'Deep, well-drained friable sandy loam', water: 'Medium (350–500 mm)', icon: 'fa-seedling' },
-            'bengal gram': { slug: 'bengal-gram', secondary: 'Chickpea / Chana (Cicer arietinum)', varieties: ['JG-11', 'JAKI-9218', 'Annigeri-1', 'Vishal'], sowing: 'October – November (Rabi)', soil: 'Well-drained clay loam or sandy loam', water: 'Low (250–350 mm)', icon: 'fa-seedling' },
-            'gram': { slug: 'bengal-gram', secondary: 'Chickpea (Cicer arietinum)', varieties: ['JG-11', 'Annigeri-1', 'JAKI-9218'], sowing: 'October – November', soil: 'Clay loam or sandy loam', water: 'Low (250–350 mm)', icon: 'fa-seedling' },
-            'soybean': { slug: 'soybean', secondary: 'Glycine max', varieties: ['JS-335', 'JS-9560', 'MACS-1407', 'NRC-37'], sowing: 'June – July (Kharif)', soil: 'Well-drained fertile loam with neutral pH', water: 'Medium (450–600 mm)', icon: 'fa-seedling' },
-            'chilli': { slug: 'green-chilli', secondary: 'Capsicum annuum', varieties: ['Byadgi', 'G-4', 'Pusa Jwala', 'Arka Meghana'], sowing: 'June – July / Oct – Nov', soil: 'Well-drained loamy soil rich in organic matter', water: 'Medium (400–500 mm)', icon: 'fa-seedling' },
-            'turmeric': { slug: 'turmeric', secondary: 'Curcuma longa', varieties: ['Prathibha', 'Salem', 'IISR Alleppey Supreme'], sowing: 'May – June', soil: 'Rich friable loamy or alluvial soil', water: 'High (800–1000 mm)', icon: 'fa-seedling' },
-            'ginger': { slug: 'ginger', secondary: 'Zingiber officinale', varieties: ['Varada', 'Rejatha', 'Mahim'], sowing: 'April – May', soil: 'Sandy loam, clay loam with high humus', water: 'High (1000–1200 mm)', icon: 'fa-seedling' },
-            'jowar': { slug: 'jowar', secondary: 'Sorghum (Sorghum bicolor)', varieties: ['CSH-14', 'CSH-16', 'M-35-1 (Maldandi)'], sowing: 'June – July / Sept – Oct', soil: 'Clayey deep soils or red loamy soil', water: 'Low to Medium (350–450 mm)', icon: 'fa-wheat-awn' },
-            'bajra': { slug: 'bajra', secondary: 'Pearl Millet (Pennisetum glaucum)', varieties: ['ICTP-8203', 'HHB-67', 'GHB-558'], sowing: 'June – July', soil: 'Light sandy or sandy loam soil', water: 'Low (250–350 mm)', icon: 'fa-wheat-awn' },
-            'banana': { slug: 'banana', secondary: 'Musa paradisiaca', varieties: ['Grand Naine (G9)', 'Robusta', 'Elakki', 'Nendran'], sowing: 'Year-round (optimal: June–July / Oct–Nov)', soil: 'Deep, rich fertile clay loam', water: 'High (1200–1800 mm)', icon: 'fa-leaf' }
+        // ================= CROP METADATA CATALOG & MULTI-LANGUAGE SYSTEM =================
+        const CROP_MODAL_I18N = {
+            en: {
+                why_recommended: "Why is this crop recommended?",
+                weather_alignment: "Weather Alignment: Current temperature ({temp}°C) and {humidity}% humidity are optimal for germination and vegetative growth.",
+                seasonal_window: "Seasonal Window: Perfectly aligned with the active {season} season in {loc}.",
+                agronomic_match: "Agronomic Match",
+                market_adaptability: "Market Adaptability: High regional demand across local APMC mandis.",
+                weather_compat: "Weather Compatibility",
+                temp_label: "Temperature",
+                optimal: "✓ Optimal",
+                humidity_label: "Humidity",
+                favorable: "✓ Favorable",
+                season_label: "Season",
+                active_window: "✓ Active Window",
+                rec_varieties: "Recommended Varieties",
+                farming_info: "Farming Information",
+                sowing_window: "Sowing Window",
+                water_req: "Water Requirement",
+                soil_req: "Soil Requirement",
+                ask_ai_btn: "Ask AI Advisor",
+                close_btn: "Close",
+                view_details: "View Details",
+                meta_factors: "Recommended: Weather • Season • Location",
+                highly_suitable: "🟢 Highly Suitable",
+                suitable: "🟢 Suitable",
+                seasons: { kharif: 'Kharif', rabi: 'Rabi', summer: 'Summer (Zaid)' },
+                default_variety: 'Certified High-Yield Variety',
+                default_sowing: 'Seasonal Window',
+                default_soil: 'Well-drained fertile agricultural soil',
+                default_water: 'Medium water requirement (400–550 mm)'
+            },
+            te: {
+                why_recommended: "ఈ పంట ఎందుకు సిఫార్సు చేయబడింది?",
+                weather_alignment: "వాతావరణ సమన్వయం: ప్రస్తుత ఉష్ణోగ్రత ({temp}°C) మరియు {humidity}% తేమ విత్తనోత్పత్తి, మొక్కల ఎదుగుదలకు అనుకూలంగా ఉన్నాయి.",
+                seasonal_window: "సీజన్ అనుకూలత: {loc} లో ప్రస్తుతం నడుస్తున్న {season} కాలానికి ఇది అత్యంత అనువైనది.",
+                agronomic_match: "వ్యవసాయ సమన్వయం",
+                market_adaptability: "మార్కెట్ గిరాకీ: స్థానిక వ్యవసాయ మార్కెట్ (APMC) యార్డులలో అధిక డిమాండ్ మరియు మంచి ధర.",
+                weather_compat: "వాతావరణ అనుకూలత",
+                temp_label: "ఉష్ణోగ్రత",
+                optimal: "✓ అనుకూలం",
+                humidity_label: "తేమ",
+                favorable: "✓ అనుకూలమైనది",
+                season_label: "సీజన్ / కాలం",
+                active_window: "✓ సరైన సమయం",
+                rec_varieties: "సిఫార్సు చేయబడిన రకాలు",
+                farming_info: "వ్యవసాయ సమాచారం",
+                sowing_window: "విత్తుకునే సమయం",
+                water_req: "నీటి అవసరం",
+                soil_req: "నేల రకం",
+                ask_ai_btn: "AI సలహాదారుని అడగండి",
+                close_btn: "మూసివేయి",
+                view_details: "వివరాలు చూడండి",
+                meta_factors: "సిఫార్సు: వాతావరణం • సీజన్ • ప్రాంతం",
+                highly_suitable: "🟢 అత్యంత అనుకూలం",
+                suitable: "🟢 అనుకూలం",
+                seasons: { kharif: 'ఖరీఫ్', rabi: 'రబీ', summer: 'వేసవి (జైద్)' },
+                default_variety: 'ప్రమాణీకరించిన అధిక దిగుబడి రకం',
+                default_sowing: 'ప్రస్తుత సీజన్ సమయం',
+                default_soil: 'నీరు ఇంకే సారవంతమైన వ్యవసాయ నేల',
+                default_water: 'మధ్యస్థ నీటి అవసరం (400–550 మి.మీ)'
+            },
+            kn: {
+                why_recommended: "ಈ ಬೆಳೆಯನ್ನು ಏಕೆ ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ?",
+                weather_alignment: "ಹವಾಮಾನ ಹೊಂದಾಣಿಕೆ: ಪ್ರಸ್ತುತ ತಾಪಮಾನ ({temp}°C) ಮತ್ತು {humidity}% ಆರ್ದ್ರತೆಯು ಬೀಜ ಮೊಳಕೆಯೊಡೆಯಲು ಹಾಗೂ ಬೆಳವಣಿಗೆಗೆ ಅತ್ಯುತ್ತಮವಾಗಿದೆ.",
+                seasonal_window: "ಋತುಮಾನ ಹೊಂದಾಣಿಕೆ: {loc} ನಲ್ಲಿ ಪ್ರಸ್ತುತ ಸಕ್ರಿಯವಾಗಿರುವ {season} ಹಂಗಾಮಿಗೆ ಸಂಪೂರ್ಣವಾಗಿ ಸೂಕ್ತವಾಗಿದೆ.",
+                agronomic_match: "ಕೃಷಿ ಸೂಕ್ತತೆ",
+                market_adaptability: "ಮಾರುಕಟ್ಟೆ ಬೇಡಿಕೆ: ಸ್ಥಳೀಯ ಎಪಿಎಂಸಿ ಮಾರುಕಟ್ಟೆಗಳಲ್ಲಿ ಉತ್ತಮ ಬೇಡಿಕೆ ಮತ್ತು ಸೂಕ್ತ ಧಾರಣೆ.",
+                weather_compat: "ಹವಾಮಾನ ಹೊಂದಾಣಿಕೆ",
+                temp_label: "ತಾಪಮಾನ",
+                optimal: "✓ ಅತ್ಯುತ್ತಮ",
+                humidity_label: "ಆರ್ದ್ರತೆ",
+                favorable: "✓ ಪೂರಕ",
+                season_label: "ಹಂಗಾಮು",
+                active_window: "✓ ಸಕ್ರಿಯ ಸಮಯ",
+                rec_varieties: "ಶಿಫಾರಸು ಮಾಡಿದ ತಳಿಗಳು",
+                farming_info: "ಕೃಷಿ ಮಾಹಿತಿ",
+                sowing_window: "ಬಿತ್ತನೆ ಸಮಯ",
+                water_req: "ನೀರಿನ ಅಗತ್ಯತೆ",
+                soil_req: "ಮಣ್ಣಿನ ಅವಶ್ಯಕತೆ",
+                ask_ai_btn: "AI ಸಲಹೆಗಾರರನ್ನು ಕೇಳಿ",
+                close_btn: "ಮುಚ್ಚಿ",
+                view_details: "ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
+                meta_factors: "ಶಿಫಾರಸು: ಹವಾಮಾನ • ಹಂಗಾಮು • ಸ್ಥಳ",
+                highly_suitable: "🟢 ಅತ್ಯಂತ ಸೂಕ್ತ",
+                suitable: "🟢 ಸೂಕ್ತ",
+                seasons: { kharif: 'ಖಾರೀಫ್', rabi: 'ರಬಿ', summer: 'ಬೇಸಿಗೆ (ಜೈದ್)' },
+                default_variety: 'ದೃಢೀಕೃತ ಅಧಿಕ ಇಳುವರಿ ತಳಿ',
+                default_sowing: 'ಪ್ರಸ್ತುತ ಹಂಗಾಮಿನ ಸಮಯ',
+                default_soil: 'ಉತ್ತಮ ನೀರು ಬಸಿದುಹೋಗುವ ಫಲವತ್ತಾದ ಕೃಷಿ ಮಣ್ಣು',
+                default_water: 'ಮಧ್ಯಮ ನೀರಿನ ಅಗತ್ಯತೆ (400–550 ಮಿ.ಮೀ)'
+            },
+            hi: {
+                why_recommended: "यह फसल क्यों अनुशंसित है?",
+                weather_alignment: "मौसम अनुकूलता: वर्तमान तापमान ({temp}°C) और {humidity}% आर्द्रता अंकुरण और वानस्पतिक विकास के लिए अनुकूल हैं।",
+                seasonal_window: "मौसमी समय: {loc} में सक्रिय {season} मौसम के बिल्कुल अनुकूल है।",
+                agronomic_match: "कृषि उपयुक्तता",
+                market_adaptability: "बाजार मांग: स्थानीय कृषि उपज मंडी (APMC) में उच्च मांग और अच्छा भाव।",
+                weather_compat: "मौसम अनुकूलता",
+                temp_label: "तापमान",
+                optimal: "✓ उत्तम",
+                humidity_label: "नमी (आर्द्रता)",
+                favorable: "✓ अनुकूल",
+                season_label: "मौसम / ऋतु",
+                active_window: "✓ बुवाई का समय",
+                rec_varieties: "अनुशंसित किस्में",
+                farming_info: "कृषि जानकारी",
+                sowing_window: "बुवाई का समय",
+                water_req: "जल की आवश्यकता",
+                soil_req: "मिट्टी की आवश्यकता",
+                ask_ai_btn: "AI सलाहकार से पूछें",
+                close_btn: "बंद करें",
+                view_details: "विवरण देखें",
+                meta_factors: "अनुशंसित: मौसम • ऋतु • स्थान",
+                highly_suitable: "🟢 अत्यधिक उपयुक्त",
+                suitable: "🟢 उपयुक्त",
+                seasons: { kharif: 'खरीफ', rabi: 'रबी', summer: 'जायद / ग्रीष्म' },
+                default_variety: 'प्रमाणित उन्नत अधिक उपज वाली किस्म',
+                default_sowing: 'वर्तमान बुवाई का समय',
+                default_soil: 'अच्छी जल निकासी वाली उपजाऊ कृषि मिट्टी',
+                default_water: 'मध्यम जल आवश्यकता (400–550 मिमी)'
+            },
+            ta: {
+                why_recommended: "இந்த பயிர் ஏன் பரிந்துரைக்கப்படுகிறது?",
+                weather_alignment: "வானிலை பொருத்தம்: தற்போதைய வெப்பநிலை ({temp}°C) மற்றும் {humidity}% ஈரப்பதம் முளைப்பு மற்றும் வளர்ச்சிக்கு ஏற்றதாக உள்ளது.",
+                seasonal_window: "பருவகாலம்: {loc} பகுதியில் உள்ள தற்போதைய {season} பருவத்திற்கு மிகவும் பொருத்தமானது.",
+                agronomic_match: "வேளாண் பொருத்தம்",
+                market_adaptability: "சந்தை தேவை: உள்ளூர் ஒழுங்குமுறை விற்பனைக்கூடங்களில் அதிக தேவை மற்றும் நல்ல விலை.",
+                weather_compat: "வானிலை பொருத்தம்",
+                temp_label: "வெப்பநிலை",
+                optimal: "✓ சிறந்தது",
+                humidity_label: "ஈரப்பதம்",
+                favorable: "✓ சாதகமானது",
+                season_label: "பருவம்",
+                active_window: "✓ நடவு காலம்",
+                rec_varieties: "பரிந்துரைக்கப்பட்ட ரகங்கள்",
+                farming_info: "விவசாய தகவல்கள்",
+                sowing_window: "விதைப்பு காலம்",
+                water_req: "நீர்த் தேவை",
+                soil_req: "மண் தேவை",
+                ask_ai_btn: "AI ஆலோசகரிடம் கேளுங்கள்",
+                close_btn: "மூடுக",
+                view_details: "விவரங்களைக் காண்க",
+                meta_factors: "பரிந்துரை: வானிலை • பருவம் • இடம்",
+                highly_suitable: "🟢 மிகவும் பொருத்தமானது",
+                suitable: "🟢 பொருத்தமானது",
+                seasons: { kharif: 'காரீஃப் (குறுவை)', rabi: 'ரபி (சம்பா)', summer: 'கோடை (நவரை)' },
+                default_variety: 'சான்றளிக்கப்பட்ட உயர் விளைச்சல் ரகம்',
+                default_sowing: 'பருவக்கால விதைப்பு நேரம்',
+                default_soil: 'நல்ல வடிகால் வசதியுள்ள வளமான நிலம்',
+                default_water: 'மிதமான நீர்த் தேவை (400–550 மி.மீ)'
+            },
+            ml: {
+                why_recommended: "എന്തുകൊണ്ട് ഈ വിള ശുപാർശ ചെയ്യുന്നു?",
+                weather_alignment: "കാലാവസ്ഥ അനുയോജ്യത: നിലവിലെ താപനിലയും ({temp}°C) {humidity}% ഈർപ്പവും വളർച്ചയ്ക്ക് ഏറ്റവും അനുയോജ്യമാണ്.",
+                seasonal_window: "സീസൺ വിൻഡോ: {loc} ലെ നിലവിലെ {season} സീസണുമായി പൂർണ്ണമായി പൊരുത്തപ്പെടുന്നു.",
+                agronomic_match: "കാർഷിക അനുയോജ്യത",
+                market_adaptability: "വിപണി സാധ്യത: പ്രാദേശിക കാർഷിക വിപണികളിൽ മികച്ച ആവശ്യകതയും വിലയും.",
+                weather_compat: "കാലാവസ്ഥ അനുയോജ്യത",
+                temp_label: "താപനില",
+                optimal: "✓ ഉചിതം",
+                humidity_label: "ഈർപ്പം",
+                favorable: "✓ അനുകൂലം",
+                season_label: "സീസൺ",
+                active_window: "✓ അനുയോജ്യ സമയം",
+                rec_varieties: "ശുപാർശ ചെയ്ത ഇനങ്ങൾ",
+                farming_info: "കൃഷി വിവരങ്ങൾ",
+                sowing_window: "വിത്ത് വിതയ്ക്കുന്ന സമയം",
+                water_req: "ജല ആവശ്യകത",
+                soil_req: "മണ്ണിന്റെ ആവശ്യകത",
+                ask_ai_btn: "AI ഉപദേശകനോട് ചോദിക്കുക",
+                close_btn: "അടയ്ക്കുക",
+                view_details: "വിശദാംശങ്ങൾ കാണുക",
+                meta_factors: "ശുപാർശ: കാലാവസ്ഥ • സീസൺ • സ്ഥലം",
+                highly_suitable: "🟢 ഏറ്റവും അനുയോജ്യം",
+                suitable: "🟢 അനുയോജ്യം",
+                seasons: { kharif: 'ഖാരിഫ് (വിരിപ്പ്)', rabi: 'റബി (മുണ്ടകൻ)', summer: 'വേനൽക്കാലം (പുഞ്ച)' },
+                default_variety: 'സാക്ഷ്യപ്പെടുത്തിയ ഉയർന്ന വിളവ് ഇനം',
+                default_sowing: 'സീസൺ വിതയ്ക്കൽ സമയം',
+                default_soil: 'നല്ല നീർവാർച്ചയുള്ള ഫലഭൂയിഷ്ഠമായ മണ്ണ്',
+                default_water: 'ഇടത്തരം ജല ആവശ്യകത (400–550 മി.മീ)'
+            }
         };
 
-        function matchCropMetadata(cropName) {
-            if (!cropName) return { slug: 'ragi', secondary: 'Agricultural Crop', varieties: ['Certified High-Yield Variety'], sowing: 'Current Season', soil: 'Fertile agricultural loam', water: 'Moderate', icon: 'fa-seedling' };
+        const CROP_CATALOG = {
+            'ragi': { 
+                slug: 'ragi', 
+                secondary: { en: 'Finger Millet (Eleusine coracana)', te: 'రాగులు / తైదలు (Eleusine coracana)', kn: 'ರಾಗಿ (Eleusine coracana)', hi: 'रागी / मडुआ (Eleusine coracana)', ta: 'கேழ்வரகு (Eleusine coracana)', ml: 'പഞ്ഞപ്പുല്ല് / റാഗി' },
+                varieties: ['GPU-28', 'ML-365', 'MR-1', 'KMR-301', 'PR-202'], 
+                sowing: { en: 'June – August (Kharif)', te: 'జూన్ – ఆగస్టు (ఖరీఫ్)', kn: 'ಜೂನ್ – ಆಗಸ್ಟ್ (ಖಾರೀಫ್)', hi: 'जून – अगस्त (खरीफ)', ta: 'ஜூன் – ஆகஸ்ட் (காரீஃப்)', ml: 'ജൂൺ – ആഗസ്റ്റ് (ഖാരിഫ്)' },
+                soil: { en: 'Well-drained red sandy loam or gravelly soil', te: 'నీరు ఇంకే ఎర్ర ఇసుక లేదా గరప నేలలు', kn: 'ಉತ್ತಮ ನೀರು ಬಸಿಯುವ ಕೆಂಪು ಮರಳು ಮಿಶ್ರಿತ ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली लाल रेतीली दोमट मिट्टी', ta: 'நல்ல வடிகால் வசதியுள்ள செம்மண் நிலம்', ml: 'നീർവാർച്ചയുള്ള ചുവന്ന മണൽ മണ്ണ്' },
+                water: { en: 'Low to Medium (350–500 mm), highly drought hardy', te: 'తక్కువ నుండి మధ్యస్థం (350–500 మి.మీ), కరువును తట్టుకుంటుంది', kn: 'ಕಡಿಮೆ-ಮಧ್ಯಮ (350–500 ಮಿ.ಮೀ), ಬರ ನಿರೋಧಕ', hi: 'कम से मध्यम (350–500 मिमी), सूखा सहनशील', ta: 'குறைந்த முதல் மிதமான நீர்த் தேவை (350–500 மி.மீ)', ml: 'കുറഞ്ഞത് മുതൽ ഇടത്തരം വരെ (350–500 മി.മീ)' },
+                icon: 'fa-wheat-awn' 
+            },
+            'paddy': { 
+                slug: 'paddy', 
+                secondary: { en: 'Rice (Oryza sativa)', te: 'వరి / ధాన్యం (Oryza sativa)', kn: 'ಭತ್ತ (Oryza sativa)', hi: 'धान / चावल (Oryza sativa)', ta: 'நெல் (Oryza sativa)', ml: 'നെല്ല് (Oryza sativa)' },
+                varieties: ['IR-64', 'Jaya', 'MTU-1010', 'Sona Masoori', 'BPT-5204'], 
+                sowing: { en: 'June – July (Kharif) / Nov – Dec (Rabi)', te: 'జూన్ – జూలై (ఖరీఫ్) / నవంబరు – డిసెంబరు (రబీ)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್) / ನವೆಂಬರ್ – ಡಿಸೆಂಬರ್ (ರಬಿ)', hi: 'जून – जुलाई (खरीफ) / नवंबर – दिसंबर (रबी)', ta: 'ஜூன் – ஜூலை / நவம்பர் – டிசம்பர்', ml: 'ജൂൺ – ജൂലൈ / നവംബർ – ഡിസംബർ' },
+                soil: { en: 'Clayey or clay loam with high water holding capacity', te: 'తేమను నిలిపి ఉంచే బంకమట్టి లేదా రేగడి నేలలు', kn: 'ಹೆಚ್ಚು ನೀರು ಹಿಡಿದಿಟ್ಟುಕೊಳ್ಳುವ ಜೇಡಿ ಮಣ್ಣು', hi: 'अधिक जल धारण क्षमता वाली चिकनी या दोमट मिट्टी', ta: 'அதிக நீர் தேங்கும் களிமண் நிலம்', ml: 'വെള്ളം കെട്ടിനിൽക്കുന്ന കളിമണ്ണ്' },
+                water: { en: 'High (1100–1250 mm), standing water preferred', te: 'ఎక్కువ (1100–1250 మి.మీ), నిల్వ నీరు అవసరం', kn: 'ಅಧಿಕ (1100–1250 ಮಿ.ಮೀ), ನಿಂತ ನೀರು ಅಗತ್ಯ', hi: 'अधिक (1100–1250 मिमी), भरा हुआ पानी आवश्यक', ta: 'அதிக நீர்த் தேவை (1100–1250 மி.மீ)', ml: 'ഉയർന്ന ജല ആവശ്യകത (1100–1250 മി.മീ)' },
+                icon: 'fa-wheat-awn' 
+            },
+            'okra': {
+                slug: 'okra',
+                secondary: { en: 'Bhindi / Lady Finger (Abelmoschus esculentus)', te: 'బెండకాయ / బెండ (Abelmoschus esculentus)', kn: 'ಬೆಂಡೆಕಾಯಿ (Abelmoschus esculentus)', hi: 'भिंडी (Abelmoschus esculentus)', ta: 'வெண்டைக்காய் (Abelmoschus esculentus)', ml: 'വെണ്ടയ്ക്ക (Abelmoschus esculentus)' },
+                varieties: ['Arka Anamika', 'Pusa Sawani', 'Kashi Kranti', 'Parbhani Kranti'],
+                sowing: { en: 'June – July (Kharif) / Feb – March (Summer)', te: 'జూన్ – జూలై (ఖరీఫ్) / ఫిబ్రవరి – మార్చి (వేసవి)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್) / ಫೆಬ್ರವರಿ – ಮಾರ್ಚ್ (ಬೇಸಿಗೆ)', hi: 'जून – जुलाई (खरीफ) / फरवरी – मार्च (जायद)', ta: 'ஜூன் – ஜூலை / பிப்ரவரி – மார்ச்', ml: 'ജൂൺ – ജൂലൈ / ഫെബ്രുവരി – മാർച്ച്' },
+                soil: { en: 'Sandy loam to clay loam rich in organic matter', te: 'సేంద్రియ పదార్థం పుష్కలంగా ఉన్న ఇసుక లేదా రేగడి నేలలు', kn: 'ಸಾವಯವ ಸಮೃದ್ಧ ಮರಳು ಮತ್ತು ಜೇಡಿ ಮಣ್ಣು', hi: 'जीवांश युक्त बलुई दोमट या दोमट मिट्टी', ta: 'வளமான மணல் கலந்த வண்டல் மண்', ml: 'ജൈവാംശമുള്ള പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (400–500 mm), drip irrigation optimal', te: 'మధ్యస్థం (400–500 మి.మీ), బిందు సేద్యం అనుకూలం', kn: 'ಮಧ್ಯಮ (400–500 ಮಿ.ಮೀ), ಹನಿ ನೀರಾವರಿ ಸೂಕ್ತ', hi: 'मध्यम (400–500 मिमी), ड्रिप सिंचाई उत्तम', ta: 'மிதமான நீர்த் தேவை (400–500 மி.மீ)', ml: 'ഇടത്തരം ജല ആവശ്യകത (400–500 മി.മീ)' },
+                icon: 'fa-seedling'
+            },
+            'green gram': {
+                slug: 'moong-dal',
+                secondary: { en: 'Moong / Green Gram (Vigna radiata)', te: 'పెసలు / పెసర (Vigna radiata)', kn: 'ಹೆಸರು ಕಾಳು (Vigna radiata)', hi: 'मूंग (Vigna radiata)', ta: 'பாசிப்பயறு (Vigna radiata)', ml: 'ചെറുപയർ (Vigna radiata)' },
+                varieties: ['IPM 02-03', 'Pusa Vishal', 'Samrat', 'K-851'],
+                sowing: { en: 'June – July (Kharif) / March (Summer)', te: 'జూన్ – జూలై (ఖరీఫ్) / మార్చి (వేసవి)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್) / ಮಾರ್ಚ್ (ಬೇಸಿಗೆ)', hi: 'जून – जुलाई (खरीफ) / मार्च (जायद)', ta: 'ஜூன் – ஜூலை / மார்ச்', ml: 'ജൂൺ – ജൂലൈ / മാർച്ച്' },
+                soil: { en: 'Well-drained loamy soil with neutral pH', te: 'నీరు ఇంకే గరప నేలలు', kn: 'ಉತ್ತಮ ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली दोमट मिट्टी', ta: 'நல்ல வடிகால் வசதியுள்ள வண்டல் மண்', ml: 'നീർവാർച്ചയുള്ള പശിമരാശി മണ്ണ്' },
+                water: { en: 'Low (250–350 mm), short duration drought tolerant', te: 'తక్కువ (250–350 మి.మీ), స్వల్పకాలిక పంట', kn: 'ಕಡಿಮೆ (250–350 ಮಿ.ಮೀ), ಕಡಿಮೆ ಅವಧಿಯ ಬೆಳೆ', hi: 'कम (250–350 मिमी), कम अवधि वाली फसल', ta: 'குறைந்த நீர்த் தேவை (250–350 மி.மீ)', ml: 'കുറഞ്ഞ ജല ആവശ്യകത (250–350 മി.മീ)' },
+                icon: 'fa-seedling'
+            },
+            'black gram': {
+                slug: 'urad-dal',
+                secondary: { en: 'Urad / Black Gram (Vigna mungo)', te: 'మినుములు / మినుము (Vigna mungo)', kn: 'ಉದ್ದಿನ ಕಾಳು (Vigna mungo)', hi: 'उड़द (Vigna mungo)', ta: 'உளுந்து (Vigna mungo)', ml: 'ഉഴുന്ന് (Vigna mungo)' },
+                varieties: ['LBG-752', 'PU-31', 'Pant U-30', 'VBN-8'],
+                sowing: { en: 'June – July / Oct – Nov', te: 'జూన్ – జూలై / అక్టోబరు – నవంబరు', kn: 'ಜೂನ್ – ಜುಲೈ / ಅಕ್ಟೋಬರ್ – ನವೆಂಬರ್', hi: 'जून – जुलाई / अक्टूबर – नवंबर', ta: 'ஜூன் – ஜூலை / அக்டோபர் – நவம்பர்', ml: 'ജൂൺ – ജൂലൈ / ഒക്ടോബർ – നവംബർ' },
+                soil: { en: 'Deep loamy or black cotton soil', te: 'లోతైన గరప లేదా నల్లరేగడి నేలలు', kn: 'ಆಳವಾದ ಗೋಡು ಅಥವಾ ಕಪ್ಪು ಮಣ್ಣು', hi: 'गहरी दोमट या काली मिट्टी', ta: 'வளமான கரிசல் அல்லது வண்டல் மண்', ml: 'പശിമരാശി അല്ലെങ്കിൽ കരിമണ്ണ്' },
+                water: { en: 'Low to Medium (300–400 mm)', te: 'తక్కువ నుండి మధ్యస్థం (300–400 మి.మీ)', kn: 'ಕಡಿಮೆ-ಮಧ್ಯಮ (300–400 ಮಿ.ಮೀ)', hi: 'कम से मध्यम (300–400 मिमी)', ta: 'குறைந்த முதல் மிதமான நீர்த் தேவை', ml: 'കുറഞ്ഞത് മുതൽ ഇടത്തരം വരെ' },
+                icon: 'fa-seedling'
+            },
+            'maize': { 
+                slug: 'maize', 
+                secondary: { en: 'Corn / Maize (Zea mays)', te: 'మొక్కజొన్న (Zea mays)', kn: 'ಮೆಕ್ಕೆಜೋಳ (Zea mays)', hi: 'मक्का (Zea mays)', ta: 'மக்காச்சோளம் (Zea mays)', ml: 'ചോളം (Zea mays)' },
+                varieties: ['Deccan-103', 'Ganga-11', 'HQPM-1', 'Bio-9681'], 
+                sowing: { en: 'June – July / Oct – Nov', te: 'జూన్ – జూలై / అక్టోబరు – నవంబరు', kn: 'ಜೂನ್ – ಜುಲೈ / ಅಕ್ಟೋಬರ್ – ನವೆಂಬರ್', hi: 'जून – जुलाई / अक्टूबर – नवंबर', ta: 'ஜூன் – ஜூலை / அக்டோபர் – நவம்பர்', ml: 'ജൂൺ – ജൂലൈ / ഒക്ടോബർ – നവംബർ' },
+                soil: { en: 'Deep, rich loamy soil with good drainage', te: 'సేంద్రియ పదార్థం గల లోతైన గరప నేలలు', kn: 'ಉತ್ತಮ ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली गहरी दोमट मिट्टी', ta: 'வளமான ஆழமான வண்டல் மண்', ml: 'ഫലഭൂയിഷ്ഠമായ പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (500–600 mm)', te: 'మధ్యస్థం (500–600 మి.మీ)', kn: 'ಮಧ್ಯಮ (500–600 ಮಿ.ಮೀ)', hi: 'मध्यम (500–600 मिमी)', ta: 'மிதமான நீர்த் தேவை (500–600 மி.மீ)', ml: 'ഇടത്തരം ജല ആവശ്യകത (500–600 മി.മീ)' },
+                icon: 'fa-wheat-awn' 
+            },
+            'tur dal': {
+                slug: 'tur-dal',
+                secondary: { en: 'Pigeon Pea / Red Gram (Cajanus cajan)', te: 'కందులు / కంది (Cajanus cajan)', kn: 'ತೊಗರಿ ಬೇಳೆ (Cajanus cajan)', hi: 'अरहर / तुअर (Cajanus cajan)', ta: 'துவரம் பருப்பு (Cajanus cajan)', ml: 'തുവരപ്പരിപ്പ് (Cajanus cajan)' },
+                varieties: ['ICPL-87119 (Asha)', 'TS-3R', 'BSMR-736', 'Maruti'],
+                sowing: { en: 'June – July (Kharif)', te: 'జూన్ – జూలై (ఖరీఫ్)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್)', hi: 'जून – जुलाई (खरीफ)', ta: 'ஜூன் – ஜூலை (காரீஃப்)', ml: 'ജൂൺ – ജൂലൈ (ഖാരിഫ്)' },
+                soil: { en: 'Deep, well-drained loam or red loam soil', te: 'లోతైన గరప లేదా ఎర్ర నేలలు', kn: 'ಆಳವಾದ ಕೆಂಪು ಗೋಡು ಮಣ್ಣು', hi: 'गहरी, अच्छी जल निकासी वाली दोमट मिट्टी', ta: 'ஆழமான செம்மண் நிலம்', ml: 'ആഴമുള്ള പശിമരാശി മണ്ണ്' },
+                water: { en: 'Low to Medium (350–500 mm), deep tap root drought hardy', te: 'తక్కువ నుండి మధ్యస్థం (350–500 మి.మీ), కరువును తట్టుకుంటుంది', kn: 'ಕಡಿಮೆ-ಮಧ್ಯಮ (350–500 ಮಿ.ಮೀ)', hi: 'कम से मध्यम (350–500 मिमी), सूखा प्रतिरोधी', ta: 'குறைந்த முதல் மிதமான நீர்த் தேவை', ml: 'കുറഞ്ഞത് മുതൽ ഇടത്തരം വരെ' },
+                icon: 'fa-seedling'
+            },
+            'groundnut': { 
+                slug: 'groundnut', 
+                secondary: { en: 'Peanut (Arachis hypogaea)', te: 'వేరుశనగ (Arachis hypogaea)', kn: 'ಕಡಲೆಕಾಯಿ (Arachis hypogaea)', hi: 'मूंगफली (Arachis hypogaea)', ta: 'வேர்க்கடலை (Arachis hypogaea)', ml: 'നിലക്കടല (Arachis hypogaea)' },
+                varieties: ['TMV-2', 'JL-24', 'Kadiri-6', 'GPBD-4'], 
+                sowing: { en: 'June – July (Rainfed) / Jan – Feb (Irrigated)', te: 'జూన్ – జూలై / జనవరి – ఫిబ్రవరి', kn: 'ಜೂನ್ – ಜುಲೈ / ಜನವರಿ – ಫೆಬ್ರವರಿ', hi: 'जून – जुलाई / जनवरी – फरवरी', ta: 'ஜூன் – ஜூலை / ஜனவரி – பிப்ரவரி', ml: 'ജൂൺ – ജൂലൈ / ജനുവരി – ഫെബ്രുവരി' },
+                soil: { en: 'Well-aerated sandy loam with pH 6.0–7.5', te: 'వదులుగా ఉండే ఇసుక గరప నేలలు', kn: 'ಉತ್ತಮ ಗಾಳಿಯಾಡುವ ಮರಳು ಮಿಶ್ರಿತ ಗೋಡು ಮಣ್ಣು', hi: 'हल्की भुरभुरी बलुई दोमट मिट्टी', ta: 'நல்ல காற்றோட்டமுள்ள மணல் பாங்கான நிலம்', ml: 'നീർവാർച്ചയുള്ള മണൽ കലർന്ന മണ്ണ്' },
+                water: { en: 'Medium (450–550 mm)', te: 'మధ్యస్థం (450–550 మి.మీ)', kn: 'ಮಧ್ಯಮ (450–550 ಮಿ.ಮೀ)', hi: 'मध्यम (450–550 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-seedling' 
+            },
+            'cotton': { 
+                slug: 'cotton', 
+                secondary: { en: 'Cotton / Kapas (Gossypium hirsutum)', te: 'పత్తి (Gossypium hirsutum)', kn: 'ಹತ್ತಿ (Gossypium hirsutum)', hi: 'कपास (Gossypium hirsutum)', ta: 'பருத்தி (Gossypium hirsutum)', ml: 'പരുത്തി (Gossypium hirsutum)' },
+                varieties: ['Bt-Cotton', 'DCH-32', 'MCU-5', 'Surabhi'], 
+                sowing: { en: 'May – June (Kharif)', te: 'మే – జూన్ (ఖరీఫ్)', kn: 'ಮೇ – ಜೂನ್ (ಖಾರೀಫ್)', hi: 'मई – जून (खरीफ)', ta: 'மே – ஜூன் (காரீஃப்)', ml: 'മേയ് – ജൂൺ (ഖാരിഫ്)' },
+                soil: { en: 'Deep black cotton soil (Vertisols) or alluvial soil', te: 'లోతైన నల్లరేగడి నేలలు', kn: 'ಆಳವಾದ ಕಪ್ಪು ಹತ್ತಿ ಮಣ್ಣು', hi: 'गहरी काली कपासी मिट्टी', ta: 'ஆழமான கரிசல் மண்', ml: 'ആഴമുള്ള കരിമണ്ണ്' },
+                water: { en: 'Medium to High (600–800 mm)', te: 'మధ్యస్థం నుండి ఎక్కువ (600–800 మి.మీ)', kn: 'ಮಧ್ಯಮ-ಅಧಿಕ (600–800 ಮಿ.ಮೀ)', hi: 'मध्यम से अधिक (600–800 मिमी)', ta: 'மிதமானது முதல் அதிக நீர்த் தேவை', ml: 'ഇടത്തരം മുതൽ ഉയർന്നത് വരെ' },
+                icon: 'fa-leaf' 
+            },
+            'tomato': { 
+                slug: 'tomato', 
+                secondary: { en: 'Tomato (Solanum lycopersicum)', te: 'టమోటా (Solanum lycopersicum)', kn: 'ಟೊಮೆಟೊ (Solanum lycopersicum)', hi: 'टमाटर (Solanum lycopersicum)', ta: 'தக்காளி (Solanum lycopersicum)', ml: 'തക്കാളി (Solanum lycopersicum)' },
+                varieties: ['Arka Rakshak', 'Arka Vikas', 'Pusa Ruby', 'Abhinav'], 
+                sowing: { en: 'Year-round (Aug–Sep, Nov–Dec, Feb–Mar)', te: 'ఏడాది పొడవునా (ఆగస్టు, నవంబరు, ఫిబ్రవరి)', kn: 'ವರ್ಷಪೂರ್ತಿ (ಆಗಸ್ಟ್, ನವೆಂಬರ್, ಫೆಬ್ರವರಿ)', hi: 'वर्ष भर (अगस्त, नवंबर, फरवरी)', ta: 'ஆண்டு முழுவதும்', ml: 'വർഷം മുഴുവൻ' },
+                soil: { en: 'Rich sandy loam with good drainage and pH 6.0–7.0', te: 'సేంద్రియ ఎరువులు గల సారవంతమైన గరప నేలలు', kn: 'ಫಲವತ್ತಾದ ಮರಳು ಗೋಡು ಮಣ್ಣು', hi: 'जीवांश युक्त उपजाऊ दोमट मिट्टी', ta: 'வளமான மணல் கலந்த வண்டல் மண்', ml: 'ഫലഭൂയിഷ്ഠമായ പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (400–600 mm), drip recommended', te: 'మధ్యస్థం (400–600 మి.మీ), బిందు సేద్యం మంచిది', kn: 'ಮಧ್ಯಮ (400–600 ಮಿ.ಮೀ), ಹನಿ ನೀರಾವರಿ ಉತ್ತಮ', hi: 'मध्यम (400–600 मिमी), ड्रिप सिंचाई अनुशंसित', ta: 'மிதமான நீர்த் தேவை (400–600 மி.மீ)', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-seedling' 
+            },
+            'onion': { 
+                slug: 'onion', 
+                secondary: { en: 'Onion (Allium cepa)', te: 'ఉల్లిపాయ / ఉల్లి (Allium cepa)', kn: 'ಈರುಳ್ಳಿ (Allium cepa)', hi: 'प्याज (Allium cepa)', ta: 'வெங்காயம் (Allium cepa)', ml: 'സവാള / ഉള്ളി (Allium cepa)' },
+                varieties: ['Bhima Super', 'Bhima Red', 'Arka Kalyan', 'Pusa Red'], 
+                sowing: { en: 'May – June (Kharif) / Oct – Nov (Rabi)', te: 'మే – జూన్ (ఖరీఫ్) / అక్టోబరు – నవంబరు (రబీ)', kn: 'ಮೇ – ಜೂನ್ (ಖಾರೀಫ್) / ಅಕ್ಟೋಬರ್ – ನವೆಂಬರ್ (ರಬಿ)', hi: 'मई – जून (खरीफ) / अक्टूबर – नवंबर (रबी)', ta: 'மே – ஜூன் / அக்டோபர் – நவம்பர்', ml: 'മേയ് – ജൂൺ / ഒക്ടോബർ – നവംബർ' },
+                soil: { en: 'Deep, well-drained friable sandy loam', te: 'మృదువైన సారవంతమైన ఇసుక గరప నేలలు', kn: 'ಉತ್ತಮ ಗಾಳಿಯಾಡುವ ಮರಳು ಗೋಡು ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली भुरभुरी बलुई दोमट मिट्टी', ta: 'நல்ல வடிகால் வசதியுள்ள மணல் வண்டல் மண்', ml: 'നീർവാർച്ചയുള്ള പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (350–500 mm)', te: 'మధ్యస్థం (350–500 మి.మీ)', kn: 'ಮಧ್ಯಮ (350–500 ಮಿ.ಮೀ)', hi: 'मध्यम (350–500 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-seedling' 
+            }
+        };
+
+        function matchCropMetadata(cropName, lang = 'en') {
+            if (!cropName) {
+                const i18n = CROP_MODAL_I18N[lang] || CROP_MODAL_I18N['en'];
+                return { slug: 'ragi', secondary: i18n.default_variety, varieties: [i18n.default_variety], sowing: i18n.default_sowing, soil: i18n.default_soil, water: i18n.default_water, icon: 'fa-seedling' };
+            }
             const lower = cropName.toLowerCase().replace(/[*_#]/g, '').trim();
             for (const [key, val] of Object.entries(CROP_CATALOG)) {
-                if (lower.includes(key) || key.includes(lower)) {
-                    return val;
+                const keyMatch = lower.includes(key) || key.includes(lower);
+                // Also check match in secondary names for multi-language matching (e.g. వరి, భత్త, ধান, etc.)
+                let secMatch = false;
+                if (val.secondary) {
+                    for (const secVal of Object.values(val.secondary)) {
+                        if (typeof secVal === 'string' && (lower.includes(secVal.toLowerCase()) || secVal.toLowerCase().includes(lower))) {
+                            secMatch = true;
+                            break;
+                        }
+                    }
+                }
+                if (keyMatch || secMatch) {
+                    return {
+                        slug: val.slug,
+                        secondary: typeof val.secondary === 'object' ? (val.secondary[lang] || val.secondary['en']) : val.secondary,
+                        varieties: val.varieties,
+                        sowing: typeof val.sowing === 'object' ? (val.sowing[lang] || val.sowing['en']) : val.sowing,
+                        soil: typeof val.soil === 'object' ? (val.soil[lang] || val.soil['en']) : val.soil,
+                        water: typeof val.water === 'object' ? (val.water[lang] || val.water['en']) : val.water,
+                        icon: val.icon
+                    };
                 }
             }
-            return { slug: 'ragi', secondary: 'Recommended Regional Crop', varieties: ['Standard Certified Variety'], sowing: 'Seasonal Window', soil: 'Well-drained agricultural soil', water: 'Moderate', icon: 'fa-seedling' };
+            const i18n = CROP_MODAL_I18N[lang] || CROP_MODAL_I18N['en'];
+            return { slug: 'ragi', secondary: i18n.default_variety, varieties: [i18n.default_variety], sowing: i18n.default_sowing, soil: i18n.default_soil, water: i18n.default_water, icon: 'fa-seedling' };
         }
 
         // Global cache for currently displayed seasonal crops
         window.lastSeasonalCropsList = [];
 
-        // ================= MODERN STRUCTURED UI RENDERER FOR SEASONAL CROPS =================
+        // ================= FULLY LOCALIZED STRUCTURED UI RENDERER FOR SEASONAL CROPS =================
         function renderSeasonalCropsUI(rawText) {
+            const lang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
+            const i18n = CROP_MODAL_I18N[lang] || CROP_MODAL_I18N['en'];
+
             if (!rawText || !rawText.trim()) {
-                return '<div style="padding: 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;"><i class="fas fa-circle-info"></i> No seasonal recommendations available at this time.</div>';
+                return `<div style="padding: 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;"><i class="fas fa-circle-info"></i> ${escapeHtml(i18n.default_sowing)}</div>`;
             }
 
             // Remove decorative emojis
@@ -3478,7 +3764,7 @@
 
             lines.forEach(line => {
                 // Headline match
-                if (line.match(/^(\**|#|\s*)*(Top|Recommended|Kharif|Rabi|Summer|Seasonal|ಶಿಫಾರಸು|ಸಿಫಾರ್ಸು|பரிந்துரை|मौसमी)/i) && !line.match(/^\d+[\.\)]/)) {
+                if (line.match(/^(\**|#|\s*)*(Top|Recommended|Kharif|Rabi|Summer|Seasonal|ಶಿಫಾರಸು|ಸಿಫಾರ್ಸು|సిఫార్సు|பரிந்துரை|ശുപാർശ|मौसमी)/i) && !line.match(/^\d+[\.\)]/)) {
                     headline = line.replace(/[*#]/g, '').trim();
                     return;
                 }
@@ -3508,20 +3794,20 @@
                         num: numMatch[1],
                         name: cropName,
                         reason: cropReason,
-                        meta: matchCropMetadata(cropName)
+                        meta: matchCropMetadata(cropName, lang)
                     });
                     return;
                 }
 
                 // Farming Tip match
-                if (line.match(/Tip|Farming Tip|ರೈತರ ಸಲಹೆ|రైతు సూచన|விவசாய குறிப்பு|किसान सलाह/i)) {
-                    tip = line.replace(/^.*?(Tip|Farming Tip|ರೈತರ ಸಲಹೆ|రైతు సూచన|விவசாய குறிப்பு|किसान सलाह)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
+                if (line.match(/Tip|Farming Tip|ರೈತರ ಸಲಹೆ|రైతు సూచన|వివరణ|விவசாய குறிப்பு|കർഷക കുറിപ്പ്|किसान सलाह/i)) {
+                    tip = line.replace(/^.*?(Tip|Farming Tip|ರೈತರ ಸಲಹೆ|రైతు సూచన|వివరణ|விவசாய குறிப்பு|കർഷക കുറിപ്പ്|किसान सलाह)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
                     return;
                 }
 
                 // Caution / Alert match
-                if (line.match(/Caution|Warning|Alert|ಎಚ್ಚರಿಕೆ|ಹೆಚ್ಚರಿಕ|எச்சரிக்கை|सावधानी/i)) {
-                    caution = line.replace(/^.*?(Caution|Warning|Alert|ಎಚ್ಚರಿಕೆ|ಹೆಚ್ಚರಿಕ|எச்சரிக்கை|सावधानी)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
+                if (line.match(/Caution|Warning|Alert|ಎಚ್ಚರಿಕೆ|హెచ్చరిక|எச்சரிக்கை|ജാഗ്രത|सावधानी/i)) {
+                    caution = line.replace(/^.*?(Caution|Warning|Alert|ಎಚ್ಚರಿಕೆ|హెచ్చరిక|எச்சரிக்கை|ജാഗ്രത|सावधानी)\s*[:：\*\-]+\s*/i, '').replace(/[*_]/g, '').trim();
                     return;
                 }
             });
@@ -3538,7 +3824,7 @@
                 let html = `
                     <div class="seasonal-header-meta">
                         <span class="seasonal-meta-loc"><i class="fas fa-location-dot"></i> ${escapeHtml(dynamicLoc)}</span>
-                        <span class="seasonal-meta-factors"><i class="fas fa-circle-check" style="color: var(--primary);"></i> Recommended: Weather • Season • Location</span>
+                        <span class="seasonal-meta-factors"><i class="fas fa-circle-check" style="color: var(--primary);"></i> ${escapeHtml(i18n.meta_factors)}</span>
                     </div>
                     <div class="seasonal-crop-grid">
                 `;
@@ -3546,11 +3832,11 @@
                 crops.forEach((c, idx) => {
                     const imgSrc = `assets/images/commodities/${c.meta.slug}.webp`;
                     const fallbackIcon = c.meta.icon || 'fa-seedling';
-                    const suitabilityLabel = idx === 0 ? '🟢 Highly Suitable' : '🟢 Suitable';
+                    const suitabilityLabel = idx === 0 ? i18n.highly_suitable : i18n.suitable;
                     const suitabilityClass = idx === 0 ? 'suitability-high' : 'suitability-suitable';
 
                     html += `
-                        <div class="seasonal-crop-card" tabindex="0" role="button" aria-label="View recommendations and advisory for ${escapeHtml(c.name)}" onclick="openCropDetailsModal(${idx})" onkeydown="if(event.key==='Enter'||event.key===' ')openCropDetailsModal(${idx})">
+                        <div class="seasonal-crop-card" tabindex="0" role="button" aria-label="${escapeHtml(i18n.view_details)} - ${escapeHtml(c.name)}" onclick="openCropDetailsModal(${idx})" onkeydown="if(event.key==='Enter'||event.key===' ')openCropDetailsModal(${idx})">
                             <div class="seasonal-card-media">
                                 <img src="${imgSrc}" alt="${escapeHtml(c.name)}" class="seasonal-card-img" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                                 <i class="fas ${fallbackIcon} seasonal-card-fallback-icon" style="display: none;"></i>
@@ -3559,15 +3845,15 @@
                                 <div class="seasonal-card-name">
                                     <span>${escapeHtml(c.name)}</span>
                                 </div>
-                                <div class="seasonal-card-secondary">${escapeHtml(c.meta.secondary || 'Seasonal Variety')}</div>
+                                <div class="seasonal-card-secondary">${escapeHtml(c.meta.secondary || i18n.default_variety)}</div>
                                 <span class="suitability-badge ${suitabilityClass}">
                                     ${suitabilityLabel}
                                 </span>
                                 <div class="seasonal-card-reason">
-                                    ${escapeHtml(c.reason || 'Optimal suitability for active season & local weather.')}
+                                    ${escapeHtml(c.reason || i18n.why_recommended)}
                                 </div>
                                 <div class="seasonal-card-action">
-                                    <span>View Details</span>
+                                    <span>${escapeHtml(i18n.view_details)}</span>
                                     <i class="fas fa-arrow-right"></i>
                                 </div>
                             </div>
@@ -3581,22 +3867,24 @@
                 if (tip || caution) {
                     html += '<div class="seasonal-advisory-wrapper">';
                     if (tip) {
+                        const tipTitle = lang === 'te' ? '💡 నేటి రైతు సూచన' : lang === 'kn' ? '💡 ಇಂದಿನ ರೈತರ ಸಲಹೆ' : lang === 'hi' ? '💡 आज की किसान सलाह' : lang === 'ta' ? '💡 இன்றைய விவசாய குறிப்பு' : lang === 'ml' ? '💡 ഇന്നത്തെ കർഷക കുറിപ്പ്' : "💡 Today's Farming Tip";
                         html += `
                             <div class="seasonal-tip-card">
                                 <i class="fas fa-lightbulb"></i>
                                 <div class="seasonal-tip-content">
-                                    <div class="seasonal-tip-title">💡 Today\'s Farming Tip</div>
+                                    <div class="seasonal-tip-title">${escapeHtml(tipTitle)}</div>
                                     <div class="seasonal-tip-desc">${escapeHtml(tip)}</div>
                                 </div>
                             </div>
                         `;
                     }
                     if (caution) {
+                        const cautionTitle = lang === 'te' ? '⚠️ ప్రస్తుత హెచ్చరిక' : lang === 'kn' ? '⚠️ ಪ್ರಸ್ತುತ ಮುನ್ನೆಚ್ಚರಿಕೆ' : lang === 'hi' ? '⚠️ वर्तमान सावधानी' : lang === 'ta' ? '⚠️ தற்போதைய எச்சரிக்கை' : lang === 'ml' ? '⚠️ നിലവിലെ ജാഗ്രത' : '⚠️ Current Advisory';
                         html += `
                             <div class="seasonal-caution-card">
                                 <i class="fas fa-triangle-exclamation"></i>
                                 <div class="seasonal-caution-content">
-                                    <div class="seasonal-caution-title">⚠️ Current Advisory</div>
+                                    <div class="seasonal-caution-title">${escapeHtml(cautionTitle)}</div>
                                     <div class="seasonal-caution-desc">${escapeHtml(caution)}</div>
                                 </div>
                             </div>
@@ -3612,7 +3900,7 @@
             return `<div class="seasonal-fallback-box"><p style="line-height: 1.5; font-size: 0.86rem; padding: 1rem;">${escapeHtml(cleanText).replace(/\n/g, '<br>')}</p></div>`;
         }
 
-        // Open Detailed Crop Modal
+        // Open Fully Localized Detailed Crop Modal
         function openCropDetailsModal(idx) {
             const crop = window.lastSeasonalCropsList?.[idx];
             if (!crop) return;
@@ -3620,36 +3908,65 @@
             const modal = document.getElementById('cropDetailsModal');
             if (!modal) return;
 
+            const lang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
+            const i18n = CROP_MODAL_I18N[lang] || CROP_MODAL_I18N['en'];
+
             const temp = lastWeatherData?.main?.temp ? Math.round(lastWeatherData.main.temp) : 28;
             const humidity = lastWeatherData?.main?.humidity || 65;
 
             const monthNum = new Date().getMonth();
-            let seasonName = 'Kharif';
-            if (monthNum >= 9 || monthNum <= 1) seasonName = 'Rabi';
-            else if (monthNum >= 2 && monthNum <= 4) seasonName = 'Summer (Zaid)';
+            let seasonKey = 'kharif';
+            if (monthNum >= 9 || monthNum <= 1) seasonKey = 'rabi';
+            else if (monthNum >= 2 && monthNum <= 4) seasonKey = 'summer';
+            const seasonName = i18n.seasons[seasonKey] || 'Kharif';
 
             const locParts = [currentDistrict || currentCity, currentState].filter(Boolean);
-            const dynamicLoc = locParts.length > 0 ? locParts.join(', ') : 'your region';
+            const dynamicLoc = locParts.length > 0 ? locParts.join(', ') : (currentState || 'India');
 
-            // Populate Modal Fields
+            // Refresh metadata with current language
+            const meta = matchCropMetadata(crop.name, lang);
+
+            // Populate Modal Section Headers & Labels in Selected Language
+            document.getElementById('cropModalSectionTitleWhy').innerText = i18n.why_recommended;
+            document.getElementById('cropModalSectionTitleWeather').innerText = i18n.weather_compat;
+            document.getElementById('cropModalSectionTitleVarieties').innerText = i18n.rec_varieties;
+            document.getElementById('cropModalSectionTitleFarming').innerText = i18n.farming_info;
+
+            document.getElementById('cropModalLabelTemp').innerText = i18n.temp_label;
+            document.getElementById('cropModalStatusTemp').innerText = i18n.optimal;
+            document.getElementById('cropModalLabelHumidity').innerText = i18n.humidity_label;
+            document.getElementById('cropModalStatusHumidity').innerText = i18n.favorable;
+            document.getElementById('cropModalLabelSeason').innerText = i18n.season_label;
+            document.getElementById('cropModalStatusSeason').innerText = i18n.active_window;
+
+            document.getElementById('cropModalLabelSowing').innerText = i18n.sowing_window;
+            document.getElementById('cropModalLabelWater').innerText = i18n.water_req;
+            document.getElementById('cropModalLabelSoil').innerText = i18n.soil_req;
+
+            document.getElementById('cropModalCloseBtnText').innerText = i18n.close_btn;
+
+            // Populate Modal Crop Data Fields
             document.getElementById('cropModalTitle').innerText = crop.name;
-            document.getElementById('cropModalSecondary').innerText = crop.meta?.secondary || 'Seasonal Agricultural Crop';
+            document.getElementById('cropModalSecondary').innerText = meta.secondary || i18n.default_variety;
             
             const imgEl = document.getElementById('cropModalImg');
             if (imgEl) {
-                imgEl.src = `assets/images/commodities/${crop.meta?.slug || 'ragi'}.webp`;
+                imgEl.src = `assets/images/commodities/${meta.slug || 'ragi'}.webp`;
                 imgEl.alt = crop.name;
                 imgEl.onerror = function() { this.src = 'assets/images/commodities/ragi.webp'; };
             }
 
-            // Reasons List
+            // Localized Reasons List
+            const weatherAlignmentText = i18n.weather_alignment.replace('{temp}', temp).replace('{humidity}', humidity);
+            const seasonalWindowText = i18n.seasonal_window.replace('{season}', seasonName).replace('{loc}', dynamicLoc);
+
             const reasonsList = document.getElementById('cropModalReasonsList');
             if (reasonsList) {
                 reasonsList.innerHTML = `
-                    <li><i class="fas fa-check-circle"></i> <span><strong>Weather Alignment:</strong> Current temperature (${temp}°C) and ${humidity}% humidity are optimal for germination and vegetative growth.</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span><strong>Seasonal Window:</strong> Perfectly aligned with the active <strong>${seasonName}</strong> season in ${escapeHtml(dynamicLoc)}.</span></li>
-                    ${crop.reason ? `<li><i class="fas fa-check-circle"></i> <span><strong>Agronomic Match:</strong> ${escapeHtml(crop.reason)}</span></li>` : ''}
-                    <li><i class="fas fa-check-circle"></i> <span><strong>Market Adaptability:</strong> High regional demand across local APMC mandis.</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>${weatherAlignmentText}</span></li>
+                    <li><i class="fas fa-check-circle"></i> <span>${seasonalWindowText}</span></li>
+                    ${crop.reason ? `<li><i class="fas fa-check-circle"></i> <span><strong>${i18n.agronomic_match}:</strong> ${escapeHtml(crop.reason)}</span></li>` : ''}
+                    <li><i class="fas fa-check-circle"></i> <span>${i18n.market_adaptability}</span></li>
                 `;
             }
 
@@ -3661,18 +3978,19 @@
             // Recommended Varieties
             const varList = document.getElementById('cropModalVarietiesList');
             if (varList) {
-                const varieties = crop.meta?.varieties || ['Certified High-Yield Variety'];
+                const varieties = meta.varieties || [i18n.default_variety];
                 varList.innerHTML = varieties.map(v => `<span class="variety-pill">${escapeHtml(v)}</span>`).join('');
             }
 
-            // Farming Info
-            document.getElementById('cropModalSowing').innerText = crop.meta?.sowing || `${seasonName} Season`;
-            document.getElementById('cropModalWater').innerText = crop.meta?.water || 'Medium water requirement';
-            document.getElementById('cropModalSoil').innerText = crop.meta?.soil || 'Well-drained fertile agricultural soil.';
+            // Localized Farming Info
+            document.getElementById('cropModalSowing').innerText = meta.sowing || `${seasonName} ${i18n.season_label}`;
+            document.getElementById('cropModalWater').innerText = meta.water || i18n.default_water;
+            document.getElementById('cropModalSoil').innerText = meta.soil || i18n.default_soil;
 
-            // AI Advisor Button Hook
+            // Localized AI Advisor Button Hook
             const aiBtn = document.getElementById('cropModalAiBtn');
             if (aiBtn) {
+                aiBtn.innerHTML = `<i class="fas fa-robot"></i> ${escapeHtml(i18n.ask_ai_btn)}`;
                 aiBtn.onclick = () => {
                     closeCropDetailsModal();
                     askAiAboutCrop(crop.name);
@@ -4344,39 +4662,39 @@
             <div class="crop-modal-body">
                 <div>
                     <div class="crop-detail-section-title">
-                        <i class="fas fa-circle-check"></i> Why is this crop recommended?
+                        <i class="fas fa-circle-check"></i> <span id="cropModalSectionTitleWhy">Why is this crop recommended?</span>
                     </div>
                     <ul class="crop-reasons-list" id="cropModalReasonsList">
-                        <!-- Populated dynamically -->
+                        <!-- Populated dynamically with full multi-language localization -->
                     </ul>
                 </div>
 
                 <div>
                     <div class="crop-detail-section-title">
-                        <i class="fas fa-cloud-sun"></i> Weather Compatibility
+                        <i class="fas fa-cloud-sun"></i> <span id="cropModalSectionTitleWeather">Weather Compatibility</span>
                     </div>
                     <div class="weather-compat-chips">
                         <div class="weather-chip">
-                            <div class="weather-chip-label">Temperature</div>
+                            <div class="weather-chip-label" id="cropModalLabelTemp">Temperature</div>
                             <div class="weather-chip-val" id="cropModalTemp">--</div>
-                            <div class="weather-chip-status">✓ Optimal</div>
+                            <div class="weather-chip-status" id="cropModalStatusTemp">✓ Optimal</div>
                         </div>
                         <div class="weather-chip">
-                            <div class="weather-chip-label">Humidity</div>
+                            <div class="weather-chip-label" id="cropModalLabelHumidity">Humidity</div>
                             <div class="weather-chip-val" id="cropModalHumidity">--</div>
-                            <div class="weather-chip-status">✓ Favorable</div>
+                            <div class="weather-chip-status" id="cropModalStatusHumidity">✓ Favorable</div>
                         </div>
                         <div class="weather-chip">
-                            <div class="weather-chip-label">Season</div>
+                            <div class="weather-chip-label" id="cropModalLabelSeason">Season</div>
                             <div class="weather-chip-val" id="cropModalSeason">Kharif</div>
-                            <div class="weather-chip-status">✓ Active Window</div>
+                            <div class="weather-chip-status" id="cropModalStatusSeason">✓ Active Window</div>
                         </div>
                     </div>
                 </div>
 
                 <div id="cropModalVarietiesSection">
                     <div class="crop-detail-section-title">
-                        <i class="fas fa-seedling"></i> Recommended Varieties
+                        <i class="fas fa-seedling"></i> <span id="cropModalSectionTitleVarieties">Recommended Varieties</span>
                     </div>
                     <div class="varieties-pill-row" id="cropModalVarietiesList">
                         <!-- Populated dynamically -->
@@ -4385,19 +4703,19 @@
 
                 <div>
                     <div class="crop-detail-section-title">
-                        <i class="fas fa-tractor"></i> Farming Information
+                        <i class="fas fa-tractor"></i> <span id="cropModalSectionTitleFarming">Farming Information</span>
                     </div>
                     <div class="agri-specs-grid">
                         <div class="spec-box">
-                            <div class="spec-box-label">Sowing Window</div>
+                            <div class="spec-box-label" id="cropModalLabelSowing">Sowing Window</div>
                             <div class="spec-box-val" id="cropModalSowing">June – August (Kharif)</div>
                         </div>
                         <div class="spec-box">
-                            <div class="spec-box-label">Water Requirement</div>
+                            <div class="spec-box-label" id="cropModalLabelWater">Water Requirement</div>
                             <div class="spec-box-val" id="cropModalWater">Medium (400–550 mm)</div>
                         </div>
                         <div class="spec-box" style="grid-column: 1 / -1;">
-                            <div class="spec-box-label">Soil Requirement</div>
+                            <div class="spec-box-label" id="cropModalLabelSoil">Soil Requirement</div>
                             <div class="spec-box-val" id="cropModalSoil">Well-drained red sandy loam or black soil.</div>
                         </div>
                     </div>
@@ -4408,7 +4726,7 @@
                     <i class="fas fa-robot"></i> Ask AI Advisor
                 </button>
                 <button type="button" onclick="closeCropDetailsModal()" style="background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.45rem 1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 600; cursor: pointer;">
-                    Close
+                    <span id="cropModalCloseBtnText">Close</span>
                 </button>
             </div>
         </div>
