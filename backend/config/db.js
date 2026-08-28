@@ -144,6 +144,42 @@ async function initDb() {
       );
     `);
 
+    // Notification Devices Table (FCM Registration Tokens linked to Farmers)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS notification_devices (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        farmer_id UUID REFERENCES farmers(id) ON DELETE CASCADE,
+        fcm_token TEXT NOT NULL UNIQUE,
+        device_type VARCHAR(50) DEFAULT 'web',
+        browser_info TEXT,
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        updated_at TIMESTAMPTZ DEFAULT NOW(),
+        last_used_at TIMESTAMPTZ DEFAULT NOW(),
+        is_active BOOLEAN DEFAULT TRUE
+      );
+    `);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_notification_devices_farmer ON notification_devices(farmer_id, is_active);`);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_notification_devices_token ON notification_devices(fcm_token);`);
+
+    // In-App Notifications Table (PostgreSQL as Source of Truth)
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS in_app_notifications (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        farmer_id UUID REFERENCES farmers(id) ON DELETE CASCADE,
+        title VARCHAR(255) NOT NULL,
+        message TEXT NOT NULL,
+        type VARCHAR(50) DEFAULT 'GENERAL',
+        priority VARCHAR(20) DEFAULT 'MEDIUM',
+        source VARCHAR(50) DEFAULT 'SYSTEM',
+        action_url VARCHAR(255) DEFAULT '/dashboard.html',
+        is_read BOOLEAN DEFAULT FALSE,
+        metadata JSONB DEFAULT '{}'::jsonb,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      );
+    `);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_in_app_notifications_farmer ON in_app_notifications(farmer_id, created_at DESC);`);
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_in_app_notifications_unread ON in_app_notifications(farmer_id, is_read);`);
+
     // Farmer Crops Table
     await client.query(`
       CREATE TABLE IF NOT EXISTS farmer_crops (

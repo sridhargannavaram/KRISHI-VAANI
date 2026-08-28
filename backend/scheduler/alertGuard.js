@@ -2,6 +2,7 @@ const cron = require('node-cron');
 const axios = require('axios');
 const twilio = require('twilio');
 const Farmer = require('../models/Farmer');
+const notificationService = require('../services/notificationService');
 
 const twilioClient = (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN)
     ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
@@ -70,6 +71,21 @@ cron.schedule('0 * * * *', async () => {
                 
                 console.log(`🚨 Triggering Alert for ${alertPhone}: ${fullMessage}`);
 
+                // 1. PostgreSQL In-App & Firebase Cloud Messaging Web Push Notification
+                try {
+                    await notificationService.sendWeatherAlert(farmer.id || farmer._id, {
+                        temp: currentTemp,
+                        humidity: currentHumidity,
+                        wind: currentWind,
+                        isRaining: isRaining,
+                        alertText: fullMessage,
+                        priority: isRaining ? 'CRITICAL' : 'HIGH'
+                    });
+                } catch (notifErr) {
+                    console.error(`Failed to send push/in-app alert for farmer ${farmer.name}:`, notifErr.message);
+                }
+
+                // 2. Legacy SMS / Voice (Twilio Gateway if configured)
                 if (twilioClient && process.env.TWILIO_PHONE_NUMBER && process.env.TWILIO_PHONE_NUMBER !== '+1234567890') {
                     try {
                         await twilioClient.messages.create({
