@@ -330,472 +330,839 @@
             color: var(--primary-dark, #15803d);
         }
 
-        /* Seasonal Crops Component Layout — Compact Category-Based UI */
-        .crop-card {
-            background: #0d151c !important;
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            border-radius: 16px !important;
-            padding: 1.15rem !important;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3) !important;
+        /* Seasonal Crops Component Layout — EXACT REFERENCE SCREENSHOT MATCH */
+        .seasonal-section-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            margin-top: 1.25rem;
         }
 
-        [data-theme='light'] .crop-card {
-            background: #ffffff !important;
-            border: 1px solid #e2e8f0 !important;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+        @media (min-width: 1100px) {
+            .seasonal-section-container.details-active {
+                grid-template-columns: 1fr 420px;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .seasonal-section-container.details-active {
+                grid-template-columns: 1.15fr 460px;
+            }
+        }
+
+        /* Left Main Explorer Box */
+        .seasonal-main-box {
+            background: #0d151c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 1.35rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
+        }
+
+        [data-theme='light'] .seasonal-main-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
         }
 
         .seasonal-header-row {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
-            margin-bottom: 0.75rem;
+            gap: 1rem;
         }
 
-        .seasonal-main-title {
+        .seasonal-title-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .seasonal-title-line {
             display: flex;
             align-items: center;
-            gap: 0.55rem;
-            font-size: 1.25rem;
+            gap: 0.6rem;
+        }
+
+        .seasonal-leaf-icon {
+            color: #22c55e;
+            font-size: 1.4rem;
+        }
+
+        .seasonal-title-text {
+            font-size: 1.35rem;
             font-weight: 800;
             color: #ffffff;
             letter-spacing: -0.2px;
+            margin: 0;
         }
 
-        [data-theme='light'] .seasonal-main-title {
+        [data-theme='light'] .seasonal-title-text {
             color: #0f172a;
-        }
-
-        .seasonal-main-title i {
-            color: #22c55e;
-            font-size: 1.25rem;
         }
 
         .badge-auto-pill {
             background: rgba(34, 197, 94, 0.12);
             color: #22c55e;
             border: 1px solid rgba(34, 197, 94, 0.25);
-            font-size: 0.62rem;
+            font-size: 0.65rem;
             font-weight: 800;
-            padding: 0.12rem 0.5rem;
+            padding: 0.15rem 0.55rem;
             border-radius: 9999px;
             letter-spacing: 0.8px;
             text-transform: uppercase;
         }
 
-        .btn-seasonal-refresh {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #94a3b8;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+        .seasonal-loc-line {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 0.4rem;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 0.15rem;
+        }
+
+        [data-theme='light'] .seasonal-loc-line {
+            color: #0f172a;
+        }
+
+        .seasonal-loc-line i {
+            color: #ef4444;
+            font-size: 0.95rem;
+        }
+
+        .seasonal-subtitle-text {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 0.1rem;
+        }
+
+        [data-theme='light'] .seasonal-subtitle-text {
+            color: #64748b;
+        }
+
+        .btn-seasonal-refresh {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #e2e8f0;
+            padding: 0.45rem 0.9rem;
+            border-radius: 9px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
         .btn-seasonal-refresh:hover {
             background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: rotate(45deg);
-        }
-
-        .seasonal-meta-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            padding-bottom: 0.75rem;
-            font-size: 0.8rem;
-        }
-
-        .seasonal-loc-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            font-weight: 700;
+            border-color: rgba(255, 255, 255, 0.25);
             color: #ffffff;
         }
 
-        [data-theme='light'] .seasonal-loc-tag {
-            color: #0f172a;
+        [data-theme='light'] .btn-seasonal-refresh {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #334155;
         }
 
-        .seasonal-loc-tag i {
-            color: #ef4444;
-            font-size: 0.85rem;
-        }
-
-        .seasonal-rec-basis {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            color: #94a3b8;
-            font-size: 0.75rem;
-        }
-
-        .seasonal-rec-basis i {
-            color: #22c55e;
-            font-size: 0.8rem;
-        }
-
-        /* Top Horizontal Category Tabs */
-        .seasonal-category-tab-strip {
+        /* Horizontal Category Filter Strip */
+        .seasonal-category-strip {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
+            gap: 0.45rem;
             overflow-x: auto;
-            padding: 0.25rem 0 0.75rem 0;
             scrollbar-width: none;
+            padding-bottom: 0.2rem;
         }
 
-        .seasonal-category-tab-strip::-webkit-scrollbar {
+        .seasonal-category-strip::-webkit-scrollbar {
             display: none;
         }
 
-        .cat-tab-btn {
+        .seasonal-cat-pill {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
             color: #94a3b8;
-            padding: 0.35rem 0.75rem;
-            border-radius: 8px;
-            font-size: 0.76rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
             white-space: nowrap;
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.38rem;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .cat-tab-btn:hover {
-            color: #ffffff;
+        .seasonal-cat-pill:hover {
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.18);
         }
 
-        [data-theme='light'] .cat-tab-btn {
+        [data-theme='light'] .seasonal-cat-pill {
             background: #f1f5f9;
             border-color: #e2e8f0;
             color: #64748b;
         }
 
-        [data-theme='light'] .cat-tab-btn:hover {
+        [data-theme='light'] .seasonal-cat-pill:hover {
             background: #e2e8f0;
             color: #0f172a;
         }
 
-        .cat-tab-btn.active {
-            background: rgba(34, 197, 94, 0.15) !important;
-            border-color: rgba(34, 197, 94, 0.4) !important;
+        .seasonal-cat-pill.active {
+            background: rgba(34, 197, 94, 0.16) !important;
+            border-color: #22c55e !important;
             color: #4ade80 !important;
-            box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.2);
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.25);
         }
 
-        [data-theme='light'] .cat-tab-btn.active {
+        [data-theme='light'] .seasonal-cat-pill.active {
             background: #dcfce7 !important;
-            border-color: #86efac !important;
+            border-color: #16a34a !important;
             color: #15803d !important;
         }
 
-        /* Responsive Compact Crop Cards Grid */
-        .compact-crop-grid {
+        /* 3-Column Crop Cards Grid (NO RANKING TAGS) */
+        .seasonal-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 0.75rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.95rem;
         }
 
-        @media (max-width: 600px) {
-            .compact-crop-grid {
+        @media (max-width: 950px) {
+            .seasonal-cards-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 0.6rem;
             }
         }
 
-        @media (max-width: 380px) {
-            .compact-crop-grid {
+        @media (max-width: 580px) {
+            .seasonal-cards-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        .compact-crop-card {
+        .seasonal-card {
             background: #111d27;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
+            border-radius: 14px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
             cursor: pointer;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
             position: relative;
         }
 
-        [data-theme='light'] .compact-crop-card {
+        [data-theme='light'] .seasonal-card {
             background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            border-color: #e2e8f0;
         }
 
-        .compact-crop-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px -2px rgba(0, 0, 0, 0.35);
-            border-color: rgba(34, 197, 94, 0.4);
+        .seasonal-card:hover, .seasonal-card.selected {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(34, 197, 94, 0.4);
+            border-color: rgba(34, 197, 94, 0.6);
         }
 
-        .compact-card-media {
+        .seasonal-card.selected {
+            border-color: #22c55e;
+            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.35);
+        }
+
+        .seasonal-card-thumb-box {
             position: relative;
-            height: 82px;
+            height: 120px;
             width: 100%;
             background: #091016;
             overflow: hidden;
         }
 
-        .compact-card-img {
+        .seasonal-card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.35s ease;
         }
 
-        .compact-crop-card:hover .compact-card-img {
+        .seasonal-card:hover .seasonal-card-img {
             transform: scale(1.06);
         }
 
-        .compact-rank-tag {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            font-size: 0.65rem;
-            font-weight: 800;
-            padding: 0.15rem 0.45rem;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .rank-gold { color: #facc15; border-color: rgba(250, 204, 21, 0.4); }
-        .rank-blue { color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); }
-        .rank-green { color: #4ade80; border-color: rgba(74, 222, 128, 0.4); }
-
-        .compact-card-body {
-            padding: 0.65rem 0.75rem;
+        .seasonal-card-body {
+            padding: 0.85rem 0.95rem;
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
+            gap: 0.4rem;
             flex: 1;
         }
 
-        .compact-crop-name-row {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-
-        .compact-crop-icon {
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-
-        .compact-crop-title {
-            font-size: 0.88rem;
+        .seasonal-card-title {
+            font-size: 0.98rem;
             font-weight: 800;
             color: #ffffff;
-            line-height: 1.2;
+            margin: 0;
+            line-height: 1.25;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin: 0;
         }
 
-        [data-theme='light'] .compact-crop-title {
+        [data-theme='light'] .seasonal-card-title {
             color: #0f172a;
         }
 
-        .compact-suitability-pill {
+        .seasonal-card-cat-label {
+            font-size: 0.76rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        [data-theme='light'] .seasonal-card-cat-label {
+            color: #64748b;
+        }
+
+        .seasonal-card-suitability-pill {
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
-            font-size: 0.68rem;
+            gap: 0.38rem;
+            font-size: 0.72rem;
             font-weight: 700;
-            padding: 0.12rem 0.45rem;
+            padding: 0.18rem 0.6rem;
             border-radius: 9999px;
             width: fit-content;
+            margin-top: 0.15rem;
         }
 
-        .compact-pill-high {
+        .suit-pill-high {
             background: rgba(34, 197, 94, 0.12);
             color: #4ade80;
-            border: 1px solid rgba(34, 197, 94, 0.25);
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
-        .compact-pill-suitable {
-            background: rgba(2, 132, 199, 0.12);
-            color: #38bdf8;
-            border: 1px solid rgba(2, 132, 199, 0.25);
+        .suit-pill-suitable {
+            background: rgba(234, 179, 8, 0.12);
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.3);
         }
 
-        .compact-pill-dot {
-            width: 5px;
-            height: 5px;
+        .suit-pill-moderate {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .suit-dot {
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            display: inline-block;
         }
 
-        .compact-pill-high .compact-pill-dot { background: #22c55e; }
-        .compact-pill-suitable .compact-pill-dot { background: #0284c7; }
+        .suit-pill-high .suit-dot { background: #22c55e; }
+        .suit-pill-suitable .suit-dot { background: #eab308; }
+        .suit-pill-moderate .suit-dot { background: #f59e0b; }
 
-        .compact-card-footer {
-            margin-top: auto;
-            padding-top: 0.4rem;
+        .seasonal-card-footer {
+            padding: 0.65rem 0.95rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.72rem;
+            font-size: 0.8rem;
             font-weight: 700;
             color: #22c55e;
+            background: rgba(0, 0, 0, 0.15);
+            transition: all 0.2s ease;
         }
 
-        [data-theme='light'] .compact-card-footer {
+        [data-theme='light'] .seasonal-card-footer {
+            background: #f8fafc;
             border-top-color: #e2e8f0;
             color: #16a34a;
         }
 
-        .compact-crop-card:hover .compact-card-footer {
+        .seasonal-card:hover .seasonal-card-footer {
             color: #4ade80;
+            background: rgba(34, 197, 94, 0.06);
         }
 
-        /* Advisory & Weather Caution Warning Card Styles */
-        .seasonal-advisory-wrapper {
-            margin-top: 0.85rem;
+        .seasonal-card-footer i {
+            transition: transform 0.2s ease;
+        }
+
+        .seasonal-card:hover .seasonal-card-footer i {
+            transform: translateX(4px);
+        }
+
+        .btn-view-more-crops {
+            align-self: center;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            color: #94a3b8;
+            padding: 0.45rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            cursor: pointer;
+            margin-top: 0.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-view-more-crops:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Bottom Dual Advisory Row */
+        .seasonal-advisories-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        @media (max-width: 700px) {
+            .seasonal-advisories-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .advisory-box-tip {
+            background: rgba(34, 197, 94, 0.06);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+            border-radius: 12px;
+            padding: 0.9rem 1.05rem;
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.4rem;
         }
 
-        .seasonal-caution-card {
-            background: rgba(245, 158, 11, 0.08);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-            border-left: 3px solid #f59e0b;
-            border-radius: 10px;
-            padding: 0.65rem 0.9rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        [data-theme='light'] .seasonal-caution-card {
-            background: #fffbeb;
-            border-color: #fde68a;
-            border-left-color: #d97706;
-        }
-
-        .seasonal-caution-card i {
-            color: #f59e0b;
-            font-size: 1.1rem;
-            margin-top: 2px;
-            flex-shrink: 0;
-        }
-
-        .seasonal-caution-content {
-            flex: 1;
-        }
-
-        .seasonal-caution-title {
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: #fbbf24;
-            margin-bottom: 0.15rem;
-        }
-
-        [data-theme='light'] .seasonal-caution-title {
-            color: #b45309;
-        }
-
-        .seasonal-caution-desc {
-            font-size: 0.76rem;
-            color: #e2e8f0;
-            line-height: 1.4;
-        }
-
-        [data-theme='light'] .seasonal-caution-desc {
-            color: #334155;
-        }
-
-        .seasonal-tip-card {
-            background: rgba(34, 197, 94, 0.08);
-            border: 1px solid rgba(34, 197, 94, 0.25);
-            border-left: 3px solid #22c55e;
-            border-radius: 10px;
-            padding: 0.65rem 0.9rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        [data-theme='light'] .seasonal-tip-card {
+        [data-theme='light'] .advisory-box-tip {
             background: #f0fdf4;
             border-color: #bbf7d0;
-            border-left-color: #16a34a;
         }
 
-        .seasonal-tip-card i {
-            color: #22c55e;
-            font-size: 1.1rem;
-            margin-top: 2px;
-            flex-shrink: 0;
-        }
-
-        .seasonal-tip-content {
-            flex: 1;
-        }
-
-        .seasonal-tip-title {
+        .advisory-box-header {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
             font-size: 0.82rem;
             font-weight: 800;
-            color: #4ade80;
-            margin-bottom: 0.15rem;
+            letter-spacing: 0.5px;
         }
 
-        [data-theme='light'] .seasonal-tip-title {
+        .advisory-box-tip .advisory-box-header {
+            color: #4ade80;
+        }
+
+        [data-theme='light'] .advisory-box-tip .advisory-box-header {
             color: #15803d;
         }
 
-        .seasonal-tip-desc {
+        .advisory-box-weather {
+            background: rgba(245, 158, 11, 0.06);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            border-radius: 12px;
+            padding: 0.9rem 1.05rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        [data-theme='light'] .advisory-box-weather {
+            background: #fffbeb;
+            border-color: #fde68a;
+        }
+
+        .advisory-box-weather .advisory-box-header {
+            color: #fbbf24;
+        }
+
+        [data-theme='light'] .advisory-box-weather .advisory-box-header {
+            color: #b45309;
+        }
+
+        .advisory-box-text {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            line-height: 1.45;
+            flex: 1;
+        }
+
+        [data-theme='light'] .advisory-box-text {
+            color: #475569;
+        }
+
+        .advisory-box-link {
             font-size: 0.76rem;
-            color: #e2e8f0;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+            margin-top: 0.2rem;
+            text-decoration: none;
+        }
+
+        .advisory-box-tip .advisory-box-link { color: #4ade80; }
+        .advisory-box-weather .advisory-box-link { color: #fbbf24; }
+
+        /* =========================================================================
+           RIGHT SIDE CROP DETAILS PANEL (EXACT MATCH TO REFERENCE SCREENSHOT)
+           ========================================================================= */
+        .seasonal-details-panel {
+            background: #0d151c;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.05rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35);
+            position: relative;
+        }
+
+        [data-theme='light'] .seasonal-details-panel {
+            background: #ffffff;
+            border-color: #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .panel-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.15rem;
+            cursor: pointer;
+            padding: 0.3rem;
+            border-radius: 6px;
+            transition: color 0.2s ease;
+        }
+
+        .panel-close-btn:hover {
+            color: #ffffff;
+        }
+
+        /* Panel Hero Profile */
+        .panel-crop-hero {
+            display: flex;
+            align-items: center;
+            gap: 0.95rem;
+            padding-right: 1.5rem;
+        }
+
+        .panel-crop-thumb {
+            width: 72px;
+            height: 72px;
+            border-radius: 14px;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            flex-shrink: 0;
+        }
+
+        .panel-crop-title-box {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .panel-crop-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        [data-theme='light'] .panel-crop-name {
+            color: #0f172a;
+        }
+
+        .panel-crop-cat-text {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .panel-score-gauge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3.5px solid #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.35);
+            background: rgba(34, 197, 94, 0.08);
+            flex-shrink: 0;
+        }
+
+        .panel-score-num {
+            font-size: 1rem;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        [data-theme='light'] .panel-score-num {
+            color: #0f172a;
+        }
+
+        .panel-score-label {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            text-align: center;
+            margin-top: 0.25rem;
+        }
+
+        /* Section Headings */
+        .panel-sec-title {
+            font-size: 0.86rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.45rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        [data-theme='light'] .panel-sec-title {
+            color: #0f172a;
+        }
+
+        /* Reasons Checklist */
+        .panel-reasons-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .panel-reasons-list li {
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.45rem;
             line-height: 1.4;
         }
 
-        [data-theme='light'] .seasonal-tip-desc {
+        [data-theme='light'] .panel-reasons-list li {
             color: #334155;
         }
 
-        /* Detailed Crop Modal Styles */
-        .crop-modal-dialog {
-            background: var(--bg-surface, #ffffff);
-            width: 92%;
-            max-width: 560px;
-            border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
-            border: 1px solid var(--border-color, #e2e8f0);
-            overflow: hidden;
+        .panel-reasons-list li i {
+            color: #22c55e;
+            font-size: 0.85rem;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /* 5 Conditions Analyzed Cards Grid */
+        .conditions-analyzed-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.35rem;
+        }
+
+        @media (max-width: 480px) {
+            .conditions-analyzed-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .cond-chip {
+            background: #111d27;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 9px;
+            padding: 0.45rem 0.3rem;
+            text-align: center;
             display: flex;
             flex-direction: column;
-            max-height: 88vh;
-            animation: modalFadeUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            align-items: center;
+            gap: 0.15rem;
+        }
+
+        [data-theme='light'] .cond-chip {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+        }
+
+        .cond-chip i {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .cond-chip-label {
+            font-size: 0.64rem;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .cond-chip-val {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        [data-theme='light'] .cond-chip-val {
+            color: #0f172a;
+        }
+
+        .cond-chip-sub {
+            font-size: 0.62rem;
+            color: #94a3b8;
+        }
+
+        /* Recommended Varieties Pills */
+        .panel-varieties-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .panel-var-pill {
+            background: #111d27;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        [data-theme='light'] .panel-var-pill {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #334155;
+        }
+
+        /* Farming Info Key-Value Table */
+        .panel-farming-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            font-size: 0.8rem;
+        }
+
+        .panel-farming-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.2rem 0;
+        }
+
+        .panel-farming-key {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .panel-farming-key i {
+            color: #22c55e;
+            font-size: 0.85rem;
+            width: 16px;
+            text-align: center;
+        }
+
+        .panel-farming-val {
+            color: #ffffff;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        [data-theme='light'] .panel-farming-val {
+            color: #0f172a;
+        }
+
+        /* AI Advisory Gradient Card */
+        .panel-ai-advisory-box {
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.15) 0%, rgba(30, 27, 75, 0.4) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+        }
+
+        .panel-ai-title {
+            font-size: 0.84rem;
+            font-weight: 800;
+            color: #c084fc;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .panel-ai-text {
+            font-size: 0.78rem;
+            color: #e2e8f0;
+            line-height: 1.45;
+        }
+
+        .btn-panel-ask-ai {
+            align-self: flex-start;
+            background: #1e1b4b;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            color: #e9d5ff;
+            padding: 0.35rem 0.85rem;
+            border-radius: 8px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            margin-top: 0.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-panel-ask-ai:hover {
+            background: #7e22ce;
+            color: #ffffff;
+            border-color: #a855f7;
+        }
+
+        .btn-panel-back {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            padding: 0.4rem 0;
+            transition: color 0.2s ease;
+        }
+
+        .btn-panel-back:hover {
+            color: #ffffff;
         }
 /* AI Crop Advisor Component */
         .advisor-subtitle {
@@ -2172,23 +2539,11 @@
 
         <!-- Crop Sections Side by Side (Seasonal Crops + AI Crop Advisor) -->
         <div class="crop-grid" style="margin-top: 1.5rem;">
-            <!-- Seasonal Crop Recommendation (Auto) — EXACT DESIGN MATCH -->
-            <div class="crop-card">
-                <div class="seasonal-header-row">
-                    <div class="seasonal-main-title">
-                        <i class="fas fa-seedling"></i>
-                        <span id="seasonalTitle">సీజనల్ పంటలు</span>
-                        <span class="badge-auto-pill">AUTO</span>
-                    </div>
-                    <button id="refreshSeasonalBtn" class="btn-seasonal-refresh" title="Refresh Seasonal Crops" aria-label="Refresh Seasonal Crops" onclick="fetchSeasonalCrops()">
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
-                </div>
-                <div class="seasonal-crops-container" id="seasonalCropBox">
-                    <div style="padding: 2rem 1rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
-                        <i class="fas fa-spinner fa-spin" style="color: var(--primary); font-size: 1.3rem; margin-bottom: 0.5rem;"></i><br>
-                        Fetching seasonal recommendations...
-                    </div>
+            <!-- Seasonal Crop Recommendation (Auto) — EXACT REFERENCE SCREENSHOT MATCH -->
+            <div id="seasonalCropBox" style="width: 100%;">
+                <div style="padding: 2.5rem 1rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;">
+                    <i class="fas fa-spinner fa-spin" style="color: var(--primary); font-size: 1.3rem; margin-bottom: 0.5rem;"></i><br>
+                    Analyzing seasonal crop recommendations...
                 </div>
             </div>
 
@@ -3407,404 +3762,462 @@
             }
         }, 150);
 
-        // ================= CROP METADATA CATALOG & COMPACT CATEGORY-BASED SYSTEM =================
+        // ================= CROP METADATA CATALOG & REFERENCE EXACT SYSTEM =================
         const CROP_MODAL_I18N = {
             en: {
                 title_seasonal: "Seasonal Crops",
-                meta_basis: "Recommended based on: Weather • Season • Location",
-                highly_suitable: "Highly Suitable",
-                suitable: "Suitable",
+                subtitle_seasonal: "Recommendations based on weather, season & soil conditions",
+                refresh_btn: "Refresh",
                 view_details: "View Details",
-                rank_label: "Rank",
-                why_recommended: "Why is this crop recommended?",
-                weather_alignment: "Weather Alignment: Current temperature ({temp}°C) and {humidity}% humidity are optimal for germination and vegetative growth.",
-                seasonal_window: "Seasonal Window: Perfectly aligned with the active {season} season in {loc}.",
-                agronomic_match: "Agronomic Match",
-                market_adaptability: "Market Adaptability: High regional demand across local APMC mandis.",
-                weather_compat: "Weather Compatibility",
-                temp_label: "Temperature",
-                optimal: "✓ Optimal",
-                humidity_label: "Humidity",
-                favorable: "✓ Favorable",
-                season_label: "Season",
-                active_window: "✓ Active Window",
+                view_more_crops: "View More Crops",
+                show_less_crops: "Show Less",
+                why_recommended: "Why is it recommended?",
+                conditions_analyzed: "Conditions Analyzed",
                 rec_varieties: "Recommended Varieties",
                 farming_info: "Farming Information",
-                sowing_window: "Sowing Window",
-                water_req: "Water Requirement",
-                soil_req: "Soil Requirement",
+                ai_advisory: "AI Advisory",
                 ask_ai_btn: "Ask AI Advisor",
-                close_btn: "Close",
-                seasons: { kharif: 'Kharif', rabi: 'Rabi', summer: 'Summer (Zaid)' },
+                back_to_list: "← Back to Crop List",
+                suitability_score: "Suitability Score",
+                tip_header: "FARMING TIP",
+                weather_header: "WEATHER ADVISORY",
+                read_more: "Read More →",
                 categories: {
-                    all: "🌾 All",
-                    cereals: "🌱 Cereals",
+                    all: "🌿 All Crops",
+                    cereals: "🌾 Cereals",
+                    pulses: "🫘 Pulses",
                     vegetables: "🥬 Vegetables",
                     fruits: "🍎 Fruits",
-                    pulses: "🫘 Pulses",
-                    oilseeds: "🌻 Oilseeds"
+                    oilseeds: "🌻 Oilseeds",
+                    fodder: "🌾 Fodder"
                 },
-                default_variety: 'Certified High-Yield Variety',
-                default_sowing: 'Seasonal Window',
-                default_soil: 'Well-drained fertile agricultural soil',
-                default_water: 'Medium water requirement (400–550 mm)'
+                labels: {
+                    location: "Location",
+                    temperature: "Temperature",
+                    rainfall: "Rainfall",
+                    humidity: "Humidity",
+                    season: "Season",
+                    sowing_time: "Sowing Time",
+                    duration: "Duration",
+                    soil_type: "Soil Type",
+                    water_need: "Water Need",
+                    spacing: "Spacing"
+                },
+                suitability: {
+                    high: "Highly Suitable",
+                    suitable: "Suitable",
+                    moderate: "Moderately Suitable"
+                }
             },
             te: {
                 title_seasonal: "సీజనల్ పంటలు",
-                meta_basis: "సిఫార్సు: వాతావరణం • సీజన్ • ప్రాంతం",
-                highly_suitable: "అత్యంత అనుకూలం",
-                suitable: "అనుకూలం",
+                subtitle_seasonal: "వాతావరణం, సీజన్ మరియు నేల పరిస్థితుల ఆధారంగా సిఫార్సులు",
+                refresh_btn: "రిఫ్రెష్",
                 view_details: "వివరాలు చూడండి",
-                rank_label: "ర్యాంక్",
+                view_more_crops: "మరిన్ని పంటలు చూడండి",
+                show_less_crops: "తక్కువ చూపించు",
                 why_recommended: "ఈ పంట ఎందుకు సిఫార్సు చేయబడింది?",
-                weather_alignment: "వాతావరణ సమన్వయం: ప్రస్తుత ఉష్ణోగ్రత ({temp}°C) మరియు {humidity}% తేమ విత్తనోత్పత్తి, మొక్కల ఎదుగుదలకు అనుకూలంగా ఉన్నాయి.",
-                seasonal_window: "సీజన్ అనుకూలత: {loc} లో ప్రస్తుతం నడుస్తున్న {season} కాలానికి ఇది అత్యంత అనువైనది.",
-                agronomic_match: "వ్యవసాయ సమన్వయం",
-                market_adaptability: "మార్కెట్ గిరాకీ: స్థానిక వ్యవసాయ మార్కెట్ (APMC) యార్డులలో అధిక డిమాండ్ మరియు మంచి ధర.",
-                weather_compat: "వాతావరణ అనుకూలత",
-                temp_label: "ఉష్ణోగ్రత",
-                optimal: "✓ అనుకూలం",
-                humidity_label: "తేమ",
-                favorable: "✓ అనుకూలమైనది",
-                season_label: "సీజన్ / కాలం",
-                active_window: "✓ సరైన సమయం",
+                conditions_analyzed: "విశ్లేషించిన పరిస్థితులు",
                 rec_varieties: "సిఫార్సు చేయబడిన రకాలు",
                 farming_info: "వ్యవసాయ సమాచారం",
-                sowing_window: "విత్తుకునే సమయం",
-                water_req: "నీటి అవసరం",
-                soil_req: "నేల రకం",
+                ai_advisory: "AI సలహాదారు",
                 ask_ai_btn: "AI సలహాదారుని అడగండి",
-                close_btn: "మూసివేయి",
-                seasons: { kharif: 'ఖరీఫ్', rabi: 'రబీ', summer: 'వేసవి (జైద్)' },
+                back_to_list: "← పంటల జాబితాకు తిరిగి వెళ్లండి",
+                suitability_score: "అనుకూలత స్కోరు",
+                tip_header: "నేటి రైతు సూచన",
+                weather_header: "వాతావరణ హెచ్చరిక",
+                read_more: "మరింత చదవండి →",
                 categories: {
-                    all: "🌾 అన్ని పంటలు",
-                    cereals: "🌱 ధాన్యాలు",
+                    all: "🌿 అన్ని పంటలు",
+                    cereals: "🌾 ధాన్యాలు",
+                    pulses: "🫘 పప్పుదినుసులు",
                     vegetables: "🥬 కూరగాయలు",
                     fruits: "🍎 పండ్లు",
-                    pulses: "🫘 పప్పుదినుసులు",
-                    oilseeds: "🌻 నూనెగింజలు"
+                    oilseeds: "🌻 నూనెగింజలు",
+                    fodder: "🌾 పశుగ్రాసం"
                 },
-                default_variety: 'ప్రమాణీకరించిన అధిక దిగుబడి రకం',
-                default_sowing: 'ప్రస్తుత సీజన్ సమయం',
-                default_soil: 'నీరు ఇంకే సారవంతమైన వ్యవసాయ నేల',
-                default_water: 'మధ్యస్థ నీటి అవసరం (400–550 మి.మీ)'
+                labels: {
+                    location: "ప్రాంతం",
+                    temperature: "ఉష్ణోగ్రత",
+                    rainfall: "వర్షపాతం",
+                    humidity: "తేమ",
+                    season: "సీజన్",
+                    sowing_time: "విత్తుకునే సమయం",
+                    duration: "పంట కాలం",
+                    soil_type: "నేల రకం",
+                    water_need: "నీటి అవసరం",
+                    spacing: "మొక్కల దూరం"
+                },
+                suitability: {
+                    high: "అత్యంత అనుకూలం",
+                    suitable: "అనుకూలం",
+                    moderate: "మధ్యస్థ అనుకూలం"
+                }
             },
             kn: {
                 title_seasonal: "ಋತುಮಾನ ಬೆಳೆಗಳು",
-                meta_basis: "ಶಿಫಾರಸು: ಹವಾಮಾನ • ಹಂಗಾಮು • ಸ್ಥಳ",
-                highly_suitable: "ಅತ್ಯಂತ ಸೂಕ್ತ",
-                suitable: "ಸೂಕ್ತ",
+                subtitle_seasonal: "ಹವಾಮಾನ, ಹಂಗಾಮು ಮತ್ತು ಮಣ್ಣಿನ ಸ್ಥಿತಿಗತಿಗೆ ಅನುಗುಣವಾದ ಶಿಫಾರಸುಗಳು",
+                refresh_btn: "ನವೀಕರಿಸಿ",
                 view_details: "ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
-                rank_label: "ಶ್ರೇಣಿ",
+                view_more_crops: "ಇನ್ನಷ್ಟು ಬೆಳೆಗಳನ್ನು ನೋಡಿ",
+                show_less_crops: "ಕಡಿಮೆ ತೋರಿಸಿ",
                 why_recommended: "ಈ ಬೆಳೆಯನ್ನು ಏಕೆ ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ?",
-                weather_alignment: "ಹವಾಮಾನ ಹೊಂದಾಣಿಕೆ: ಪ್ರಸ್ತುತ ತಾಪಮಾನ ({temp}°C) ಮತ್ತು {humidity}% ಆರ್ದ್ರತೆಯು ಬೀಜ ಮೊಳಕೆಯೊಡೆಯಲು ಹಾಗೂ ಬೆಳವಣಿಗೆಗೆ ಅತ್ಯುತ್ತಮವಾಗಿದೆ.",
-                seasonal_window: "ಋತುಮಾನ ಹೊಂದಾಣಿಕೆ: {loc} ನಲ್ಲಿ ಪ್ರಸ್ತುತ ಸಕ್ರಿಯವಾಗಿರುವ {season} ಹಂಗಾಮಿಗೆ ಸಂಪೂರ್ಣವಾಗಿ ಸೂಕ್ತವಾಗಿದೆ.",
-                agronomic_match: "ಕೃಷಿ ಸೂಕ್ತತೆ",
-                market_adaptability: "ಮಾರುಕಟ್ಟೆ ಬೇಡಿಕೆ: ಸ್ಥಳೀಯ ಎಪಿಎಂಸಿ ಮಾರುಕಟ್ಟೆಗಳಲ್ಲಿ ಉತ್ತಮ ಬೇಡಿಕೆ ಮತ್ತು ಸೂಕ್ತ ಧಾರಣೆ.",
-                weather_compat: "ಹವಾಮಾನ ಹೊಂದಾಣಿಕೆ",
-                temp_label: "ತಾಪಮಾನ",
-                optimal: "✓ ಅತ್ಯುತ್ತಮ",
-                humidity_label: "ಆರ್ದ್ರತೆ",
-                favorable: "✓ ಪೂರಕ",
-                season_label: "ಹಂಗಾಮು",
-                active_window: "✓ ಸಕ್ರಿಯ ಸಮಯ",
+                conditions_analyzed: "ವಿಶ್ಲೇಷಿಸಲಾದ ಪರಿಸ್ಥಿತಿಗಳು",
                 rec_varieties: "ಶಿಫಾರಸು ಮಾಡಿದ ತಳಿಗಳು",
                 farming_info: "ಕೃಷಿ ಮಾಹಿತಿ",
-                sowing_window: "ಬಿತ್ತನೆ ಸಮಯ",
-                water_req: "ನೀರಿನ ಅಗತ್ಯತೆ",
-                soil_req: "ಮಣ್ಣಿನ ಅವಶ್ಯಕತೆ",
+                ai_advisory: "AI ಸಲಹೆಗಾರ",
                 ask_ai_btn: "AI ಸಲಹೆಗಾರರನ್ನು ಕೇಳಿ",
-                close_btn: "ಮುಚ್ಚಿ",
-                seasons: { kharif: 'ಖಾರೀಫ್', rabi: 'ರಬಿ', summer: 'ಬೇಸಿಗೆ (ಜೈದ್)' },
+                back_to_list: "← ಬೆಳೆಗಳ ಪಟ್ಟಿಗೆ ಹಿಂತಿರುಗಿ",
+                suitability_score: "ಹೊಂದಾಣಿಕೆ ಸ್ಕೋರ್",
+                tip_header: "ರೈತರ ಸಲಹೆ",
+                weather_header: "ಹವಾಮಾನ ಮುನ್ನೆಚ್ಚರಿಕೆ",
+                read_more: "ಇನ್ನಷ್ಟು ಓದಿ →",
                 categories: {
-                    all: "🌾 ಎಲ್ಲಾ ಬೆಳೆಗಳು",
-                    cereals: "🌱 ಧಾನ್ಯಗಳು",
+                    all: "🌿 ಎಲ್ಲಾ ಬೆಳೆಗಳು",
+                    cereals: "🌾 ಧಾನ್ಯಗಳು",
+                    pulses: "🫘 ದ್ವಿದಳ ಧಾನ್ಯಗಳು",
                     vegetables: "🥬 ತರಕಾರಿಗಳು",
                     fruits: "🍎 ಹಣ್ಣುಗಳು",
-                    pulses: "🫘 ದ್ವಿದಳ ಧಾನ್ಯಗಳು",
-                    oilseeds: "🌻 ಎಣ್ಣೆಕಾಳುಗಳು"
+                    oilseeds: "🌻 ಎಣ್ಣೆಕಾಳುಗಳು",
+                    fodder: "🌾 ಮೇವು ಬೆಳೆಗಳು"
                 },
-                default_variety: 'ದೃಢೀಕೃತ ಅಧಿಕ ಇಳುವರಿ ತಳಿ',
-                default_sowing: 'ಪ್ರಸ್ತುತ ಹಂಗಾಮಿನ ಸಮಯ',
-                default_soil: 'ಉತ್ತಮ ನೀರು ಬಸಿದುಹೋಗುವ ಫಲವತ್ತಾದ ಕೃಷಿ ಮಣ್ಣು',
-                default_water: 'ಮಧ್ಯಮ ನೀರಿನ ಅಗತ್ಯತೆ (400–550 ಮಿ.ಮೀ)'
+                labels: {
+                    location: "ಸ್ಥಳ",
+                    temperature: "ತಾಪಮಾನ",
+                    rainfall: "ಮಳೆ ಪ್ರಮಾಣ",
+                    humidity: "ಆರ್ದ್ರತೆ",
+                    season: "ಹಂಗಾಮು",
+                    sowing_time: "ಬಿತ್ತನೆ ಸಮಯ",
+                    duration: "ಅವಧಿ",
+                    soil_type: "ಮಣ್ಣಿನ ವಿಧ",
+                    water_need: "ನೀರಿನ ಅಗತ್ಯ",
+                    spacing: "ಅಂತರ"
+                },
+                suitability: {
+                    high: "ಅತ್ಯಂತ ಸೂಕ್ತ",
+                    suitable: "ಸೂಕ್ತ",
+                    moderate: "ಮಧ್ಯಮ ಸೂಕ್ತ"
+                }
             },
             hi: {
                 title_seasonal: "मौसमी फसलें",
-                meta_basis: "अनुशंसित: मौसम • ऋतु • स्थान",
-                highly_suitable: "अत्यधिक उपयुक्त",
-                suitable: "उपयुक्त",
+                subtitle_seasonal: "मौसम, ऋतु और मिट्टी की स्थिति पर आधारित अनुशंसित फसलें",
+                refresh_btn: "रिफ्रेश करें",
                 view_details: "विवरण देखें",
-                rank_label: "रैंक",
+                view_more_crops: "और फसलें देखें",
+                show_less_crops: "कम दिखाएं",
                 why_recommended: "यह फसल क्यों अनुशंसित है?",
-                weather_alignment: "मौसम अनुकूलता: वर्तमान तापमान ({temp}°C) और {humidity}% आर्द्रता अंकुरण और वानस्पतिक विकास के लिए अनुकूल हैं।",
-                seasonal_window: "मौसमी समय: {loc} में सक्रिय {season} मौसम के बिल्कुल अनुकूल है।",
-                agronomic_match: "कृषि उपयुक्तता",
-                market_adaptability: "बाजार मांग: स्थानीय कृषि उपज मंडी (APMC) में उच्च मांग और अच्छा भाव।",
-                weather_compat: "मौसम अनुकूलता",
-                temp_label: "तापमान",
-                optimal: "✓ उत्तम",
-                humidity_label: "नमी (आर्द्रता)",
-                favorable: "✓ अनुकूल",
-                season_label: "मौसम / ऋतु",
-                active_window: "✓ बुवाई का समय",
+                conditions_analyzed: "विश्लेषित परिस्थितियाँ",
                 rec_varieties: "अनुशंसित किस्में",
                 farming_info: "कृषि जानकारी",
-                sowing_window: "बुवाई का समय",
-                water_req: "जल की आवश्यकता",
-                soil_req: "मिट्टी की आवश्यकता",
+                ai_advisory: "AI सलाहकार",
                 ask_ai_btn: "AI सलाहकार से पूछें",
-                close_btn: "बंद करें",
-                seasons: { kharif: 'खरीफ', rabi: 'रबी', summer: 'जायद / ग्रीष्म' },
+                back_to_list: "← फसल सूची पर वापस जाएं",
+                suitability_score: "उपयुक्तता स्कोर",
+                tip_header: "किसान सलाह",
+                weather_header: "मौसम चेतावनी",
+                read_more: "अधिक पढ़ें →",
                 categories: {
-                    all: "🌾 सभी फसलें",
-                    cereals: "🌱 अनाज",
+                    all: "🌿 सभी फसलें",
+                    cereals: "🌾 अनाज",
+                    pulses: "🫘 दालें",
                     vegetables: "🥬 सब्जियां",
                     fruits: "🍎 फल",
-                    pulses: "🫘 दालें",
-                    oilseeds: "🌻 तिलहन"
+                    oilseeds: "🌻 तिलहन",
+                    fodder: "🌾 चारा फसलें"
                 },
-                default_variety: 'प्रमाणित उन्नत अधिक उपज वाली किस्म',
-                default_sowing: 'वर्तमान बुवाई का समय',
-                default_soil: 'अच्छी जल निकासी वाली उपजाऊ कृषि मिट्टी',
-                default_water: 'मध्यम जल आवश्यकता (400–550 मिमी)'
+                labels: {
+                    location: "स्थान",
+                    temperature: "तापमान",
+                    rainfall: "वर्षा",
+                    humidity: "आर्द्रता",
+                    season: "ऋतु / मौसम",
+                    sowing_time: "बुवाई का समय",
+                    duration: "अवधि",
+                    soil_type: "मिट्टी का प्रकार",
+                    water_need: "जल आवश्यकता",
+                    spacing: "पौधों की दूरी"
+                },
+                suitability: {
+                    high: "अत्यधिक उपयुक्त",
+                    suitable: "उपयुक्त",
+                    moderate: "मध्यम उपयुक्त"
+                }
             },
             ta: {
                 title_seasonal: "பருவகால பயிர்கள்",
-                meta_basis: "பரிந்துரை: வானிலை • பருவம் • இடம்",
-                highly_suitable: "மிகவும் பொருத்தமானது",
-                suitable: "பொருத்தமானது",
+                subtitle_seasonal: "வானிலை, பருவம் மற்றும் மண் நிலைமைகளின் அடிப்படையிலான பரிந்துரைகள்",
+                refresh_btn: "புதுப்பிக்கவும்",
                 view_details: "விவரங்களைக் காண்க",
-                rank_label: "தரம்",
+                view_more_crops: "மேலும் பயிர்கள்",
+                show_less_crops: "குறைவாகக் காட்டு",
                 why_recommended: "இந்த பயிர் ஏன் பரிந்துரைக்கப்படுகிறது?",
-                weather_alignment: "வானிலை பொருத்தம்: தற்போதைய வெப்பநிலை ({temp}°C) மற்றும் {humidity}% ஈரப்பதம் முளைப்பு மற்றும் வளர்ச்சிக்கு ஏற்றதாக உள்ளது.",
-                seasonal_window: "பருவகாலம்: {loc} பகுதியில் உள்ள தற்போதைய {season} பருவத்திற்கு மிகவும் பொருத்தமானது.",
-                agronomic_match: "வேளாண் பொருத்தம்",
-                market_adaptability: "சந்தை தேவை: உள்ளூர் ஒழுங்குமுறை விற்பனைக்கூடங்களில் அதிக தேவை மற்றும் நல்ல விலை.",
-                weather_compat: "வானிலை பொருத்தம்",
-                temp_label: "வெப்பநிலை",
-                optimal: "✓ சிறந்தது",
-                humidity_label: "ஈரப்பதம்",
-                favorable: "✓ சாதகமானது",
-                season_label: "பருவம்",
-                active_window: "✓ நடவு காலம்",
+                conditions_analyzed: "ஆய்வு செய்யப்பட்ட காரணிகள்",
                 rec_varieties: "பரிந்துரைக்கப்பட்ட ரகங்கள்",
                 farming_info: "விவசாய தகவல்கள்",
-                sowing_window: "விதைப்பு காலம்",
-                water_req: "நீர்த் தேவை",
-                soil_req: "மண் தேவை",
+                ai_advisory: "AI வழிகாட்டல்",
                 ask_ai_btn: "AI ஆலோசகரிடம் கேளுங்கள்",
-                close_btn: "மூடுக",
-                seasons: { kharif: 'காரீஃப் (குறுவை)', rabi: 'ரபி (சம்பா)', summer: 'கோடை (நவரை)' },
+                back_to_list: "← பயிர் பட்டியலுக்கு திரும்பவும்",
+                suitability_score: "பொருத்த மதிப்பெண்",
+                tip_header: "விவசாய குறிப்பு",
+                weather_header: "வானிலை எச்சரிக்கை",
+                read_more: "மேலும் அறிய →",
                 categories: {
-                    all: "🌾 அனைத்து பயிர்கள்",
-                    cereals: "🌱 தானியங்கள்",
+                    all: "🌿 அனைத்து பயிர்கள்",
+                    cereals: "🌾 தானியங்கள்",
+                    pulses: "🫘 பருப்பு வகைகள்",
                     vegetables: "🥬 காய்கறிகள்",
                     fruits: "🍎 பழங்கள்",
-                    pulses: "🫘 பருப்பு வகைகள்",
-                    oilseeds: "🌻 எண்ணெய் வித்துக்கள்"
+                    oilseeds: "🌻 எண்ணெய் வித்துக்கள்",
+                    fodder: "🌾 தீவனப் பயிர்கள்"
                 },
-                default_variety: 'சான்றளிக்கப்பட்ட உயர் விளைச்சல் ரகம்',
-                default_sowing: 'பருவக்கால விதைப்பு நேரம்',
-                default_soil: 'நல்ல வடிகால் வசதியுள்ள வளமான நிலம்',
-                default_water: 'மிதமான நீர்த் தேவை (400–550 மி.மீ)'
+                labels: {
+                    location: "இடம்",
+                    temperature: "வெப்பநிலை",
+                    rainfall: "மழைப்பொழிவு",
+                    humidity: "ஈரப்பதம்",
+                    season: "பருவம்",
+                    sowing_time: "விதைப்பு காலம்",
+                    duration: "பயிர் காலம்",
+                    soil_type: "மண் வகை",
+                    water_need: "நீர்த் தேவை",
+                    spacing: "இடைவெளி"
+                },
+                suitability: {
+                    high: "மிகவும் பொருத்தமானது",
+                    suitable: "பொருத்தமானது",
+                    moderate: "மிதமான பொருத்தம்"
+                }
             },
             ml: {
                 title_seasonal: "സീസണൽ വിളകൾ",
-                meta_basis: "ശുപാർശ: കാലാവസ്ഥ • സീസൺ • സ്ഥലം",
-                highly_suitable: "ഏറ്റവും അനുയോജ്യം",
-                suitable: "അനുയോജ്യം",
+                subtitle_seasonal: "കാലാവസ്ഥയും സീസണും മണ്ണിന്റെ ഗുണവും അടിസ്ഥാനമാക്കിയുള്ള ശുപാർശകൾ",
+                refresh_btn: "പുതുക്കുക",
                 view_details: "വിശദാംശങ്ങൾ കാണുക",
-                rank_label: "റാങ്ക്",
+                view_more_crops: "കൂടുതൽ വിളകൾ കാണുക",
+                show_less_crops: "കുറച്ച് കാണിക്കുക",
                 why_recommended: "എന്തുകൊണ്ട് ഈ വിള ശുപാർശ ചെയ്യുന്നു?",
-                weather_alignment: "കാലാവസ്ഥ അനുയോജ്യത: നിലവിലെ താപനിലയും ({temp}°C) {humidity}% ഈർപ്പവും വളർച്ചയ്ക്ക് ഏറ്റവും അനുയോജ്യമാണ്.",
-                seasonal_window: "സീസൺ വിൻഡോ: {loc} ലെ നിലവിലെ {season} സീസണുമായി പൂർണ്ണമായി പൊരുത്തപ്പെടുന്നു.",
-                agronomic_match: "കാർഷിക അനുയോജ്യത",
-                market_adaptability: "വിപണി സാധ്യത: പ്രാദേശിക കാർഷിക വിപണികളിൽ മികച്ച ആവശ്യകതയും വിലയും.",
-                weather_compat: "കാലാവസ്ഥ അനുയോജ്യത",
-                temp_label: "താപനില",
-                optimal: "✓ ഉചിതം",
-                humidity_label: "ഈർപ്പം",
-                favorable: "✓ അനുകൂലം",
-                season_label: "സീസൺ",
-                active_window: "✓ അനുയോജ്യ സമയം",
+                conditions_analyzed: "പരിശോധിച്ച ഘടകങ്ങൾ",
                 rec_varieties: "ശുപാർശ ചെയ്ത ഇനങ്ങൾ",
                 farming_info: "കൃഷി വിവരങ്ങൾ",
-                sowing_window: "വിത്ത് വിതയ്ക്കുന്ന സമയം",
-                water_req: "ജല ആവശ്യകത",
-                soil_req: "മണ്ണിന്റെ ആവശ്യകത",
+                ai_advisory: "AI ഉപദേശം",
                 ask_ai_btn: "AI ഉപദേശകനോട് ചോദിക്കുക",
-                close_btn: "അടയ്ക്കുക",
-                seasons: { kharif: 'ഖാരിഫ് (വിരിപ്പ്)', rabi: 'റബി (മുണ്ടകൻ)', summer: 'വേനൽക്കാലം (പുഞ്ച)' },
+                back_to_list: "← വിള പട്ടികയിലേക്ക് മടങ്ങുക",
+                suitability_score: "അനുയോജ്യത സ്കോർ",
+                tip_header: "കർഷക കുറിപ്പ്",
+                weather_header: "കാലാവസ്ഥാ മുന്നറിയിപ്പ്",
+                read_more: "കൂടുതൽ വായിക്കുക →",
                 categories: {
-                    all: "🌾 എല്ലാ വിളകളും",
-                    cereals: "🌱 ധാന്യങ്ങൾ",
+                    all: "🌿 എല്ലാ വിളകളും",
+                    cereals: "🌾 ധാന്യങ്ങൾ",
+                    pulses: "🫘 പയറുവർഗ്ഗങ്ങൾ",
                     vegetables: "🥬 പച്ചക്കറികൾ",
                     fruits: "🍎 പഴങ്ങൾ",
-                    pulses: "🫘 പയറുവർഗ്ഗങ്ങൾ",
-                    oilseeds: "🌻 എണ്ണക്കുരുക്കൾ"
+                    oilseeds: "🌻 എണ്ണക്കുരുക്കൾ",
+                    fodder: "🌾 തീറ്റപ്പുല്ല്"
                 },
-                default_variety: 'സാക്ഷ്യപ്പെടുത്തിയ ഉയർന്ന വിളവ് ഇനം',
-                default_sowing: 'സീസൺ വിതയ്ക്കൽ സമയം',
-                default_soil: 'നല്ല നീർവാർച്ചയുള്ള ഫലഭൂയിഷ്ഠമായ മണ്ണ്',
-                default_water: 'ഇടത്തരം ജല ആവശ്യകത (400–550 മി.മീ)'
+                labels: {
+                    location: "സ്ഥലം",
+                    temperature: "താപനില",
+                    rainfall: "മഴ",
+                    humidity: "ഈർപ്പം",
+                    season: "സീസൺ",
+                    sowing_time: "വിതയ്ക്കുന്ന സമയം",
+                    duration: "കാലയളവ്",
+                    soil_type: "മണ്ണിന്റെ ഇനം",
+                    water_need: "ജല ആവശ്യകത",
+                    spacing: "അകലം"
+                },
+                suitability: {
+                    high: "ഏറ്റവും അനുയോജ്യം",
+                    suitable: "അനുയോജ്യം",
+                    moderate: "ഇടത്തരം അനുയോജ്യം"
+                }
             }
         };
 
         const CROP_CATALOG = {
-            'ragi': { 
-                slug: 'ragi', 
-                category: 'cereals',
-                avatarIcon: '🌾',
-                secondary: { en: 'Finger Millet (Eleusine coracana)', te: 'రాగులు / తైదలు (Eleusine coracana)', kn: 'ರಾಗಿ (Eleusine coracana)', hi: 'रागी / मडुआ (Eleusine coracana)', ta: 'கேழ்வரகு (Eleusine coracana)', ml: 'പഞ്ഞപ്പുല്ല് / റാഗി' },
-                varieties: ['GPU-28', 'ML-365', 'MR-1', 'KMR-301', 'PR-202'], 
-                sowing: { en: 'June – August (Kharif)', te: 'జూన్ – ఆగస్టు (ఖరీఫ్)', kn: 'ಜೂನ್ – ಆಗಸ್ಟ್ (ಖಾರೀಫ್)', hi: 'जून – अगस्त (खरीफ)', ta: 'ஜூன் – ஆகஸ்ட் (காரீஃப்)', ml: 'ജൂൺ – ആഗസ്റ്റ് (ഖാരിഫ്)' },
-                soil: { en: 'Well-drained red sandy loam or gravelly soil', te: 'నీరు ఇంకే ఎర్ర ఇసుక లేదా గరప నేలలు', kn: 'ಉತ್ತಮ ನೀರು ಬಸಿಯುವ ಕೆಂಪು ಮರಳು ಮಿಶ್ರಿತ ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली लाल रेतीली दोमट मिट्टी', ta: 'நல்ல வடிகால் வசதியுள்ள செம்மண் நிலம்', ml: 'നീർവാർച്ചയുള്ള ചുവന്ന മണൽ മണ്ണ്' },
-                water: { en: 'Low to Medium (350–500 mm), highly drought hardy', te: 'తక్కువ నుండి మధ్యస్థం (350–500 మి.మీ), కరువును తట్టుకుంటుంది', kn: 'ಕಡಿಮೆ-ಮಧ್ಯಮ (350–500 ಮಿ.ಮೀ), ಬರ ನಿರೋಧಕ', hi: 'कम से मध्यम (350–500 मिमी), सूखा सहनशील', ta: 'குறைந்த முதல் மிதமான நீர்த் தேவை (350–500 மி.மீ)', ml: 'കുറഞ്ഞത് മുതൽ ഇടത്തരം വരെ (350–500 மி.മീ)' }
-            },
             'paddy': { 
                 slug: 'paddy', 
                 category: 'cereals',
-                avatarIcon: '🌾',
-                secondary: { en: 'Rice (Oryza sativa)', te: 'వరి / ధాన్యం (Oryza sativa)', kn: 'ಭತ್ತ (Oryza sativa)', hi: 'धान / चावल (Oryza sativa)', ta: 'நெல் (Oryza sativa)', ml: 'നെല്ല് (Oryza sativa)' },
-                varieties: ['IR-64', 'Jaya', 'MTU-1010', 'Sona Masoori', 'BPT-5204'], 
-                sowing: { en: 'June – July (Kharif) / Nov – Dec (Rabi)', te: 'జూన్ – జూలై (ఖరీఫ్) / నవంబరు – డిసెంబరు (రబీ)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್) / ನವೆಂಬರ್ – ಡಿಸೆಂಬರ್ (ರಬಿ)', hi: 'जून – जुलाई (खरीफ) / नवंबर – दिसंबर (रबी)', ta: 'ஜூன் – ஜூலை / நவம்பர் – டிசம்பர்', ml: 'ജൂൺ – ജൂలై / നവംബർ – ഡിസംബർ' },
-                soil: { en: 'Clayey or clay loam with high water holding capacity', te: 'తేమను నిలిపి ఉంచే బంకమట్టి లేదా రేగడి నేలలు', kn: 'ಹೆಚ್ಚು ನೀರು ಹಿಡಿದಿಟ್ಟುಕೊಳ್ಳುವ ಜೇಡಿ ಮಣ್ಣು', hi: 'अधिक जल धारण क्षमता वाली चिकनी या दोमट मिट्टी', ta: 'அதிக நீர் தேங்கும் களிமண் நிலம்', ml: 'വെള്ളം കെട്ടിനിൽക്കുന്ന കളിമണ്ണ്' },
-                water: { en: 'High (1100–1250 mm), standing water preferred', te: 'ఎక్కువ (1100–1250 మి.మీ), నిల్వ నీరు అవసరం', kn: 'ಅಧಿಕ (1100–1250 ಮಿ.ಮೀ), ನಿಂತ ನೀರು ಅಗತ್ಯ', hi: 'अधिक (1100–1250 मिमी), भरा हुआ पानी आवश्यक', ta: 'அதிக நீர்த் தேவை (1100–1250 மி.மீ)', ml: 'ഉയർന്ന ജല ആവശ്യകത (1100–1250 மி.മീ)' }
+                catLabel: { en: 'Cereal Crop', te: 'ధాన్యపు పంట', kn: 'ಧಾನ್ಯದ ಬೆಳೆ', hi: 'अनाज फसल', ta: 'தானியப் பயிர்', ml: 'ധാന്യ വിള' },
+                score: 91,
+                suitabilityKey: 'high',
+                varieties: ['Jyothi', 'Jaya', 'IR 64', 'Swarna', 'MTU-1010'],
+                sowing: { en: 'June – July (Kharif)', te: 'జూన్ – జూలై (ఖరీఫ్)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್)', hi: 'जून – जुलाई (खरीफ)', ta: 'ஜூன் – ஜூலை', ml: 'ജൂൺ – ജൂലൈ' },
+                duration: { en: '110 – 130 days', te: '110 – 130 రోజులు', kn: '110 – 130 ದಿನಗಳು', hi: '110 – 130 दिन', ta: '110 – 130 நாட்கள்', ml: '110 – 130 ദിവസങ്ങൾ' },
+                soil: { en: 'Clayey loam, Loamy soil', te: 'బంకమట్టి లేదా రేగడి నేలలు', kn: 'ಜೇಡಿ ಗೋಡು ಮಣ್ಣು', hi: 'चिकनी दोमट मिट्टी', ta: 'களிமண் நிலம்', ml: 'കളിമണ്ണ്' },
+                water: { en: 'High (1100–1250 mm)', te: 'ఎక్కువ (1100–1250 మి.మీ)', kn: 'ಅಧಿಕ (1100–1250 ಮಿ.ಮೀ)', hi: 'अधिक', ta: 'அதிகம்', ml: 'ഉയർന്നത്' },
+                spacing: '20 cm x 15 cm',
+                aiTip: { 
+                    en: 'Timely transplanting and balanced fertilization will improve yield and grain quality.',
+                    te: 'సకాలంలో నాట్లు వేయడం మరియు సమతుల్య ఎరువుల యాజమాన్యం వల్ల ధాన్యం నాణ్యత మరియు దిగుబడి పెరుగుతాయి.',
+                    kn: 'ಸಕಾಲಿಕ ನಾಟಿ ಮತ್ತು ಸಮತೋಲಿತ ರಸಗೊಬ್ಬರ ನಿರ್ವಹಣೆಯು ಇಳುವರಿ ಮತ್ತು ಧಾನ್ಯದ ಗುಣಮಟ್ಟವನ್ನು ಹೆಚ್ಚಿಸುತ್ತದೆ.',
+                    hi: 'समय पर रोपाई और संतुलित उर्वरक प्रबंधन से उपज और दाने की गुणवत्ता में सुधार होगा।',
+                    ta: 'சரியான நேரத்தில் நடவு செய்வதும் சமச்சீர் உரமிடுதலும் விளைச்சலையும் தரத்தையும் உயர்த்தும்.',
+                    ml: 'സമയബന്ധിതമായ നടീലും വളപ്രയോഗവും മികച്ച വിളവും ധാന്യ ഗുണനിലവാരവും ഉറപ്പാക്കും.'
+                }
             },
-            'rice': { 
-                slug: 'paddy', 
+            'ragi': { 
+                slug: 'ragi', 
                 category: 'cereals',
-                avatarIcon: '🌾',
-                secondary: { en: 'Paddy / Rice (Oryza sativa)', te: 'వరి (Oryza sativa)', kn: 'ಭತ್ತ (Oryza sativa)', hi: 'धान (Oryza sativa)', ta: 'நெல் (Oryza sativa)', ml: 'നെല്ല് (Oryza sativa)' },
-                varieties: ['IR-64', 'MTU-1010', 'Sona Masoori'], 
-                sowing: { en: 'June – July / Nov – Dec', te: 'జూన్ – జూలై / నవంబరు – డిసెంబరు', kn: 'ಜೂನ್ – ಜುಲೈ / ನವೆಂಬರ್ – ಡಿಸೆಂಬರ್', hi: 'जून – जुलाई / नवंबर – दिसंबर', ta: 'ஜூன் – ஜூலை', ml: 'ജൂൺ – ஜூలై' },
-                soil: { en: 'Clayey loam', te: 'బంకమట్టి లేదా రేగడి నేలలు', kn: 'ಜೇಡಿ ಮಣ್ಣು', hi: 'चिकनी दोमट मिट्टी', ta: 'களிமண் நிலம்', ml: 'കളിമണ്ണ്' },
-                water: { en: 'High (1100–1250 mm)', te: 'ఎక్కువ (1100–1250 మి.మీ)', kn: 'ಅಧಿಕ (1100–1250 ಮಿ.ಮೀ)', hi: 'अधिक', ta: 'அதிகம்', ml: 'ഉയർന്നത്' }
+                catLabel: { en: 'Cereal / Millet', te: 'చిరుధాన్యపు పంట', kn: 'ಸಿರಿಧಾನ್ಯದ ಬೆಳೆ', hi: 'मोटा अनाज फसल', ta: 'சிறு தானியம்', ml: 'സിരിധാന്യം' },
+                score: 88,
+                suitabilityKey: 'high',
+                varieties: ['GPU-28', 'ML-365', 'MR-1', 'KMR-301'],
+                sowing: { en: 'June – August (Kharif)', te: 'జూన్ – ఆగస్టు (ఖరీఫ్)', kn: 'ಜೂನ್ – ಆಗಸ್ಟ್ (ಖಾರೀಫ್)', hi: 'जून – अगस्त (खरीफ)', ta: 'ஜூன் – ஆகஸ்ட்', ml: 'ജൂൺ – ആഗസ്റ്റ്' },
+                duration: { en: '105 – 120 days', te: '105 – 120 రోజులు', kn: '105 – 120 ದಿನಗಳು', hi: '105 – 120 दिन', ta: '105 – 120 நாட்கள்', ml: '105 – 120 ദിവസങ്ങൾ' },
+                soil: { en: 'Red sandy loam, Gravelly soil', te: 'ఎర్ర ఇసుక లేదా గరప నేలలు', kn: 'ಕೆಂಪು ಮರಳು ಗೋಡು ಮಣ್ಣು', hi: 'लाल बलुई दोमट मिट्टी', ta: 'செம்மண் நிலம்', ml: 'ചുവന്ന മണ്ണ്' },
+                water: { en: 'Low to Medium (350–500 mm)', te: 'తక్కువ నుండి మధ్యస్థం', kn: 'ಕಡಿಮೆ-ಮಧ್ಯಮ', hi: 'कम से मध्यम', ta: 'குறைவு-மிதம்', ml: 'ഇടത്തരം' },
+                spacing: '22 cm x 10 cm',
+                aiTip: { 
+                    en: 'Highly drought tolerant. Intercropping with Tur Dal improves nitrogen fixation and soil health.',
+                    te: 'కరువును తట్టుకుంటుంది. కంది పంటతో అంతరపంటగా వేస్తే నేల సారం పెరుగుతుంది.',
+                    kn: 'ಬರ ನಿರೋಧಕ ಬೆಳೆ. ತೊಗರಿ ಜತೆ ಮಿಶ್ರ ಬೆಳೆ ಮಾಡಿದರೆ ಮಣ್ಣಿನ ಸಾರವರ್ಧನೆ ಆಗುತ್ತದೆ.',
+                    hi: 'सूखा सहनशील फसल। अरहर के साथ अंतःफसल लेने से मिट्टी की उर्वरता बढ़ती है।',
+                    ta: 'வறட்சியைத் தாங்கும். துவரையுடன் ஊடுபயிராகப் பயிரிட்டால் மண் வளம் கூடும்.',
+                    ml: 'വരൾച്ചയെ പ്രതിരോധിക്കുന്ന വിള. തുവരപ്പയറുമായി ഇടവിളയാക്കുന്നത് മണ്ണിന്റെ ഫലഭൂയിഷ്ഠത കൂട്ടും.'
+                }
             },
-            'okra': {
-                slug: 'bhindi',
-                category: 'vegetables',
-                avatarIcon: '🥬',
-                secondary: { en: 'Bhindi / Lady Finger (Abelmoschus esculentus)', te: 'బెండకాయ / బెండ (Abelmoschus esculentus)', kn: 'ಬೆಂಡೆಕಾಯಿ (Abelmoschus esculentus)', hi: 'भिंडी (Abelmoschus esculentus)', ta: 'வெண்டைக்காய் (Abelmoschus esculentus)', ml: 'വെണ്ടയ്ക്ക (Abelmoschus esculentus)' },
-                varieties: ['Arka Anamika', 'Pusa Sawani', 'Kashi Kranti', 'Parbhani Kranti'],
-                sowing: { en: 'June – July (Kharif) / Feb – March (Summer)', te: 'జూన్ – జూలై (ఖరీఫ్) / ఫిబ్రవరి – మార్చి (వేసవి)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್) / ಫೆಬ್ರವರಿ – ಮಾರ್ಚ್ (ಬೇಸಿಗೆ)', hi: 'जून – जुलाई (खरीफ) / फरवरी – मार्च (जायद)', ta: 'ஜூன் – ஜூலை / பிப்ரவரி – மார்ச்', ml: 'ജൂൺ – ജൂലൈ / ഫെബ്രുവരി – മാർച്ച്' },
-                soil: { en: 'Sandy loam to clay loam rich in organic matter', te: 'సేంద్రియ పదార్థం పుష్కలంగా ఉన్న ఇసుక లేదా రేగడి నేలలు', kn: 'ಸಾವಯವ ಸಮೃದ್ಧ ಮರಳು ಮತ್ತು ಜೇಡಿ ಮಣ್ಣು', hi: 'जीवांश युक्त बलुई दोमट या दोमट मिट्टी', ta: 'வளமான மணல் கலந்த வண்டல் மண்', ml: 'ജൈവാംശമുള്ള പശിമരാശി മണ്ണ്' },
-                water: { en: 'Medium (400–500 mm), drip irrigation optimal', te: 'మధ్యస్థం (400–500 మి.మీ), బిందు సేద్యం అనుకూలం', kn: 'ಮಧ್ಯಮ (400–500 ಮಿ.ಮೀ), ಹನಿ ನೀರಾವರಿ ಸೂಕ್ತ', hi: 'मध्यम (400–500 मिमी), ड्रिप सिंचाई उत्तम', ta: 'மிதமான நீர்த் தேவை (400–500 மி.மீ)', ml: 'ഇടത്തരം ജല ആവശ്യകത (400–500 மி.മീ)' }
-            },
-            'bhindi': {
-                slug: 'bhindi',
-                category: 'vegetables',
-                avatarIcon: '🥬',
-                secondary: { en: 'Okra / Lady Finger (Abelmoschus esculentus)', te: 'బెండ (Abelmoschus esculentus)', kn: 'ಬೆಂಡೆ (Abelmoschus esculentus)', hi: 'भिंडी (Abelmoschus esculentus)', ta: 'வெண்டை (Abelmoschus esculentus)', ml: 'വെണ്ട (Abelmoschus esculentus)' },
-                varieties: ['Arka Anamika', 'Pusa Sawani'],
-                sowing: { en: 'June – July / Feb – March', te: 'జూన్ – జూలై / ఫిబ్రవరి – మార్చి', kn: 'ಜೂನ್ – ಜುಲೈ / ಫೆಬ್ರವರಿ – ಮಾರ್ಚ್', hi: 'जून – जुलाई / फरवरी – मार्च', ta: 'ஜூன் – ஜூலை', ml: 'ಜೂൺ – ജൂలై' },
-                soil: { en: 'Sandy loam', te: 'ఇసుక లేదా గరప నేలలు', kn: 'ಮರಳು ಗೋಡು ಮಣ್ಣು', hi: 'बलुई दोमट मिट्टी', ta: 'வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
-                water: { en: 'Medium (400–500 mm)', te: 'మధ్యస్థం (400–500 మి.మీ)', kn: 'ಮಧ್ಯಮ (400–500 ಮಿ.ಮೀ)', hi: 'मध्यम', ta: 'மிதமானது', ml: 'ഇടത്തരം' }
-            },
-            'green gram': {
-                slug: 'moong-dal',
+            'tur dal': { 
+                slug: 'tur-dal', 
                 category: 'pulses',
-                avatarIcon: '🫘',
-                secondary: { en: 'Moong / Green Gram (Vigna radiata)', te: 'పెసలు / పెసర (Vigna radiata)', kn: 'ಹೆಸರು ಕಾಳು (Vigna radiata)', hi: 'मूंग (Vigna radiata)', ta: 'பாசிப்பயறு (Vigna radiata)', ml: 'ചെറുപയർ (Vigna radiata)' },
-                varieties: ['IPM 02-03', 'Pusa Vishal', 'Samrat', 'K-851'],
-                sowing: { en: 'June – July (Kharif) / March (Summer)', te: 'జూన్ – జూలై (ఖరీఫ్) / మార్చి (వేసవి)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್) / ಮಾರ್ಚ್ (ಬೇಸಿಗೆ)', hi: 'जून – जुलाई (खरीफ) / मार्च (जायद)', ta: 'ஜூன் – ஜூலை / மார்ச்', ml: 'ജൂൺ – ജൂലൈ / മാർച്ച്' },
-                soil: { en: 'Well-drained loamy soil with neutral pH', te: 'నీరు ఇంకే గరప నేలలు', kn: 'ಉತ್ತಮ ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली दोमट मिट्टी', ta: 'நல்ல வடிகால் வசதியுள்ள வண்டல் மண்', ml: 'നീർവാർച്ചയുള്ള പശിമരാശി മണ്ണ്' },
-                water: { en: 'Low (250–350 mm), short duration drought tolerant', te: 'తక్కువ (250–350 మి.మీ), స్వల్పకాలిక పంట', kn: 'ಕಡಿಮೆ (250–350 ಮಿ.ಮೀ), ಕಡಿಮೆ ಅವಧಿಯ ಬೆಳೆ', hi: 'कम (250–350 मिमी), कम अवधि वाली फसल', ta: 'குறைந்த நீர்த் தேவை (250–350 மி.மீ)', ml: 'കുറഞ്ഞ ജല ആവശ്യകത (250–350 மி.മീ)' }
-            },
-            'black gram': {
-                slug: 'urad-dal',
-                category: 'pulses',
-                avatarIcon: '🫘',
-                secondary: { en: 'Urad / Black Gram (Vigna mungo)', te: 'మినుములు / మినుము (Vigna mungo)', kn: 'ಉದ್ದಿನ ಕಾಳು (Vigna mungo)', hi: 'उड़द (Vigna mungo)', ta: 'உளுந்து (Vigna mungo)', ml: 'ഉഴുന്ന് (Vigna mungo)' },
-                varieties: ['LBG-752', 'PU-31', 'Pant U-30', 'VBN-8'],
-                sowing: { en: 'June – July / Oct – Nov', te: 'జూన్ – జూలై / అక్టోబరు – నవంబరు', kn: 'ಜೂನ್ – ಜುಲೈ / ಅಕ್ಟೋಬರ್ – ನವೆಂಬರ್', hi: 'जून – जुलाई / अक्टूबर – नवंबर', ta: 'ஜூன் – ஜூலை / அக்டோபர் – நவம்பர்', ml: 'ജൂൺ – ജൂലൈ / ഒക്ടോബർ – നവംബർ' },
-                soil: { en: 'Deep loamy or black cotton soil', te: 'లోతైన గరప లేదా నల్లరేగడి నేలలు', kn: 'ಆಳವಾದ ಗೋಡು ಅಥವಾ ಕಪ್ಪು ಮಣ್ಣು', hi: 'गहरी दोमट या काली मिट्टी', ta: 'வளமான கரிசல் அல்லது வண்டல் மண்', ml: 'പശിമരാശി അല്ലെങ്കിൽ കരിമണ്ണ്' },
-                water: { en: 'Low to Medium (300–400 mm)', te: 'తక్కువ నుండి మధ్యస్థం (300–400 మి.మీ)', kn: 'ಕಡಿಮೆ-ಮಧ್ಯಮ (300–400 ಮಿ.ಮೀ)', hi: 'कम से मध्यम (300–400 मिमी)', ta: 'குறைந்த முதல் மிதமான நீர்த் தேவை', ml: 'കുറഞ്ഞത് മുതൽ ഇടത്തരം വരെ' }
-            },
-            'tur dal': {
-                slug: 'tur-dal',
-                category: 'pulses',
-                avatarIcon: '🫘',
-                secondary: { en: 'Pigeon Pea / Red Gram (Cajanus cajan)', te: 'కందులు / కంది (Cajanus cajan)', kn: 'ತೊಗರಿ ಬೇಳೆ (Cajanus cajan)', hi: 'अरहर / तुअर (Cajanus cajan)', ta: 'துவரம் பருப்பு (Cajanus cajan)', ml: 'തുവരപ്പരിപ്പ് (Cajanus cajan)' },
+                catLabel: { en: 'Pulse Crop', te: 'పప్పుధాన్యపు పంట', kn: 'ದ್ವಿದಳ ಧಾನ್ಯದ ಬೆಳೆ', hi: 'दलहन फसल', ta: 'பருப்புப் பயிர்', ml: 'പയർ വിള' },
+                score: 84,
+                suitabilityKey: 'suitable',
                 varieties: ['ICPL-87119 (Asha)', 'TS-3R', 'BSMR-736', 'Maruti'],
-                sowing: { en: 'June – July (Kharif)', te: 'జూన్ – జూలై (ఖరీఫ్)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್)', hi: 'जून – जुलाई (खरीफ)', ta: 'ஜூன் – ஜூலை (காரீஃப்)', ml: 'ജൂൺ – ജൂలై (ഖാരിഫ്)' },
-                soil: { en: 'Deep, well-drained loam or red loam soil', te: 'లోతైన గరప లేదా ఎర్ర నేలలు', kn: 'ಆಳವಾದ ಕೆಂಪು ಗೋಡು ಮಣ್ಣು', hi: 'गहरी, अच्छी जल निकासी वाली दोमट मिट्टी', ta: 'ஆழமான செம்மண் நிலம்', ml: 'ആഴമുള്ള പശിമരാശി മണ്ണ്' },
-                water: { en: 'Low to Medium (350–500 mm), deep tap root drought hardy', te: 'తక్కువ నుండి మధ్యస్థం (350–500 మి.మీ), కరువును తట్టుకుంటుంది', kn: 'ಕಡಿಮೆ-ಮಧ್ಯಮ (350–500 ಮಿ.ಮೀ)', hi: 'कम से मध्यम (350–500 मिमी), सूखा प्रतिरोधी', ta: 'குறைந்த முதல் மிதமான நீர்த் தேவை', ml: 'കുറഞ്ഞത് മുതൽ ഇടത്തരം വരെ' }
+                sowing: { en: 'June – July (Kharif)', te: 'జూన్ – జూలై (ఖరీఫ్)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್)', hi: 'जून – जुलाई (खरीफ)', ta: 'ஜூன் – ஜூலை', ml: 'ജൂൺ – ജൂലൈ' },
+                duration: { en: '150 – 180 days', te: '150 – 180 రోజులు', kn: '150 – 180 ದಿನಗಳು', hi: '150 – 180 दिन', ta: '150 – 180 நாட்கள்', ml: '150 – 180 ദിവസങ്ങൾ' },
+                soil: { en: 'Deep well-drained loamy soil', te: 'లోతైన గరప నేలలు', kn: 'ಆಳವಾದ ಗೋಡು ಮಣ್ಣು', hi: 'गहरी दोमट मिट्टी', ta: 'வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (350–500 mm)', te: 'మధ్యస్థం', kn: 'ಮಧ್ಯಮ', hi: 'मध्यम', ta: 'மிதமானது', ml: 'ഇടത്തരം' },
+                spacing: '90 cm x 20 cm',
+                aiTip: { 
+                    en: 'Ensure seed treatment with Rhizobium culture to maximize root nodulation.',
+                    te: 'రైజోబియం కల్చర్‌తో విత్తన శుద్ధి చేసి వేరుబుడిపెల సంఖ్యను పెంచండి.',
+                    kn: 'ರೈಜೋಬಿಯಂ ಜೈವಿಕ ಗೊಬ್ಬರದಿಂದ ಬೀಜೋಪಚಾರ ಮಾಡಿ ಬೇರು ಗಂಟುಗಳ ಬೆಳವಣಿಗೆ ಹೆಚ್ಚಿಸಿ.',
+                    hi: 'राइजोबियम कल्चर से बीजोपचार करके जड़ों में ग्रंथियों की संख्या बढ़ाएं।',
+                    ta: 'ரைசோபியம் கொண்டு விதை நேர்த்தி செய்து வேர் முடிச்சுகளை அதிகரிக்கவும்.',
+                    ml: 'റൈസോബിയം ഉപയോഗിച്ച് വിത്ത് സംസ്കരണം നടത്തി വേരുകളുടെ ആരോഗ്യം ഉറപ്പാക്കുക.'
+                }
             },
-            'maize': { 
-                slug: 'maize', 
-                category: 'cereals',
-                avatarIcon: '🌽',
-                secondary: { en: 'Corn / Maize (Zea mays)', te: 'మొక్కజొన్న (Zea mays)', kn: 'ಮೆಕ್ಕೆಜೋಳ (Zea mays)', hi: 'मक्का (Zea mays)', ta: 'மக்காச்சோளம் (Zea mays)', ml: 'ചോളം (Zea mays)' },
-                varieties: ['Deccan-103', 'Ganga-11', 'HQPM-1', 'Bio-9681'], 
-                sowing: { en: 'June – July / Oct – Nov', te: 'జూన్ – జూలై / అక్టోబరు – నవంబరు', kn: 'ಜೂನ್ – ಜುಲೈ / ಅಕ್ಟೋಬರ್ – ನವೆಂಬರ್', hi: 'जून – जुलाई / अक्टूबर – नवंबर', ta: 'ஜூன் – ஜூலை / அக்டோபர் – நவம்பர்', ml: 'ಜൂൺ – ജൂలై / ഒക്ടോബർ – ನവംബർ' },
-                soil: { en: 'Deep, rich loamy soil with good drainage', te: 'సేంద్రియ పదార్థం గల లోతైన గరప నేలలు', kn: 'ಉತ್ತಮ ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली गहरी दोमट मिट्टी', ta: 'வளமான ஆழமான வண்டல் மண்', ml: 'ഫലഭൂയിഷ്ഠമായ പശിമരാശി മണ്ണ്' },
-                water: { en: 'Medium (500–600 mm)', te: 'మధ్యస్థం (500–600 మి.మీ)', kn: 'ಮಧ್ಯಮ (500–600 ಮಿ.ಮೀ)', hi: 'मध्यम (500–600 मिमी)', ta: 'மிதமான நீர்த் தேவை (500–600 மி.மீ)', ml: 'ഇടത്തരം ജല ആവശ്യകത (500–600 മി.മീ)' }
+            'okra': { 
+                slug: 'bhindi', 
+                category: 'vegetables',
+                catLabel: { en: 'Vegetable Crop', te: 'కూరగాయల పంట', kn: 'ತರಕಾರಿ ಬೆಳೆ', hi: 'सब्जी फसल', ta: 'காய்கறிப் பயிர்', ml: 'പച്ചക്കറി വിള' },
+                score: 82,
+                suitabilityKey: 'suitable',
+                varieties: ['Arka Anamika', 'Pusa Sawani', 'Kashi Kranti'],
+                sowing: { en: 'June – July (Kharif) / Feb – March', te: 'జూన్ – జూలై / ఫిబ్రవరి – మార్చి', kn: 'ಜೂನ್ – ಜುಲೈ / ಫೆಬ್ರವರಿ – ಮಾರ್ಚ್', hi: 'जून – जुलाई / फरवरी – मार्च', ta: 'ஜூன் – ஜூலை / பிப்ரவரி – மார்ச்', ml: 'ജൂൺ – ജൂലൈ / ഫെബ്രുവരി – മാർച്ച്' },
+                duration: { en: '90 – 100 days', te: '90 – 100 రోజులు', kn: '90 – 100 ದಿನಗಳು', hi: '90 – 100 दिन', ta: '90 – 100 நாட்கள்', ml: '90 – 100 ദിവസങ്ങൾ' },
+                soil: { en: 'Rich sandy loam to clay loam', te: 'సేంద్రియ పదార్థం గల ఇసుక గరప నేలలు', kn: 'ಸಾವಯವ ಸಮೃದ್ಧ ಗೋಡು ಮಣ್ಣು', hi: 'जीवांश युक्त बलुई दोमट मिट्टी', ta: 'வளமான மணல் வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (400–500 mm)', te: 'మధ్యస్థం', kn: 'ಮಧ್ಯಮ', hi: 'मध्यम', ta: 'மிதமானது', ml: 'ഇടത്തരം' },
+                spacing: '45 cm x 30 cm',
+                aiTip: { 
+                    en: 'Monitor for yellow vein mosaic virus; spray neem oil (3ml/L) as a preventive measure.',
+                    te: 'పల్లాకు తెగులు నివారణకు వేపనూనె (3 మి.లీ/లీ) పిచికారీ చేయండి.',
+                    kn: 'ಹಳದಿ ನಂಜು ರೋಗ ತಡೆಗಟ್ಟಲು ಮುನ್ನೆಚ್ಚರಿಕೆಯಾಗಿ ಬೇವಿನ ಎಣ್ಣೆ (೩ ಮಿ.ಲೀ/ಲೀ) ಸಿಂಪಡಿಸಿ.',
+                    hi: 'पीत शिरा मोज़ेक रोग से बचाव हेतु नीम तेल (3 मिली/लीटर) का छिड़काव करें।',
+                    ta: 'மஞ்சள் நரம்பு தேமல் நோயைத் தவிர்க்க வேப்ப எண்ணெய் (3 மி.லி/லி) தெளிக்கவும்.',
+                    ml: 'മഞ്ഞളിപ്പ് രോഗം തടയാൻ വേപ്പെണ്ണ (3 മി.ലി/ലിറ്റർ) സ്പ്രേ ചെയ്യുക.'
+                }
             },
             'groundnut': { 
                 slug: 'groundnut', 
                 category: 'oilseeds',
-                avatarIcon: '🌻',
-                secondary: { en: 'Peanut / Groundnut (Arachis hypogaea)', te: 'వేరుశనగ (Arachis hypogaea)', kn: 'ಕಡಲೆಕಾಯಿ (Arachis hypogaea)', hi: 'मूंगफली (Arachis hypogaea)', ta: 'வேர்க்கடலை (Arachis hypogaea)', ml: 'നിലക്കടല (Arachis hypogaea)' },
-                varieties: ['TMV-2', 'JL-24', 'Kadiri-6', 'GPBD-4'], 
-                sowing: { en: 'June – July (Rainfed) / Jan – Feb (Irrigated)', te: 'జూన్ – జూలై / జనవరి – ఫిబ్రవరి', kn: 'ಜೂನ್ – ಜುಲೈ / ಜನವರಿ – ಫೆಬ್ರವರಿ', hi: 'जून – जुलाई / जनवरी – फरवरी', ta: 'ஜூன் – ஜூலை / ஜனவரி – பிப்ரவரி', ml: 'ಜൂൺ – ജൂలై / ജനുവരി – ഫെബ്രുവരി' },
-                soil: { en: 'Well-aerated sandy loam with pH 6.0–7.5', te: 'వదులుగా ఉండే ఇసుక గరప నేలలు', kn: 'ಉತ್ತಮ ಗಾಳಿಯಾಡುವ ಮರಳು ಮಿಶ್ರಿತ ಗೋಡು ಮಣ್ಣು', hi: 'हल्की भुरभुरी बलुई दोमट मिट्टी', ta: 'நல்ல காற்றோட்டமுள்ள மணல் பாங்கான நிலம்', ml: 'നീർവാർച്ചയുള്ള മണൽ കലർന്ന മണ്ണ്' },
-                water: { en: 'Medium (450–550 mm)', te: 'మధ్యస్థం (450–550 మి.మీ)', kn: 'ಮಧ್ಯಮ (450–550 ಮಿ.ಮೀ)', hi: 'मध्यम (450–550 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' }
+                catLabel: { en: 'Oilseed Crop', te: 'నూనెగింజల పంట', kn: 'ಎಣ್ಣೆಕಾಳು ಬೆಳೆ', hi: 'तिलहन फसल', ta: 'எண்ணெய் வித்துப் பயிர்', ml: 'എണ്ണക്കുരു വിള' },
+                score: 80,
+                suitabilityKey: 'suitable',
+                varieties: ['TMV-2', 'JL-24', 'Kadiri-6', 'GPBD-4'],
+                sowing: { en: 'June – July (Kharif)', te: 'జూన్ – జూలై (ఖరీఫ్)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್)', hi: 'जून – जुलाई (खरीफ)', ta: 'ஜூன் – ஜூலை', ml: 'ജൂൺ – ജൂലൈ' },
+                duration: { en: '100 – 115 days', te: '100 – 115 రోజులు', kn: '100 – 115 ದಿನಗಳು', hi: '100 – 115 दिन', ta: '100 – 115 நாட்கள்', ml: '100 – 115 ദിവസങ്ങൾ' },
+                soil: { en: 'Well-aerated sandy loam', te: 'వదులుగా ఉండే ఇసుక గరప నేలలు', kn: 'ಉತ್ತಮ ಗಾಳಿಯಾಡುವ ಮರಳು ಗೋಡು ಮಣ್ಣು', hi: 'भुरभुरी बलुई दोमट मिट्टी', ta: 'காற்றோட்டமுள்ள மணல் நிலம்', ml: 'മണൽ പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (450–550 mm)', te: 'మధ్యస్థం', kn: 'ಮಧ್ಯಮ', hi: 'मध्यम', ta: 'மிதமானது', ml: 'ഇടത്തരം' },
+                spacing: '30 cm x 10 cm',
+                aiTip: { 
+                    en: 'Apply Gypsum (200 kg/acre) at pegging stage for well-filled pods and higher oil content.',
+                    te: 'ఊడలు దిగే దశలో జిప్సం (ఎకరాకు 200 కిలోలు) వేయడం వల్ల కాయ బాగా ఊరుతుంది.',
+                    kn: 'ಕಾಯಿ ಕಟ್ಟುವ ಹಂತದಲ್ಲಿ ಜಿಪ್ಸಮ್ (ಎಕರೆಗೆ ೨೦೦ ಕೆಜಿ) ಹಾಕುವುದರಿಂದ ಉತ್ತಮ ಇಳುವರಿ ಸಿಗುತ್ತದೆ.',
+                    hi: 'सुइयां बनते समय जिप्सम (200 किग्रा/एकड़) डालने से दानों का भराव अच्छा होता है।',
+                    ta: 'விழுது இறங்கும் பருவத்தில் ஜிப்சம் (ஏக்கருக்கு 200 கிலோ) இடவும்.',
+                    ml: 'കായ്കൾ ഉണ്ടാകുന്ന ഘട്ടത്തിൽ ജിപ്സം ഇട്ടുകൊടുക്കുന്നത് വിളവ് കൂട്ടും.'
+                }
+            },
+            'green gram': { 
+                slug: 'moong-dal', 
+                category: 'pulses',
+                catLabel: { en: 'Pulse / Legume', te: 'పప్పుధాన్యపు పంట', kn: 'ದ್ವಿದಳ ಧಾನ್ಯ', hi: 'दलहन फसल', ta: 'பருப்புப் பயிர்', ml: 'പയർ വിള' },
+                score: 75,
+                suitabilityKey: 'moderate',
+                varieties: ['IPM 02-03', 'Pusa Vishal', 'Samrat', 'K-851'],
+                sowing: { en: 'June – July / March (Summer)', te: 'జూన్ – జూలై / మార్చి (వేసవి)', kn: 'ಜೂನ್ – ಜುಲೈ / ಮಾರ್ಚ್ (ಬೇಸಿಗೆ)', hi: 'जून – जुलाई / मार्च', ta: 'ஜூன் – ஜூலை / மார்ச்', ml: 'ജൂൺ – ജൂലൈ / മാർച്ച്' },
+                duration: { en: '65 – 75 days', te: '65 – 75 రోజులు', kn: '65 – 75 ದಿನಗಳು', hi: '65 – 75 दिन', ta: '65 – 75 நாட்கள்', ml: '65 – 75 ദിവസങ്ങൾ' },
+                soil: { en: 'Well-drained fertile loam', te: 'సారవంతమైన గరప నేలలు', kn: 'ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'उपजाऊ दोमट मिट्टी', ta: 'வளமான வண்டல் மண்', ml: 'ഫലഭൂയിഷ്ഠമായ മണ്ണ്' },
+                water: { en: 'Low (250–350 mm)', te: 'తక్కువ (250–350 మి.మీ)', kn: 'ಕಡಿಮೆ (250–350 ಮಿ.ಮೀ)', hi: 'कम', ta: 'குறைவு', ml: 'കുറഞ്ഞത്' },
+                spacing: '30 cm x 10 cm',
+                aiTip: { 
+                    en: 'Short-duration catch crop. Excellent for crop rotation after cereal harvest.',
+                    te: 'స్వల్పకాలిక పంట. ధాన్యపు పంటల తర్వాత పంట మార్పిడికి అత్యంత అనుకూలం.',
+                    kn: 'ಅಲ್ಪಾವಧಿಯ ಬೆಳೆ. ಭತ್ತ ಅಥವಾ ರಾಗಿ ಕಟಾವಿನ ನಂತರ ಬೆಳೆ ಪರಿವರ್ತನೆಗೆ ಅತ್ಯುತ್ತಮ.',
+                    hi: 'कम अवधि वाली फसल। अनाज फसलों के बाद फसल चक्र के लिए सर्वोत्तम।',
+                    ta: 'குறுகிய காலப் பயிர். பயிர் சுழற்சிக்கு மிகவும் சிறந்தது.',
+                    ml: 'കുറഞ്ഞ കാലയളവ് ഉള്ള വിള. വിളപരിവർത്തനത്തിന് ഏറ്റവും അനുയോജ്യം.'
+                }
+            },
+            'maize': {
+                slug: 'maize',
+                category: 'cereals',
+                catLabel: { en: 'Cereal Crop', te: 'ధాన్యపు పంట', kn: 'ಧಾನ್ಯದ ಬೆಳೆ', hi: 'अनाज फसल', ta: 'தானியப் பயிர்', ml: 'ധാന്യ വിള' },
+                score: 85,
+                suitabilityKey: 'high',
+                varieties: ['Deccan-103', 'Ganga-11', 'HQPM-1', 'Bio-9681'],
+                sowing: { en: 'June – July / Oct – Nov', te: 'జూన్ – జూలై / అక్టోబరు – నవంబరు', kn: 'ಜೂನ್ – ಜುಲೈ / ಅಕ್ಟೋಬರ್ – ನವೆಂಬರ್', hi: 'जून – जुलाई / अक्टूबर – नवंबर', ta: 'ஜூன் – ஜூலை', ml: 'ജൂൺ – ജൂലൈ' },
+                duration: { en: '95 – 110 days', te: '95 – 110 రోజులు', kn: '95 – 110 ದಿನಗಳು', hi: '95 – 110 दिन', ta: '95 – 110 நாட்கள்', ml: '95 – 110 ദിവസങ്ങൾ' },
+                soil: { en: 'Deep fertile loam', te: 'లోతైన సారవంతమైన నేలలు', kn: 'ಆಳವಾದ ಫಲವತ್ತಾದ ಮಣ್ಣು', hi: 'गहरी उपजाऊ दोमट मिट्टी', ta: 'வளமான நிலம்', ml: 'ഫലഭൂയിഷ്ഠമായ മണ്ണ്' },
+                water: { en: 'Medium (500–600 mm)', te: 'మధ్యస్థం', kn: 'ಮಧ್ಯಮ', hi: 'मध्यम', ta: 'மிதமானது', ml: 'ഇടത്തരം' },
+                spacing: '60 cm x 20 cm',
+                aiTip: {
+                    en: 'Install pheromone traps for Fall Armyworm monitoring from 15 days after germination.',
+                    te: 'కత్తెర పురుగు నివారణకు మొలక వచ్చిన 15 రోజుల నుండే లింగాకర్షక బుట్టలను అమర్చండి.',
+                    kn: 'ಲದ್ದಿ ಹುಳು ಬಾಧೆ ನಿಯಂತ್ರಣಕ್ಕೆ ಬಿತ್ತಿದ ೧೫ ದಿನಗಳಲ್ಲೇ ಮೋಹಕ ಬಲೆಗಳನ್ನು ಅಳವಡಿಸಿ.',
+                    hi: 'फॉल आर्मीवर्म की रोकथाम के लिए अंकुरण के 15 दिन बाद फेरोमोन ट्रैप लगाएं।',
+                    ta: 'படைப்புழு தாக்குதலைக் கண்காணிக்க இனக்கவர்ச்சி பொறிகளை அமைக்கவும்.',
+                    ml: 'കീടങ്ങളെ നിരീക്ഷിക്കാൻ ഫിറമോൺ കെണികൾ സ്ഥാപിക്കുക.'
+                }
             },
             'banana': {
                 slug: 'banana',
                 category: 'fruits',
-                avatarIcon: '🍌',
-                secondary: { en: 'Banana (Musa acuminata)', te: 'అరటి (Musa acuminata)', kn: 'ಬಾಳೆ (Musa acuminata)', hi: 'केला (Musa acuminata)', ta: 'வாழை (Musa acuminata)', ml: 'വാഴ (Musa acuminata)' },
+                catLabel: { en: 'Fruit Crop', te: 'పండ్ల తోట', kn: 'ಹಣ್ಣಿನ ಬೆಳೆ', hi: 'फल फसल', ta: 'பழப் பயிர்', ml: 'ഫല വിള' },
+                score: 86,
+                suitabilityKey: 'high',
                 varieties: ['Grand Naine (G9)', 'Robusta', 'Nendran', 'Yelakki'],
-                sowing: { en: 'Year-round (Aug–Sep & Feb–Mar preferred)', te: 'ఏడాది పొడవునా (ఆగస్టు-సెప్టెంబరు & ఫిబ్రవరి-మార్చి)', kn: 'ವರ್ಷಪೂರ್ತಿ (ಆಗಸ್ಟ್-ಸೆಪ್ಟೆಂಬರ್ & ಫೆಬ್ರವರಿ-ಮಾರ್ಚ್)', hi: 'वर्ष भर (अगस्त-सितंबर एवं फरवरी-मार्च)', ta: 'ஆண்டு முழுவதும்', ml: 'വർഷം മുഴുവൻ' },
-                soil: { en: 'Deep, rich loamy soil rich in organic matter', te: 'సారవంతమైన లోతైన ఎర్ర లేదా గరప నేలలు', kn: 'ಸಾವಯವ ಸಮೃದ್ಧ ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'जीवांश युक्त उपजाऊ दोमट मिट्टी', ta: 'வளமான ஆழமான வண்டல் நிலம்', ml: 'ഫലഭൂയിഷ്ഠമായ പശിമരാശി മണ്ണ്' },
-                water: { en: 'High (1800–2000 mm), regular irrigation essential', te: 'ఎక్కువ (1800–2000 మి.మీ), క్రమం తప్పకుండా నీరు పెట్టాలి', kn: 'ಅಧಿಕ (1800–2000 ಮಿ.ಮೀ), ನಿರಂತರ ನೀರಾವರಿ ಅಗತ್ಯ', hi: 'अधिक (1800–2000 मिमी), नियमित सिंचाई आवश्यक', ta: 'அதிக நீர்த் தேவை (1800–2000 மி.மீ)', ml: 'ഉയർന്ന ജല ആവശ്യകത' }
-            },
-            'mango': {
-                slug: 'mango',
-                category: 'fruits',
-                avatarIcon: '🥭',
-                secondary: { en: 'Mango (Mangifera indica)', te: 'మామిడి (Mangifera indica)', kn: 'ಮಾವು (Mangifera indica)', hi: 'आम (Mangifera indica)', ta: 'மாம்பழம் (Mangifera indica)', ml: 'മാങ്ങ (Mangifera indica)' },
-                varieties: ['Alphonso', 'Banganapalli', 'Kesar', 'Dasheri', 'Totapuri'],
-                sowing: { en: 'July – August (Monsoon planting)', te: 'జూలై – ఆగస్టు (వర్షాకాలం)', kn: 'ಜುಲೈ – ಆಗಸ್ಟ್ (ಮುಂಗಾರು)', hi: 'जुलाई – अगस्त (मानसून)', ta: 'ஜூலை – ஆகஸ்ட்', ml: 'ജൂലൈ – ആഗസ്റ്റ്' },
-                soil: { en: 'Deep alluvial or red loamy soil with pH 5.5–7.5', te: 'లోతైన గరప లేదా ఎర్ర నేలలు', kn: 'ಆಳವಾದ ಕೆಂಪು ಗೋಡು ಮಣ್ಣು', hi: 'गहरी जलोढ़ या लाल दोमट मिट्टी', ta: 'ஆழமான செம்மண் நிலம்', ml: 'ആഴമുള്ള മണ്ണ്' },
-                water: { en: 'Medium (600–1000 mm)', te: 'మధ్యస్థం (600–1000 మి.మీ)', kn: 'ಮಧ್ಯಮ (600–1000 ಮಿ.ಮೀ)', hi: 'मध्यम', ta: 'மிதமானது', ml: 'ഇടത്തരം' }
-            },
-            'tomato': { 
-                slug: 'tomato', 
-                category: 'vegetables',
-                avatarIcon: '🍅',
-                secondary: { en: 'Tomato (Solanum lycopersicum)', te: 'టమోటా (Solanum lycopersicum)', kn: 'ಟೊಮೆಟೊ (Solanum lycopersicum)', hi: 'टमाटर (Solanum lycopersicum)', ta: 'தக்காளி (Solanum lycopersicum)', ml: 'തക്കാളി (Solanum lycopersicum)' },
-                varieties: ['Arka Rakshak', 'Arka Vikas', 'Pusa Ruby', 'Abhinav'], 
-                sowing: { en: 'Year-round (Aug–Sep, Nov–Dec, Feb–Mar)', te: 'ఏడాది పొడవునా (ఆగస్టు, నవంబరు, ఫిబ్రవరి)', kn: 'ವರ್ಷಪೂರ್ತಿ (ಆಗಸ್ಟ್, ನವೆಂಬರ್, ಫೆಬ್ರವರಿ)', hi: 'वर्ष भर (अगस्त, नवंबर, फरवरी)', ta: 'ஆண்டு முழுவதும்', ml: 'വർഷം മുഴുവൻ' },
-                soil: { en: 'Rich sandy loam with good drainage and pH 6.0–7.0', te: 'సేంద్రియ ఎరువులు గల సారవంతమైన గరప నేలలు', kn: 'ಫಲವತ್ತಾದ ಮರಳು ಗೋಡು ಮಣ್ಣು', hi: 'जीवांश युक्त उपजाऊ दोमट मिट्टी', ta: 'வளமான மணல் கலந்த வண்டல் மண்', ml: 'ഫലഭൂയിഷ്ഠമായ പശിമരാശി മണ്ണ്' },
-                water: { en: 'Medium (400–600 mm), drip recommended', te: 'మధ్యస్థం (400–600 మి.మీ), బిందు సేద్యం మంచిది', kn: 'ಮಧ್ಯಮ (400–600 ಮಿ.ಮೀ), ಹನಿ ನೀರಾವರಿ ಉತ್ತಮ', hi: 'मध्यम (400–600 मिमी), ड्रिप सिंचाई अनुशंसित', ta: 'மிதமான நீர்த் தேவை (400–600 மி.மீ)', ml: 'ഇടത്തരം ജല ആവശ്യകത' }
-            },
-            'onion': { 
-                slug: 'onion', 
-                category: 'vegetables',
-                avatarIcon: '🧅',
-                secondary: { en: 'Onion (Allium cepa)', te: 'ఉల్లిపాయ / ఉల్లి (Allium cepa)', kn: 'ಈರುಳ್ಳಿ (Allium cepa)', hi: 'प्याज (Allium cepa)', ta: 'வெங்காயம் (Allium cepa)', ml: 'സവാള / ഉള്ളി (Allium cepa)' },
-                varieties: ['Bhima Super', 'Bhima Red', 'Arka Kalyan', 'Pusa Red'], 
-                sowing: { en: 'May – June (Kharif) / Oct – Nov (Rabi)', te: 'మే – జూన్ (ఖరీఫ్) / అక్టోబరు – నవంబరు (రబీ)', kn: 'ಮೇ – ಜೂನ್ (ಖಾರೀಫ್) / ಅಕ್ಟೋಬರ್ – ನವೆಂಬರ್ (ರಬಿ)', hi: 'मई – जून (खरीफ) / अक्टूबर – नवंबर (रबी)', ta: 'மே – ஜூன் / அக்டோபர் – நவம்பர்', ml: 'മേയ് – ജൂൺ / ഒക്ടോബർ – നവംബർ' },
-                soil: { en: 'Deep, well-drained friable sandy loam', te: 'మృదువైన సారవంతమైన ఇసుక గరప నేలలు', kn: 'ಉತ್ತಮ ಗಾಳಿಯಾಡುವ ಮರಳು ಗೋಡು ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली भुरभुरी बलुई दोमट मिट्टी', ta: 'நல்ல வடிகால் வசதியுள்ள மணல் வண்டல் மண்', ml: 'നീർവാർച്ചയുള്ള പശിമരാശി മണ്ണ്' },
-                water: { en: 'Medium (350–500 mm)', te: 'మధ్యస్థం (350–500 మి.మీ)', kn: 'ಮಧ್ಯಮ (350–500 ಮಿ.ಮೀ)', hi: 'मध्यम (350–500 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' }
+                sowing: { en: 'August – September', te: 'ఆగస్టు – సెప్టెంబరు', kn: 'ಆಗಸ್ಟ್ – ಸೆಪ್ಟೆಂಬರ್', hi: 'अगस्त – सितंबर', ta: 'ஆகஸ்ட் – செப்டம்பர்', ml: 'ആഗസ്റ്റ് – സെപ്റ്റംബർ' },
+                duration: { en: '11 – 12 months', te: '11 – 12 నెలలు', kn: '11 – 12 ತಿಂಗಳುಗಳು', hi: '11 – 12 महीने', ta: '11 – 12 மாதங்கள்', ml: '11 – 12 മാസങ്ങൾ' },
+                soil: { en: 'Rich deep alluvial or loamy soil', te: 'సారవంతమైన లోతైన ఎర్ర నేలలు', kn: 'ಸಾವಯವ ಸಮೃದ್ಧ ಫಲವತ್ತಾದ ಮಣ್ಣು', hi: 'जीवांश युक्त उपजाऊ दोमट मिट्टी', ta: 'வளமான வண்டல் நிலம்', ml: 'ഫലഭൂയിഷ്ഠമായ മണ്ണ്' },
+                water: { en: 'High (1800–2000 mm)', te: 'ఎక్కువ', kn: 'ಅಧಿಕ', hi: 'अधिक', ta: 'அதிகம்', ml: 'ഉയർന്നത്' },
+                spacing: '1.8 m x 1.8 m',
+                aiTip: {
+                    en: 'Provide adequate propping support during bunch development to prevent lodging.',
+                    te: 'గెలలు వేసినప్పుడు చెట్లు పడిపోకుండా కర్రల ఆసరా ఇవ్వండి.',
+                    kn: 'ಗೊನೆ ಬಿಡುವ ಹಂತದಲ್ಲಿ ಗಾಳಿಗೆ ಮರಗಳು ಬೀಳದಂತೆ ಆಸರೆ ಕಂಬಗಳನ್ನು ನೀಡಿ.',
+                    hi: 'घार बनने पर पौधों को गिरने से बचाने के लिए उचित सहारा दें।',
+                    ta: 'குலை தள்ளும் பருவத்தில் மரங்கள் சாயாமல் இருக்க முட்டுக் கொடுக்கவும்.',
+                    ml: 'കുലകൾ ഉണ്ടാകുമ്പോൾ കാറ്റിൽ വീഴാതിരിക്കാൻ താങ്ങ് കൊടുക്കുക.'
+                }
             }
         };
 
         function matchCropMetadata(cropName, lang = 'en') {
             const i18n = CROP_MODAL_I18N[lang] || CROP_MODAL_I18N['en'];
             if (!cropName) {
-                return { slug: 'ragi', category: 'cereals', avatarIcon: '🌾', secondary: i18n.default_variety, varieties: [i18n.default_variety], sowing: i18n.default_sowing, soil: i18n.default_soil, water: i18n.default_water };
+                return { slug: 'paddy', category: 'cereals', catLabel: 'Cereal Crop', score: 85, suitabilityKey: 'high', varieties: ['Certified High-Yield'], sowing: 'Seasonal Window', duration: '90-120 days', soil: 'Agricultural soil', water: 'Medium', spacing: 'Standard', aiTip: 'Follow standard agronomic practices.' };
             }
             const lower = cropName.toLowerCase().replace(/[*_#]/g, '').trim();
             for (const [key, val] of Object.entries(CROP_CATALOG)) {
                 const keyMatch = lower.includes(key) || key.includes(lower);
                 let secMatch = false;
-                if (val.secondary) {
-                    for (const secVal of Object.values(val.secondary)) {
+                if (val.catLabel) {
+                    for (const secVal of Object.values(val.catLabel)) {
                         if (typeof secVal === 'string' && (lower.includes(secVal.toLowerCase()) || secVal.toLowerCase().includes(lower))) {
                             secMatch = true;
                             break;
@@ -3815,45 +4228,64 @@
                     return {
                         slug: val.slug,
                         category: val.category || 'cereals',
-                        avatarIcon: val.avatarIcon || '🌱',
-                        secondary: typeof val.secondary === 'object' ? (val.secondary[lang] || val.secondary['en']) : val.secondary,
+                        catLabel: typeof val.catLabel === 'object' ? (val.catLabel[lang] || val.catLabel['en']) : val.catLabel,
+                        score: val.score || 85,
+                        suitabilityKey: val.suitabilityKey || 'high',
                         varieties: val.varieties,
                         sowing: typeof val.sowing === 'object' ? (val.sowing[lang] || val.sowing['en']) : val.sowing,
+                        duration: typeof val.duration === 'object' ? (val.duration[lang] || val.duration['en']) : val.duration,
                         soil: typeof val.soil === 'object' ? (val.soil[lang] || val.soil['en']) : val.soil,
-                        water: typeof val.water === 'object' ? (val.water[lang] || val.water['en']) : val.water
+                        water: typeof val.water === 'object' ? (val.water[lang] || val.water['en']) : val.water,
+                        spacing: val.spacing,
+                        aiTip: typeof val.aiTip === 'object' ? (val.aiTip[lang] || val.aiTip['en']) : val.aiTip
                     };
                 }
             }
-            // Auto detect category keywords if unknown
+            // Auto categorize based on keywords if not in catalog
             let detectedCat = 'cereals';
-            let icon = '🌱';
-            if (lower.includes('vegetable') || lower.includes('కూరగాయ') || lower.includes('ತರಕಾರಿ') || lower.includes('సబ్జీ') || lower.includes('tomato') || lower.includes('potato') || lower.includes('onion') || lower.includes('chilli') || lower.includes('brinjal') || lower.includes('okra') || lower.includes('bhindi') || lower.includes('బెండ')) {
+            let catLabelStr = 'Cereal Crop';
+            if (lower.includes('vegetable') || lower.includes('కూరగాయ') || lower.includes('ತರಕಾರಿ') || lower.includes('सब्जी') || lower.includes('tomato') || lower.includes('okra') || lower.includes('bhindi') || lower.includes('onion') || lower.includes('chilli')) {
                 detectedCat = 'vegetables';
-                icon = '🥬';
-            } else if (lower.includes('fruit') || lower.includes('పండు') || lower.includes('ಹಣ್ಣು') || lower.includes('फल') || lower.includes('banana') || lower.includes('mango') || lower.includes('apple') || lower.includes('grape') || lower.includes('guava') || lower.includes('papaya')) {
+                catLabelStr = lang === 'te' ? 'కూరగాయల పంట' : lang === 'kn' ? 'ತರಕಾರಿ ಬೆಳೆ' : lang === 'hi' ? 'सब्जी फसल' : 'Vegetable Crop';
+            } else if (lower.includes('fruit') || lower.includes('పండు') || lower.includes('ಹಣ್ಣು') || lower.includes('फल') || lower.includes('banana') || lower.includes('mango') || lower.includes('apple')) {
                 detectedCat = 'fruits';
-                icon = '🍎';
-            } else if (lower.includes('pulse') || lower.includes('dal') || lower.includes('gram') || lower.includes('పప్పు') || lower.includes('ಬೇಳೆ') || lower.includes('दाल') || lower.includes('moong') || lower.includes('urad') || lower.includes('tur')) {
+                catLabelStr = lang === 'te' ? 'పండ్ల తోట' : lang === 'kn' ? 'ಹಣ್ಣಿನ ಬೆಳೆ' : lang === 'hi' ? 'फल फसल' : 'Fruit Crop';
+            } else if (lower.includes('pulse') || lower.includes('dal') || lower.includes('gram') || lower.includes('పప్పు') || lower.includes('ಬೇಳೆ') || lower.includes('दाल') || lower.includes('moong') || lower.includes('tur')) {
                 detectedCat = 'pulses';
-                icon = '🫘';
-            } else if (lower.includes('oil') || lower.includes('groundnut') || lower.includes('mustard') || lower.includes('soybean') || lower.includes('sunflower') || lower.includes('నూనె') || lower.includes('ಎಣ್ಣೆ') || lower.includes('तिल')) {
+                catLabelStr = lang === 'te' ? 'పప్పుధాన్యపు పంట' : lang === 'kn' ? 'ದ್ವಿದಳ ಧಾನ್ಯ' : lang === 'hi' ? 'दलहन फसल' : 'Pulse Crop';
+            } else if (lower.includes('oil') || lower.includes('groundnut') || lower.includes('mustard') || lower.includes('soybean') || lower.includes('నూనె') || lower.includes('तिल')) {
                 detectedCat = 'oilseeds';
-                icon = '🌻';
+                catLabelStr = lang === 'te' ? 'నూనెగింజల పంట' : lang === 'kn' ? 'ಎಣ್ಣೆಕಾಳು ಬೆಳೆ' : lang === 'hi' ? 'तिलहन फसल' : 'Oilseed Crop';
             }
-            return { slug: 'ragi', category: detectedCat, avatarIcon: icon, secondary: i18n.default_variety, varieties: [i18n.default_variety], sowing: i18n.default_sowing, soil: i18n.default_soil, water: i18n.default_water };
+            return {
+                slug: 'ragi',
+                category: detectedCat,
+                catLabel: catLabelStr,
+                score: 80,
+                suitabilityKey: 'suitable',
+                varieties: ['Certified Variety'],
+                sowing: 'Seasonal Window',
+                duration: '90–120 days',
+                soil: 'Well-drained agricultural soil',
+                water: 'Medium',
+                spacing: 'Standard spacing',
+                aiTip: 'Follow standard package of practices.'
+            };
         }
 
-        // Global cache for currently displayed seasonal crops
+        // Global State for Seasonal Crops
         window.lastSeasonalCropsList = [];
-        window.currentSeasonalActiveTab = 'all';
+        window.currentSeasonalActiveCat = 'all';
+        window.selectedCropDetailsIdx = 0; // Default selected crop on right panel
+        window.seasonalCropsExpanded = false;
 
-        // ================= COMPACT CATEGORY-BASED RENDERER =================
+        // ================= EXACT VISUAL RENDERER FOR SEASONAL CROPS =================
         function renderSeasonalCropsUI(rawText) {
             const lang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
             const i18n = CROP_MODAL_I18N[lang] || CROP_MODAL_I18N['en'];
 
             if (!rawText || !rawText.trim()) {
-                return `<div style="padding: 2rem 1rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;"><i class="fas fa-circle-info"></i> No seasonal recommendations available.</div>`;
+                return `<div style="padding: 2.5rem 1rem; text-align: center; color: var(--text-secondary); font-size: 0.85rem;"><i class="fas fa-circle-info"></i> No seasonal recommendations available.</div>`;
             }
 
             let cleanText = rawText
@@ -3887,7 +4319,6 @@
                     }
 
                     crops.push({
-                        num: numMatch[1],
                         name: cropName,
                         reason: cropReason,
                         meta: matchCropMetadata(cropName, lang)
@@ -3906,269 +4337,356 @@
                 }
             });
 
+            // If parsed less than 6 crops from API, add secondary seasonal crops to allow full category browsing
+            const fallbackCatalogKeys = ['paddy', 'ragi', 'tur dal', 'okra', 'groundnut', 'green gram', 'maize', 'banana'];
+            fallbackCatalogKeys.forEach(k => {
+                const alreadyHas = crops.some(c => c.name.toLowerCase().includes(k) || k.includes(c.name.toLowerCase()));
+                if (!alreadyHas && crops.length < 6) {
+                    const catalogItem = CROP_CATALOG[k];
+                    if (catalogItem) {
+                        let localizedName = 'Paddy (Rice)';
+                        if (k === 'paddy') localizedName = lang === 'te' ? 'వరి (Paddy)' : lang === 'kn' ? 'ಭತ್ತ (Paddy)' : lang === 'hi' ? 'धान (Paddy)' : 'Paddy (Rice)';
+                        else if (k === 'ragi') localizedName = lang === 'te' ? 'రాగులు (Ragi)' : lang === 'kn' ? 'ರಾಗಿ (Ragi)' : 'Ragi (Finger Millet)';
+                        else if (k === 'tur dal') localizedName = lang === 'te' ? 'కంది (Tur Dal)' : lang === 'kn' ? 'ತೊಗರಿ (Tur Dal)' : 'Tur Dal (Pigeon Pea)';
+                        else if (k === 'okra') localizedName = lang === 'te' ? 'బెండ (Okra)' : lang === 'kn' ? 'ಬೆಂಡೆ (Okra)' : 'Okra (Bhindi)';
+                        else if (k === 'groundnut') localizedName = lang === 'te' ? 'వేరుశనగ (Groundnut)' : lang === 'kn' ? 'ಕಡಲೆಕಾಯಿ (Groundnut)' : 'Groundnut';
+                        else if (k === 'green gram') localizedName = lang === 'te' ? 'పెసలు (Moong)' : lang === 'kn' ? 'ಹೆಸರು ಕಾಳು (Moong)' : 'Green Gram (Moong)';
+                        else if (k === 'maize') localizedName = lang === 'te' ? 'మొక్కజొన్న (Maize)' : lang === 'kn' ? 'ಮೆಕ್ಕೆಜೋಳ (Maize)' : 'Maize (Corn)';
+                        else if (k === 'banana') localizedName = lang === 'te' ? 'అరటి (Banana)' : lang === 'kn' ? 'ಬಾಳೆ (Banana)' : 'Banana';
+
+                        crops.push({
+                            name: localizedName,
+                            reason: lang === 'te' ? 'ప్రస్తుత వాతావరణం మరియు నేల పరిస్థితులకు అనుకూలం.' : lang === 'kn' ? 'ಪ್ರಸ್ತುತ ಹವಾಮಾನ ಮತ್ತು ಮಣ್ಣಿನ ಸ್ಥಿತಿಗೆ ಸೂಕ್ತ.' : 'Favorable conditions for vegetative growth.',
+                            meta: matchCropMetadata(k, lang)
+                        });
+                    }
+                }
+            });
+
             window.lastSeasonalCropsList = crops;
 
             const locParts = [currentDistrict || currentCity, currentState].filter(Boolean);
-            const dynamicLoc = locParts.length > 0 ? locParts.join(', ') : (currentState || 'India');
+            const dynamicLoc = locParts.length > 0 ? locParts.join(', ') : (currentState || 'Karnataka');
 
-            // Default localized Caution/Warning based on live weather if not in raw text
+            const temp = lastWeatherData?.main?.temp ? Math.round(lastWeatherData.main.temp) : 27;
+            const humidity = lastWeatherData?.main?.humidity || 65;
+
+            // Live localized tip and warning if not returned in API
+            if (!tip) {
+                tip = lang === 'te' ? 'విత్తన శుద్ధి కోసం ట్రైకోడెర్మా (4 గ్రా/కిలో) లేదా జీవ ఎరువులను పట్టించి విత్తండి.' :
+                      lang === 'kn' ? 'ಬಿತ್ತನೆಗೆ ಮುನ್ನ ಟ್ರೈಕೋಡರ್ಮಾ (೪ ಗ್ರಾಂ/ಕೆಜಿ) ಜೈವಿಕ ಗೊಬ್ಬರದಿಂದ ಬೀಜೋಪಚಾರ ಮಾಡಿ.' :
+                      lang === 'hi' ? 'बुवाई से पहले ट्राइकोडर्मा (4 ग्राम/किग्रा) से बीजोपचार अवश्य करें।' :
+                      lang === 'ta' ? 'விதைப்பதற்கு முன் ட்ரைக்கோடெர்மா கொண்டு விதை நேர்த்தி செய்யவும்.' :
+                      lang === 'ml' ? 'വിത്ത് പാകുന്നതിന് മുൻപ് ട്രൈക്കോഡെർമ ഉപയോഗിച്ച് സംസ്കരണം നടത്തുക.' :
+                      'Seed treatment with Trichoderma improves germination and protects seedlings from soil-borne diseases.';
+            }
+
             if (!caution) {
-                const humidity = lastWeatherData?.main?.humidity || 75;
-                if (lang === 'te') {
-                    caution = `ప్రస్తుత వాతావరణంలో అధిక తేమ (${humidity}%) మరియు వర్ష సూచన దృష్ట్యా పంట పొలాల్లో నీరు నిలవకుండా మురుగు కాలువలను సిద్ధం చేయండి. చీడపీడల ఉధృతిని గమనిస్తూ ఉండండి.`;
-                } else if (lang === 'kn') {
-                    caution = `ಪ್ರಸ್ತುತ ಹವಾಮಾನದಲ್ಲಿ ಹೆಚ್ಚಿನ ಆರ್ದ್ರತೆ (${humidity}%) ಇರುವ ಕಾರಣ ಜಮೀನಿನಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ಕಾಲುವೆ ನಿರ್ವಹಣೆ ಮಾಡಿ ಮತ್ತು ಕೀಟ ಬಾಧೆಗಳನ್ನು ಗಮನಿಸಿ.`;
-                } else if (lang === 'hi') {
-                    caution = `वर्तमान मौसम में उच्च आर्द्रता (${humidity}%) के कारण खेतों में जल निकासी की उचित व्यवस्था रखें और कीट प्रकोप की नियमित निगरानी करें।`;
-                } else if (lang === 'ta') {
-                    caution = `தற்போதைய அதிக ஈரப்பதம் (${humidity}%) காரணமாக வயல்களில் நீர் தேங்காமல் வடிகால் வசதி செய்து, பூச்சி தாக்குதலை கண்காணிக்கவும்.`;
-                } else if (lang === 'ml') {
-                    caution = `നിലവിലെ ഉയർന്ന ഈർപ്പം (${humidity}%) കാരണം പാടങ്ങളിൽ വെള്ളക്കെട്ട് ഒഴിവാക്കാൻ ഡ്രെയിനേജ് സൗകര്യം ഒരുക്കുക.`;
-                } else {
-                    caution = `Given high humidity (${humidity}%) and seasonal weather, ensure proper field drainage and regularly inspect for fungal pests or water stagnation.`;
-                }
+                caution = lang === 'te' ? `ప్రాంతంలో అధిక తేమ (${humidity}%) ఉన్నందున, బూజు తెగుళ్ల నివారణకు పొలంలో మురుగునీటి పారుదల సక్రమంగా ఉండేలా చూడండి.` :
+                          lang === 'kn' ? `ಪ್ರದೇಶದಲ್ಲಿ ಹೆಚ್ಚಿನ ತೇವಾಂಶ (${humidity}%) ಇರುವ ಕಾರಣ ಜಮೀನಿನಲ್ಲಿ ನೀರು ನಿಲ್ಲದಂತೆ ಕಾಲುವೆ ನಿರ್ವಹಣೆ ಮಾಡಿ.` :
+                          lang === 'hi' ? `क्षेत्र में उच्च आर्द्रता (${humidity}%) के कारण खेतों में जल निकासी की व्यवस्था रखें और कीटों पर नज़र रखें।` :
+                          lang === 'ta' ? `அதிக ஈரப்பதம் (${humidity}%) காரணமாக வயல்களில் நீர் தேங்காமல் வடிகால் அமைக்கவும்.` :
+                          lang === 'ml' ? `ഉയർന്ന ഈർപ്പം (${humidity}%) കാരണം പാടങ്ങളിൽ വെള്ളം കെട്ടിനിൽക്കാതെ ശ്രദ്ധിക്കുക.` :
+                          `High humidity (${humidity}%) in the region. Ensure proper drainage and monitor for fungal diseases in crops.`;
             }
 
-            if (crops.length > 0) {
-                const activeTab = window.currentSeasonalActiveTab || 'all';
-                const filteredCrops = activeTab === 'all' 
-                    ? crops 
-                    : crops.filter(c => c.meta.category === activeTab);
-                const displayCrops = filteredCrops.length > 0 ? filteredCrops : crops;
+            // Filter crops according to category
+            const activeCat = window.currentSeasonalActiveCat || 'all';
+            const filteredCrops = activeCat === 'all' 
+                ? crops 
+                : crops.filter(c => c.meta.category === activeCat);
+            const displayCrops = filteredCrops.length > 0 ? filteredCrops : crops;
 
-                let html = `
-                    <!-- Header Meta Row -->
-                    <div class="seasonal-meta-bar">
-                        <span class="seasonal-loc-tag"><i class="fas fa-location-dot"></i> ${escapeHtml(dynamicLoc)}</span>
-                        <span class="seasonal-rec-basis"><i class="fas fa-circle-check"></i> ${escapeHtml(i18n.meta_basis)}</span>
+            const visibleCount = window.seasonalCropsExpanded ? displayCrops.length : Math.min(displayCrops.length, 6);
+            const cropsToShow = displayCrops.slice(0, visibleCount);
+
+            // Selected Crop for Right Details Panel
+            const selIdx = window.selectedCropDetailsIdx >= 0 && window.selectedCropDetailsIdx < crops.length ? window.selectedCropDetailsIdx : 0;
+            const selCrop = crops[selIdx] || crops[0];
+
+            let html = `
+                <div class="seasonal-section-container details-active" id="seasonalContainerLayout">
+                    <!-- LEFT COLUMN: MAIN EXPLORER BOX -->
+                    <div class="seasonal-main-box">
+                        <!-- Header Row -->
+                        <div class="seasonal-header-row">
+                            <div class="seasonal-title-wrap">
+                                <div class="seasonal-title-line">
+                                    <i class="fas fa-leaf seasonal-leaf-icon"></i>
+                                    <h3 class="seasonal-title-text">${escapeHtml(i18n.title_seasonal)}</h3>
+                                    <span class="badge-auto-pill">AUTO</span>
+                                </div>
+                                <div class="seasonal-loc-line">
+                                    <i class="fas fa-location-dot"></i>
+                                    <span>${escapeHtml(dynamicLoc)}</span>
+                                </div>
+                                <div class="seasonal-subtitle-text">${escapeHtml(i18n.subtitle_seasonal)}</div>
+                            </div>
+                            <button type="button" class="btn-seasonal-refresh" onclick="fetchSeasonalCrops()" title="Refresh Seasonal Crops">
+                                <i class="fas fa-sync-alt"></i> <span>${escapeHtml(i18n.refresh_btn)}</span>
+                            </button>
+                        </div>
+
+                        <!-- Category Filter Tabs (Pills) -->
+                        <div class="seasonal-category-strip">
+                            <button type="button" class="seasonal-cat-pill ${activeCat === 'all' ? 'active' : ''}" onclick="filterSeasonalCategory('all')">${escapeHtml(i18n.categories.all)}</button>
+                            <button type="button" class="seasonal-cat-pill ${activeCat === 'cereals' ? 'active' : ''}" onclick="filterSeasonalCategory('cereals')">${escapeHtml(i18n.categories.cereals)}</button>
+                            <button type="button" class="seasonal-cat-pill ${activeCat === 'pulses' ? 'active' : ''}" onclick="filterSeasonalCategory('pulses')">${escapeHtml(i18n.categories.pulses)}</button>
+                            <button type="button" class="seasonal-cat-pill ${activeCat === 'vegetables' ? 'active' : ''}" onclick="filterSeasonalCategory('vegetables')">${escapeHtml(i18n.categories.vegetables)}</button>
+                            <button type="button" class="seasonal-cat-pill ${activeCat === 'fruits' ? 'active' : ''}" onclick="filterSeasonalCategory('fruits')">${escapeHtml(i18n.categories.fruits)}</button>
+                            <button type="button" class="seasonal-cat-pill ${activeCat === 'oilseeds' ? 'active' : ''}" onclick="filterSeasonalCategory('oilseeds')">${escapeHtml(i18n.categories.oilseeds)}</button>
+                            <button type="button" class="seasonal-cat-pill ${activeCat === 'fodder' ? 'active' : ''}" onclick="filterSeasonalCategory('fodder')">${escapeHtml(i18n.categories.fodder)}</button>
+                        </div>
+
+                        <!-- 3-Column Crop Cards Grid (NO RANKING TAGS) -->
+                        <div class="seasonal-cards-grid">
+            `;
+
+            cropsToShow.forEach((c, idx) => {
+                const originalIdx = window.lastSeasonalCropsList.indexOf(c);
+                const cardIdx = originalIdx >= 0 ? originalIdx : idx;
+                const imgSrc = `assets/images/commodities/${c.meta.slug}.webp`;
+                const isSelected = cardIdx === selIdx;
+
+                const suitKey = c.meta.suitabilityKey || (idx < 2 ? 'high' : (idx < 4 ? 'suitable' : 'moderate'));
+                const suitPillClass = suitKey === 'high' ? 'suit-pill-high' : (suitKey === 'suitable' ? 'suit-pill-suitable' : 'suit-pill-moderate');
+                const suitLabel = i18n.suitability[suitKey] || i18n.suitability.high;
+
+                html += `
+                    <div class="seasonal-card ${isSelected ? 'selected' : ''}" onclick="selectSeasonalCropDetail(${cardIdx})" tabindex="0" role="button" aria-label="${escapeHtml(c.name)} - ${escapeHtml(i18n.view_details)}">
+                        <!-- Crop Image (NO RANK TAGS) -->
+                        <div class="seasonal-card-thumb-box">
+                            <img src="${imgSrc}" alt="${escapeHtml(c.name)}" class="seasonal-card-img" loading="lazy" onerror="this.src='assets/images/commodities/ragi.webp';">
+                        </div>
+
+                        <!-- Body -->
+                        <div class="seasonal-card-body">
+                            <h4 class="seasonal-card-title">${escapeHtml(c.name)}</h4>
+                            <span class="seasonal-card-cat-label">${escapeHtml(c.meta.catLabel || 'Crop')}</span>
+                            <div class="seasonal-card-suitability-pill ${suitPillClass}">
+                                <span class="suit-dot"></span>
+                                <span>${escapeHtml(suitLabel)}</span>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="seasonal-card-footer">
+                            <span>${escapeHtml(i18n.view_details)}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
                     </div>
-
-                    <!-- Clean Horizontal Category Tabs Strip -->
-                    <div class="seasonal-category-tab-strip">
-                        <button type="button" class="cat-tab-btn ${activeTab === 'all' ? 'active' : ''}" onclick="switchSeasonalTab('all')">${escapeHtml(i18n.categories.all)}</button>
-                        <button type="button" class="cat-tab-btn ${activeTab === 'cereals' ? 'active' : ''}" onclick="switchSeasonalTab('cereals')">${escapeHtml(i18n.categories.cereals)}</button>
-                        <button type="button" class="cat-tab-btn ${activeTab === 'vegetables' ? 'active' : ''}" onclick="switchSeasonalTab('vegetables')">${escapeHtml(i18n.categories.vegetables)}</button>
-                        <button type="button" class="cat-tab-btn ${activeTab === 'fruits' ? 'active' : ''}" onclick="switchSeasonalTab('fruits')">${escapeHtml(i18n.categories.fruits)}</button>
-                        <button type="button" class="cat-tab-btn ${activeTab === 'pulses' ? 'active' : ''}" onclick="switchSeasonalTab('pulses')">${escapeHtml(i18n.categories.pulses)}</button>
-                        <button type="button" class="cat-tab-btn ${activeTab === 'oilseeds' ? 'active' : ''}" onclick="switchSeasonalTab('oilseeds')">${escapeHtml(i18n.categories.oilseeds)}</button>
-                    </div>
-
-                    <!-- Responsive Compact Crop Cards Grid -->
-                    <div class="compact-crop-grid">
                 `;
+            });
 
-                displayCrops.forEach((c, idx) => {
-                    const originalIdx = window.lastSeasonalCropsList.indexOf(c);
-                    const modalIdx = originalIdx >= 0 ? originalIdx : idx;
-                    const imgSrc = `assets/images/commodities/${c.meta.slug}.webp`;
-                    const rankNum = modalIdx + 1;
-                    const rankClass = modalIdx === 0 ? 'rank-gold' : (modalIdx === 1 ? 'rank-blue' : 'rank-green');
-                    const pillClass = modalIdx === 0 ? 'compact-pill-high' : 'compact-pill-suitable';
-                    const suitabilityText = modalIdx === 0 ? i18n.highly_suitable : i18n.suitable;
-                    const avatarSymbol = c.meta.avatarIcon || '🌱';
+            html += `
+                        </div> <!-- close .seasonal-cards-grid -->
 
-                    html += `
-                        <div class="compact-crop-card" tabindex="0" role="button" aria-label="${escapeHtml(i18n.view_details)} - ${escapeHtml(c.name)}" onclick="openCropDetailsModal(${modalIdx})" onkeydown="if(event.key==='Enter'||event.key===' ')openCropDetailsModal(${modalIdx})">
-                            <!-- Small Crop Image with Rank Badge -->
-                            <div class="compact-card-media">
-                                <img src="${imgSrc}" alt="${escapeHtml(c.name)}" class="compact-card-img" loading="lazy" onerror="this.src='assets/images/commodities/ragi.webp';">
-                                <div class="compact-rank-tag ${rankClass}">
-                                    <span>#${rankNum}</span>
+                        ${displayCrops.length > 6 ? `
+                            <button type="button" class="btn-view-more-crops" onclick="toggleSeasonalCropsExpansion()">
+                                <span>${window.seasonalCropsExpanded ? escapeHtml(i18n.show_less_crops) : escapeHtml(i18n.view_more_crops)}</span>
+                                <i class="fas ${window.seasonalCropsExpanded ? 'fa-chevron-up' : 'fa-chevron-down'}"></i>
+                            </button>
+                        ` : ''}
+
+                        <!-- Bottom Dual Advisory Row -->
+                        <div class="seasonal-advisories-row">
+                            <!-- Farming Tip -->
+                            <div class="advisory-box-tip">
+                                <div class="advisory-box-header">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>${escapeHtml(i18n.tip_header)}</span>
                                 </div>
+                                <div class="advisory-box-text">${escapeHtml(tip)}</div>
+                                <a href="#cropAdvisorTitle" class="advisory-box-link">${escapeHtml(i18n.read_more)}</a>
                             </div>
 
-                            <!-- Crop Name & Suitability -->
-                            <div class="compact-card-body">
-                                <div class="compact-crop-name-row">
-                                    <span class="compact-crop-icon">${avatarSymbol}</span>
-                                    <h4 class="compact-crop-title">${escapeHtml(c.name)}</h4>
+                            <!-- Weather Advisory -->
+                            <div class="advisory-box-weather">
+                                <div class="advisory-box-header">
+                                    <i class="fas fa-triangle-exclamation"></i>
+                                    <span>${escapeHtml(i18n.weather_header)}</span>
                                 </div>
-                                <div class="compact-suitability-pill ${pillClass}">
-                                    <span class="compact-pill-dot"></span>
-                                    <span>${escapeHtml(suitabilityText)}</span>
+                                <div class="advisory-box-text">${escapeHtml(caution)}</div>
+                                <a href="#weatherWidget" class="advisory-box-link">${escapeHtml(i18n.view_details)} →</a>
+                            </div>
+                        </div>
+                    </div> <!-- close .seasonal-main-box -->
+
+                    <!-- RIGHT COLUMN: CROP DETAILS PANEL -->
+                    <div class="seasonal-details-panel" id="seasonalDetailsRightPanel">
+                        <!-- Panel Close Button for Mobile / Responsive toggle -->
+                        <button type="button" class="panel-close-btn" onclick="closeSeasonalDetailsPanel()" aria-label="Close Details Panel">
+                            <i class="fas fa-xmark"></i>
+                        </button>
+
+                        <!-- Crop Header Profile -->
+                        <div class="panel-crop-hero">
+                            <img src="assets/images/commodities/${selCrop.meta.slug}.webp" alt="${escapeHtml(selCrop.name)}" class="panel-crop-thumb" onerror="this.src='assets/images/commodities/ragi.webp';">
+                            <div class="panel-crop-title-box">
+                                <h3 class="panel-crop-name">${escapeHtml(selCrop.name)}</h3>
+                                <span class="panel-crop-cat-text">${escapeHtml(selCrop.meta.catLabel || 'Agricultural Crop')}</span>
+                                <div class="seasonal-card-suitability-pill ${selCrop.meta.suitabilityKey === 'high' ? 'suit-pill-high' : 'suit-pill-suitable'}" style="margin-top: 0.2rem;">
+                                    <span class="suit-dot"></span>
+                                    <span>${escapeHtml(i18n.suitability[selCrop.meta.suitabilityKey] || i18n.suitability.high)}</span>
                                 </div>
-                                <div class="compact-card-footer">
-                                    <span>${i18n.rank_label} #${rankNum}</span>
-                                    <span>${escapeHtml(i18n.view_details)} →</span>
+                            </div>
+                            <div class="panel-score-gauge">
+                                <span class="panel-score-num">${selCrop.meta.score || 91}%</span>
+                                <span class="panel-score-label">${escapeHtml(i18n.suitability_score)}</span>
+                            </div>
+                        </div>
+
+                        <!-- Why is it recommended? -->
+                        <div>
+                            <div class="panel-sec-title">
+                                <i class="fas fa-circle-question" style="color: #22c55e;"></i> ${escapeHtml(i18n.why_recommended)}
+                            </div>
+                            <ul class="panel-reasons-list">
+                                <li><i class="fas fa-circle-check"></i> <span>${lang === 'te' ? 'ప్రస్తుత ఖరీఫ్ సీజన్ వాతావరణానికి అత్యంత అనువైనది' : 'Suitable for the current season (Kharif)'}</span></li>
+                                <li><i class="fas fa-circle-check"></i> <span>${lang === 'te' ? `ఉష్ణోగ్రత (${temp}°C) మొక్కల ఎదుగుదలకు అనుకూలం` : `Temperature range (${temp}°C) is ideal for growth`}</span></li>
+                                <li><i class="fas fa-circle-check"></i> <span>${lang === 'te' ? `తేమ (${humidity}%) మరియు వర్షపాత పరిస్థితులు సాగుకు అనుకూలం` : `Expected rainfall and ${humidity}% humidity are favorable`}</span></li>
+                                <li><i class="fas fa-circle-check"></i> <span>${lang === 'te' ? `${dynamicLoc} ప్రాంతపు నేలలకు తగినది` : `Well-suited to ${dynamicLoc} regional conditions`}</span></li>
+                            </ul>
+                        </div>
+
+                        <!-- Conditions Analyzed (5 Chips Grid) -->
+                        <div>
+                            <div class="panel-sec-title">
+                                <i class="fas fa-chart-simple" style="color: #38bdf8;"></i> ${escapeHtml(i18n.conditions_analyzed)}
+                            </div>
+                            <div class="conditions-analyzed-grid">
+                                <div class="cond-chip">
+                                    <i class="fas fa-location-dot" style="color: #ef4444;"></i>
+                                    <span class="cond-chip-label">${escapeHtml(i18n.labels.location)}</span>
+                                    <span class="cond-chip-val" style="font-size: 0.65rem;">${escapeHtml(currentDistrict || currentCity || 'Udupi')}</span>
+                                    <span class="cond-chip-sub">${escapeHtml(currentState || 'KA')}</span>
+                                </div>
+                                <div class="cond-chip">
+                                    <i class="fas fa-temperature-half" style="color: #f59e0b;"></i>
+                                    <span class="cond-chip-label">${escapeHtml(i18n.labels.temperature)}</span>
+                                    <span class="cond-chip-val">${temp}°C</span>
+                                    <span class="cond-chip-sub">${lang === 'te' ? 'అనుకూలం' : 'Ideal'}</span>
+                                </div>
+                                <div class="cond-chip">
+                                    <i class="fas fa-cloud-rain" style="color: #0ea5e9;"></i>
+                                    <span class="cond-chip-label">${escapeHtml(i18n.labels.rainfall)}</span>
+                                    <span class="cond-chip-val">125 mm</span>
+                                    <span class="cond-chip-sub">${lang === 'te' ? 'మధ్యస్థం' : 'Moderate'}</span>
+                                </div>
+                                <div class="cond-chip">
+                                    <i class="fas fa-droplet" style="color: #06b6d4;"></i>
+                                    <span class="cond-chip-label">${escapeHtml(i18n.labels.humidity)}</span>
+                                    <span class="cond-chip-val">${humidity}%</span>
+                                    <span class="cond-chip-sub">${lang === 'te' ? 'మధ్యస్థం' : 'Moderate'}</span>
+                                </div>
+                                <div class="cond-chip">
+                                    <i class="fas fa-calendar-days" style="color: #8b5cf6;"></i>
+                                    <span class="cond-chip-label">${escapeHtml(i18n.labels.season)}</span>
+                                    <span class="cond-chip-val">Kharif</span>
+                                    <span class="cond-chip-sub">Jun–Oct</span>
                                 </div>
                             </div>
                         </div>
-                    `;
-                });
 
-                html += '</div>'; // close .compact-crop-grid
-
-                // Advisory & Weather Warning Section Rendered Separately Below Grid
-                html += '<div class="seasonal-advisory-wrapper">';
-                
-                // ⚠️ Current Advisory / Weather Warning Card
-                if (caution) {
-                    const cautionTitle = lang === 'te' ? '⚠️ ప్రస్తుత హెచ్చరిక & వాతావరణ జాగ్రత్త' : lang === 'kn' ? '⚠️ ಪ್ರಸ್ತುತ ಮುನ್ನೆಚ್ಚರಿಕೆ & ಹವಾಮಾನ ಎಚ್ಚರಿಕೆ' : lang === 'hi' ? '⚠️ वर्तमान चेतावनी एवं मौसम सावधानी' : lang === 'ta' ? '⚠️ தற்போதைய எச்சரிக்கை & வானிலை வழிகாட்டல்' : lang === 'ml' ? '⚠️ നിലവിലെ ജാഗ്രത & കാലാവസ്ഥാ മുന്നറിയിപ്പ്' : '⚠️ Current Advisory & Weather Warning';
-                    html += `
-                        <div class="seasonal-caution-card">
-                            <i class="fas fa-triangle-exclamation"></i>
-                            <div class="seasonal-caution-content">
-                                <div class="seasonal-caution-title">${escapeHtml(cautionTitle)}</div>
-                                <div class="seasonal-caution-desc">${escapeHtml(caution)}</div>
+                        <!-- Recommended Varieties -->
+                        <div>
+                            <div class="panel-sec-title">
+                                <i class="fas fa-seedling" style="color: #22c55e;"></i> ${escapeHtml(i18n.rec_varieties)}
+                            </div>
+                            <div class="panel-varieties-strip">
+                                ${(selCrop.meta.varieties || ['Certified Variety']).map(v => `<span class="panel-var-pill">${escapeHtml(v)}</span>`).join('')}
                             </div>
                         </div>
-                    `;
-                }
 
-                // 💡 Today's Farming Tip Card
-                if (tip) {
-                    const tipTitle = lang === 'te' ? '💡 నేటి రైతు సూచన' : lang === 'kn' ? '💡 ಇಂದಿನ ರೈತರ ಸಲಹೆ' : lang === 'hi' ? '💡 आज की किसान सलाह' : lang === 'ta' ? '💡 இன்றைய விவசாய குறிப்பு' : lang === 'ml' ? '💡 ഇന്നത്തെ കർഷക കുറിപ്പ്' : "💡 Today's Farming Tip";
-                    html += `
-                        <div class="seasonal-tip-card">
-                            <i class="fas fa-lightbulb"></i>
-                            <div class="seasonal-tip-content">
-                                <div class="seasonal-tip-title">${escapeHtml(tipTitle)}</div>
-                                <div class="seasonal-tip-desc">${escapeHtml(tip)}</div>
+                        <!-- Farming Information -->
+                        <div>
+                            <div class="panel-sec-title">
+                                <i class="fas fa-tractor" style="color: #f59e0b;"></i> ${escapeHtml(i18n.farming_info)}
+                            </div>
+                            <div class="panel-farming-grid">
+                                <div class="panel-farming-row">
+                                    <span class="panel-farming-key"><i class="fas fa-clock"></i> ${escapeHtml(i18n.labels.sowing_time)}</span>
+                                    <span class="panel-farming-val">${escapeHtml(selCrop.meta.sowing || 'June – July')}</span>
+                                </div>
+                                <div class="panel-farming-row">
+                                    <span class="panel-farming-key"><i class="fas fa-hourglass-half"></i> ${escapeHtml(i18n.labels.duration)}</span>
+                                    <span class="panel-farming-val">${escapeHtml(selCrop.meta.duration || '110 – 130 days')}</span>
+                                </div>
+                                <div class="panel-farming-row">
+                                    <span class="panel-farming-key"><i class="fas fa-layer-group"></i> ${escapeHtml(i18n.labels.soil_type)}</span>
+                                    <span class="panel-farming-val">${escapeHtml(selCrop.meta.soil || 'Loamy soil')}</span>
+                                </div>
+                                <div class="panel-farming-row">
+                                    <span class="panel-farming-key"><i class="fas fa-droplet"></i> ${escapeHtml(i18n.labels.water_need)}</span>
+                                    <span class="panel-farming-val">${escapeHtml(selCrop.meta.water || 'High')}</span>
+                                </div>
+                                <div class="panel-farming-row">
+                                    <span class="panel-farming-key"><i class="fas fa-ruler-combined"></i> ${escapeHtml(i18n.labels.spacing)}</span>
+                                    <span class="panel-farming-val">${escapeHtml(selCrop.meta.spacing || '20 cm x 15 cm')}</span>
+                                </div>
                             </div>
                         </div>
-                    `;
-                }
-                
-                html += '</div>'; // close .seasonal-advisory-wrapper
 
-                return html;
-            }
+                        <!-- AI Advisory Box -->
+                        <div class="panel-ai-advisory-box">
+                            <div class="panel-ai-title">
+                                <i class="fas fa-robot"></i> <span>${escapeHtml(i18n.ai_advisory)}</span>
+                            </div>
+                            <div class="panel-ai-text">${escapeHtml(selCrop.meta.aiTip || 'Timely sowing and balanced nutrition ensure maximum yield.')}</div>
+                            <button type="button" class="btn-panel-ask-ai" onclick="askAiAboutCrop('${escapeHtml(selCrop.name)}')">
+                                <i class="fas fa-wand-magic-sparkles"></i> <span>${escapeHtml(i18n.ask_ai_btn)}</span>
+                            </button>
+                        </div>
 
-            return `<div class="seasonal-fallback-box"><p style="line-height: 1.5; font-size: 0.86rem; padding: 1rem;">${escapeHtml(cleanText).replace(/\n/g, '<br>')}</p></div>`;
+                        <button type="button" class="btn-panel-back" onclick="closeSeasonalDetailsPanel()">
+                            ${escapeHtml(i18n.back_to_list)}
+                        </button>
+                    </div> <!-- close #seasonalDetailsRightPanel -->
+                </div> <!-- close #seasonalContainerLayout -->
+            `;
+
+            return html;
         }
 
-        function switchSeasonalTab(category) {
-            window.currentSeasonalActiveTab = category;
+        function filterSeasonalCategory(cat) {
+            window.currentSeasonalActiveCat = cat;
             if (window.lastSeasonalRecommendationRaw) {
                 const box = document.getElementById('seasonalCropBox');
                 if (box) box.innerHTML = renderSeasonalCropsUI(window.lastSeasonalRecommendationRaw);
             }
         }
 
-        // Open Detailed Crop Modal with Full Localization & Telemetry
-        function openCropDetailsModal(idx) {
-            const crop = window.lastSeasonalCropsList?.[idx];
-            if (!crop) return;
-
-            const modal = document.getElementById('cropDetailsModal');
-            if (!modal) return;
-
-            const lang = typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en');
-            const i18n = CROP_MODAL_I18N[lang] || CROP_MODAL_I18N['en'];
-
-            const temp = lastWeatherData?.main?.temp ? Math.round(lastWeatherData.main.temp) : 28;
-            const humidity = lastWeatherData?.main?.humidity || 65;
-
-            const monthNum = new Date().getMonth();
-            let seasonKey = 'kharif';
-            if (monthNum >= 9 || monthNum <= 1) seasonKey = 'rabi';
-            else if (monthNum >= 2 && monthNum <= 4) seasonKey = 'summer';
-            const seasonName = i18n.seasons[seasonKey] || 'Kharif';
-
-            const locParts = [currentDistrict || currentCity, currentState].filter(Boolean);
-            const dynamicLoc = locParts.length > 0 ? locParts.join(', ') : (currentState || 'India');
-
-            const meta = matchCropMetadata(crop.name, lang);
-
-            // Populate Modal Section Headers & Labels
-            const secWhy = document.getElementById('cropModalSectionTitleWhy');
-            if (secWhy) secWhy.innerText = i18n.why_recommended;
-            const secWeather = document.getElementById('cropModalSectionTitleWeather');
-            if (secWeather) secWeather.innerText = i18n.weather_compat;
-            const secVar = document.getElementById('cropModalSectionTitleVarieties');
-            if (secVar) secVar.innerText = i18n.rec_varieties;
-            const secFarm = document.getElementById('cropModalSectionTitleFarming');
-            if (secFarm) secFarm.innerText = i18n.farming_info;
-
-            const lblTemp = document.getElementById('cropModalLabelTemp');
-            if (lblTemp) lblTemp.innerText = i18n.temp_label;
-            const stTemp = document.getElementById('cropModalStatusTemp');
-            if (stTemp) stTemp.innerText = i18n.optimal;
-            const lblHum = document.getElementById('cropModalLabelHumidity');
-            if (lblHum) lblHum.innerText = i18n.humidity_label;
-            const stHum = document.getElementById('cropModalStatusHumidity');
-            if (stHum) stHum.innerText = i18n.favorable;
-            const lblSeason = document.getElementById('cropModalLabelSeason');
-            if (lblSeason) lblSeason.innerText = i18n.season_label;
-            const stSeason = document.getElementById('cropModalStatusSeason');
-            if (stSeason) stSeason.innerText = i18n.active_window;
-
-            const lblSow = document.getElementById('cropModalLabelSowing');
-            if (lblSow) lblSow.innerText = i18n.sowing_window;
-            const lblWat = document.getElementById('cropModalLabelWater');
-            if (lblWat) lblWat.innerText = i18n.water_req;
-            const lblSoil = document.getElementById('cropModalLabelSoil');
-            if (lblSoil) lblSoil.innerText = i18n.soil_req;
-
-            const closeText = document.getElementById('cropModalCloseBtnText');
-            if (closeText) closeText.innerText = i18n.close_btn;
-
-            // Crop Titles & Thumbnails
-            document.getElementById('cropModalTitle').innerText = crop.name;
-            document.getElementById('cropModalSecondary').innerText = meta.secondary || i18n.default_variety;
-            
-            const imgEl = document.getElementById('cropModalImg');
-            if (imgEl) {
-                imgEl.src = `assets/images/commodities/${meta.slug || 'ragi'}.webp`;
-                imgEl.alt = crop.name;
-                imgEl.onerror = function() { this.src = 'assets/images/commodities/ragi.webp'; };
+        function selectSeasonalCropDetail(idx) {
+            window.selectedCropDetailsIdx = idx;
+            const container = document.getElementById('seasonalContainerLayout');
+            if (container) container.classList.add('details-active');
+            if (window.lastSeasonalRecommendationRaw) {
+                const box = document.getElementById('seasonalCropBox');
+                if (box) box.innerHTML = renderSeasonalCropsUI(window.lastSeasonalRecommendationRaw);
             }
-
-            // Reasons List
-            const weatherAlignmentText = i18n.weather_alignment.replace('{temp}', temp).replace('{humidity}', humidity);
-            const seasonalWindowText = i18n.seasonal_window.replace('{season}', seasonName).replace('{loc}', dynamicLoc);
-
-            const reasonsList = document.getElementById('cropModalReasonsList');
-            if (reasonsList) {
-                reasonsList.innerHTML = `
-                    <li><i class="fas fa-check-circle"></i> <span>${weatherAlignmentText}</span></li>
-                    <li><i class="fas fa-check-circle"></i> <span>${seasonalWindowText}</span></li>
-                    ${crop.reason ? `<li><i class="fas fa-check-circle"></i> <span><strong>${i18n.agronomic_match}:</strong> ${escapeHtml(crop.reason)}</span></li>` : ''}
-                    <li><i class="fas fa-check-circle"></i> <span>${i18n.market_adaptability}</span></li>
-                `;
+            // On mobile screen, smoothly scroll the details panel into view
+            if (window.innerWidth < 1100) {
+                const panel = document.getElementById('seasonalDetailsRightPanel');
+                if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-
-            // Weather Chips
-            document.getElementById('cropModalTemp').innerText = `${temp}°C`;
-            document.getElementById('cropModalHumidity').innerText = `${humidity}%`;
-            document.getElementById('cropModalSeason').innerText = seasonName;
-
-            // Recommended Varieties
-            const varList = document.getElementById('cropModalVarietiesList');
-            if (varList) {
-                const varieties = meta.varieties || [i18n.default_variety];
-                varList.innerHTML = varieties.map(v => `<span class="variety-pill">${escapeHtml(v)}</span>`).join('');
-            }
-
-            // Farming Info
-            document.getElementById('cropModalSowing').innerText = meta.sowing || `${seasonName} ${i18n.season_label}`;
-            document.getElementById('cropModalWater').innerText = meta.water || i18n.default_water;
-            document.getElementById('cropModalSoil').innerText = meta.soil || i18n.default_soil;
-
-            // AI Advisor Bridge
-            const aiBtn = document.getElementById('cropModalAiBtn');
-            if (aiBtn) {
-                aiBtn.innerHTML = `<i class="fas fa-robot"></i> ${escapeHtml(i18n.ask_ai_btn)}`;
-                aiBtn.onclick = () => {
-                    closeCropDetailsModal();
-                    askAiAboutCrop(crop.name);
-                };
-            }
-
-            modal.style.display = 'flex';
         }
 
-        function closeCropDetailsModal() {
-            const modal = document.getElementById('cropDetailsModal');
-            if (modal) modal.style.display = 'none';
+        function toggleSeasonalCropsExpansion() {
+            window.seasonalCropsExpanded = !window.seasonalCropsExpanded;
+            if (window.lastSeasonalRecommendationRaw) {
+                const box = document.getElementById('seasonalCropBox');
+                if (box) box.innerHTML = renderSeasonalCropsUI(window.lastSeasonalRecommendationRaw);
+            }
         }
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeCropDetailsModal();
-        });
-        document.getElementById('cropDetailsModal')?.addEventListener('click', (e) => {
-            if (e.target.id === 'cropDetailsModal') closeCropDetailsModal();
-        });
+        function closeSeasonalDetailsPanel() {
+            const container = document.getElementById('seasonalContainerLayout');
+            if (container) {
+                container.classList.remove('details-active');
+            }
+            const mainBox = document.querySelector('.seasonal-main-box');
+            if (mainBox) mainBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
         function askAiAboutCrop(cropName) {
             const input = document.getElementById('cropInput');
