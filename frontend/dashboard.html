@@ -2907,7 +2907,7 @@
                 </div>
 
                 <div class="mandi-preview-item">
-                    <img src="assets/images/commodities/paddy.webp" alt="Paddy" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Paddy')" loading="lazy">
+                    <img src="assets/images/commodities/paddy.png" alt="Paddy" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Paddy')" loading="lazy">
                     <div class="mandi-item-content">
                         <div class="mandi-item-top">
                             <span class="mandi-commodity-name">Paddy (Rice)</span>
@@ -2919,7 +2919,7 @@
                 </div>
 
                 <div class="mandi-preview-item">
-                    <img src="assets/images/commodities/tomato.webp" alt="Tomato" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Tomato')" loading="lazy">
+                    <img src="assets/images/commodities/Tomatoes.jpg" alt="Tomato" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Tomato')" loading="lazy">
                     <div class="mandi-item-content">
                         <div class="mandi-item-top">
                             <span class="mandi-commodity-name">Tomato (Hybrid)</span>
@@ -4926,6 +4926,71 @@
             return rawName;
         }
 
+                // ================= CROP IMAGE PATH MAPPING =================
+        const CROP_IMAGE_MAP = {
+            'paddy': 'assets/images/commodities/paddy.png',
+            'rice': 'assets/images/commodities/paddy.png',
+            'ragi': 'assets/images/commodities/ragi.webp',
+            'finger millet': 'assets/images/commodities/ragi.webp',
+            'tur dal': 'assets/images/commodities/tur-dal.webp',
+            'red gram': 'assets/images/commodities/tur-dal.webp',
+            'arhar': 'assets/images/commodities/tur-dal.webp',
+            'pigeon pea': 'assets/images/commodities/tur-dal.webp',
+            'okra': 'assets/images/commodities/bhindi.webp',
+            'bhindi': 'assets/images/commodities/bhindi.webp',
+            'lady finger': 'assets/images/commodities/bhindi.webp',
+            'green gram': 'assets/images/commodities/green-gram.webp',
+            'moong': 'assets/images/commodities/green-gram.webp',
+            'maize': 'assets/images/commodities/Maize.png',
+            'corn': 'assets/images/commodities/Maize.png',
+            'groundnut': 'assets/images/commodities/Groundnet.jpg',
+            'peanut': 'assets/images/commodities/Groundnet.jpg',
+            'cotton': 'assets/images/commodities/cotton.webp',
+            'tomato': 'assets/images/commodities/Tomatoes.jpg',
+            'tomatoes': 'assets/images/commodities/Tomatoes.jpg',
+            'onion': 'assets/images/commodities/Green Onion (Spring Onion).png',
+            'coconut': 'assets/images/commodities/coconut.jpg',
+            'arecanut': 'assets/images/commodities/Arecanut.png',
+            'betel nut': 'assets/images/commodities/Arecanut.png',
+            'banana': 'assets/images/commodities/banana.png',
+            'wheat': 'assets/images/commodities/Wheat.webp',
+            'mustard': 'assets/images/commodities/Mustard.webp',
+            'soybean': 'assets/images/commodities/soybean.webp',
+            'chilli': 'assets/images/commodities/green-chilli.webp',
+            'bengal gram': 'assets/images/commodities/Bengal Gram.jpeg',
+            'chickpea': 'assets/images/commodities/Bengal Gram.jpeg',
+            'chana': 'assets/images/commodities/Bengal Gram.jpeg',
+            'potato': 'assets/images/commodities/potato.jpg',
+            'bajra': 'assets/images/commodities/bajra.jpg',
+            'pearl millet': 'assets/images/commodities/bajra.jpg',
+            'jowar': 'assets/images/commodities/Jowar.png',
+            'sorghum': 'assets/images/commodities/Jowar.png',
+            'sesame': 'assets/images/commodities/sesamum.webp',
+            'til': 'assets/images/commodities/sesamum.webp',
+            'bitter gourd': 'assets/images/commodities/bitter-gourd.webp',
+            'karela': 'assets/images/commodities/bitter-gourd.webp',
+            'brinjal': 'assets/images/commodities/brinjal.webp',
+            'eggplant': 'assets/images/commodities/brinjal.webp',
+            'turmeric': 'assets/images/commodities/turmeric.jpg',
+            'ginger': 'assets/images/commodities/green ginger.webp',
+            'garlic': 'assets/images/commodities/Garlic.jpg'
+        };
+
+        function getCropImageUrl(cropKey, cropName, fallbackSlug) {
+            if (cropKey && CROP_IMAGE_MAP[cropKey]) return CROP_IMAGE_MAP[cropKey];
+            if (cropName) {
+                const lower = cropName.toLowerCase();
+                for (const [k, p] of Object.entries(CROP_IMAGE_MAP)) {
+                    if (lower.includes(k)) return p;
+                }
+            }
+            if (window.CommodityImageService) {
+                const sUrl = window.CommodityImageService.getCommodityImageUrl(cropKey || cropName);
+                if (sUrl && !sUrl.startsWith('data:image/svg')) return sUrl;
+            }
+            return fallbackSlug ? `assets/images/commodities/${fallbackSlug}.webp` : 'assets/images/commodities/ragi.webp';
+        }
+
         // ================= CROP CATALOG METADATA =================
         const CROP_CATALOG = {
             'ragi': { 
@@ -5271,6 +5336,7 @@
                 const cat = val.category || 'cereals';
                 return {
                     slug: val.slug || 'ragi',
+                    image: getCropImageUrl(key, cropName, val.slug),
                     category: cat,
                     catLabel: getLocalizedCatLabel(cat, lang),
                     secondary: typeof val.secondary === 'object' ? (val.secondary[lang] || val.secondary['en']) : val.secondary,
@@ -5374,7 +5440,7 @@
 
             const imgEl = document.getElementById('cropModalImg');
             if (imgEl) {
-                imgEl.src = 'assets/images/commodities/' + (meta.slug || 'ragi') + '.webp';
+                imgEl.src = meta.image || getCropImageUrl(key, crop.rawName || crop.name, meta.slug);
                 imgEl.alt = displayName;
                 imgEl.onerror = function() { this.src = 'assets/images/commodities/ragi.webp'; };
             }
@@ -5595,7 +5661,7 @@
             cropsToShow.forEach((c, idx) => {
                 const originalIdx = window.lastSeasonalCropsList.indexOf(c);
                 const cardIdx = originalIdx >= 0 ? originalIdx : idx;
-                const imgSrc = `assets/images/commodities/${c.meta.slug}.webp`;
+                const imgSrc = c.meta?.image || getCropImageUrl(c.key, c.rawName || c.name, c.meta?.slug);
 
                 const score = c.meta.score || (idx < 2 ? 90 : (idx < 5 ? 80 : 75));
                 const suitPillClass = score >= 85 ? 'suit-pill-high' : (score >= 78 ? 'suit-pill-suitable' : 'suit-pill-moderate');
@@ -6228,7 +6294,7 @@ function openFarmerSettingsModal(e) {
                     : rawCommodity;
                 const imgUrl = (window.CommodityImageService && CommodityImageService.getCommodityImageUrl)
                     ? CommodityImageService.getCommodityImageUrl(rawCommodity)
-                    : 'assets/images/commodities/paddy.webp';
+                    : 'assets/images/commodities/paddy.png';
                 const safeCommodity = escapeHtml(translatedComm);
                 const safeMarket = escapeHtml(r.market || 'Local Mandi');
                 const price = Number(r.modal_price || r.max_price || 0).toLocaleString('en-IN');

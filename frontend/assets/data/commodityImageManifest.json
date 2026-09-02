@@ -15,10 +15,10 @@
   },
   "arecanut": {
     "name": "Arecanut",
-    "filename": "arecanut.webp",
-    "localPath": "assets/images/commodities/arecanut.webp",
+    "filename": "Arecanut.png",
+    "localPath": "assets/images/commodities/Arecanut.png",
     "status": "available",
-    "fileSizeBytes": 71723
+    "fileSizeBytes": 3102782
   },
   "ash-gourd": {
     "name": "Ash Gourd",
@@ -29,31 +29,31 @@
   },
   "baby-corn": {
     "name": "Baby Corn",
-    "filename": "baby-corn.webp",
-    "localPath": "assets/images/commodities/baby-corn.webp",
+    "filename": "baby-corn.jpg",
+    "localPath": "assets/images/commodities/baby-corn.jpg",
     "status": "available",
-    "fileSizeBytes": 119763
+    "fileSizeBytes": 42195
   },
   "bajra": {
     "name": "Bajra",
-    "filename": "bajra.webp",
-    "localPath": "assets/images/commodities/bajra.webp",
+    "filename": "bajra.jpg",
+    "localPath": "assets/images/commodities/bajra.jpg",
     "status": "available",
-    "fileSizeBytes": 154562
+    "fileSizeBytes": 479275
   },
   "banana-green": {
     "name": "Banana Green",
-    "filename": "banana-green.webp",
-    "localPath": "assets/images/commodities/banana-green.webp",
+    "filename": "Green Banana.png",
+    "localPath": "assets/images/commodities/Green Banana.png",
     "status": "available",
-    "fileSizeBytes": 34418
+    "fileSizeBytes": 2298191
   },
   "banana": {
     "name": "Banana",
-    "filename": "banana.webp",
-    "localPath": "assets/images/commodities/banana.webp",
+    "filename": "banana.png",
+    "localPath": "assets/images/commodities/banana.png",
     "status": "available",
-    "fileSizeBytes": 45092
+    "fileSizeBytes": 2116488
   },
   "beans": {
     "name": "Beans",
@@ -71,10 +71,10 @@
   },
   "bengal-gram": {
     "name": "Bengal Gram",
-    "filename": "bengal-gram.webp",
-    "localPath": "assets/images/commodities/bengal-gram.webp",
+    "filename": "Bengal Gram.jpeg",
+    "localPath": "assets/images/commodities/Bengal Gram.jpeg",
     "status": "available",
-    "fileSizeBytes": 141990
+    "fileSizeBytes": 165803
   },
   "betel-leaf": {
     "name": "Betel Leaf",
@@ -120,10 +120,10 @@
   },
   "capsicum": {
     "name": "Capsicum",
-    "filename": "capsicum.webp",
-    "localPath": "assets/images/commodities/capsicum.webp",
+    "filename": "Capsicum.png",
+    "localPath": "assets/images/commodities/Capsicum.png",
     "status": "available",
-    "fileSizeBytes": 53262
+    "fileSizeBytes": 2926798
   },
   "carrot": {
     "name": "Carrot",
@@ -134,10 +134,10 @@
   },
   "castor-seed": {
     "name": "Castor Seed",
-    "filename": "castor-seed.webp",
-    "localPath": "assets/images/commodities/castor-seed.webp",
+    "filename": "Castor Seed.png",
+    "localPath": "assets/images/commodities/Castor Seed.png",
     "status": "available",
-    "fileSizeBytes": 71723
+    "fileSizeBytes": 3018851
   },
   "cauliflower": {
     "name": "Cauliflower",
@@ -148,10 +148,10 @@
   },
   "chikoo": {
     "name": "Chikoo",
-    "filename": "chikoo.webp",
-    "localPath": "assets/images/commodities/chikoo.webp",
+    "filename": "Chikoo (Sapota).png",
+    "localPath": "assets/images/commodities/Chikoo (Sapota).png",
     "status": "available",
-    "fileSizeBytes": 86439
+    "fileSizeBytes": 2603453
   },
   "cluster-beans": {
     "name": "Cluster Beans",
@@ -169,17 +169,17 @@
   },
   "coconut": {
     "name": "Coconut",
-    "filename": "coconut.webp",
-    "localPath": "assets/images/commodities/coconut.webp",
+    "filename": "coconut.jpg",
+    "localPath": "assets/images/commodities/coconut.jpg",
     "status": "available",
-    "fileSizeBytes": 92801
+    "fileSizeBytes": 175677
   },
   "copra": {
     "name": "Copra",
-    "filename": "copra.webp",
-    "localPath": "assets/images/commodities/copra.webp",
+    "filename": "Copra.png",
+    "localPath": "assets/images/commodities/Copra.png",
     "status": "available",
-    "fileSizeBytes": 92801
+    "fileSizeBytes": 2845453
   },
   "coriander": {
     "name": "Coriander",
@@ -232,24 +232,24 @@
   },
   "dry-chilli": {
     "name": "Dry Chilli",
-    "filename": "dry-chilli.webp",
-    "localPath": "assets/images/commodities/dry-chilli.webp",
+    "filename": "Dry Chillies.webp",
+    "localPath": "assets/images/commodities/Dry Chillies.webp",
     "status": "available",
-    "fileSizeBytes": 137785
+    "fileSizeBytes": 52456
   },
   "fig": {
     "name": "Fig",
-    "filename": "fig.webp",
-    "localPath": "assets/images/commodities/fig.webp",
+    "filename": "Fig (Anjeer).png",
+    "localPath": "assets/images/commodities/Fig (Anjeer).png",
     "status": "available",
-    "fileSizeBytes": 166962
+    "fileSizeBytes": 2377927
   },
   "garlic": {
     "name": "Garlic",
-    "filename": "garlic.webp",
-    "localPath": "assets/images/commodities/garlic.webp",
+    "filename": "Garlic.jpg",
+    "localPath": "assets/images/commodities/Garlic.jpg",
     "status": "available",
-    "fileSizeBytes": 80764
+    "fileSizeBytes": 131876
   },
   "gerbera": {
     "name": "Gerbera",
@@ -260,24 +260,24 @@
   },
   "ginger": {
     "name": "Ginger",
-    "filename": "ginger.webp",
-    "localPath": "assets/images/commodities/ginger.webp",
+    "filename": "green ginger.webp",
+    "localPath": "assets/images/commodities/green ginger.webp",
     "status": "available",
-    "fileSizeBytes": 76993
+    "fileSizeBytes": 60890
   },
   "grapes": {
     "name": "Grapes",
-    "filename": "grapes.webp",
-    "localPath": "assets/images/commodities/grapes.webp",
+    "filename": "grapes.jpg",
+    "localPath": "assets/images/commodities/grapes.jpg",
     "status": "available",
-    "fileSizeBytes": 134879
+    "fileSizeBytes": 88942
   },
   "green-chilli": {
     "name": "Green Chilli",
     "filename": "green-chilli.webp",
     "localPath": "assets/images/commodities/green-chilli.webp",
     "status": "available",
-    "fileSizeBytes": 174547
+    "fileSizeBytes": 722009
   },
   "green-gram": {
     "name": "Green Gram",
@@ -295,10 +295,10 @@
   },
   "groundnut": {
     "name": "Groundnut",
-    "filename": "groundnut.webp",
-    "localPath": "assets/images/commodities/groundnut.webp",
+    "filename": "Groundnet.jpg",
+    "localPath": "assets/images/commodities/Groundnet.jpg",
     "status": "available",
-    "fileSizeBytes": 71723
+    "fileSizeBytes": 229030
   },
   "guava": {
     "name": "Guava",
@@ -309,10 +309,10 @@
   },
   "horse-gram": {
     "name": "Horse Gram",
-    "filename": "horse-gram.webp",
-    "localPath": "assets/images/commodities/horse-gram.webp",
+    "filename": "Horse Gram (Kulthi).png",
+    "localPath": "assets/images/commodities/Horse Gram (Kulthi).png",
     "status": "available",
-    "fileSizeBytes": 141990
+    "fileSizeBytes": 2849730
   },
   "jackfruit": {
     "name": "Jackfruit",
@@ -323,24 +323,24 @@
   },
   "jaggery": {
     "name": "Jaggery",
-    "filename": "jaggery.webp",
-    "localPath": "assets/images/commodities/jaggery.webp",
+    "filename": "Jaggery (Gur).png",
+    "localPath": "assets/images/commodities/Jaggery (Gur).png",
     "status": "available",
-    "fileSizeBytes": 76239
+    "fileSizeBytes": 2923987
   },
   "jasmine": {
     "name": "Jasmine",
-    "filename": "jasmine.webp",
-    "localPath": "assets/images/commodities/jasmine.webp",
+    "filename": "Jasmin.jpeg",
+    "localPath": "assets/images/commodities/Jasmin.jpeg",
     "status": "available",
-    "fileSizeBytes": 103567
+    "fileSizeBytes": 176575
   },
   "jowar": {
     "name": "Jowar",
-    "filename": "jowar.webp",
-    "localPath": "assets/images/commodities/jowar.webp",
+    "filename": "Jowar.png",
+    "localPath": "assets/images/commodities/Jowar.png",
     "status": "available",
-    "fileSizeBytes": 154562
+    "fileSizeBytes": 2258596
   },
   "lemon": {
     "name": "Lemon",
@@ -351,17 +351,17 @@
   },
   "lentil": {
     "name": "Lentil",
-    "filename": "lentil.webp",
-    "localPath": "assets/images/commodities/lentil.webp",
+    "filename": "Lentil (Masur).png",
+    "localPath": "assets/images/commodities/Lentil (Masur).png",
     "status": "available",
-    "fileSizeBytes": 141990
+    "fileSizeBytes": 2561961
   },
   "maize": {
     "name": "Maize",
-    "filename": "maize.webp",
-    "localPath": "assets/images/commodities/maize.webp",
+    "filename": "Maize.png",
+    "localPath": "assets/images/commodities/Maize.png",
     "status": "available",
-    "fileSizeBytes": 119763
+    "fileSizeBytes": 2449346
   },
   "mango": {
     "name": "Mango",
@@ -372,10 +372,10 @@
   },
   "marigold": {
     "name": "Marigold",
-    "filename": "marigold.webp",
-    "localPath": "assets/images/commodities/marigold.webp",
+    "filename": "Marigold.jpg",
+    "localPath": "assets/images/commodities/Marigold.jpg",
     "status": "available",
-    "fileSizeBytes": 200260
+    "fileSizeBytes": 154523
   },
   "mentha-oil": {
     "name": "Mentha Oil",
@@ -393,10 +393,10 @@
   },
   "methi": {
     "name": "Methi",
-    "filename": "methi.webp",
-    "localPath": "assets/images/commodities/methi.webp",
+    "filename": "Methi (Fenugreek).png",
+    "localPath": "assets/images/commodities/Methi (Fenugreek).png",
     "status": "available",
-    "fileSizeBytes": 225952
+    "fileSizeBytes": 2801016
   },
   "mint": {
     "name": "Mint",
@@ -421,45 +421,45 @@
   },
   "mustard": {
     "name": "Mustard",
-    "filename": "mustard.webp",
-    "localPath": "assets/images/commodities/mustard.webp",
+    "filename": "Mustard.webp",
+    "localPath": "assets/images/commodities/Mustard.webp",
     "status": "available",
-    "fileSizeBytes": 125107
+    "fileSizeBytes": 48882
   },
   "onion-green": {
     "name": "Onion Green",
-    "filename": "onion-green.webp",
-    "localPath": "assets/images/commodities/onion-green.webp",
+    "filename": "Green Onion (Spring Onion).png",
+    "localPath": "assets/images/commodities/Green Onion (Spring Onion).png",
     "status": "available",
-    "fileSizeBytes": 96768
+    "fileSizeBytes": 3150210
   },
   "onion": {
     "name": "Onion",
-    "filename": "onion.webp",
-    "localPath": "assets/images/commodities/onion.webp",
+    "filename": "Green Onion (Spring Onion).png",
+    "localPath": "assets/images/commodities/Green Onion (Spring Onion).png",
     "status": "available",
-    "fileSizeBytes": 247745
+    "fileSizeBytes": 3150210
   },
   "orange": {
     "name": "Orange",
-    "filename": "orange.webp",
-    "localPath": "assets/images/commodities/orange.webp",
+    "filename": "Orange.jpg",
+    "localPath": "assets/images/commodities/Orange.jpg",
     "status": "available",
-    "fileSizeBytes": 101578
+    "fileSizeBytes": 582495
   },
   "paddy": {
     "name": "Paddy",
-    "filename": "paddy.webp",
-    "localPath": "assets/images/commodities/paddy.webp",
+    "filename": "paddy.png",
+    "localPath": "assets/images/commodities/paddy.png",
     "status": "available",
-    "fileSizeBytes": 106492
+    "fileSizeBytes": 161238
   },
   "papaya": {
     "name": "Papaya",
-    "filename": "papaya.webp",
-    "localPath": "assets/images/commodities/papaya.webp",
+    "filename": "Papaya.jpg",
+    "localPath": "assets/images/commodities/Papaya.jpg",
     "status": "available",
-    "fileSizeBytes": 86439
+    "fileSizeBytes": 167743
   },
   "pear": {
     "name": "Pear",
@@ -470,10 +470,10 @@
   },
   "pineapple": {
     "name": "Pineapple",
-    "filename": "pineapple.webp",
-    "localPath": "assets/images/commodities/pineapple.webp",
+    "filename": "pineapple.jpg",
+    "localPath": "assets/images/commodities/pineapple.jpg",
     "status": "available",
-    "fileSizeBytes": 105045
+    "fileSizeBytes": 178729
   },
   "plum": {
     "name": "Plum",
@@ -484,24 +484,24 @@
   },
   "pointed-gourd": {
     "name": "Pointed Gourd",
-    "filename": "pointed-gourd.webp",
-    "localPath": "assets/images/commodities/pointed-gourd.webp",
+    "filename": "Pointed Gourd (Parval).png",
+    "localPath": "assets/images/commodities/Pointed Gourd (Parval).png",
     "status": "available",
-    "fileSizeBytes": 113728
+    "fileSizeBytes": 2656937
   },
   "pomegranate": {
     "name": "Pomegranate",
-    "filename": "pomegranate.webp",
-    "localPath": "assets/images/commodities/pomegranate.webp",
+    "filename": "Pomegranate.jpg",
+    "localPath": "assets/images/commodities/Pomegranate.jpg",
     "status": "available",
-    "fileSizeBytes": 52121
+    "fileSizeBytes": 77977
   },
   "potato": {
     "name": "Potato",
-    "filename": "potato.webp",
-    "localPath": "assets/images/commodities/potato.webp",
+    "filename": "potato.jpg",
+    "localPath": "assets/images/commodities/potato.jpg",
     "status": "available",
-    "fileSizeBytes": 85929
+    "fileSizeBytes": 2543055
   },
   "pumpkin": {
     "name": "Pumpkin",
@@ -512,10 +512,10 @@
   },
   "radish": {
     "name": "Radish",
-    "filename": "radish.webp",
-    "localPath": "assets/images/commodities/radish.webp",
+    "filename": "Radish.png",
+    "localPath": "assets/images/commodities/Radish.png",
     "status": "available",
-    "fileSizeBytes": 134267
+    "fileSizeBytes": 2946755
   },
   "ragi": {
     "name": "Ragi",
@@ -540,10 +540,10 @@
   },
   "ridge-gourd": {
     "name": "Ridge Gourd",
-    "filename": "ridge-gourd.webp",
-    "localPath": "assets/images/commodities/ridge-gourd.webp",
+    "filename": "ridge-gourd.jpeg",
+    "localPath": "assets/images/commodities/ridge-gourd.jpeg",
     "status": "available",
-    "fileSizeBytes": 113728
+    "fileSizeBytes": 194143
   },
   "rose": {
     "name": "Rose",
@@ -561,10 +561,10 @@
   },
   "snake-gourd": {
     "name": "Snake Gourd",
-    "filename": "snake-gourd.webp",
-    "localPath": "assets/images/commodities/snake-gourd.webp",
+    "filename": "snake-gourd.png",
+    "localPath": "assets/images/commodities/snake-gourd.png",
     "status": "available",
-    "fileSizeBytes": 113728
+    "fileSizeBytes": 2335053
   },
   "soybean": {
     "name": "Soybean",
@@ -575,10 +575,10 @@
   },
   "spinach": {
     "name": "Spinach",
-    "filename": "spinach.webp",
-    "localPath": "assets/images/commodities/spinach.webp",
+    "filename": "spinach.jpeg",
+    "localPath": "assets/images/commodities/spinach.jpeg",
     "status": "available",
-    "fileSizeBytes": 225952
+    "fileSizeBytes": 187078
   },
   "sponge-gourd": {
     "name": "Sponge Gourd",
@@ -596,17 +596,17 @@
   },
   "sweet-lime": {
     "name": "Sweet Lime",
-    "filename": "sweet-lime.webp",
-    "localPath": "assets/images/commodities/sweet-lime.webp",
+    "filename": "sweet-lime.jpg",
+    "localPath": "assets/images/commodities/sweet-lime.jpg",
     "status": "available",
-    "fileSizeBytes": 205501
+    "fileSizeBytes": 81092
   },
   "sweet-potato": {
     "name": "Sweet Potato",
-    "filename": "sweet-potato.webp",
-    "localPath": "assets/images/commodities/sweet-potato.webp",
+    "filename": "sweet potato.jpg",
+    "localPath": "assets/images/commodities/sweet potato.jpg",
     "status": "available",
-    "fileSizeBytes": 211573
+    "fileSizeBytes": 210624
   },
   "tamarind": {
     "name": "Tamarind",
@@ -638,17 +638,17 @@
   },
   "tomato": {
     "name": "Tomato",
-    "filename": "tomato.webp",
-    "localPath": "assets/images/commodities/tomato.webp",
+    "filename": "Tomatoes.jpg",
+    "localPath": "assets/images/commodities/Tomatoes.jpg",
     "status": "available",
-    "fileSizeBytes": 208604
+    "fileSizeBytes": 82413
   },
   "turmeric": {
     "name": "Turmeric",
-    "filename": "turmeric.webp",
-    "localPath": "assets/images/commodities/turmeric.webp",
+    "filename": "turmeric.jpg",
+    "localPath": "assets/images/commodities/turmeric.jpg",
     "status": "available",
-    "fileSizeBytes": 52121
+    "fileSizeBytes": 1005540
   },
   "turnip": {
     "name": "Turnip",
@@ -673,17 +673,17 @@
   },
   "wheat": {
     "name": "Wheat",
-    "filename": "wheat.webp",
-    "localPath": "assets/images/commodities/wheat.webp",
+    "filename": "Wheat.webp",
+    "localPath": "assets/images/commodities/Wheat.webp",
     "status": "available",
-    "fileSizeBytes": 154562
+    "fileSizeBytes": 31902
   },
   "wood": {
     "name": "Wood",
-    "filename": "wood.webp",
-    "localPath": "assets/images/commodities/wood.webp",
+    "filename": "Wood.png",
+    "localPath": "assets/images/commodities/Wood.png",
     "status": "available",
-    "fileSizeBytes": 113167
+    "fileSizeBytes": 3702068
   },
   "yam": {
     "name": "Yam",
