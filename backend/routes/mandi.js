@@ -118,10 +118,6 @@ router.get('/', async (req, res) => {
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
-    // Total Count Query
-    const countRes = await query(`SELECT COUNT(*) as total FROM market_prices ${whereClause}`, params);
-    const totalRecords = parseInt(countRes.rows[0].total) || 0;
-
     // Sorting
     let orderByClause = 'ORDER BY arrival_date DESC, modal_price DESC';
     if (sort === 'highest') {
@@ -155,14 +151,18 @@ router.get('/', async (req, res) => {
       }
     }
 
-    // Fetch paginated records
-    const dataRes = await query(`
+    // Parallelize Total Count Query and Paginated Records Query
+    const countPromise = query(`SELECT COUNT(*) as total FROM market_prices ${whereClause}`, params);
+    const dataPromise = query(`
       SELECT ${selectFields}
       FROM market_prices
       ${whereClause}
       ${orderByClause}
       LIMIT $${paramIndex++} OFFSET $${paramIndex++}
     `, [...params, limitNum, offset]);
+
+    const [countRes, dataRes] = await Promise.all([countPromise, dataPromise]);
+    const totalRecords = parseInt(countRes.rows[0]?.total) || 0;
 
     // Format arrival_date and natural distance
     const records = dataRes.rows.map(r => {
