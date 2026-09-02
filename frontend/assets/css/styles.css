@@ -1134,19 +1134,36 @@ body > nav.glass {
   }
 }
 
-/* Responsive Breakpoints for Two-Row Navigation */
+/* Responsive Breakpoints for Two-Row Navigation & Mobile Touch Targets */
 @media (max-width: 768px) {
   .header-nav-row {
     display: none;
   }
   .mobile-nav-toggle {
     display: inline-flex !important;
+    min-width: 40px;
+    min-height: 40px;
   }
   .header-top-row {
     height: 56px;
   }
   .brand-name {
     font-size: 0.95rem;
+  }
+  .nav-notification-btn {
+    min-width: 40px;
+    min-height: 40px;
+  }
+  .nav-profile-button {
+    min-height: 40px;
+    padding: 0.35rem 0.65rem;
+  }
+  .nav-lang-box {
+    min-height: 40px;
+  }
+  .seasonal-cat-pill {
+    min-height: 38px;
+    padding: 0.45rem 0.95rem;
   }
 }
 
