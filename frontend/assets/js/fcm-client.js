@@ -254,15 +254,14 @@ class KrishiNotificationClient {
             if (!res.ok) return;
             const data = await res.json();
 
-            const badge = document.getElementById('notificationBadge');
-            if (badge) {
+            document.querySelectorAll('#notificationBadge, #mobileDrawerNotificationBadge, .notification-counter-badge').forEach(badge => {
                 if (data.unreadCount > 0) {
                     badge.textContent = data.unreadCount > 9 ? '9+' : data.unreadCount;
                     badge.style.display = 'inline-flex';
                 } else {
                     badge.style.display = 'none';
                 }
-            }
+            });
         } catch (e) {}
     }
 

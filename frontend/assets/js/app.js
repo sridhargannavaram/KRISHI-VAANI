@@ -1810,22 +1810,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (mobileNavToggle && mobileNavDrawer) {
+        window.closeMobileDrawer = function() {
+            mobileNavDrawer.classList.remove('open');
+            const backdrop = document.getElementById('mobileNavBackdrop');
+            if (backdrop) backdrop.classList.remove('open');
+            if (mobileNavToggle) {
+                mobileNavToggle.setAttribute('aria-expanded', 'false');
+                const icon = mobileNavToggle.querySelector('i');
+                if (icon) icon.className = 'fas fa-bars';
+            }
+        };
+
+        window.openMobileDrawer = function() {
+            mobileNavDrawer.classList.add('open');
+            let backdrop = document.getElementById('mobileNavBackdrop');
+            if (!backdrop) {
+                backdrop = document.createElement('div');
+                backdrop.id = 'mobileNavBackdrop';
+                backdrop.className = 'mobile-nav-backdrop';
+                backdrop.onclick = window.closeMobileDrawer;
+                document.body.appendChild(backdrop);
+            }
+            backdrop.classList.add('open');
+            if (mobileNavToggle) {
+                mobileNavToggle.setAttribute('aria-expanded', 'true');
+                const icon = mobileNavToggle.querySelector('i');
+                if (icon) icon.className = 'fas fa-xmark';
+            }
+        };
+
         mobileNavToggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isOpen = mobileNavDrawer.classList.toggle('open');
-            mobileNavToggle.setAttribute('aria-expanded', isOpen);
-            const icon = mobileNavToggle.querySelector('i');
-            if (icon) {
-                icon.className = isOpen ? 'fas fa-xmark' : 'fas fa-bars';
+            if (mobileNavDrawer.classList.contains('open')) {
+                window.closeMobileDrawer();
+            } else {
+                window.openMobileDrawer();
             }
         });
 
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.app-header')) {
-                mobileNavDrawer.classList.remove('open');
-                mobileNavToggle.setAttribute('aria-expanded', 'false');
-                const icon = mobileNavToggle.querySelector('i');
-                if (icon) icon.className = 'fas fa-bars';
+            if (!e.target.closest('.mobile-nav-drawer') && !e.target.closest('#mobileNavToggle')) {
+                if (typeof window.closeMobileDrawer === 'function') {
+                    window.closeMobileDrawer();
+                }
             }
         });
     }
@@ -1980,7 +2007,18 @@ function syncUserProfileDisplay() {
         if (popoverSub && dict.profile_my_profile) popoverSub.innerText = dict.profile_my_profile;
 
         const popoverAvatar = document.getElementById('popoverAvatar');
-        if (popoverAvatar) {
+        
+    const mDrawerName = document.getElementById('mobileDrawerUserName');
+    if (mDrawerName) mDrawerName.innerText = farmer.name || 'Farmer';
+    const mDrawerAvatar = document.getElementById('mobileDrawerAvatar');
+    if (mDrawerAvatar) {
+        if (farmer.profileImage) {
+            mDrawerAvatar.innerHTML = `<img src="${farmer.profileImage}" alt="Profile" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">`;
+        } else {
+            mDrawerAvatar.innerText = initials;
+        }
+    }
+    if (popoverAvatar) {
             popoverAvatar.innerHTML = '';
             if (profileImgUrl) {
                 const img = document.createElement('img');
