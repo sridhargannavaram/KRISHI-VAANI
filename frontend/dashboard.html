@@ -2818,7 +2818,7 @@
             </div>
             <div class="mandi-preview-grid" id="mandiPreviewGrid">
                 <div class="mandi-preview-item">
-                    <img src="assets/images/commodities/ragi.webp" alt="Ragi" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Ragi')">
+                    <img src="assets/images/commodities/ragi.webp" alt="Ragi" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Ragi')" loading="lazy">
                     <div class="mandi-item-content">
                         <div class="mandi-item-top">
                             <span class="mandi-commodity-name">Ragi (Finger Millet)</span>
@@ -2830,7 +2830,7 @@
                 </div>
 
                 <div class="mandi-preview-item">
-                    <img src="assets/images/commodities/paddy.webp" alt="Paddy" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Paddy')">
+                    <img src="assets/images/commodities/paddy.webp" alt="Paddy" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Paddy')" loading="lazy">
                     <div class="mandi-item-content">
                         <div class="mandi-item-top">
                             <span class="mandi-commodity-name">Paddy (Rice)</span>
@@ -2842,7 +2842,7 @@
                 </div>
 
                 <div class="mandi-preview-item">
-                    <img src="assets/images/commodities/tomato.webp" alt="Tomato" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Tomato')">
+                    <img src="assets/images/commodities/tomato.webp" alt="Tomato" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Tomato')" loading="lazy">
                     <div class="mandi-item-content">
                         <div class="mandi-item-top">
                             <span class="mandi-commodity-name">Tomato (Hybrid)</span>
@@ -2854,7 +2854,7 @@
                 </div>
 
                 <div class="mandi-preview-item">
-                    <img src="assets/images/commodities/soybean.webp" alt="Soybean" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Soybean')">
+                    <img src="assets/images/commodities/soybean.webp" alt="Soybean" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, 'Soybean')" loading="lazy">
                     <div class="mandi-item-content">
                         <div class="mandi-item-top">
                             <span class="mandi-commodity-name">Soybean</span>
@@ -3026,7 +3026,7 @@
                 src = `${API_BASE_URL.replace('/api', '')}/uploads/profiles/${imageUrl}`;
             }
             if (avatarDisplay) {
-                avatarDisplay.outerHTML = `<img class="profile-avatar" id="avatarDisplay" src="${src}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-initials\\' id=\\'avatarDisplay\\'>${getInitials(farmer.name || 'Farmer')}</div>'">`;
+                avatarDisplay.outerHTML = `<img class="profile-avatar" id="avatarDisplay" src="${src}" alt="Profile" onerror="this.outerHTML='<div class=\\'avatar-initials\\' id=\\'avatarDisplay\\' loading="lazy">${getInitials(farmer.name || 'Farmer')}</div>'">`;
             }
         }
 
@@ -3695,7 +3695,7 @@
             const box = document.getElementById('currentWeatherBox');
             if (box) {
                 box.innerHTML = `
-                    <img src="https://openweathermap.org/img/wn/${iconCode}@4x.png" alt="weather" width="90" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">
+                    <img src="https://openweathermap.org/img/wn/${iconCode}@4x.png" alt="weather" width="90" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));" loading="lazy">
                     <div>
                         <h2 style="font-size: 4.2rem; font-weight: 200; line-height: 1;">${temp}°</h2>
                         <p style="font-size: 1.05rem; font-weight: 600; text-transform: capitalize;">${desc}</p>
@@ -3726,7 +3726,7 @@
                 html += `
                     <div class="forecast-item">
                         <div style="font-size: 0.8em; color: var(--text-secondary);">${time}</div>
-                        <img src="https://openweathermap.org/img/wn/${iconCode}.png" alt="icon" width="40">
+                        <img src="https://openweathermap.org/img/wn/${iconCode}.png" alt="icon" width="40" loading="lazy">
                         <div style="font-weight: 700; font-size: 1.1rem;">${temp}°</div>
                     </div>
                 `;
@@ -5672,7 +5672,7 @@ function openFarmerSettingsModal(e) {
             <!-- Modal Header -->
             <div class="crop-modal-header">
                 <div class="crop-modal-hero">
-                    <img id="cropModalImg" src="assets/images/commodities/ragi.webp" alt="Crop" class="crop-modal-thumb" onerror="this.src='assets/images/commodities/ragi.webp';">
+                    <img id="cropModalImg" src="assets/images/commodities/ragi.webp" alt="Crop" class="crop-modal-thumb" onerror="this.src='assets/images/commodities/ragi.webp';" loading="lazy">
                     <div class="crop-modal-title-box">
                         <h3 id="cropModalTitle">Crop Details</h3>
                         <div class="crop-modal-sub" id="cropModalSecondary">Cereal Crop</div>
@@ -5882,7 +5882,7 @@ function openFarmerSettingsModal(e) {
                 
                 return `
                     <div class="mandi-preview-item">
-                        <img src="${imgUrl}" alt="${escapeHtml(translatedComm)}" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, '${escapeHtml(item.commodity)}')">
+                        <img src="${imgUrl}" alt="${escapeHtml(translatedComm)}" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, '${escapeHtml(item.commodity)}')" loading="lazy">
                         <div class="mandi-item-content">
                             <div class="mandi-item-top">
                                 <span class="mandi-commodity-name">${escapeHtml(translatedComm)}</span>
@@ -5922,7 +5922,7 @@ function openFarmerSettingsModal(e) {
                 
                 return `
                     <div class="mandi-preview-item">
-                        <img src="${imgUrl}" alt="${safeCommodity}" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, '${escapeHtml(rawCommodity)}')">
+                        <img src="${imgUrl}" alt="${safeCommodity}" class="mandi-preview-thumb" onerror="if(window.CommodityImageService) CommodityImageService.handleImageError(this, '${escapeHtml(rawCommodity)}')" loading="lazy">
                         <div class="mandi-item-content">
                             <div class="mandi-item-top">
                                 <span class="mandi-commodity-name">${safeCommodity}</span>
@@ -6059,7 +6059,7 @@ function openFarmerSettingsModal(e) {
         <div class="crop-modal-dialog">
             <div class="crop-modal-header">
                 <div class="crop-modal-hero">
-                    <img id="cropModalImg" src="assets/images/commodities/ragi.webp" alt="Crop" class="crop-modal-thumb">
+                    <img id="cropModalImg" src="assets/images/commodities/ragi.webp" alt="Crop" class="crop-modal-thumb" loading="lazy">
                     <div class="crop-modal-title-box">
                         <h3 id="cropModalTitle">Crop Name</h3>
                         <div class="crop-modal-sub" id="cropModalSecondary">Secondary / Botanical Name</div>

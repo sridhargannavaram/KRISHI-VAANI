@@ -2831,7 +2831,7 @@
                 <tr>
                     <td>
                         <div style="display: flex; align-items: center; gap: 0.65rem;">
-                            <img src="${imgUrl}" style="width: 36px; height: 36px; border-radius: 6px; object-fit: cover;" onerror="CommodityImageService.handleImageError(this, '${safeCommodity}')">
+                            <img src="${imgUrl}" style="width: 36px; height: 36px; border-radius: 6px; object-fit: cover;" onerror="CommodityImageService.handleImageError(this, '${safeCommodity}')" loading="lazy">
                             <strong>${r.commodity}</strong>
                         </div>
                     </td>
@@ -2970,7 +2970,7 @@
 
             modalBody.innerHTML = `
                 <div style="display: flex; gap: 1.2rem; align-items: center; margin-bottom: 1.5rem;">
-                    <img src="${imgUrl}" style="width: 72px; height: 72px; border-radius: 12px; object-fit: cover; box-shadow: var(--shadow-sm);" onerror="CommodityImageService.handleImageError(this, '${safeCommodity}')">
+                    <img src="${imgUrl}" style="width: 72px; height: 72px; border-radius: 12px; object-fit: cover; box-shadow: var(--shadow-sm);" onerror="CommodityImageService.handleImageError(this, '${safeCommodity}')" loading="lazy">
                     <div>
                         <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); line-height: 1.2;">${r.commodity}</h2>
                         <div style="font-size: 0.9rem; color: var(--text-muted);">${r.variety || 'Standard Variety'} • Grade: <strong>${r.grade || 'FAQ'}</strong></div>
