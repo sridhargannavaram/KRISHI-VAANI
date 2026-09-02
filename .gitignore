@@ -24,3 +24,9 @@ build/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Scratch and Local Diagnostics
+scratch/
+*backup*/
+backup*/
+
