@@ -2629,7 +2629,7 @@
                 </div>
                 <div class="popover-user-info">
                     <div class="popover-user-name nav-profile-name" id="mobileDrawerUserName">Farmer</div>
-                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> <span data-i18n="prof_view_profile">My Profile</span></div>
+                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> <span data-i18n="profile_my_profile">My Profile</span></div>
                 </div>
                 <i class="fas fa-chevron-right popover-arrow"></i>
             </a>
@@ -2640,7 +2640,7 @@
             <button type="button" class="mobile-drawer-action-btn" onclick="krishiFCM.openNotificationCenter(); closeMobileDrawer();" title="Notifications">
                 <div class="mobile-drawer-action-left">
                     <i class="fas fa-bell"></i>
-                    <span data-i18n="nav_notifications">Notifications</span>
+                    <span data-i18n="profile_notifications">Notifications</span>
                 </div>
                 <span class="notification-counter-badge" id="mobileDrawerNotificationBadge" style="display: none;">0</span>
             </button>
@@ -2648,7 +2648,7 @@
             <button type="button" class="mobile-drawer-action-btn" onclick="openFarmerSettingsModal(event); closeMobileDrawer();" title="Account Settings">
                 <div class="mobile-drawer-action-left">
                     <i class="fas fa-gear"></i>
-                    <span data-i18n="prof_settings">Settings</span>
+                    <span data-i18n="profile_settings">Settings</span>
                 </div>
                 <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--text-light);"></i>
             </button>
@@ -2656,7 +2656,7 @@
             <div class="mobile-drawer-theme-box">
                 <div class="mobile-drawer-theme-label">
                     <i class="fas fa-palette"></i>
-                    <span data-i18n="prof_theme">Appearance</span>
+                    <span data-i18n="profile_appearance">Appearance</span>
                 </div>
                 <div class="popover-theme-pills">
                     <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
@@ -2670,7 +2670,7 @@
 
         <!-- Primary Navigation Links -->
         <div class="mobile-drawer-nav-section">
-            <div class="mobile-drawer-section-title" data-i18n="nav_menu">NAVIGATION</div>
+            <div class="mobile-drawer-section-title">NAVIGATION</div>
             <a href="dashboard.html" class="mobile-drawer-link active">
                 <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
             </a>
@@ -2690,9 +2690,9 @@
 
         <div class="popover-divider" style="margin-top: auto;"></div>
 
-        <!-- Logout Action -->
+        <!-- Logout Action at bottom -->
         <a href="#" onclick="logout(event); closeMobileDrawer();" class="mobile-drawer-link mobile-drawer-logout" title="Logout">
-            <i class="fas fa-right-from-bracket"></i> <span data-i18n="prof_logout">Logout</span>
+            <i class="fas fa-right-from-bracket"></i> <span data-i18n="profile_logout">Logout</span>
         </a>
     </div>
     </header>
