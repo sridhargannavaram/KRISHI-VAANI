@@ -9,67 +9,97 @@ const twilioClient = (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_
     ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
     : null;
 
+// In-memory cache & in-flight deduplication for reverse geocoding (~100m precision)
+const geocodeCache = new Map();
+const inFlightGeocode = new Map();
+const GEOCODE_TTL = 30 * 60 * 1000; // 30 minutes
+
+function getGeocodeCacheKey(lat, lon) {
+    return `${parseFloat(lat).toFixed(3)}:${parseFloat(lon).toFixed(3)}`;
+}
+
 /**
- * Helper: Reverse Geocode via OpenStreetMap Nominatim with retry and timeout
+ * Helper: Reverse Geocode via OpenStreetMap Nominatim with retry, timeout & in-memory caching
  */
 async function reverseGeocode(lat, lon) {
-    try {
-        const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=en&addressdetails=1`;
-        const response = await axios.get(url, {
-            headers: {
-                'User-Agent': 'KrishiVaani-App/1.0 (Agriculture Telemetry Platform; contact@krishivaani.in)',
-                'Accept': 'application/json'
-            },
-            timeout: 6000
-        });
-
-        const address = response.data?.address || {};
-        const state = address.state || address.state_district || '';
-        const district = address.district || address.state_district || address.county || '';
-        
-        // Priority order for Indian urban/rural settlements
-        let city = address.city || 
-                   address.town || 
-                   address.municipality || 
-                   address.suburb || 
-                   address.neighbourhood || 
-                   address.residential || 
-                   address.village || 
-                   address.hamlet || 
-                   address.city_district || 
-                   district || 
-                   'My Farm';
-                   
-        // Clean up common suffix noise if present
-        if (city && typeof city === 'string') {
-            city = city.replace(/ taluku?$/i, '').replace(/ district$/i, '').trim();
-        }
-
-        const village = address.village || address.hamlet || address.isolated_dwelling || '';
-        const postalCode = address.postcode || '';
-        const formattedAddress = response.data?.display_name || '';
-
-        return {
-            state,
-            district,
-            city,
-            village,
-            postalCode,
-            formattedAddress,
-            raw: address
-        };
-    } catch (err) {
-        console.warn('⚠️ Reverse geocoding fallback note:', err.message);
-        return {
-            state: '',
-            district: '',
-            city: '',
-            village: '',
-            postalCode: '',
-            formattedAddress: '',
-            raw: {}
-        };
+    const key = getGeocodeCacheKey(lat, lon);
+    const cached = geocodeCache.get(key);
+    if (cached && Date.now() < cached.expiresAt) {
+        return cached.data;
     }
+
+    if (inFlightGeocode.has(key)) {
+        return await inFlightGeocode.get(key);
+    }
+
+    const fetchPromise = (async () => {
+        try {
+            const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=en&addressdetails=1`;
+            const response = await axios.get(url, {
+                headers: {
+                    'User-Agent': 'KrishiVaani-App/1.0 (Agriculture Telemetry Platform; contact@krishivaani.in)',
+                    'Accept': 'application/json'
+                },
+                timeout: 6000
+            });
+
+            const address = response.data?.address || {};
+            const state = address.state || address.state_district || '';
+            const district = address.district || address.state_district || address.county || '';
+            
+            // Priority order for Indian urban/rural settlements
+            let city = address.city || 
+                       address.town || 
+                       address.municipality || 
+                       address.suburb || 
+                       address.neighbourhood || 
+                       address.residential || 
+                       address.village || 
+                       address.hamlet || 
+                       address.city_district || 
+                       district || 
+                       'My Farm';
+                       
+            // Clean up common suffix noise if present
+            if (city && typeof city === 'string') {
+                city = city.replace(/ taluku?$/i, '').replace(/ district$/i, '').trim();
+            }
+
+            const village = address.village || address.hamlet || address.isolated_dwelling || '';
+            const postalCode = address.postcode || '';
+            const formattedAddress = response.data?.display_name || '';
+
+            const result = {
+                state,
+                district,
+                city,
+                village,
+                postalCode,
+                formattedAddress,
+                raw: address
+            };
+
+            geocodeCache.set(key, { data: result, expiresAt: Date.now() + GEOCODE_TTL });
+            return result;
+        } catch (err) {
+            console.warn('⚠️ Nominatim Reverse Geocoding Error:', err.message);
+            // Fallback object to avoid hard failure
+            return {
+                state: '',
+                district: '',
+                city: 'My Farm',
+                village: '',
+                postalCode: '',
+                formattedAddress: '',
+                raw: {}
+            };
+        } finally {
+            inFlightGeocode.delete(key);
+        }
+    })();
+
+    inFlightGeocode.set(key, fetchPromise);
+    return await fetchPromise;
 }
 
 /**
