@@ -989,6 +989,9 @@ body > nav.glass {
   flex-direction: column;
   gap: 0.4rem;
   animation: popoverSlide 0.15s ease;
+  pointer-events: auto;
+  position: relative;
+  z-index: 1001;
 }
 
 [data-theme='dark'] .mobile-nav-drawer {
@@ -1012,6 +1015,8 @@ body > nav.glass {
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.12s ease;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .mobile-drawer-link i {
@@ -1137,15 +1142,47 @@ body > nav.glass {
 /* Responsive Breakpoints for Two-Row Navigation & Mobile Touch Targets */
 @media (max-width: 768px) {
   .header-nav-row {
+    display: flex !important;
+    overflow-x: auto;
+    width: 100%;
+    padding: 0.25rem 0;
+    pointer-events: auto;
+  }
+  .header-container-bottom {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 0 0.85rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    pointer-events: auto;
+  }
+  .header-container-bottom::-webkit-scrollbar {
     display: none;
+  }
+  .header-nav-primary {
+    justify-content: flex-start;
+    margin-left: 0;
+    gap: 0.4rem;
+    pointer-events: auto;
+  }
+  .header-nav-primary .nav-tab {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.82rem;
+    min-height: 38px;
+    box-sizing: border-box;
+    pointer-events: auto;
+    cursor: pointer;
   }
   .mobile-nav-toggle {
     display: inline-flex !important;
     min-width: 40px;
     min-height: 40px;
+    pointer-events: auto;
+    cursor: pointer;
   }
   .header-top-row {
-    height: 56px;
+    height: 52px;
+    pointer-events: auto;
   }
   .brand-name {
     font-size: 0.95rem;
@@ -1153,13 +1190,16 @@ body > nav.glass {
   .nav-notification-btn {
     min-width: 40px;
     min-height: 40px;
+    pointer-events: auto;
   }
   .nav-profile-button {
     min-height: 40px;
     padding: 0.35rem 0.65rem;
+    pointer-events: auto;
   }
   .nav-lang-box {
     min-height: 40px;
+    pointer-events: auto;
   }
   .seasonal-cat-pill {
     min-height: 38px;
