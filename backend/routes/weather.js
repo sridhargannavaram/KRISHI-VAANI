@@ -130,6 +130,15 @@ router.get('/current', async (req, res) => {
       return res.json({ ...cached, _cached: true });
     }
 
+    if (inFlightWeather.has(cacheKey)) {
+      try {
+        const sharedData = await inFlightWeather.get(cacheKey);
+        return res.json({ ...sharedData, _shared: true });
+      } catch (err) {
+        // Fall through to independent request if shared fails
+      }
+    }
+
     const apiKey = process.env.OPENWEATHER_API_KEY;
     if (!apiKey) {
       console.warn('⚠️ OPENWEATHER_API_KEY is not defined. Returning offline fallback.');
@@ -138,16 +147,27 @@ router.get('/current', async (req, res) => {
       return res.status(503).json({ error: 'Weather service is temporarily unconfigured.' });
     }
 
+    const fetchPromise = (async () => {
+      try {
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+        const response = await axios.get(url, { timeout: 8000 });
+        const weatherData = response.data;
+
+        // Persist to DB & Cache
+        await saveWeatherToDb(latitude, longitude, weatherData);
+        setInCache(cacheKey, weatherData, CACHE_TTL_CURRENT);
+        logWeatherActivity(req, latitude, longitude, weatherData.name || '');
+
+        return weatherData;
+      } finally {
+        inFlightWeather.delete(cacheKey);
+      }
+    })();
+
+    inFlightWeather.set(cacheKey, fetchPromise);
+
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-      const response = await axios.get(url, { timeout: 8000 });
-      const weatherData = response.data;
-
-      // Persist to DB & Cache
-      await saveWeatherToDb(latitude, longitude, weatherData);
-      setInCache(cacheKey, weatherData, CACHE_TTL_CURRENT);
-      logWeatherActivity(req, latitude, longitude, weatherData.name || '');
-
+      const weatherData = await fetchPromise;
       return res.json(weatherData);
     } catch (apiErr) {
       console.error('❌ OpenWeather API Error:', apiErr.response?.status || apiErr.message);
