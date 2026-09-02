@@ -2698,6 +2698,8 @@
             if (tableContainer) tableContainer.style.display = mode === 'table' ? 'block' : 'none';
         }
 
+        let mandiAbortController = null;
+
         // ================= LOAD MANDI PRICES =================
         async function loadMandiPrices(page = 1) {
             currentPage = page;
@@ -2707,6 +2709,11 @@
             const loader = document.getElementById('cardsLoader');
             const emptyState = document.getElementById('emptyResultsState');
             const paginationBar = document.getElementById('paginationBar');
+
+            if (mandiAbortController) {
+                mandiAbortController.abort();
+            }
+            mandiAbortController = new AbortController();
 
             cardsContainer.style.display = 'none';
             tableContainer.style.display = 'none';
@@ -2729,7 +2736,7 @@
             }
 
             try {
-                const res = await fetch(url);
+                const res = await fetch(url, { signal: mandiAbortController.signal });
                 const data = await res.json();
                 loader.style.display = 'none';
 
@@ -2759,6 +2766,7 @@
                 document.getElementById('btnPageNext').disabled = data.page >= totalPages;
                 paginationBar.style.display = totalPages > 1 ? 'flex' : 'none';
             } catch (err) {
+                if (err.name === 'AbortError') return; // Cancelled in favor of newer request
                 loader.style.display = 'none';
                 emptyState.style.display = 'block';
             }
