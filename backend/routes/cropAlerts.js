@@ -23,6 +23,20 @@ const CROP_PROFILES = {
             { condition: 'heavy_rain', msg: 'Heavy rain expected. Rice is tolerant but ensure bund maintenance to prevent overflow.', priority: 'LOW' }
         ]
     },
+    paddy: {
+        name: 'Rice (Paddy)',
+        rainTolerance: 'HIGH',
+        tempMin: 20, tempMax: 38,
+        humidityMax: 95,
+        windMax: 12,
+        rules: [
+            { condition: 'temp_high', threshold: 38, msg: 'Extreme heat can cause spikelet sterility in rice. Increase irrigation depth to 5cm.', priority: 'HIGH' },
+            { condition: 'temp_low', threshold: 15, msg: 'Cold stress detected. Delay transplanting if possible.', priority: 'MEDIUM' },
+            { condition: 'wind_high', threshold: 12, msg: 'Strong winds may cause lodging in rice. Ensure proper drainage.', priority: 'MEDIUM' },
+            { condition: 'humidity_high', threshold: 90, msg: 'High humidity increases blast disease risk in rice. Apply fungicide preventively.', priority: 'MEDIUM' },
+            { condition: 'heavy_rain', msg: 'Heavy rain expected. Rice is tolerant but ensure bund maintenance to prevent overflow.', priority: 'LOW' }
+        ]
+    },
     wheat: {
         name: 'Wheat',
         rainTolerance: 'LOW',
@@ -49,6 +63,48 @@ const CROP_PROFILES = {
             { condition: 'temp_high', threshold: 35, msg: 'Heat stress on tomatoes. Use shade nets and mulching. Irrigate during early morning.', priority: 'HIGH' },
             { condition: 'temp_low', threshold: 10, msg: 'Cold stress may cause fruit damage. Cover plants with polythene at night.', priority: 'MEDIUM' },
             { condition: 'wind_high', threshold: 8, msg: 'Wind may damage tomato stakes. Reinforce supports and staking.', priority: 'MEDIUM' }
+        ]
+    },
+    potato: {
+        name: 'Potato',
+        rainTolerance: 'VERY_LOW',
+        tempMin: 12, tempMax: 28,
+        humidityMax: 75,
+        windMax: 10,
+        rules: [
+            { condition: 'heavy_rain', msg: 'Heavy rain expected! Late blight and tuber rot risk is critical. Stop irrigation and ensure earthing up and drainage.', priority: 'HIGH' },
+            { condition: 'humidity_high', threshold: 75, msg: 'High humidity detected! Severe late blight risk for potato. Spray Mancozeb or copper fungicide.', priority: 'HIGH' },
+            { condition: 'temp_high', threshold: 30, msg: 'High temperatures above 30°C restrict potato tuberization. Irrigate in early morning.', priority: 'HIGH' },
+            { condition: 'temp_low', threshold: 5, msg: 'Frost warning! Cover young potato foliage with straw or mulching.', priority: 'MEDIUM' },
+            { condition: 'wind_high', threshold: 10, msg: 'Strong winds may cause vine lodging. Check soil ridges.', priority: 'LOW' }
+        ]
+    },
+    onion: {
+        name: 'Onion',
+        rainTolerance: 'VERY_LOW',
+        tempMin: 13, tempMax: 35,
+        humidityMax: 70,
+        windMax: 12,
+        rules: [
+            { condition: 'heavy_rain', msg: 'Heavy rain expected! High risk of bulb rot and purple blotch in onion. Ensure swift field drainage.', priority: 'HIGH' },
+            { condition: 'humidity_high', threshold: 70, msg: 'High humidity triggers purple blotch and thrips surge in onion. Apply preventive fungicide.', priority: 'HIGH' },
+            { condition: 'temp_high', threshold: 38, msg: 'Extreme heat accelerates premature bolting and bulb drying. Irrigate during cooler hours.', priority: 'MEDIUM' },
+            { condition: 'temp_low', threshold: 8, msg: 'Cold spell may slow vegetative growth. Avoid stagnant standing water.', priority: 'LOW' },
+            { condition: 'wind_high', threshold: 12, msg: 'Strong winds may cause foliar lodging in onion.', priority: 'LOW' }
+        ]
+    },
+    chilli: {
+        name: 'Chilli',
+        rainTolerance: 'LOW',
+        tempMin: 18, tempMax: 38,
+        humidityMax: 70,
+        windMax: 8,
+        rules: [
+            { condition: 'heavy_rain', msg: 'Heavy rainfall alert! Chilli is susceptible to damping off and fruit rot (anthracnose). Provide clear drainage.', priority: 'HIGH' },
+            { condition: 'humidity_high', threshold: 70, msg: 'High humidity increases anthracnose fruit rot and powdery mildew. Spray sulfur/carbendazim.', priority: 'HIGH' },
+            { condition: 'temp_high', threshold: 38, msg: 'High temperatures cause flower and fruit drop in chilli. Irrigate lightly and spray planofix.', priority: 'HIGH' },
+            { condition: 'wind_high', threshold: 8, msg: 'Wind stress may dislodge flowers. Check field staking.', priority: 'MEDIUM' },
+            { condition: 'temp_low', threshold: 12, msg: 'Cold nights delay flowering in chilli crops.', priority: 'LOW' }
         ]
     },
     ragi: {
@@ -102,13 +158,65 @@ const CROP_PROFILES = {
             { condition: 'temp_high', threshold: 38, msg: 'Heat stress may affect groundnut pegging. Irrigate during cooler hours.', priority: 'MEDIUM' },
             { condition: 'wind_high', threshold: 10, msg: 'Moderate wind risk for groundnut. Monitor field conditions.', priority: 'LOW' }
         ]
+    },
+    maize: {
+        name: 'Maize (Corn)',
+        rainTolerance: 'MEDIUM',
+        tempMin: 18, tempMax: 38,
+        humidityMax: 80,
+        windMax: 12,
+        rules: [
+            { condition: 'wind_high', threshold: 12, msg: 'Strong winds detected! Lodging risk during tasseling/silking stage. Earthing up recommended.', priority: 'HIGH' },
+            { condition: 'temp_high', threshold: 40, msg: 'Extreme heat can cause tassel desiccation in maize. Irrigate immediately.', priority: 'HIGH' },
+            { condition: 'heavy_rain', msg: 'Waterlogging in young maize causes yellowing. Clear drainage furrows.', priority: 'MEDIUM' },
+            { condition: 'humidity_high', threshold: 85, msg: 'High humidity increases turcicum leaf blight risk in maize.', priority: 'LOW' }
+        ]
+    },
+    mustard: {
+        name: 'Mustard',
+        rainTolerance: 'LOW',
+        tempMin: 10, tempMax: 30,
+        humidityMax: 70,
+        windMax: 8,
+        rules: [
+            { condition: 'humidity_high', threshold: 70, msg: 'High humidity triggers white rust and aphid infestation in mustard.', priority: 'HIGH' },
+            { condition: 'heavy_rain', msg: 'Heavy rain during flowering causes pod shattering in mustard. Avoid irrigation.', priority: 'HIGH' },
+            { condition: 'temp_high', threshold: 32, msg: 'Heat stress during pod filling reduces oil content. Provide light irrigation.', priority: 'MEDIUM' }
+        ]
+    },
+    soybean: {
+        name: 'Soybean',
+        rainTolerance: 'MEDIUM',
+        tempMin: 18, tempMax: 36,
+        humidityMax: 75,
+        windMax: 10,
+        rules: [
+            { condition: 'heavy_rain', msg: 'Waterlogging causes root rot in soybean. Ensure clear field drainage.', priority: 'HIGH' },
+            { condition: 'humidity_high', threshold: 75, msg: 'High humidity increases yellow mosaic virus and rust risk in soybean.', priority: 'HIGH' },
+            { condition: 'temp_high', threshold: 38, msg: 'High temperature may lead to pod abortion in soybean. Irrigate in evening.', priority: 'MEDIUM' }
+        ]
+    },
+    banana: {
+        name: 'Banana',
+        rainTolerance: 'HIGH',
+        tempMin: 15, tempMax: 40,
+        humidityMax: 90,
+        windMax: 7,
+        rules: [
+            { condition: 'wind_high', threshold: 7, msg: 'Strong wind alert! Banana pseudostems are prone to snapping. Provide bamboo props immediately.', priority: 'HIGH' },
+            { condition: 'temp_low', threshold: 12, msg: 'Low temperatures cause chilling injury in banana. Apply mulching.', priority: 'HIGH' },
+            { condition: 'humidity_high', threshold: 85, msg: 'Sigatoka leaf spot risk is high under prolonged humidity. Spray propiconazole.', priority: 'MEDIUM' }
+        ]
     }
 };
 
-// Analyze crop alerts based on weather
-router.post('/analyze', async (req, res) => {
+// Reusable alert analyzer handler supporting POST and GET
+const analyzeCropAlertsHandler = async (req, res) => {
     try {
-        const { crop, lat, lon, location } = req.body;
+        const crop = req.body?.crop || req.query?.crop;
+        const lat = req.body?.lat || req.query?.lat;
+        const lon = req.body?.lon || req.query?.lon;
+        const location = req.body?.location || req.query?.location;
         
         if (!crop || !CROP_PROFILES[crop.toLowerCase()]) {
             return res.status(400).json({ 
@@ -212,7 +320,12 @@ router.post('/analyze', async (req, res) => {
         console.error('Crop Alert Engine Error:', error);
         res.status(500).json({ error: 'Crop alert analysis failed.' });
     }
-});
+};
+
+router.post('/analyze', analyzeCropAlertsHandler);
+router.post('/check-instant', analyzeCropAlertsHandler);
+router.get('/check-instant', analyzeCropAlertsHandler);
+router.get('/analyze', analyzeCropAlertsHandler);
 
 // Send alert via SMS/Voice
 router.post('/send-alert', async (req, res) => {

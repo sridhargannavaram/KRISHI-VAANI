@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const { getAgronomicRecommendations } = require('../services/agronomicEngine');
 
 // Use OpenRouter API (supports Gemini and other models)
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
@@ -451,10 +452,10 @@ CRITICAL WRITING RULES:
     }
 });
 
-// Automatic seasonal crop recommendation endpoint
+// Automatic seasonal crop recommendation endpoint with verified agronomic calculation
 router.post('/seasonal', async (req, res) => {
     try {
-        const { weatherData, location, state, district, language } = req.body;
+        const { weatherData, location, state, district, language, soil } = req.body;
         const lang = language || 'en';
         const currentMonth = new Date().toLocaleString('default', { month: 'long' });
         const temp = weatherData?.main?.temp ? Math.round(weatherData.main.temp) : 28;
@@ -463,9 +464,24 @@ router.post('/seasonal', async (req, res) => {
         const todayKey = new Date().toISOString().split('T')[0];
         const seasonalCacheKey = `seasonal_${locName.toLowerCase().trim()}_${lang}_${todayKey}`;
 
+        // Compute verified agronomic recommendations dynamically
+        const structuredCrops = getAgronomicRecommendations({
+            temp,
+            humidity,
+            monthNum: new Date().getMonth(),
+            state: state || 'Karnataka',
+            district: district || 'Udupi',
+            farmerSoil: soil || null,
+            language: lang
+        });
+
         const cachedSeasonal = getFromAiCache(seasonalCacheKey);
         if (cachedSeasonal) {
-            return res.json({ recommendation: cachedSeasonal, _cached: true });
+            return res.json({ 
+                recommendation: cachedSeasonal, 
+                crops: structuredCrops,
+                _cached: true 
+            });
         }
 
         const monthNum = new Date().getMonth();
@@ -502,7 +518,10 @@ Keep it concise, actionable, and strictly accurate for ${locName}.`;
             setInAiCache(seasonalCacheKey, recommendation);
         }
 
-        res.json({ recommendation });
+        res.json({ 
+            recommendation,
+            crops: structuredCrops
+        });
     } catch (error) {
         console.error('Seasonal API Error:', error);
         res.status(500).json({ error: 'Failed to generate seasonal recommendation.' });

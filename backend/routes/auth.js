@@ -328,5 +328,51 @@ router.get('/admin/me', requireAdminAuth, async (req, res) => {
     });
 });
 
+
+/**
+ * POST /api/auth/change-password
+ * Secure password change for authenticated farmer
+ */
+router.post('/change-password', async (req, res) => {
+    try {
+        const { farmerId, currentPassword, newPassword } = req.body;
+        if (!farmerId || !currentPassword || !newPassword) {
+            return res.status(400).json({ success: false, error: 'Current password and new password are required.' });
+        }
+
+        if (newPassword.length < 6) {
+            return res.status(400).json({ success: false, error: 'New password must be at least 6 characters long.' });
+        }
+
+        const farmer = await Farmer.findById(farmerId);
+        if (!farmer) {
+            return res.status(404).json({ success: false, error: 'Farmer account not found.' });
+        }
+
+        // Verify current password with bcrypt
+        const isMatch = await farmer.comparePassword(currentPassword);
+        if (!isMatch) {
+            return res.status(400).json({ success: false, error: 'Current password is incorrect.' });
+        }
+
+        // Ensure new password is not identical to current
+        const isSame = await farmer.comparePassword(newPassword);
+        if (isSame) {
+            return res.status(400).json({ success: false, error: 'New password cannot be identical to your current password.' });
+        }
+
+        // Update password with bcrypt hash in database
+        await Farmer.updatePassword(farmer.id, newPassword);
+
+        // Record security activity log
+        await Farmer.logActivity(farmer.id, 'PASSWORD_CHANGE', { ip: req.ip });
+
+        res.json({ success: true, message: 'Password updated successfully.' });
+    } catch (error) {
+        console.error('Password Change Error:', error);
+        res.status(500).json({ success: false, error: 'Failed to update password: ' + error.message });
+    }
+});
+
 module.exports = router;
 

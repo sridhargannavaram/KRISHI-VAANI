@@ -251,112 +251,130 @@
     </style>
 </head>
 <body>
-    <!-- Modern AgriTech / SaaS Navbar -->
+        <!-- Modern AgriTech / SaaS Navbar -->
     <header class="app-header">
-        <div class="header-container">
-            <!-- Left: Brand Logo -->
-            <a href="dashboard.html" class="brand-logo" title="KRISHI VAANI">
-                <div class="brand-icon-wrap">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <span class="brand-name">KRISHI VAANI</span>
-            </a>
-
-            <!-- Center: Navigation Items -->
-            <nav class="header-nav-center">
-                <a href="dashboard.html" class="nav-tab">
-                    <i class="fas fa-chart-line"></i> <span>Dashboard</span>
-                </a>
-                <a href="marketplace.html" class="nav-tab">
-                    <i class="fas fa-store"></i> <span>Marketplace</span>
-                </a>
-                <a href="crop-alerts.html" class="nav-tab active">
-                    <i class="fas fa-bell"></i> <span>Crop Alerts</span>
-                </a>
-                <a href="alert-guard.html" class="nav-tab">
-                    <i class="fas fa-shield-alt"></i> <span>AlertGuard</span>
-                </a>
-                <a href="news.html" class="nav-tab">
-                    <i class="fas fa-newspaper"></i> <span>Agri-News</span>
-                </a>
-            </nav>
-
-            <!-- Right: Language + Profile -->
-            <div class="header-nav-right">
-                <!-- Language Selector -->
-                <div class="nav-lang-box">
-                    <i class="fas fa-globe"></i>
-                    <select id="langSelect" class="nav-lang-select" aria-label="Select Language">
-                        <option value="en">English</option>
-                        <option value="kn">ಕನ್ನಡ</option>
-                        <option value="ta">தமிழ்</option>
-                        <option value="te">తెలుగు</option>
-                        <option value="ml">മലയാളം</option>
-                        <option value="hi">हिन्दी</option>
-                    </select>
-                </div>
-
-                <!-- Profile Dropdown (Displays only 'Profile') -->
-                <div class="nav-profile-container">
-                    <button class="nav-profile-button" id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Account Menu">
-                        <span>Profile</span>
-                        <i class="fas fa-chevron-down nav-caret"></i>
-                    </button>
-                    <div class="nav-profile-popover" id="navProfileDropdown">
-                        <a href="dashboard.html" class="popover-item">
-                            <i class="fas fa-user"></i>
-                            <span>Profile</span>
-                        </a>
-                        <div class="popover-theme-row">
-                            <div class="popover-theme-label">
-                                <i class="fas fa-palette"></i>
-                                <span>Appearance</span>
-                            </div>
-                            <div class="popover-theme-pills">
-                                <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
-                                <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
-                                <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
-                            </div>
-                        </div>
-                        <a href="alert-guard.html" class="popover-item">
-                            <i class="fas fa-bell"></i>
-                            <span>Notifications</span>
-                        </a>
-                        <a href="dashboard.html" class="popover-item">
-                            <i class="fas fa-gear"></i>
-                            <span>Settings</span>
-                        </a>
-                        <div class="popover-divider"></div>
-                        <a href="#" onclick="logout(event)" class="popover-item popover-logout">
-                            <i class="fas fa-right-from-bracket"></i>
-                            <span>Logout</span>
-                        </a>
+        <!-- ROW 1: Main Header (Logo on Left, Controls on Right) -->
+        <div class="header-top-row">
+            <div class="header-container-top">
+                <!-- Left: Brand Logo -->
+                <a href="dashboard.html" class="brand-logo" title="KRISHI VAANI">
+                    <div class="brand-icon-wrap">
+                        <i class="fas fa-leaf"></i>
                     </div>
-                </div>
+                    <span class="brand-name">KRISHI VAANI</span>
+                </a>
 
-                <!-- Mobile Navigation Toggle -->
-                <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <!-- Right: Standardized Header Controls [ Notification | Language | Profile ] -->
+                <div class="header-nav-right">
+                    <!-- 1. Notification Bell Button -->
+                    <div class="nav-notification-container" style="position: relative;">
+                        <button type="button" class="nav-notification-btn" id="notificationBellBtn" onclick="krishiFCM.openNotificationCenter()" title="Live Alerts & Notifications" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span id="notificationBadge" class="notification-counter-badge" style="display: none;">0</span>
+                        </button>
+                    </div>
+
+                    <!-- 2. Language Selector: [ Globe Icon | English | Dropdown Arrow ] -->
+                    <div class="nav-lang-box" title="Select Language">
+                        <i class="fas fa-globe"></i>
+                        <select id="langSelect" class="nav-lang-select" aria-label="Select Language">
+                            <option value="en">English</option>
+                            <option value="kn">ಕನ್ನಡ</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="ml">മലയാളം</option>
+                            <option value="hi">हिन्दी</option>
+                        </select>
+                        <i class="fas fa-chevron-down nav-lang-arrow"></i>
+                    </div>
+
+                    <!-- 3. Profile Button: [ User Icon | User Name | Dropdown Arrow ] -->
+                    <div class="nav-profile-container">
+                        <button class="nav-profile-button" id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Account Menu">
+                            <i class="fas fa-circle-user nav-profile-icon"></i>
+                            <span id="navProfileName" class="nav-profile-name">Farmer</span>
+                            <i class="fas fa-chevron-down nav-caret"></i>
+                        </button>
+                        <div class="nav-profile-popover" id="navProfileDropdown">
+                            <a href="#" onclick="openFarmerProfileModal(event)" class="popover-profile-header" title="View Profile">
+                                <div class="popover-avatar-wrap">
+                                    <div class="popover-avatar" id="popoverAvatar">F</div>
+                                </div>
+                                <div class="popover-user-info">
+                                    <div class="popover-user-name" id="popoverUserName">Farmer</div>
+                                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> My Profile</div>
+                                </div>
+                                <i class="fas fa-chevron-right popover-arrow"></i>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <div class="popover-theme-row">
+                                <div class="popover-theme-label">
+                                    <i class="fas fa-palette"></i>
+                                    <span>Appearance</span>
+                                </div>
+                                <div class="popover-theme-pills">
+                                    <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                                </div>
+                            </div>
+                            <a href="alert-guard.html" class="popover-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                            <a href="#" onclick="openFarmerSettingsModal(event)" class="popover-item">
+                                <i class="fas fa-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <a href="#" onclick="logout(event)" class="popover-item popover-logout">
+                                <i class="fas fa-right-from-bracket"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Navigation Toggle -->
+                    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: Primary Navigation (Dashboard | Marketplace | Crop Alerts | AlertGuard) -->
+        <div class="header-nav-row">
+            <div class="header-container-bottom">
+                <nav class="header-nav-primary">
+                    <a href="dashboard.html" class="nav-tab ">
+                        <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
+                    </a>
+                    <a href="marketplace.html" class="nav-tab ">
+                        <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
+                    </a>
+                    <a href="crop-alerts.html" class="nav-tab active">
+                        <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
+                    </a>
+                    <a href="alert-guard.html" class="nav-tab ">
+                        <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
+                    </a>
+                </nav>
             </div>
         </div>
 
         <!-- Mobile Drawer -->
         <div class="mobile-nav-drawer" id="mobileNavDrawer">
-            <a href="dashboard.html" class="mobile-drawer-link">
-                <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+            <a href="dashboard.html" class="mobile-drawer-link ">
+                <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
             </a>
-            <a href="marketplace.html" class="mobile-drawer-link">
-                <i class="fas fa-store"></i> <span>Marketplace</span>
+            <a href="marketplace.html" class="mobile-drawer-link ">
+                <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
             </a>
             <a href="crop-alerts.html" class="mobile-drawer-link active">
-                <i class="fas fa-bell"></i> <span>Crop Alerts</span>
+                <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
             </a>
-            <a href="alert-guard.html" class="mobile-drawer-link">
-                <i class="fas fa-shield-alt"></i> <span>AlertGuard</span>
-            </a>
-            <a href="news.html" class="mobile-drawer-link">
-                <i class="fas fa-newspaper"></i> <span>Agri-News</span>
+            <a href="alert-guard.html" class="mobile-drawer-link ">
+                <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
             </a>
         </div>
     </header>
@@ -369,14 +387,14 @@
 
         <!-- Crop Selector -->
         <div class="crop-selector" id="cropSelector">
-            <button class="crop-btn" data-crop="rice"><i class="fas fa-seedling"></i> Rice</button>
+            <button class="crop-btn" data-crop="rice"><i class="fas fa-wheat-awn"></i> Rice</button>
             <button class="crop-btn" data-crop="wheat"><i class="fas fa-wheat-awn"></i> Wheat</button>
             <button class="crop-btn" data-crop="tomato"><i class="fas fa-apple-whole"></i> Tomato</button>
-            <button class="crop-btn" data-crop="potato"><i class="fas fa-bowl-food"></i> Potato</button>
-            <button class="crop-btn" data-crop="onion"><i class="fas fa-cubes-stacked"></i> Onion</button>
+            <button class="crop-btn" data-crop="potato"><i class="fas fa-carrot"></i> Potato</button>
+            <button class="crop-btn" data-crop="onion"><i class="fas fa-seedling"></i> Onion</button>
             <button class="crop-btn" data-crop="cotton"><i class="fas fa-feather"></i> Cotton</button>
-            <button class="crop-btn" data-crop="sugarcane"><i class="fas fa-tree"></i> Sugarcane</button>
-            <button class="crop-btn" data-crop="chilli"><i class="fas fa-fire"></i> Chilli</button>
+            <button class="crop-btn" data-crop="sugarcane"><i class="fas fa-seedling"></i> Sugarcane</button>
+            <button class="crop-btn" data-crop="chilli"><i class="fas fa-pepper-hot"></i> Chilli</button>
             <button class="crop-btn" data-crop="ragi"><i class="fas fa-leaf"></i> Ragi</button>
         </div>
 
@@ -384,7 +402,7 @@
         <div class="glass glass-card">
             <h3 style="margin-bottom: 1rem;"><i class="fas fa-cloud-sun" style="color: #4fc3f7;"></i> Current Weather Summary</h3>
             <div class="weather-summary" id="weatherSummary">
-                <div class="weather-badge"><i class="fas fa-spinner fa-spin"></i> Loading weather...</div>
+                <div class="weather-badge"><i class="fas fa-spinner fa-spin"></i> <span data-i18n="ca_loading_weather">Loading weather...</span></div>
             </div>
         </div>
 
@@ -395,7 +413,7 @@
                 <div id="alertSummary" style="font-size: 0.85rem; color: var(--text-secondary);"></div>
             </div>
             <div class="alerts-container" id="alertsBox">
-                <div class="no-alerts"><i class="fas fa-spinner fa-spin"></i><p>Analyzing crop conditions...</p></div>
+                <div class="no-alerts"><i class="fas fa-spinner fa-spin"></i><p><span data-i18n="ca_analyzing">Analyzing crop conditions...</span></p></div>
             </div>
         </div>
 
@@ -453,7 +471,7 @@
         // Analyze crop alerts
         async function analyzeCrop() {
             const box = document.getElementById('alertsBox');
-            box.innerHTML = '<div class="no-alerts"><i class="fas fa-spinner fa-spin"></i><p>Analyzing crop conditions...</p></div>';
+            box.innerHTML = '<div class="no-alerts"><i class="fas fa-spinner fa-spin"></i><p><span data-i18n="ca_analyzing">Analyzing crop conditions...</span></p></div>';
 
             try {
                 const res = await fetch(`${API_BASE_URL}/crop-alerts/analyze`, {
@@ -474,14 +492,14 @@
                     <div class="weather-badge"><i class="fas fa-thermometer-half" style="color:#ef5350;"></i> ${w.temp}°C</div>
                     <div class="weather-badge"><i class="fas fa-tint" style="color:#4fc3f7;"></i> ${w.humidity}%</div>
                     <div class="weather-badge"><i class="fas fa-wind" style="color:#aed581;"></i> ${w.windSpeed} m/s</div>
-                    <div class="weather-badge"><i class="fas fa-cloud-rain" style="color:#90caf9;"></i> ${w.isRaining ? '🌧 Raining' : w.rainForecast ? '⛅ Rain Expected' : '☀️ No Rain'}</div>
+                    <div class="weather-badge"><i class="fas fa-cloud-rain" style="color:#90caf9;"></i> ${w.isRaining ? '<i class="fas fa-cloud-showers-heavy" style="margin-right:4px;"></i> Raining' : w.rainForecast ? '<i class="fas fa-cloud-sun" style="margin-right:4px;"></i> Rain Expected' : '<i class="fas fa-sun" style="margin-right:4px;"></i> No Rain'}</div>
                     <div class="weather-badge"><i class="fas fa-map-marker-alt" style="color:#4CAF50;"></i> ${data.location}</div>
                 `;
 
                 document.getElementById('alertTitle').innerText = `${data.crop} — ${data.alertCount} Alert(s)`;
                 document.getElementById('alertSummary').innerHTML = data.alertCount > 0 
                     ? `Highest Priority: <span class="priority-badge badge-${data.highestPriority}">${data.highestPriority}</span>`
-                    : '<span style="color:#4CAF50;">✅ All Clear</span>';
+                    : '<span style="color:#4CAF50;"><i class="fas fa-circle-check" style="margin-right:4px;"></i> All Clear</span>';
 
                 if (data.alerts.length === 0) {
                     box.innerHTML = `<div class="no-alerts">

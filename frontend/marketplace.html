@@ -11,6 +11,53 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     
     <style>
+        /* Subtle card fade-in animation for Marketplace only */
+        @keyframes mandiCardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .commodity-card {
+            animation: mandiCardFadeIn 0.28s ease-out;
+        }
+
+        /* Indic Languages Layout Safety for Marketplace */
+        html[lang="te"], html[lang="kn"], html[lang="ta"], html[lang="ml"], html[lang="hi"] {
+            --font-main: 'Noto Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+        .stat-data .stat-label {
+            line-height: 1.25;
+            word-break: break-word;
+        }
+        .sd-trigger {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .filter-grid {
+            gap: 1rem;
+        }
+        .category-pill span {
+            white-space: nowrap;
+        }
+        .card-commodity-name {
+            word-break: break-word;
+        }
+        .btn-card-details, .btn-filter-apply, .btn-page {
+            white-space: nowrap;
+        }
+        .highlight-text h4 {
+            line-height: 1.3;
+        }
+        .highlight-text p {
+            line-height: 1.4;
+        }
+
         :root {
             --bg-page: #f8fafc;
             --bg-surface: #ffffff;
@@ -1614,112 +1661,130 @@
 </head>
 <body>
 
-    <!-- Modern AgriTech / SaaS Navbar -->
+        <!-- Modern AgriTech / SaaS Navbar -->
     <header class="app-header">
-        <div class="header-container">
-            <!-- Left: Brand Logo -->
-            <a href="dashboard.html" class="brand-logo" title="KRISHI VAANI">
-                <div class="brand-icon-wrap">
-                    <i class="fas fa-leaf"></i>
-                </div>
-                <span class="brand-name">KRISHI VAANI</span>
-            </a>
-
-            <!-- Center: Navigation Items -->
-            <nav class="header-nav-center">
-                <a href="dashboard.html" class="nav-tab">
-                    <i class="fas fa-chart-line"></i> <span>Dashboard</span>
-                </a>
-                <a href="marketplace.html" class="nav-tab active">
-                    <i class="fas fa-store"></i> <span>Marketplace</span>
-                </a>
-                <a href="crop-alerts.html" class="nav-tab">
-                    <i class="fas fa-bell"></i> <span>Crop Alerts</span>
-                </a>
-                <a href="alert-guard.html" class="nav-tab">
-                    <i class="fas fa-shield-alt"></i> <span>AlertGuard</span>
-                </a>
-                <a href="news.html" class="nav-tab">
-                    <i class="fas fa-newspaper"></i> <span>Agri-News</span>
-                </a>
-            </nav>
-
-            <!-- Right: Language + Profile -->
-            <div class="header-nav-right">
-                <!-- Language Selector -->
-                <div class="nav-lang-box">
-                    <i class="fas fa-globe"></i>
-                    <select id="langSelect" class="nav-lang-select" aria-label="Select Language">
-                        <option value="en">English</option>
-                        <option value="kn">ಕನ್ನಡ</option>
-                        <option value="ta">தமிழ்</option>
-                        <option value="te">తెలుగు</option>
-                        <option value="ml">മലയാളം</option>
-                        <option value="hi">हिन्दी</option>
-                    </select>
-                </div>
-
-                <!-- Profile Dropdown (Displays only 'Profile') -->
-                <div class="nav-profile-container">
-                    <button class="nav-profile-button" id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Account Menu">
-                        <span>Profile</span>
-                        <i class="fas fa-chevron-down nav-caret"></i>
-                    </button>
-                    <div class="nav-profile-popover" id="navProfileDropdown">
-                        <a href="dashboard.html" class="popover-item">
-                            <i class="fas fa-user"></i>
-                            <span>Profile</span>
-                        </a>
-                        <div class="popover-theme-row">
-                            <div class="popover-theme-label">
-                                <i class="fas fa-palette"></i>
-                                <span>Appearance</span>
-                            </div>
-                            <div class="popover-theme-pills">
-                                <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
-                                <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
-                                <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
-                            </div>
-                        </div>
-                        <a href="alert-guard.html" class="popover-item">
-                            <i class="fas fa-bell"></i>
-                            <span>Notifications</span>
-                        </a>
-                        <a href="dashboard.html" class="popover-item">
-                            <i class="fas fa-gear"></i>
-                            <span>Settings</span>
-                        </a>
-                        <div class="popover-divider"></div>
-                        <a href="#" onclick="logout(event)" class="popover-item popover-logout">
-                            <i class="fas fa-right-from-bracket"></i>
-                            <span>Logout</span>
-                        </a>
+        <!-- ROW 1: Main Header (Logo on Left, Controls on Right) -->
+        <div class="header-top-row">
+            <div class="header-container-top">
+                <!-- Left: Brand Logo -->
+                <a href="dashboard.html" class="brand-logo" title="KRISHI VAANI">
+                    <div class="brand-icon-wrap">
+                        <i class="fas fa-leaf"></i>
                     </div>
-                </div>
+                    <span class="brand-name">KRISHI VAANI</span>
+                </a>
 
-                <!-- Mobile Navigation Toggle -->
-                <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <!-- Right: Standardized Header Controls [ Notification | Language | Profile ] -->
+                <div class="header-nav-right">
+                    <!-- 1. Notification Bell Button -->
+                    <div class="nav-notification-container" style="position: relative;">
+                        <button type="button" class="nav-notification-btn" id="notificationBellBtn" onclick="krishiFCM.openNotificationCenter()" title="Live Alerts & Notifications" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span id="notificationBadge" class="notification-counter-badge" style="display: none;">0</span>
+                        </button>
+                    </div>
+
+                    <!-- 2. Language Selector: [ Globe Icon | English | Dropdown Arrow ] -->
+                    <div class="nav-lang-box" title="Select Language">
+                        <i class="fas fa-globe"></i>
+                        <select id="langSelect" class="nav-lang-select" aria-label="Select Language">
+                            <option value="en">English</option>
+                            <option value="kn">ಕನ್ನಡ</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="ml">മലയാളം</option>
+                            <option value="hi">हिन्दी</option>
+                        </select>
+                        <i class="fas fa-chevron-down nav-lang-arrow"></i>
+                    </div>
+
+                    <!-- 3. Profile Button: [ User Icon | User Name | Dropdown Arrow ] -->
+                    <div class="nav-profile-container">
+                        <button class="nav-profile-button" id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Account Menu">
+                            <i class="fas fa-circle-user nav-profile-icon"></i>
+                            <span id="navProfileName" class="nav-profile-name">Farmer</span>
+                            <i class="fas fa-chevron-down nav-caret"></i>
+                        </button>
+                        <div class="nav-profile-popover" id="navProfileDropdown">
+                            <a href="#" onclick="openFarmerProfileModal(event)" class="popover-profile-header" title="View Profile">
+                                <div class="popover-avatar-wrap">
+                                    <div class="popover-avatar" id="popoverAvatar">F</div>
+                                </div>
+                                <div class="popover-user-info">
+                                    <div class="popover-user-name" id="popoverUserName">Farmer</div>
+                                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> My Profile</div>
+                                </div>
+                                <i class="fas fa-chevron-right popover-arrow"></i>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <div class="popover-theme-row">
+                                <div class="popover-theme-label">
+                                    <i class="fas fa-palette"></i>
+                                    <span>Appearance</span>
+                                </div>
+                                <div class="popover-theme-pills">
+                                    <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                                </div>
+                            </div>
+                            <a href="alert-guard.html" class="popover-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                            <a href="#" onclick="openFarmerSettingsModal(event)" class="popover-item">
+                                <i class="fas fa-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <a href="#" onclick="logout(event)" class="popover-item popover-logout">
+                                <i class="fas fa-right-from-bracket"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Navigation Toggle -->
+                    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: Primary Navigation (Dashboard | Marketplace | Crop Alerts | AlertGuard) -->
+        <div class="header-nav-row">
+            <div class="header-container-bottom">
+                <nav class="header-nav-primary">
+                    <a href="dashboard.html" class="nav-tab ">
+                        <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
+                    </a>
+                    <a href="marketplace.html" class="nav-tab active">
+                        <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
+                    </a>
+                    <a href="crop-alerts.html" class="nav-tab ">
+                        <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
+                    </a>
+                    <a href="alert-guard.html" class="nav-tab ">
+                        <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
+                    </a>
+                </nav>
             </div>
         </div>
 
         <!-- Mobile Drawer -->
         <div class="mobile-nav-drawer" id="mobileNavDrawer">
-            <a href="dashboard.html" class="mobile-drawer-link">
-                <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+            <a href="dashboard.html" class="mobile-drawer-link ">
+                <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
             </a>
             <a href="marketplace.html" class="mobile-drawer-link active">
-                <i class="fas fa-store"></i> <span>Marketplace</span>
+                <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
             </a>
-            <a href="crop-alerts.html" class="mobile-drawer-link">
-                <i class="fas fa-bell"></i> <span>Crop Alerts</span>
+            <a href="crop-alerts.html" class="mobile-drawer-link ">
+                <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
             </a>
-            <a href="alert-guard.html" class="mobile-drawer-link">
-                <i class="fas fa-shield-alt"></i> <span>AlertGuard</span>
-            </a>
-            <a href="news.html" class="mobile-drawer-link">
-                <i class="fas fa-newspaper"></i> <span>Agri-News</span>
+            <a href="alert-guard.html" class="mobile-drawer-link ">
+                <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
             </a>
         </div>
     </header>
@@ -1757,21 +1822,21 @@
                 <div class="stat-icon-wrap"><i class="fas fa-store-alt"></i></div>
                 <div class="stat-data">
                     <div class="stat-number" id="statActiveMandis">1,090+</div>
-                    <div class="stat-label">Active Mandis</div>
+                    <div class="stat-label" data-i18n="mkt_active_mandis">Active Mandis</div>
                 </div>
             </div>
             <div class="stat-item">
                 <div class="stat-icon-wrap"><i class="fas fa-map-location-dot"></i></div>
                 <div class="stat-data">
                     <div class="stat-number" id="statStatesCovered">21</div>
-                    <div class="stat-label">States Covered</div>
+                    <div class="stat-label" data-i18n="mkt_states_covered">States Covered</div>
                 </div>
             </div>
             <div class="stat-item">
                 <div class="stat-icon-wrap"><i class="fas fa-seedling"></i></div>
                 <div class="stat-data">
                     <div class="stat-number" id="statCommodities">160+</div>
-                    <div class="stat-label">Commodities</div>
+                    <div class="stat-label" data-i18n="mkt_commodities">Commodities</div>
                 </div>
             </div>
             <div class="stat-item">
@@ -1860,7 +1925,7 @@
                 <div class="section-headline-bar">
                     <div>
                         <h2 id="mainSectionTitle">Today's Mandi Prices</h2>
-                        <p id="mainSectionSubtitle">Reported daily mandi prices from across India</p>
+                        <p id="mainSectionSubtitle"><span data-i18n="mkt_reported_daily">Reported daily mandi prices from across India</span></p>
                     </div>
                     <div class="view-controls">
                         <select class="sort-select" id="sortSelect" onchange="loadMandiPrices(1)">
@@ -1948,22 +2013,22 @@
                     <div class="highlight-item">
                         <div class="highlight-icon"><i class="fas fa-arrow-trend-up"></i></div>
                         <div class="highlight-text">
-                            <h4>Tomato & Onion Arrivals Strong</h4>
-                            <p>Active trading reported across South & West APMC yards.</p>
+                            <h4><span data-i18n="mkt_highlight_1_title">Tomato & Onion Arrivals Strong</span></h4>
+                            <p><span data-i18n="mkt_highlight_1_desc">Active trading reported across South & West APMC yards.</span></p>
                         </div>
                     </div>
                     <div class="highlight-item">
                         <div class="highlight-icon"><i class="fas fa-clock-rotate-left"></i></div>
                         <div class="highlight-text">
-                            <h4>Daily Synchronization</h4>
-                            <p>Prices synced from Agmarknet & Data.gov.in daily at 06:00 AM.</p>
+                            <h4><span data-i18n="mkt_highlight_2_title">Daily Synchronization</span></h4>
+                            <p><span data-i18n="mkt_highlight_2_desc">Prices synced from Agmarknet & Data.gov.in daily at 06:00 AM.</span></p>
                         </div>
                     </div>
                     <div class="highlight-item">
                         <div class="highlight-icon"><i class="fas fa-shield-check"></i></div>
                         <div class="highlight-text">
-                            <h4>Direct Farmer Listings</h4>
-                            <p>Connect peer-to-peer with verified local farmers and FPOs.</p>
+                            <h4><span data-i18n="mkt_highlight_3_title">Direct Farmer Listings</span></h4>
+                            <p><span data-i18n="mkt_highlight_3_desc">Connect peer-to-peer with verified local farmers and FPOs.</span></p>
                         </div>
                     </div>
                 </div>
@@ -2001,6 +2066,8 @@
     <script src="assets/js/app.js"></script>
     <script src="assets/js/commodityImages.js"></script>
     <script>
+        window.API_BASE_URL = window.API_BASE_URL || '/api';
+        
         // Primary Popular Categories for Navigation Strip
         const PRIMARY_CATEGORIES = [
             { name: 'All Commodities', slug: '', iconAll: true },
@@ -2056,6 +2123,38 @@
             }
         }
 
+
+        // Clean Short Location Formatter (Mandi Display Rule: Name & State only)
+        function formatShortLocation(loc) {
+            if (!loc) return 'Bengaluru, Karnataka';
+            if (typeof loc === 'object') {
+                const primary = loc.city || loc.town || loc.village || loc.district || loc.suburb;
+                const state = loc.state || '';
+                if (primary && state) return `${primary}, ${state}`;
+                if (primary) return primary;
+                if (state) return state;
+                if (loc.formattedAddress) {
+                    const parts = loc.formattedAddress.split(',').map(s => s.trim()).filter(Boolean);
+                    const cleaned = parts.filter(p => !/^\d{5,6}$/.test(p) && p.toLowerCase() !== 'india');
+                    if (cleaned.length >= 2) {
+                        return `${cleaned[cleaned.length - 2]}, ${cleaned[cleaned.length - 1]}`;
+                    } else if (cleaned.length === 1) {
+                        return cleaned[0];
+                    }
+                }
+            }
+            if (typeof loc === 'string') {
+                const parts = loc.split(',').map(s => s.trim()).filter(Boolean);
+                const cleaned = parts.filter(p => !/^\d{5,6}$/.test(p) && p.toLowerCase() !== 'india');
+                if (cleaned.length >= 2) {
+                    return `${cleaned[cleaned.length - 2]}, ${cleaned[cleaned.length - 1]}`;
+                } else if (cleaned.length === 1) {
+                    return cleaned[0];
+                }
+            }
+            return 'Bengaluru, Karnataka';
+        }
+
         function initFarmerGpsCoordinates() {
             // 1. Check logged-in farmer profile in localStorage as fallback
             const farmer = JSON.parse(localStorage.getItem('farmer') || 'null');
@@ -2065,8 +2164,8 @@
                     const firstName = (farmer.name || 'Farmer').split(' ')[0];
                     authBtn.innerHTML = `<i class="fas fa-user"></i> <span>${firstName}</span>`;
                 }
-                if (farmer.city && farmer.state) {
-                    farmerLocation.city = `${farmer.city}, ${farmer.state}`;
+                if (farmer.city || farmer.state || farmer.district) {
+                    farmerLocation.city = formatShortLocation(farmer);
                     const locHdr = document.getElementById('userLocationHeader');
                     if (locHdr) locHdr.innerText = farmerLocation.city;
                 }
@@ -2084,8 +2183,8 @@
             if (savedGps && savedGps.lat && savedGps.lon) {
                 farmerLocation.lat = parseFloat(savedGps.lat);
                 farmerLocation.lon = parseFloat(savedGps.lon);
-                if (savedGps.city || savedGps.formattedAddress) {
-                    farmerLocation.city = savedGps.city || savedGps.formattedAddress;
+                if (savedGps.city || savedGps.formattedAddress || savedGps.district) {
+                    farmerLocation.city = formatShortLocation(savedGps);
                     const locHdr = document.getElementById('userLocationHeader');
                     if (locHdr) locHdr.innerText = farmerLocation.city;
                 }
@@ -2104,8 +2203,7 @@
                             const geoRes = await fetch(`${API_BASE_URL}/farmer/location/reverse-geocode?lat=${farmerLocation.lat}&lon=${farmerLocation.lon}`);
                             const geoJson = await geoRes.json();
                             if (geoJson.success && geoJson.location) {
-                                const l = geoJson.location;
-                                farmerLocation.city = l.formattedAddress || `${l.city || l.district || 'Current Location'}, ${l.state || ''}`;
+                                farmerLocation.city = formatShortLocation(geoJson.location);
                             }
                         } catch(e) {
                             console.warn('Geocode proxy note:', e);
@@ -2141,11 +2239,11 @@
             populateInitialDropdowns();
             renderCategoryNavigation();
             
-            // Fetch live summaries & enrich dropdowns asynchronously
-            await loadSummaryStats();
-            await loadFilterDropdowns();
-            await loadMandiPrices(1);
-            await loadNearbyMarkets();
+            // Fetch live summaries & enrich dropdowns concurrently for instant card display
+            loadSummaryStats();
+            loadFilterDropdowns();
+            loadMandiPrices(1);
+            loadNearbyMarkets();
         });
 
         // ===== SearchableDropdown Class =====
@@ -2543,9 +2641,12 @@
                 ddDistrict.setValue('', true);
             }
             if (ddCommodity) ddCommodity.setValue('', true);
-            document.getElementById('filterSearch').value = '';
-            document.getElementById('sortSelect').value = 'recent';
-            document.getElementById('marketTypeSelect').value = 'mandi';
+            const sInput = document.getElementById('filterSearch');
+            if (sInput) sInput.value = '';
+            const sortSel = document.getElementById('sortSelect');
+            if (sortSel) sortSel.value = 'recent';
+            const mType = document.getElementById('marketTypeSelect');
+            if (mType) mType.value = 'mandi';
             
             document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
             document.querySelector('.category-pill')?.classList.add('active');
@@ -2557,26 +2658,44 @@
 
         function switchMarketView(val) {
             currentMarketType = val;
+            const titleEl = document.getElementById('mainSectionTitle');
+            const subEl = document.getElementById('mainSectionSubtitle');
             if (val === 'mandi') {
-                document.getElementById('mainSectionTitle').innerText = "Today's Mandi Prices";
-                document.getElementById('mainSectionSubtitle').innerText = "Reported daily mandi prices from across India";
+                if (titleEl) titleEl.innerText = typeof t === 'function' ? (t('mkt_reported_daily_title') || "Today's Mandi Prices") : "Today's Mandi Prices";
+                if (subEl) subEl.innerHTML = '<span data-i18n="mkt_reported_daily">' + (typeof t === 'function' ? t('mkt_reported_daily') : 'Reported daily mandi prices from across India') + '</span>';
             } else if (val === 'sell') {
-                document.getElementById('mainSectionTitle').innerText = "Farmer Sell Offers";
-                document.getElementById('mainSectionSubtitle').innerText = "Direct agricultural produce listings from verified farmers";
+                if (titleEl) titleEl.innerText = "Farmer Sell Offers";
+                if (subEl) subEl.innerText = "Direct agricultural produce listings from verified farmers";
             } else {
-                document.getElementById('mainSectionTitle').innerText = "Buyer Requirements";
-                document.getElementById('mainSectionSubtitle').innerText = "Active crop purchase requirements from buyers & FPOs";
+                if (titleEl) titleEl.innerText = "Buyer Requirements";
+                if (subEl) subEl.innerText = "Active crop purchase requirements from buyers & FPOs";
             }
             loadMandiPrices(1);
         }
 
+
+        function navigatePage(delta) {
+            const newPage = currentPage + delta;
+            if (newPage >= 1 && newPage <= totalPages) {
+                loadMandiPrices(newPage);
+                const gridEl = document.querySelector('.main-layout-grid');
+                if (gridEl) {
+                    window.scrollTo({ top: gridEl.offsetTop - 80, behavior: 'smooth' });
+                }
+            }
+        }
+    
         function toggleViewMode(mode) {
             currentViewMode = mode;
-            document.getElementById('btnViewGrid').classList.toggle('active', mode === 'grid');
-            document.getElementById('btnViewTable').classList.toggle('active', mode === 'table');
+            const btnGrid = document.getElementById('btnViewGrid');
+            const btnTable = document.getElementById('btnViewTable');
+            if (btnGrid) btnGrid.classList.toggle('active', mode === 'grid');
+            if (btnTable) btnTable.classList.toggle('active', mode === 'table');
             
-            document.getElementById('commodityCardsContainer').style.display = mode === 'grid' ? 'grid' : 'none';
-            document.getElementById('mandiTableContainer').style.display = mode === 'table' ? 'block' : 'none';
+            const gridContainer = document.getElementById('commodityCardsContainer');
+            const tableContainer = document.getElementById('mandiTableContainer');
+            if (gridContainer) gridContainer.style.display = mode === 'grid' ? 'grid' : 'none';
+            if (tableContainer) tableContainer.style.display = mode === 'table' ? 'block' : 'none';
         }
 
         // ================= LOAD MANDI PRICES =================
@@ -2622,6 +2741,7 @@
 
                 // Render Grid Cards
                 cardsContainer.innerHTML = data.records.map(r => renderCommodityCard(r)).join('');
+                if (window.revealNewElements) window.revealNewElements(cardsContainer);
                 
                 // Render Table Rows
                 tableBody.innerHTML = data.records.map(r => renderTableRow(r)).join('');
@@ -2656,7 +2776,7 @@
                 <div class="commodity-card">
                     <div class="card-image-box">
                         <img class="card-real-img" src="${imgUrl}" alt="${r.commodity}" loading="lazy" onerror="CommodityImageService.handleImageError(this, '${safeCommodity}')">
-                        <div class="card-top-badge">Market Price</div>
+                        <div class="card-top-badge">${getMarketplaceText('mkt_market_price_badge')}</div>
                         <div class="card-date-badge">${r.arrival_date}</div>
                         ${distBadge}
                     </div>
@@ -2668,7 +2788,7 @@
                         <div class="card-variety-subtitle">${r.variety || 'Local Variety'}</div>
 
                         <div class="card-price-headline">
-                            <div class="card-modal-price">₹${r.modal_price.toLocaleString()} <span class="card-unit-label">/ Quintal</span></div>
+                            <div class="card-modal-price">₹${r.modal_price.toLocaleString()} <span class="card-unit-label">${getMarketplaceText('mkt_per_quintal')}</span></div>
                         </div>
 
                         <div class="price-range-strip">
@@ -2695,7 +2815,7 @@
                         </div>
 
                         <button class="btn-card-details" onclick='openPriceDetailsModal(${safeObj})'>
-                            <i class="fas fa-chart-line"></i> View Details & History
+                            <i class="fas fa-chart-line"></i> ${getMarketplaceText('mkt_btn_details')}
                         </button>
                     </div>
                 </div>
@@ -2805,8 +2925,7 @@
                             const geoRes = await fetch(`${API_BASE_URL}/farmer/location/reverse-geocode?lat=${farmerLocation.lat}&lon=${farmerLocation.lon}`);
                             const geoJson = await geoRes.json();
                             if (geoJson.success && geoJson.location) {
-                                const l = geoJson.location;
-                                farmerLocation.city = l.formattedAddress || `${l.city || l.district || 'Current Location'}, ${l.state || ''}`;
+                                farmerLocation.city = formatShortLocation(geoJson.location);
                             }
                         } catch(e) {
                             console.warn('Geocode proxy note:', e);
@@ -2860,17 +2979,17 @@
                 </div>
 
                 <div style="background: var(--primary-light); border: 1px solid var(--primary-border); border-radius: var(--radius-md); padding: 1rem; text-align: center; margin-bottom: 1.5rem;">
-                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary-dark);">₹${r.modal_price.toLocaleString()} <span style="font-size: 1rem; font-weight: 600;">/ Quintal</span></div>
-                    <div style="font-size: 0.82rem; font-weight: 600; color: var(--primary-dark);">Modal Reported Mandi Arrival Price</div>
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary-dark);">₹${r.modal_price.toLocaleString()} <span style="font-size: 1rem; font-weight: 600;">${getMarketplaceText('mkt_per_quintal')}</span></div>
+                    <div style="font-size: 0.82rem; font-weight: 600; color: var(--primary-dark);">${getMarketplaceText('mkt_modal_price')}</div>
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
                     <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
-                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Minimum Price</div>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">${getMarketplaceText('mkt_min_price')}</div>
                         <div style="font-size: 1.2rem; font-weight: 800; color: var(--text-main);">₹${r.min_price.toLocaleString()}</div>
                     </div>
                     <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
-                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Maximum Price</div>
+                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">${getMarketplaceText('mkt_max_price')}</div>
                         <div style="font-size: 1.2rem; font-weight: 800; color: var(--text-main);">₹${r.max_price.toLocaleString()}</div>
                     </div>
                 </div>
@@ -2878,7 +2997,7 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                     <h4 style="font-size: 1rem; font-weight: 800; color: var(--text-main);"><i class="fas fa-chart-area" style="color: var(--primary);"></i> Price Trend Analysis</h4>
                     <button class="btn-filter-reset" onclick="openRegionalCompare('${r.commodity}', '${r.state}')" style="height: 32px; padding: 0 0.8rem; font-size: 0.8rem;">
-                        <i class="fas fa-scale-balanced"></i> Compare Markets
+                        <i class="fas fa-scale-balanced"></i> ${getMarketplaceText('mkt_btn_compare')}
                     </button>
                 </div>
 
@@ -3000,58 +3119,473 @@
             document.getElementById(id).classList.remove('active');
         }
 
+
+        // Dedicated Multilingual Dictionary for Marketplace (Self-Contained)
+        const MARKETPLACE_I18N = {
+            en: {
+                mkt_title_prefix: "Indian",
+                mkt_title_accent: "Agricultural Market",
+                mkt_subtitle: "Explore daily mandi prices, nearby markets and agricultural listings across India.",
+                mkt_your_location: "Your Location",
+                mkt_last_updated: "Last Updated",
+                mkt_active_mandis: "Active Mandis",
+                mkt_states_covered: "States Covered",
+                mkt_commodities: "Commodities",
+                mkt_latest_price_date: "Latest Price Date",
+                mkt_filter_type: "Type",
+                mkt_filter_state: "State",
+                mkt_filter_district: "District",
+                mkt_filter_commodity: "Commodity",
+                common_search: "Search",
+                mkt_type_mandi: "Market Prices (Govt)",
+                mkt_type_seller: "Farmer Sell Offers",
+                mkt_type_buyer: "Buyer Requirements",
+                mkt_filter_search_ph: "Search commodity, market, district...",
+                mkt_filter_apply: "Apply",
+                mkt_all_commodities: "All Commodities",
+                mkt_all_states: "All States",
+                mkt_all_districts: "All Districts",
+                mkt_reported_daily_title: "Today's Mandi Prices",
+                mkt_reported_daily: "Reported daily mandi prices from across India",
+                mkt_sort_recent: "Sort by: Latest Date",
+                mkt_sort_highest: "Sort by: Highest Price",
+                mkt_sort_lowest: "Sort by: Lowest Price",
+                mkt_sort_nearest: "Sort by: Nearest (PostGIS)",
+                mkt_nearby_title: "Nearby Markets",
+                mkt_view_all: "View All",
+                mkt_highlights_title: "Market Highlights",
+                mkt_highlight_1_title: "Tomato & Onion Arrivals Strong",
+                mkt_highlight_1_desc: "Active trading reported across South & West APMC yards.",
+                mkt_highlight_2_title: "Daily Synchronization",
+                mkt_highlight_2_desc: "Prices synced from Agmarknet & Data.gov.in daily at 06:00 AM.",
+                mkt_highlight_3_title: "Direct Farmer Listings",
+                mkt_highlight_3_desc: "Connect peer-to-peer with verified local farmers and FPOs.",
+                mkt_data_source: "Data Source:",
+                mkt_data_source_text: "Government of India Open Government Data (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "Note: Mandi prices are reported arrival rates and may vary with produce quality and auction timings.",
+                mkt_btn_details: "View Details & History",
+                mkt_btn_compare: "Compare Markets",
+                mkt_no_prices_title: "No Market Prices Found",
+                mkt_no_prices_desc: "We couldn't find mandi prices matching your filter criteria. Try selecting another state, commodity or reset filters.",
+                mkt_reset_all: "Reset All Filters",
+                mkt_prev: "Prev",
+                mkt_next: "Next",
+                mkt_market_price_badge: "Market Price",
+                mkt_per_quintal: "/ Quintal",
+                mkt_min_price: "Minimum Price",
+                mkt_max_price: "Maximum Price",
+                mkt_modal_price: "Modal Price",
+                mkt_verified_arrival: "Verified Arrival: Reported via Agmarknet Government Portal."
+            },
+            te: {
+                mkt_title_prefix: "భారతీయ",
+                mkt_title_accent: "వ్యవసాయ మార్కెట్",
+                mkt_subtitle: "భారతదేశం అంతటా రోజువారీ మండి ధరలు, సమీప మార్కెట్లు మరియు వ్యవసాయ జాబితాలను అన్వేషించండి.",
+                mkt_your_location: "మీ స్థానం",
+                mkt_last_updated: "చివరిగా అప్‌డేట్ చేయబడింది",
+                mkt_active_mandis: "క్రియాశీల మండిలు",
+                mkt_states_covered: "రాష్ట్రాలు",
+                mkt_commodities: "వ్యవసాయ వస్తువులు",
+                mkt_latest_price_date: "తాజా ధరల తేదీ",
+                mkt_filter_type: "రకం",
+                mkt_filter_state: "రాష్ట్రం",
+                mkt_filter_district: "జిల్లా",
+                mkt_filter_commodity: "పంట / వస్తువు",
+                common_search: "శోధించండి",
+                mkt_type_mandi: "మండి ధరలు (ప్రభుత్వ)",
+                mkt_type_seller: "రైతుల విక్రయ ఆఫర్లు",
+                mkt_type_buyer: "కొనుగోలుదారుల అవసరాలు",
+                mkt_filter_search_ph: "వస్తువు, మార్కెట్, జిల్లాను శోధించండి...",
+                mkt_filter_apply: "వర్తించు",
+                mkt_all_commodities: "అన్ని వస్తువులు",
+                mkt_all_states: "అన్ని రాష్ట్రాలు",
+                mkt_all_districts: "అన్ని జిల్లాలు",
+                mkt_reported_daily_title: "నేటి మండి ధరలు",
+                mkt_reported_daily: "భారతదేశం అంతటా నమోదైన రోజువారీ మండి ధరలు",
+                mkt_sort_recent: "క్రమబద్ధీకరించు: తాజా తేదీ",
+                mkt_sort_highest: "క్రమబద్ధీకరించు: గరిష్ట ధర",
+                mkt_sort_lowest: "క్రమబద్ధీకరించు: కనిష్ట ధర",
+                mkt_sort_nearest: "క్రమబద్ధీకరించు: దగ్గరి మార్కెట్",
+                mkt_nearby_title: "సమీప మార్కెట్లు",
+                mkt_view_all: "అన్నీ చూడండి",
+                mkt_highlights_title: "మార్కెట్ ముఖ్యాంశాలు",
+                mkt_highlight_1_title: "టమోటా & ఉల్లి రాకలు స్థిరంగా ఉన్నాయి",
+                mkt_highlight_1_desc: "దక్షిణ & పశ్చిమ APMC యార్డులలో చురుకైన వ్యాపారం నమోదైంది.",
+                mkt_highlight_2_title: "రోజువారీ నవీకరణ",
+                mkt_highlight_2_desc: "ధరలు ప్రతిరోజూ ఉదయం 06:00 గంటలకు Agmarknet & Data.gov.in నుండి నవీకరించబడతాయి.",
+                mkt_highlight_3_title: "ప్రత్యక్ష రైతుల జాబితాలు",
+                mkt_highlight_3_desc: "ధృవీకరించబడిన స్థానిక రైతులు మరియు FPOలతో నేరుగా కనెక్ట్ అవ్వండి.",
+                mkt_data_source: "సమాచార మూలం:",
+                mkt_data_source_text: "భారత ప్రభుత్వం ఓపెన్ గవర్నమెంట్ డేటా (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "గమనిక: మండి ధరలు నమోదైన రాక రేట్లు, నాణ్యత మరియు వేలం సమయాలను బట్టి మారవచ్చు.",
+                mkt_btn_details: "వివరాలు & చరిత్ర చూడండి",
+                mkt_btn_compare: "మార్కెట్లను పోల్చండి",
+                mkt_no_prices_title: "మండి ధరలు కనుగొనబడలేదు",
+                mkt_no_prices_desc: "మీ ఫిల్టర్ ప్రమాణాలకు సరిపోలే మండి ధరలు దొరకలేదు. వేరే రాష్ట్రం, వస్తువును ఎంచుకోండి లేదా ఫిల్టర్‌లను రీసెట్ చేయండి.",
+                mkt_reset_all: "అన్ని ఫిల్టర్‌లను రీసెట్ చేయండి",
+                mkt_prev: "మునుపటి",
+                mkt_next: "తదుపరి",
+                mkt_market_price_badge: "మండి ధర",
+                mkt_per_quintal: "/ క్వింటాల్",
+                mkt_min_price: "కనిష్ట ధర",
+                mkt_max_price: "గరిష్ట ధర",
+                mkt_modal_price: "మోడల్ ధర",
+                mkt_verified_arrival: "ధృవీకరించబడిన రాక: Agmarknet పోర్టల్ ద్వారా నివేదించబడింది."
+            },
+            kn: {
+                mkt_title_prefix: "ಭಾರತೀಯ",
+                mkt_title_accent: "ಕೃಷಿ ಮಾರುಕಟ್ಟೆ",
+                mkt_subtitle: "ಭಾರತದಾದ್ಯಂತ ದೈನಂದಿನ ಮಂಡಿ ದರಗಳು, ಹತ್ತಿರದ ಮಾರುಕಟ್ಟೆಗಳು ಮತ್ತು ಕೃಷಿ ಪಟ್ಟಿಗಳನ್ನು ಅನ್ವೇಷಿಸಿ.",
+                mkt_your_location: "ನಿಮ್ಮ ಸ್ಥಳ",
+                mkt_last_updated: "ಕೊನೆಯ ನವೀಕರಣ",
+                mkt_active_mandis: "ಸಕ್ರಿಯ ಮಂಡಿಗಳು",
+                mkt_states_covered: "ಒಳಗೊಂಡ ರಾಜ್ಯಗಳು",
+                mkt_commodities: "ಕೃಷಿ ಸರಕುಗಳು",
+                mkt_latest_price_date: "ಇತ್ತೀಚಿನ ಬೆಲೆ ದಿನಾಂಕ",
+                mkt_filter_type: "ಪ್ರಕಾರ",
+                mkt_filter_state: "ರಾಜ್ಯ",
+                mkt_filter_district: "ಜಿಲ್ಲೆ",
+                mkt_filter_commodity: "ಬೆಳೆ / ಸರಕು",
+                common_search: "ಹುಡುಕಿ",
+                mkt_type_mandi: "ಮಾರುಕಟ್ಟೆ ಬೆಲೆಗಳು (ಸರ್ಕಾರಿ)",
+                mkt_type_seller: "ರೈತರ ಮಾರಾಟ ಆಫರ್‌ಗಳು",
+                mkt_type_buyer: "ಖರೀದಿದಾರರ ಅವಶ್ಯಕತೆಗಳು",
+                mkt_filter_search_ph: "ಸರಕು, ಮಾರುಕಟ್ಟೆ, ಜಿಲ್ಲೆ ಹುಡುಕಿ...",
+                mkt_filter_apply: "ಅನ್ವಯಿಸು",
+                mkt_all_commodities: "ಎಲ್ಲಾ ಸರಕುಗಳು",
+                mkt_all_states: "ಎಲ್ಲಾ ರಾಜ್ಯಗಳು",
+                mkt_all_districts: "ಎಲ್ಲಾ ಜಿಲ್ಲೆಗಳು",
+                mkt_reported_daily_title: "ಇಂದಿನ ಮಂಡಿ ದರಗಳು",
+                mkt_reported_daily: "ಭಾರತದಾದ್ಯಂತ ವರದಿಯಾದ ದೈನಂದಿನ ಮಂಡಿ ದರಗಳು",
+                mkt_sort_recent: "ವಿಂಗಡಿಸಿ: ಇತ್ತೀಚಿನ ದಿನಾಂಕ",
+                mkt_sort_highest: "ವಿಂಗಡಿಸಿ: ಗರಿಷ್ಠ ಬೆಲೆ",
+                mkt_sort_lowest: "ವಿಂಗಡಿಸಿ: ಕನಿಷ್ಠ ಬೆಲೆ",
+                mkt_sort_nearest: "ವಿಂಗಡಿಸಿ: ಹತ್ತಿರದ ಮಾರುಕಟ್ಟೆ",
+                mkt_nearby_title: "ಹತ್ತಿರದ ಮಾರುಕಟ್ಟೆಗಳು",
+                mkt_view_all: "ಎಲ್ಲವನ್ನೂ ವೀಕ್ಷಿಸಿ",
+                mkt_highlights_title: "ಮಾರುಕಟ್ಟೆ ಮುಖ್ಯಾಂಶಗಳು",
+                mkt_highlight_1_title: "ಟೊಮೆಟೊ ಮತ್ತು ಈರುಳ್ಳಿ ಆಗಮನ ಉತ್ತಮವಾಗಿದೆ",
+                mkt_highlight_1_desc: "ದಕ್ಷಿಣ ಮತ್ತು ಪಶ್ಚಿಮ ಎಪಿಎಂಸಿಗಳಲ್ಲಿ ಸಕ್ರಿಯ ವ್ಯಾಪಾರ.",
+                mkt_highlight_2_title: "ದೈನಂದಿನ ಸಿಂಕ್ರೊನೈಸೇಶನ್",
+                mkt_highlight_2_desc: "ದರಗಳು ಪ್ರತಿದಿನ ಬೆಳಗ್ಗೆ 06:00 ಗಂಟೆಗೆ Agmarknet & Data.gov.in ನಿಂದ ಸಿಂಕ್ ಆಗುತ್ತವೆ.",
+                mkt_highlight_3_title: "ನೇರ ರೈತರ ಪಟ್ಟಿಗಳು",
+                mkt_highlight_3_desc: "ಪರಿಶೀಲಿಸಿದ ಸ್ಥಳೀಯ ರೈತರು ಮತ್ತು ಎಫ್‌ಪಿಒಗಳೊಂದಿಗೆ ನೇರವಾಗಿ ಸಂಪರ್ಕ ಸಾಧಿಸಿ.",
+                mkt_data_source: "ಮಾಹಿತಿ ಮೂಲ:",
+                mkt_data_source_text: "ಭಾರತ ಸರ್ಕಾರದ ಮುಕ್ತ ಡೇಟಾ (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "ಗಮನಿಸಿ: ಮಂಡಿ ಬೆಲೆಗಳು ವರದಿಯಾದ ಆಗಮನ ದರಗಳಾಗಿದ್ದು, ಗುಣಮಟ್ಟ ಮತ್ತು ಹರಾಜು ಸಮಯಕ್ಕೆ ಅನುಗುಣವಾಗಿ ಬದಲಾಗಬಹುದು.",
+                mkt_btn_details: "ವಿವರಗಳು ಮತ್ತು ಇತಿಹಾಸ ವೀಕ್ಷಿಸಿ",
+                mkt_btn_compare: "ಮಾರುಕಟ್ಟೆಗಳನ್ನು ಹೋಲಿಕೆ ಮಾಡಿ",
+                mkt_no_prices_title: "ಯಾವುದೇ ಮಾರುಕಟ್ಟೆ ಬೆಲೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ",
+                mkt_no_prices_desc: "ನಿಮ್ಮ ಫಿಲ್ಟರ್‌ಗೆ ಹೊಂದಿಕೆಯಾಗುವ ಮಂಡಿ ಬೆಲೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ. ಮತ್ತೊಂದು ರಾಜ್ಯ, ಸರಕು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಫಿಲ್ಟರ್ ಮರುಹೊಂದಿಸಿ.",
+                mkt_reset_all: "ಎಲ್ಲಾ ಫಿಲ್ಟರ್‌ಗಳನ್ನು ಮರುಹೊಂದಿಸಿ",
+                mkt_prev: "ಹಿಂದಿನ",
+                mkt_next: "ಮುಂದಿನ",
+                mkt_market_price_badge: "ಮಂಡಿ ಬೆಲೆ",
+                mkt_per_quintal: "/ ಕ್ವಿಂಟಾಲ್",
+                mkt_min_price: "ಕನಿಷ್ಠ ಬೆಲೆ",
+                mkt_max_price: "ಗರಿಷ್ಠ ಬೆಲೆ",
+                mkt_modal_price: "ಮಾದರಿ ಬೆಲೆ",
+                mkt_verified_arrival: "ಪರಿಶೀಲಿಸಿದ ಆಗಮನ: Agmarknet ಪೋರ್ಟಲ್ ಮೂಲಕ ವರದಿಯಾಗಿದೆ."
+            },
+            ta: {
+                mkt_title_prefix: "இந்திய",
+                mkt_title_accent: "வேளாண் சந்தை",
+                mkt_subtitle: "இந்தியா முழுவதிலும் உள்ள தினசரி மண்டி விலைகள், அருகிலுள்ள சந்தைகள் மற்றும் விவசாய பட்டியல்களை ஆராயுங்கள்.",
+                mkt_your_location: "உங்கள் இருப்பிடம்",
+                mkt_last_updated: "கடைசியாக புதுப்பிக்கப்பட்டது",
+                mkt_active_mandis: "செயலில் உள்ள மண்டிகள்",
+                mkt_states_covered: "உள்ளடக்கிய மாநிலங்கள்",
+                mkt_commodities: "பொருட்கள்",
+                mkt_latest_price_date: "சமீபத்திய விலை தேதி",
+                mkt_filter_type: "வகை",
+                mkt_filter_state: "மாநிலம்",
+                mkt_filter_district: "மாவட்டம்",
+                mkt_filter_commodity: "பயிர் / பொருள்",
+                common_search: "தேடு",
+                mkt_type_mandi: "மண்டி விலைகள் (அரசு)",
+                mkt_type_seller: "விவசாயிகள் விற்பனை சலுகைகள்",
+                mkt_type_buyer: "வாங்குபவர் தேவைகள்",
+                mkt_filter_search_ph: "பொருள், சந்தை, மாவட்டம் தேடவும்...",
+                mkt_filter_apply: "பயன்படுத்து",
+                mkt_all_commodities: "அனைத்து பொருட்கள்",
+                mkt_all_states: "அனைத்து மாநிலங்கள்",
+                mkt_all_districts: "அனைத்து மாவட்டங்கள்",
+                mkt_reported_daily_title: "இன்றைய மண்டி விலைகள்",
+                mkt_reported_daily: "இந்தியா முழுவதிலுமிருந்து தினசரி பதிவுசெய்யப்பட்ட மண்டி விலைகள்",
+                mkt_sort_recent: "வரிசைப்படுத்து: சமீபத்திய தேதி",
+                mkt_sort_highest: "வரிசைப்படுத்து: அதிகபட்ச விலை",
+                mkt_sort_lowest: "வரிசைப்படுத்து: குறைந்த விலை",
+                mkt_sort_nearest: "வரிசைப்படுத்து: அருகிலுள்ள சந்தை",
+                mkt_nearby_title: "அருகிலுள்ள சந்தைகள்",
+                mkt_view_all: "அனைத்தையும் பார்",
+                mkt_highlights_title: "சந்தை சிறப்பம்சங்கள்",
+                mkt_highlight_1_title: "தக்காளி மற்றும் வெங்காயம் வரத்து அதிகம்",
+                mkt_highlight_1_desc: "தெற்கு & மேற்கு ஏபிஎம்சி வளாகங்களில் தீவிர வர்த்தகம்.",
+                mkt_highlight_2_title: "தினசரி ஒத்திசைவு",
+                mkt_highlight_2_desc: "விலைகள் தினமும் காலை 06:00 மணிக்கு Agmarknet & Data.gov.in மூலம் புதுப்பிக்கப்படுகின்றன.",
+                mkt_highlight_3_title: "நேரடி விவசாயி பட்டியல்கள்",
+                mkt_highlight_3_desc: "சரிபார்க்கப்பட்ட உள்ளூர் விவசாயிகள் மற்றும் FPOக்களுடன் நேரடியாக இணையுங்கள்.",
+                mkt_data_source: "தரவு ஆதாரம்:",
+                mkt_data_source_text: "இந்திய அரசு திறந்த தரவு (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "குறிப்பு: மண்டி விலைகள் வருகை விகிதங்கள் ஆகும், தரம் மற்றும் ஏல நேரத்தைப் பொறுத்து மாறுபடலாம்.",
+                mkt_btn_details: "விவரங்கள் & வரலாறு காண்க",
+                mkt_btn_compare: "சந்தைகளை ஒப்பிடுக",
+                mkt_no_prices_title: "மண்டி விலைகள் எதுவும் கிடைக்கவில்லை",
+                mkt_no_prices_desc: "உங்கள் வடிகட்டி அளவுகோல்களுக்கு பொருந்தும் மண்டி விலைகள் கிடைக்கவில்லை. மற்றொரு மாநிலம், பொருளைத் தேர்ந்தெடுக்கவும்.",
+                mkt_reset_all: "எல்லா வடிகட்டிகளையும் மீட்டமை",
+                mkt_prev: "முந்தைய",
+                mkt_next: "அடுத்தது",
+                mkt_market_price_badge: "சந்தை விலை",
+                mkt_per_quintal: "/ குவிண்டால்",
+                mkt_min_price: "குறைந்தபட்ச விலை",
+                mkt_max_price: "அதிகபட்ச விலை",
+                mkt_modal_price: "சராசரி விலை",
+                mkt_verified_arrival: "சரிபார்க்கப்பட்ட வருகை: Agmarknet போர்டல் மூலம் தெரிவிக்கப்பட்டது."
+            },
+            ml: {
+                mkt_title_prefix: "ഇന്ത്യൻ",
+                mkt_title_accent: "കാർഷിക വിപണി",
+                mkt_subtitle: "ഇന്ത്യയിലുടനീളമുള്ള പ്രതിദിന മണ്ടി വിലകൾ, അടുത്തുള്ള വിപണികൾ, കാർഷിക ലിസ്റ്റിംഗുകൾ എന്നിവ കണ്ടെത്തുക.",
+                mkt_your_location: "നിങ്ങളുടെ സ്ഥലം",
+                mkt_last_updated: "അവസാനം പുതുക്കിയത്",
+                mkt_active_mandis: "സജീവ മണ്ടികൾ",
+                mkt_states_covered: "ഉൾപ്പെട്ട സംസ്ഥാനങ്ങൾ",
+                mkt_commodities: "വിളകൾ / ഉൽപ്പന്നങ്ങൾ",
+                mkt_latest_price_date: "ഏറ്റവും പുതിയ വില തീയതി",
+                mkt_filter_type: "തരം",
+                mkt_filter_state: "സംസ്ഥാനം",
+                mkt_filter_district: "ജില്ല",
+                mkt_filter_commodity: "വിള / ഉൽപ്പന്നം",
+                common_search: "തിരയുക",
+                mkt_type_mandi: "മണ്ടി വിലകൾ (സർക്കാർ)",
+                mkt_type_seller: "കർഷക വിൽപന ഓഫറുകൾ",
+                mkt_type_buyer: "വാങ്ങുന്നവരുടെ ആവശ്യങ്ങൾ",
+                mkt_filter_search_ph: "ഉൽപ്പന്നം, മാർക്കറ്റ്, ജില്ല തിരയുക...",
+                mkt_filter_apply: "പ്രയോഗിക്കുക",
+                mkt_all_commodities: "എല്ലാ വിളകളും",
+                mkt_all_states: "എല്ലാ സംസ്ഥാനങ്ങളും",
+                mkt_all_districts: "എല്ലാ ജില്ലകളും",
+                mkt_reported_daily_title: "ഇന്നത്തെ മണ്ടി വിലകൾ",
+                mkt_reported_daily: "ഇന്ത്യയിലുടനീളം റിപ്പോർട്ട് ചെയ്ത പ്രതിദിന മണ്ടി വിലകൾ",
+                mkt_sort_recent: "ക്രമീകരിക്കുക: പുതിയ തീയതി",
+                mkt_sort_highest: "ക്രമീകരിക്കുക: ഉയർന്ന വില",
+                mkt_sort_lowest: "ക്രമീകരിക്കുക: കുറഞ്ഞ വില",
+                mkt_sort_nearest: "ക്രമീകരിക്കുക: അടുത്തുള്ള മാർക്കറ്റ്",
+                mkt_nearby_title: "അടുത്തുള്ള മാർക്കറ്റുകൾ",
+                mkt_view_all: "എല്ലാം കാണുക",
+                mkt_highlights_title: "മാർക്കറ്റ് ഹൈലൈറ്റുകൾ",
+                mkt_highlight_1_title: "തക്കാളി, ഉള്ളി വരവ് ശക്തമാണ്",
+                mkt_highlight_1_desc: "തെക്ക്, പടിഞ്ഞാറൻ എപിഎംസി യാർഡുകളിൽ സജീവ വ്യാപാരം.",
+                mkt_highlight_2_title: "പ്രതിദിന സിൻക്രൊണൈസേഷൻ",
+                mkt_highlight_2_desc: "വിലകൾ ദിവസേന രാവിലെ 06:00 ന് Agmarknet & Data.gov.in വഴി പുതുക്കുന്നു.",
+                mkt_highlight_3_title: "നേരിട്ടുള്ള കർഷക ലിസ്റ്റിംഗുകൾ",
+                mkt_highlight_3_desc: "പരിശോധിച്ചുറപ്പിച്ച പ്രാദേശിക കർഷകരുമായും എഫ്‌പിഒകളുമായും നേരിട്ട് ബന്ധപ്പെടുക.",
+                mkt_data_source: "വിവര സ്രോതസ്സ്:",
+                mkt_data_source_text: "ഇന്ത്യാ ഗവൺമെന്റ് ഓപ്പൺ ഡാറ്റ (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "കുറിപ്പ്: മണ്ടി വിലകൾ റിപ്പോർട്ട് ചെയ്ത നിരക്കുകളാണ്, ഗുണനിലവാരത്തിനും ലേല സമയത്തിനും അനുസരിച്ച് വ്യത്യാസപ്പെടാം.",
+                mkt_btn_details: "വിശദാംശങ്ങളും ചരിത്രവും കാണുക",
+                mkt_btn_compare: "മാർക്കറ്റുകൾ താരതമ്യം ചെയ്യുക",
+                mkt_no_prices_title: "വിപണി വിലകളൊന്നും കണ്ടെത്തിയില്ല",
+                mkt_no_prices_desc: "നിങ്ങളുടെ ഫിൽട്ടറുമായി പൊരുത്തപ്പെടുന്ന മണ്ടി വിലകൾ കണ്ടെത്താനായില്ല. മറ്റൊരു സംസ്ഥാനം, ഉൽപ്പന്നം തിരഞ്ഞെടുക്കുക.",
+                mkt_reset_all: "എല്ലാ ഫിൽട്ടറുകളും പുനഃക്രമീകരിക്കുക",
+                mkt_prev: "മുമ്പത്തെ",
+                mkt_next: "അടുത്തത്",
+                mkt_market_price_badge: "വിപണി വില",
+                mkt_per_quintal: "/ ക്വിന്റൽ",
+                mkt_min_price: "കുറഞ്ഞ വില",
+                mkt_max_price: "പരമാവധി വില",
+                mkt_modal_price: "ശരാശരി വില",
+                mkt_verified_arrival: "സ്ഥിരീകരിച്ച വരവ്: Agmarknet പോർട്ടൽ വഴി റിപ്പോർട്ട് ചെയ്തത്."
+            },
+            hi: {
+                mkt_title_prefix: "भारतीय",
+                mkt_title_accent: "कृषि मंडी बाज़ार",
+                mkt_subtitle: "पूरे भारत में दैनिक मंडी भाव, निकटतम बाज़ार और कृषि उपज सूचियों का अन्वेषण करें।",
+                mkt_your_location: "आपका स्थान",
+                mkt_last_updated: "अंतिम अपडेट",
+                mkt_active_mandis: "सक्रिय मंडियां",
+                mkt_states_covered: "शामिल राज्य",
+                mkt_commodities: "कृषि जींस / फसलें",
+                mkt_latest_price_date: "नवीनतम भाव तिथि",
+                mkt_filter_type: "प्रकार",
+                mkt_filter_state: "राज्य",
+                mkt_filter_district: "जिला",
+                mkt_filter_commodity: "फसल / वस्तु",
+                common_search: "खोजें",
+                mkt_type_mandi: "मंडी भाव (सरकारी)",
+                mkt_type_seller: "किसान बिक्री प्रस्ताव",
+                mkt_type_buyer: "क्रेता आवश्यकताएं",
+                mkt_filter_search_ph: "फसल, मंडी, जिला खोजें...",
+                mkt_filter_apply: "लागू करें",
+                mkt_all_commodities: "सभी फसलें",
+                mkt_all_states: "सभी राज्य",
+                mkt_all_districts: "सभी जिले",
+                mkt_reported_daily_title: "आज के मंडी भाव",
+                mkt_reported_daily: "पूरे भारत से दर्ज दैनिक मंडी भाव",
+                mkt_sort_recent: "क्रमबद्ध करें: नवीनतम तारीख",
+                mkt_sort_highest: "क्रमबद्ध करें: उच्चतम भाव",
+                mkt_sort_lowest: "क्रमबद्ध करें: न्यूनतम भाव",
+                mkt_sort_nearest: "क्रमबद्ध करें: निकटतम मंडी",
+                mkt_nearby_title: "निकटतम मंडियां",
+                mkt_view_all: "सभी देखें",
+                mkt_highlights_title: "बाज़ार की मुख्य बातें",
+                mkt_highlight_1_title: "टमाटर और प्याज की आवक मजबूत",
+                mkt_highlight_1_desc: "दक्षिण और पश्चिम एपीएमसी यार्डों में सक्रिय व्यापार दर्ज किया गया।",
+                mkt_highlight_2_title: "दैनिक तुल्यकालन (सिंक)",
+                mkt_highlight_2_desc: "भाव प्रतिदिन सुबह 06:00 बजे Agmarknet और Data.gov.in से सिंक होते हैं।",
+                mkt_highlight_3_title: "सीधी किसान लिस्टिंग",
+                mkt_highlight_3_desc: "सत्यापित स्थानीय किसानों और एफपीओ के साथ सीधे जुड़ें।",
+                mkt_data_source: "डेटा स्रोत:",
+                mkt_data_source_text: "भारत सरकार ओपन गवर्नमेंट डेटा (data.gov.in) और एग्मार्कनेट।",
+                mkt_disclaimer_note: "नोट: मंडी भाव दर्ज आगमन दरें हैं और उपज की गुणवत्ता व नीलामी समय के अनुसार भिन्न हो सकते हैं।",
+                mkt_btn_details: "विवरण व इतिहास देखें",
+                mkt_btn_compare: "मंडियों की तुलना करें",
+                mkt_no_prices_title: "कोई मंडी भाव नहीं मिला",
+                mkt_no_prices_desc: "आपके फ़िल्टर के अनुसार कोई मंडी भाव नहीं मिला। कृपया अन्य राज्य, फसल चुनें या फ़िल्टर रीसेट करें।",
+                mkt_reset_all: "सभी फ़िल्टर रीसेट करें",
+                mkt_prev: "पिछला",
+                mkt_next: "अगला",
+                mkt_market_price_badge: "मंडी भाव",
+                mkt_per_quintal: "/ क्विंटल",
+                mkt_min_price: "न्यूनतम मूल्य",
+                mkt_max_price: "अधिकतम मूल्य",
+                mkt_modal_price: "मॉडल मूल्य",
+                mkt_verified_arrival: "सत्यापित आगमन: एग्मार्कनेट पोर्टल द्वारा दर्ज।"
+            }
+        };
+
+        function getMarketplaceText(key) {
+            const lang = localStorage.getItem('krishiLang') || 'en';
+            if (MARKETPLACE_I18N[lang] && MARKETPLACE_I18N[lang][key]) {
+                return MARKETPLACE_I18N[lang][key];
+            }
+            if (MARKETPLACE_I18N.en && MARKETPLACE_I18N.en[key]) {
+                return MARKETPLACE_I18N.en[key];
+            }
+            if (typeof t === 'function') {
+                return t(key);
+            }
+            return key;
+        }
+
+
         function updateMarketplaceTranslations() {
             // Header
             const titleH1 = document.querySelector('.header-title-group h1');
-            if (titleH1) titleH1.innerHTML = `${t('mkt_title_prefix')} <span class="green-accent">${t('mkt_title_accent')}</span>`;
+            if (titleH1) titleH1.innerHTML = `${getMarketplaceText('mkt_title_prefix')} <span class="green-accent">${getMarketplaceText('mkt_title_accent')}</span>`;
             const titleP = document.querySelector('.header-title-group p');
-            if (titleP) titleP.innerText = t('mkt_subtitle');
+            if (titleP) titleP.innerText = getMarketplaceText('mkt_subtitle');
 
             // Meta labels
             const metaLabels = document.querySelectorAll('.meta-pill-text .label');
-            if (metaLabels[0]) metaLabels[0].innerText = t('mkt_your_location');
-            if (metaLabels[1]) metaLabels[1].innerText = t('mkt_last_updated');
+            if (metaLabels[0]) metaLabels[0].innerText = getMarketplaceText('mkt_your_location');
+            if (metaLabels[1]) metaLabels[1].innerText = getMarketplaceText('mkt_last_updated');
 
             // Stats labels
             const statMandis = document.getElementById('statActiveMandis');
-            if (statMandis && statMandis.nextElementSibling) statMandis.nextElementSibling.innerText = t('mkt_active_mandis');
+            if (statMandis && statMandis.nextElementSibling) statMandis.nextElementSibling.innerText = getMarketplaceText('mkt_active_mandis');
             const statStates = document.getElementById('statStatesCovered');
-            if (statStates && statStates.nextElementSibling) statStates.nextElementSibling.innerText = t('mkt_states_covered');
+            if (statStates && statStates.nextElementSibling) statStates.nextElementSibling.innerText = getMarketplaceText('mkt_states_covered');
             const statComm = document.getElementById('statCommodities');
-            if (statComm && statComm.nextElementSibling) statComm.nextElementSibling.innerText = t('mkt_commodities');
+            if (statComm && statComm.nextElementSibling) statComm.nextElementSibling.innerText = getMarketplaceText('mkt_commodities');
             const statDate = document.getElementById('statLatestDate');
-            if (statDate && statDate.nextElementSibling) statDate.nextElementSibling.innerText = t('mkt_latest_price_date');
+            if (statDate && statDate.nextElementSibling) statDate.nextElementSibling.innerText = getMarketplaceText('mkt_latest_price_date');
 
             // Filter Labels
             const filterLabels = document.querySelectorAll('.filter-grid .form-group label');
-            if (filterLabels[0]) filterLabels[0].innerText = t('mkt_filter_type');
-            if (filterLabels[1]) filterLabels[1].innerText = t('mkt_filter_state');
-            if (filterLabels[2]) filterLabels[2].innerText = t('mkt_filter_district');
-            if (filterLabels[3]) filterLabels[3].innerText = t('mkt_filter_commodity');
-            if (filterLabels[4]) filterLabels[4].innerText = t('common_search');
+            if (filterLabels[0]) filterLabels[0].innerText = getMarketplaceText('mkt_filter_type');
+            if (filterLabels[1]) filterLabels[1].innerText = getMarketplaceText('mkt_filter_state');
+            if (filterLabels[2]) filterLabels[2].innerText = getMarketplaceText('mkt_filter_district');
+            if (filterLabels[3]) filterLabels[3].innerText = getMarketplaceText('mkt_filter_commodity');
+            if (filterLabels[4]) filterLabels[4].innerText = getMarketplaceText('common_search');
 
             // Filter Type Options
             const typeSelect = document.getElementById('marketTypeSelect');
             if (typeSelect && typeSelect.options.length >= 3) {
-                typeSelect.options[0].text = t('mkt_type_mandi');
-                typeSelect.options[1].text = t('mkt_type_seller');
-                typeSelect.options[2].text = t('mkt_type_buyer');
+                typeSelect.options[0].text = getMarketplaceText('mkt_type_mandi');
+                typeSelect.options[1].text = getMarketplaceText('mkt_type_seller');
+                typeSelect.options[2].text = getMarketplaceText('mkt_type_buyer');
             }
 
             // Filter Search placeholder & Apply button
             const filterSearch = document.getElementById('filterSearch');
-            if (filterSearch) filterSearch.placeholder = t('mkt_filter_search_ph');
+            if (filterSearch) filterSearch.placeholder = getMarketplaceText('mkt_filter_search_ph');
 
             const applyBtn = document.querySelector('.btn-filter-apply');
-            if (applyBtn) applyBtn.innerHTML = `<i class="fas fa-filter"></i> ${t('mkt_filter_apply')}`;
+            if (applyBtn) applyBtn.innerHTML = `<i class="fas fa-filter"></i> ${getMarketplaceText('mkt_filter_apply')}`;
 
             // Category strip first item
             const firstCatSpan = document.querySelector('.category-icon-all + span');
-            if (firstCatSpan) firstCatSpan.innerText = t('mkt_all_commodities');
+            if (firstCatSpan) firstCatSpan.innerText = getMarketplaceText('mkt_all_commodities');
+
+            // Section Headline & Subtitle
+            const mainTitle = document.getElementById('mainSectionTitle');
+            if (mainTitle && currentMarketType === 'mandi') mainTitle.innerText = getMarketplaceText('mkt_reported_daily_title');
+            const mainSub = document.getElementById('mainSectionSubtitle');
+            if (mainSub && currentMarketType === 'mandi') mainSub.innerHTML = `<span>${getMarketplaceText('mkt_reported_daily')}</span>`;
+
+            // Sort dropdown options
+            const sortSelect = document.getElementById('sortSelect');
+            if (sortSelect && sortSelect.options.length >= 4) {
+                sortSelect.options[0].text = getMarketplaceText('mkt_sort_recent');
+                sortSelect.options[1].text = getMarketplaceText('mkt_sort_highest');
+                sortSelect.options[2].text = getMarketplaceText('mkt_sort_lowest');
+                sortSelect.options[3].text = getMarketplaceText('mkt_sort_nearest');
+            }
+
+            // Sidebar Headers
+            const nearbyH3 = document.querySelector('.sidebar-panel:first-child .sidebar-panel-header h3');
+            if (nearbyH3) nearbyH3.innerHTML = `<i class="fas fa-location-crosshairs" style="color: var(--primary);"></i> ${getMarketplaceText('mkt_nearby_title')}`;
+            const nearbyViewAll = document.querySelector('.sidebar-panel:first-child .sidebar-panel-header a');
+            if (nearbyViewAll) nearbyViewAll.innerText = getMarketplaceText('mkt_view_all');
+
+            const highlightsH3 = document.querySelector('.sidebar-panel:nth-child(2) .sidebar-panel-header h3');
+            if (highlightsH3) highlightsH3.innerHTML = `<i class="fas fa-chart-line" style="color: var(--primary);"></i> ${getMarketplaceText('mkt_highlights_title')}`;
+
+            // Market Highlights Items
+            const hItems = document.querySelectorAll('.highlight-item');
+            if (hItems[0]) {
+                const h4 = hItems[0].querySelector('h4');
+                const p = hItems[0].querySelector('p');
+                if (h4) h4.innerText = getMarketplaceText('mkt_highlight_1_title');
+                if (p) p.innerText = getMarketplaceText('mkt_highlight_1_desc');
+            }
+            if (hItems[1]) {
+                const h4 = hItems[1].querySelector('h4');
+                const p = hItems[1].querySelector('p');
+                if (h4) h4.innerText = getMarketplaceText('mkt_highlight_2_title');
+                if (p) p.innerText = getMarketplaceText('mkt_highlight_2_desc');
+            }
+            if (hItems[2]) {
+                const h4 = hItems[2].querySelector('h4');
+                const p = hItems[2].querySelector('p');
+                if (h4) h4.innerText = getMarketplaceText('mkt_highlight_3_title');
+                if (p) p.innerText = getMarketplaceText('mkt_highlight_3_desc');
+            }
+
+            // Disclaimer card
+            const disclaimerP = document.querySelectorAll('.disclaimer-card p');
+            if (disclaimerP[0]) disclaimerP[0].innerHTML = `<strong><i class="fas fa-building-columns"></i> ${getMarketplaceText('mkt_data_source')}</strong> ${getMarketplaceText('mkt_data_source_text')}`;
+            if (disclaimerP[1]) disclaimerP[1].innerHTML = `<strong><i class="fas fa-info-circle"></i></strong> ${getMarketplaceText('mkt_disclaimer_note')}`;
+
+            // Empty state texts
+            const emptyH3 = document.querySelector('.empty-results-box h3');
+            if (emptyH3) emptyH3.innerText = getMarketplaceText('mkt_no_prices_title');
+            const emptyP = document.querySelector('.empty-results-box p');
+            if (emptyP) emptyP.innerText = getMarketplaceText('mkt_no_prices_desc');
+            const emptyBtn = document.querySelector('.empty-results-box button');
+            if (emptyBtn) emptyBtn.innerText = getMarketplaceText('mkt_reset_all');
+
+            // Pagination button texts
+            const btnPrev = document.getElementById('btnPagePrev');
+            if (btnPrev) btnPrev.innerHTML = `<i class="fas fa-chevron-left"></i> ${getMarketplaceText('mkt_prev')}`;
+            const btnNext = document.getElementById('btnPageNext');
+            if (btnNext) btnNext.innerHTML = `${getMarketplaceText('mkt_next')} <i class="fas fa-chevron-right"></i>`;
 
             // Re-render current page
             loadMandiPrices(currentPage);
         }
+
 
         window.addEventListener('krishi:languageChanged', () => {
             updateMarketplaceTranslations();

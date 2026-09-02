@@ -1,13 +1,9 @@
+
 // Base API URL
-// Automatically detects if running locally or deployed on Vercel
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? 'http://localhost:4000/api' 
     : '/api';
-
-// =============================================================
-// GLOBAL I18N & MULTI-LANGUAGE SYSTEM (Single Source of Truth)
-// Supported: en (English), kn (Kannada), ta (Tamil), te (Telugu), ml (Malayalam), hi (Hindi)
-// =============================================================
+window.API_BASE_URL = API_BASE_URL;
 
 const SUPPORTED_LANGUAGES = ['en', 'kn', 'ta', 'te', 'ml', 'hi'];
 
@@ -187,9 +183,87 @@ const I18N_DICT = {
         common_success: "Success",
         common_save: "Save",
         common_cancel: "Cancel",
-        common_close: "Close"
+        common_close: "Close",
+        profile_title: "Farmer Profile",
+        profile_verified: "Verified Krishi Vaani Account",
+        profile_personal_info: "Personal Information",
+        profile_full_name: "Full Name",
+        profile_mobile_number: "Mobile Number",
+        profile_pref_language: "Preferred Language",
+        profile_account_status: "Account Status",
+        profile_status_active: "Active & Protected",
+        profile_farm_location: "Farm Location",
+        profile_location: "Location",
+        profile_gps_coords: "GPS Coordinates",
+        profile_account_security: "Account & Security",
+        profile_password: "Password",
+        profile_security_tier: "Security Tier",
+        profile_sec_verified: "OTP / PIN Verified",
+        profile_change_password: "Change Password",
+        profile_change_photo: "Change Photo",
+        profile_close: "Close",
+        profile_my_profile: "My Profile",
+        profile_appearance: "Appearance",
+        profile_notifications: "Notifications",
+        profile_settings: "Settings",
+        profile_logout: "Logout",
+        cp_title: "Change Password",
+        cp_subtitle: "Update your account password securely",
+        cp_current_pw: "Current Password",
+        cp_current_ph: "Enter your current password",
+        cp_new_pw: "New Password",
+        cp_new_ph: "Enter new password (min. 6 characters)",
+        cp_confirm_pw: "Confirm New Password",
+        cp_confirm_ph: "Re-enter new password",
+        cp_btn_cancel: "Cancel",
+        cp_btn_update: "Update Password",
+        cp_err_empty_current: "Please enter your current password.",
+        cp_err_empty_new: "Please enter a new password.",
+        cp_err_length: "New password must be at least 6 characters long.",
+        cp_err_mismatch: "New password and confirmation password do not match.",
+        cp_err_same: "New password cannot be identical to your current password.",
+        cp_success: "Password updated successfully.",
     },
-    kn: {
+    kn: {        profile_title: "ರೈತರ ಪ್ರೊಫೈಲ್",
+        profile_verified: "ಪರಿಶೀಲಿಸಿದ ಕೃಷಿ ವಾಣಿ ಖಾತೆ",
+        profile_personal_info: "ವೈಯಕ್ತಿಕ ಮಾಹಿತಿ",
+        profile_full_name: "ಪೂರ್ಣ ಹೆಸರು",
+        profile_mobile_number: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+        profile_pref_language: "ಆದ್ಯತೆಯ ಭಾಷೆ",
+        profile_account_status: "ಖಾತೆ ಸ್ಥಿತಿ",
+        profile_status_active: "ಸಕ್ರಿಯ ಮತ್ತು ಸುರಕ್ಷಿತ",
+        profile_farm_location: "ಕೃಷಿ ಭೂಮಿ ಸ್ಥಳ",
+        profile_location: "ಸ್ಥಳ",
+        profile_gps_coords: "GPS ನಿರ್ದೇಶಾಂಕಗಳು",
+        profile_account_security: "ಖಾತೆ ಮತ್ತು ಭದ್ರತೆ",
+        profile_password: "ಪಾಸ್‌ವರ್ಡ್",
+        profile_security_tier: "ಭದ್ರತಾ ಶ್ರೇಣಿ",
+        profile_sec_verified: "OTP / PIN ಪರಿಶೀಲಿಸಲಾಗಿದೆ",
+        profile_change_password: "ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಿ",
+        profile_change_photo: "ಫೋಟೋ ಬದಲಾಯಿಸಿ",
+        profile_close: "ಮುಚ್ಚಿ",
+        profile_my_profile: "ನನ್ನ ಪ್ರೊಫೈಲ್",
+        profile_appearance: "ಗೋಚರತೆ",
+        profile_notifications: "ಅಧಿಸೂಚನೆಗಳು",
+        profile_settings: "ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+        profile_logout: "ಲಾಗ್‌ಔಟ್",
+        cp_title: "ಪಾಸ್‌ವರ್ಡ್ ಬದಲಾಯಿಸಿ",
+        cp_subtitle: "ನಿಮ್ಮ ಖಾತೆಯ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಸುರಕ್ಷಿತವಾಗಿ ನವೀಕರಿಸಿ",
+        cp_current_pw: "ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್",
+        cp_current_ph: "ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ",
+        cp_new_pw: "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್",
+        cp_new_ph: "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ (ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳು)",
+        cp_confirm_pw: "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ದೃಢೀಕರಿಸಿ",
+        cp_confirm_ph: "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಅನ್ನು ಮರುನಮೂದಿಸಿ",
+        cp_btn_cancel: "ರದ್ದುಮಾಡಿ",
+        cp_btn_update: "ಪಾಸ್‌ವರ್ಡ್ ನವೀಕರಿಸಿ",
+        cp_err_empty_current: "ದಯವಿಟ್ಟು ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.",
+        cp_err_empty_new: "ದಯವಿಟ್ಟು ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.",
+        cp_err_length: "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಕನಿಷ್ಠ 6 ಅಕ್ಷರಗಳನ್ನು ಹೊಂದಿರಬೇಕು.",
+        cp_err_mismatch: "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಮತ್ತು ದೃಢೀಕರಣ ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಕೆಯಾಗುತ್ತಿಲ್ಲ.",
+        cp_err_same: "ಹೊಸ ಪಾಸ್‌ವರ್ಡ್ ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್‌ನಂತೆಯೇ ಇರಬಾರದು.",
+        cp_success: "ಪಾಸ್‌ವರ್ಡ್ ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ.",
+
         // Nav & Common
         nav_dashboard: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
         nav_marketplace: "ಮಾರುಕಟ್ಟೆ",
@@ -367,6 +441,57 @@ const I18N_DICT = {
         common_close: "ಮುಚ್ಚಿ"
     },
     ta: {
+        mkt_highlight_3_desc: "சரிபார்க்கப்பட்ட உள்ளூர் விவசாயிகள் மற்றும் FPOக்களுடன் நேரடி தொடர்பு.",
+        mkt_highlight_3_title: "நேரடி விவசாயி பட்டியல்கள்",
+        mkt_highlight_2_desc: "Agmarknet மற்றும் Data.gov.in இலிருந்து தினசரி புதுப்பிக்கப்படுகிறது.",
+        mkt_highlight_2_title: "தினசரி விலை புதுப்பிப்பு",
+        mkt_highlight_1_desc: "தென் மற்றும் மேற்கு மண்டிகளில் தீவிர வர்த்தகம்.",
+        mkt_highlight_1_title: "தக்காளி & வெங்காய வரத்து அதிகம்",
+        mkt_highlights: "சந்தை சிறப்பம்சங்கள்",
+        mkt_view_all: "அனைத்தையும் காண்க",
+        mkt_nearby_markets_short: "அருகிலுள்ள சந்தைகள்",
+        mkt_sort_latest: "வரிசைப்படுத்து: சமீபத்திய தேதி",
+        mkt_reported_daily: "இந்தியா முழுவதிலும் இருந்து தினசரி மண்டி விலைகள்",
+        mkt_todays_mandi_prices: "இன்றைய மண்டி விலைகள்",        profile_title: "விவசாயி சுயவிவரம்",
+        profile_verified: "சரிபார்க்கப்பட்ட கிருஷி வாணி கணக்கு",
+        profile_personal_info: "தனிப்பட்ட தகவல்",
+        profile_full_name: "முழு பெயர்",
+        profile_mobile_number: "கைபேசி எண்",
+        profile_pref_language: "விருப்பமான மொழி",
+        profile_account_status: "கணக்கு நிலை",
+        profile_status_active: "செயலில் & பாதுகாப்பானது",
+        profile_farm_location: "பண்ணை அமைவிடம்",
+        profile_location: "அமைவிடம்",
+        profile_gps_coords: "GPS ஆயத்தொலைவுகள்",
+        profile_account_security: "கணக்கு & பாதுகாப்பு",
+        profile_password: "கடவுச்சொல்",
+        profile_security_tier: "பாதுகாப்பு அடுக்கு",
+        profile_sec_verified: "OTP / PIN சரிபார்க்கப்பட்டது",
+        profile_change_password: "கடவுச்சொல்லை மாற்றவும்",
+        profile_change_photo: "புகைப்படத்தை மாற்றவும்",
+        profile_close: "மூடுக",
+        profile_my_profile: "என் சுயவிவரம்",
+        profile_appearance: "தோற்றம்",
+        profile_notifications: "அறிவிப்புகள்",
+        profile_settings: "அமைப்புகள்",
+        profile_logout: "வெளியேறு",
+        cp_title: "கடவுச்சொல்லை மாற்றவும்",
+        cp_subtitle: "உங்கள் கணக்கு கடவுச்சொல்லை பாதுகாப்பாக புதுப்பிக்கவும்",
+        cp_current_pw: "தற்போதைய கடவுச்சொல்",
+        cp_current_ph: "உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடவும்",
+        cp_new_pw: "புதிய கடவுச்சொல்",
+        cp_new_ph: "புதிய கடவுச்சொல்லை உள்ளிடவும் (குறைந்தது 6 எழுத்துக்கள்)",
+        cp_confirm_pw: "புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்",
+        cp_confirm_ph: "புதிய கடவுச்சொல்லை மீண்டும் உள்ளிடவும்",
+        cp_btn_cancel: "ரத்து செய்",
+        cp_btn_update: "கடவுச்சொல்லைப் புதுப்பிக்கவும்",
+        cp_err_empty_current: "தயவுசெய்து உங்கள் தற்போதைய கடவுச்சொல்லை உள்ளிடவும்.",
+        cp_err_empty_new: "தயவுசெய்து புதிய கடவுச்சொல்லை உள்ளிடவும்.",
+        cp_err_length: "புதிய கடவுச்சொல் குறைந்தது 6 எழுத்துக்களாக இருக்க வேண்டும்.",
+        cp_err_mismatch: "புதிய கடவுச்சொல் மற்றும் உறுதிப்படுத்தல் கடவுச்சொல் பொருந்தவில்லை.",
+        cp_err_same: "புதிய கடவுச்சொல் உங்கள் தற்போதைய கடவுச்சொல்லாக இருக்கக்கூடாது.",
+        cp_success: "கடவுச்சொல் வெற்றிகரமாக புதுப்பிக்கப்பட்டது.",
+
         // Nav & Common
         nav_dashboard: "டாஷ்போர்டு",
         nav_marketplace: "சந்தை",
@@ -543,7 +668,46 @@ const I18N_DICT = {
         common_cancel: "ரத்து செய்",
         common_close: "மூடு"
     },
-    te: {
+    te: {        profile_title: "రైతు ప్రొఫైల్",
+        profile_verified: "ధృవీకరించబడిన కృషి వాణి ఖాతా",
+        profile_personal_info: "వ్యక్తిగత సమాచారం",
+        profile_full_name: "పూర్తి పేరు",
+        profile_mobile_number: "మొబైల్ సంఖ్య",
+        profile_pref_language: "ప్రాధాన్యత భాష",
+        profile_account_status: "ఖాతా స్థితి",
+        profile_status_active: "క్రియాశీల & రక్షితం",
+        profile_farm_location: "వ్యవసాయ క్షేత్రం స్థానం",
+        profile_location: "ప్రాంతం",
+        profile_gps_coords: "GPS కోఆర్డినేట్స్",
+        profile_account_security: "ఖాతా & భద్రత",
+        profile_password: "పాస్‌వర్డ్",
+        profile_security_tier: "భద్రతా శ్రేణి",
+        profile_sec_verified: "OTP / PIN ధృవీకరించబడింది",
+        profile_change_password: "పాస్‌వర్డ్ మార్చండి",
+        profile_change_photo: "ఫోటో మార్చండి",
+        profile_close: "మూసివేయి",
+        profile_my_profile: "నా ప్రొఫైల్",
+        profile_appearance: "రూపురేఖలు",
+        profile_notifications: "నోటిఫికేషన్లు",
+        profile_settings: "సెట్టింగ్స్",
+        profile_logout: "లాగౌట్",
+        cp_title: "పాస్‌వర్డ్ మార్చండి",
+        cp_subtitle: "మీ ఖాతా పాస్‌వర్డ్‌ను సురక్షితంగా నవీకరించండి",
+        cp_current_pw: "ప్రస్తుత పాస్‌వర్డ్",
+        cp_current_ph: "మీ ప్రస్తుత పాస్‌వర్డ్‌ను నమోదు చేయండి",
+        cp_new_pw: "కొత్త పాస్‌వర్డ్",
+        cp_new_ph: "కొత్త పాస్‌వర్డ్‌ను నమోదు చేయండి (కనీసం 6 అక్షరాలు)",
+        cp_confirm_pw: "కొత్త పాస్‌వర్డ్‌ను నిర్ధారించండి",
+        cp_confirm_ph: "కొత్త పాస్‌వర్డ్‌ను మళ్లీ నమోదు చేయండి",
+        cp_btn_cancel: "రద్దు చేయండి",
+        cp_btn_update: "పాస్‌వర్డ్‌ను అప్‌డేట్ చేయండి",
+        cp_err_empty_current: "దయచేసి మీ ప్రస్తుత పాస్‌వర్డ్‌ను నమోదు చేయండి.",
+        cp_err_empty_new: "దయచేసి కొత్త పాస్‌వర్డ్‌ను నమోదు చేయండి.",
+        cp_err_length: "కొత్త పాస్‌వర్డ్ కనీసం 6 అక్షరాలు ఉండాలి.",
+        cp_err_mismatch: "కొత్త పాస్‌వర్డ్ మరియు నిర్ధారణ పాస్‌వర్డ్ సరిపోలడం లేదు.",
+        cp_err_same: "కొత్త పాస్‌వర్డ్ మీ ప్రస్తుత పాస్‌వర్డ్ వలె ఉండకూడదు.",
+        cp_success: "పాస్‌వర్డ్ విజయవంతంగా నవీకరించబడింది.",
+
         // Nav & Common
         nav_dashboard: "డ్యాష్‌బోర్డ్",
         nav_marketplace: "మార్కెట్",
@@ -721,6 +885,57 @@ const I18N_DICT = {
         common_close: "మూసివేయి"
     },
     ml: {
+        mkt_todays_mandi_prices: "ഇന്നത്തെ വിപണി വിലകൾ",
+        mkt_reported_daily: "ഇന്ത്യയിലുടനീളമുള്ള പ്രതിദിന വിപണി വിലകൾ",
+        mkt_sort_latest: "തരംതിരിക്കുക: ഏറ്റവും പുതിയ തീയതി",
+        mkt_nearby_markets_short: "അടുത്തുള്ള വിപണികൾ",
+        mkt_view_all: "എല്ലാം കാണുക",
+        mkt_highlights: "വിപണി ഹൈലൈറ്റുകൾ",
+        mkt_highlight_1_title: "തക്കാളി, ഉള്ളി വരവ് വർദ്ധിച്ചു",
+        mkt_highlight_1_desc: "ദക്ഷിണ, പടിഞ്ഞാറൻ വിപണികളിൽ സജീവ വ്യാപാരം.",
+        mkt_highlight_2_title: "പ്രതിദിന വില പുതുക്കൽ",
+        mkt_highlight_2_desc: "Agmarknet, Data.gov.in എന്നിവയിൽ നിന്ന് ദിവസവും പുതുക്കുന്നു.",
+        mkt_highlight_3_title: "നേരിട്ടുള്ള കർഷക ലിസ്റ്റിംഗുകൾ",
+        mkt_highlight_3_desc: "കർഷകരുമായും FPO-കളുമായും നേരിട്ട് ബന്ധപ്പെടുക.",        profile_title: "കർഷക പ്രൊഫൈൽ",
+        profile_verified: "പരിശോധിച്ചുറപ്പിച്ച കൃഷി വാണി അക്കൗണ്ട്",
+        profile_personal_info: "വ്യക്തിഗത വിവരങ്ങൾ",
+        profile_full_name: "പൂർണ്ണമായ പേര്",
+        profile_mobile_number: "മൊബൈൽ നമ്പർ",
+        profile_pref_language: "തിരഞ്ഞെടുത്ത ഭാഷ",
+        profile_account_status: "അക്കൗണ്ട് നില",
+        profile_status_active: "സജീവം & സുരക്ഷിതം",
+        profile_farm_location: "കൃഷിയിട സ്ഥലം",
+        profile_location: "സ്ഥലം",
+        profile_gps_coords: "GPS കോർഡിനേറ്റുകൾ",
+        profile_account_security: "അക്കൗണ്ടും സുരക്ഷയും",
+        profile_password: "പാസ്‌വേഡ്",
+        profile_security_tier: "സുരക്ഷാ തലം",
+        profile_sec_verified: "OTP / PIN പരിശോധിച്ചു",
+        profile_change_password: "പാസ്‌വേഡ് മാറ്റുക",
+        profile_change_photo: "ഫോട്ടോ മാറ്റുക",
+        profile_close: "അടയ്ക്കുക",
+        profile_my_profile: "എന്റെ പ്രൊഫൈൽ",
+        profile_appearance: "കാഴ്ച",
+        profile_notifications: "അറിയിപ്പുകൾ",
+        profile_settings: "ക്രമീകരണങ്ങൾ",
+        profile_logout: "ലോഗ്ഔട്ട്",
+        cp_title: "പാസ്‌വേഡ് മാറ്റുക",
+        cp_subtitle: "നിങ്ങളുടെ അക്കൗണ്ട് പാസ്‌വേഡ് സുരക്ഷിതമായി അപ്‌ഡേറ്റ് ചെയ്യുക",
+        cp_current_pw: "നിലവിലെ പാസ്‌വേഡ്",
+        cp_current_ph: "നിങ്ങളുടെ നിലവിലെ പാസ്‌വേഡ് നൽകുക",
+        cp_new_pw: "പുതിയ പാസ്‌വേഡ്",
+        cp_new_ph: "പുതിയ പാസ്‌വേഡ് നൽകുക (കുറഞ്ഞത് 6 അക്ഷരങ്ങൾ)",
+        cp_confirm_pw: "പുതിയ പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക",
+        cp_confirm_ph: "പുതിയ പാസ്‌വേഡ് വീണ്ടും നൽകുക",
+        cp_btn_cancel: "റദ്ദാക്കുക",
+        cp_btn_update: "പാസ്‌വേഡ് അപ്ഡേറ്റ് ചെയ്യുക",
+        cp_err_empty_current: "ദയവായി നിങ്ങളുടെ നിലവിലെ പാസ്‌വേഡ് നൽകുക.",
+        cp_err_empty_new: "ദയവായി ഒരു പുതിയ പാസ്‌വേഡ് നൽകുക.",
+        cp_err_length: "പുതിയ പാസ്‌വേഡിൽ കുറഞ്ഞത് 6 അക്ഷരങ്ങൾ ഉണ്ടായിരിക്കണം.",
+        cp_err_mismatch: "പുതിയ പാസ്‌വേഡും സ്ഥിരീകരണ പാസ്‌വേഡും പൊരുത്തപ്പെടുന്നില്ല.",
+        cp_err_same: "പുതിയ പാസ്‌വേഡ് നിങ്ങളുടെ നിലവിലെ പാസ്‌വേഡിന് തുല്യമാകാൻ കഴിയില്ല.",
+        cp_success: "പാസ്‌വേഡ് വിജയകരമായി അപ്‌ഡേറ്റുചെയ്‌തു.",
+
         // Nav & Common
         nav_dashboard: "ഡാഷ്‌ബോർഡ്",
         nav_marketplace: "വിപണി",
@@ -897,7 +1112,46 @@ const I18N_DICT = {
         common_cancel: "റദ്ദാക്കുക",
         common_close: "അടയ്ക്കുക"
     },
-    hi: {
+    hi: {        profile_title: "किसान प्रोफ़ाइल",
+        profile_verified: "सत्यापित कृषि वाणी खाता",
+        profile_personal_info: "व्यक्तिगत जानकारी",
+        profile_full_name: "पूरा नाम",
+        profile_mobile_number: "मोबाइल नंबर",
+        profile_pref_language: "पसंदीदा भाषा",
+        profile_account_status: "खाता स्थिति",
+        profile_status_active: "सक्रिय और सुरक्षित",
+        profile_farm_location: "खेत का स्थान",
+        profile_location: "स्थान",
+        profile_gps_coords: "जीपीएस निर्देशांक",
+        profile_account_security: "खाता और सुरक्षा",
+        profile_password: "पासवर्ड",
+        profile_security_tier: "सुरक्षा स्तर",
+        profile_sec_verified: "OTP / PIN सत्यापित",
+        profile_change_password: "पासवर्ड बदलें",
+        profile_change_photo: "फ़ोटो बदलें",
+        profile_close: "बंद करें",
+        profile_my_profile: "मेरी प्रोफ़ाइल",
+        profile_appearance: "दिखावट",
+        profile_notifications: "सूचनाएं",
+        profile_settings: "सेटिंग्स",
+        profile_logout: "लॉगआउट",
+        cp_title: "पासवर्ड बदलें",
+        cp_subtitle: "अपना खाता पासवर्ड सुरक्षित रूप से अपडेट करें",
+        cp_current_pw: "वर्तमान पासवर्ड",
+        cp_current_ph: "अपना वर्तमान पासवर्ड दर्ज करें",
+        cp_new_pw: "नया पासवर्ड",
+        cp_new_ph: "नया पासवर्ड दर्ज करें (न्यूनतम 6 अक्षर)",
+        cp_confirm_pw: "नए पासवर्ड की पुष्टि करें",
+        cp_confirm_ph: "नया पासवर्ड दोबारा दर्ज करें",
+        cp_btn_cancel: "रद्द करें",
+        cp_btn_update: "पासवर्ड अपडेट करें",
+        cp_err_empty_current: "कृपया अपना वर्तमान पासवर्ड दर्ज करें।",
+        cp_err_empty_new: "कृपया नया पासवर्ड दर्ज करें।",
+        cp_err_length: "नया पासवर्ड कम से कम 6 अक्षरों का होना चाहिए।",
+        cp_err_mismatch: "नया पासवर्ड और पुष्टिकरण पासवर्ड मेल नहीं खाते।",
+        cp_err_same: "नया पासवर्ड आपके वर्तमान पासवर्ड जैसा नहीं हो सकता।",
+        cp_success: "पासवर्ड सफलतापूर्वक अपडेट किया गया।",
+
         // Nav & Common
         nav_dashboard: "डैशबोर्ड",
         nav_marketplace: "मंडी / बाज़ार",
@@ -1321,6 +1575,11 @@ function t(key, fallback = '') {
 /**
  * Set application language globally, update state, and refresh all UI elements
  */
+window.t = t;
+window.I18N_DICT = I18N_DICT;
+window.getAppLanguage = getAppLanguage;
+window.setAppLanguage = setAppLanguage;
+
 function setAppLanguage(lang) {
     if (!SUPPORTED_LANGUAGES.includes(lang)) lang = 'en';
     localStorage.setItem('krishiLang', lang);
@@ -1502,7 +1761,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Profile Dropdown & Mobile Drawer Toggle Logic
+    // 2. Sync Farmer Profile in Top Header on All Pages
+    try {
+        const storedFarmer = JSON.parse(localStorage.getItem('farmer') || '{}');
+        const farmerName = storedFarmer.name || storedFarmer.fullName || 'Farmer';
+        const navNameEl = document.getElementById('navProfileName');
+        if (navNameEl) navNameEl.innerText = farmerName;
+        const popoverNameEl = document.getElementById('popoverUserName');
+        if (popoverNameEl) popoverNameEl.innerText = farmerName;
+        const popoverAvatarEl = document.getElementById('popoverAvatar');
+        if (popoverAvatarEl) {
+            popoverAvatarEl.innerText = farmerName.trim().charAt(0).toUpperCase() || 'F';
+        }
+    } catch(e) {}
+
+    // 3. Profile Dropdown & Mobile Drawer Toggle Logic
     const profileDropdownBtn = document.getElementById('profileDropdownBtn');
     const navProfileDropdown = document.getElementById('navProfileDropdown');
     const mobileNavToggle = document.getElementById('mobileNavToggle');
@@ -1627,3 +1900,681 @@ if (isAuthenticated() && !window.location.pathname.includes('admin')) {
     // Send periodic heartbeat every 60 seconds
     setInterval(sendFarmerHeartbeat, 60000);
 }
+
+
+/* =============================================================
+   GLOBAL FARMER PROFILE & SETTINGS SYSTEM (KRISHI VAANI)
+============================================================= */
+
+// Helper to get initials
+function getFarmerInitials(name) {
+    if (!name) return 'F';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+    return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+}
+
+// Helper to get safe profile image URL
+function getSafeProfileImageUrl(img) {
+    if (!img || typeof img !== 'string') return null;
+    const trimmed = img.trim();
+    if (!trimmed || trimmed === 'null' || trimmed === 'undefined' || trimmed.includes('default-avatar')) return null;
+    if (trimmed.startsWith('data:image') || trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('/') || trimmed.startsWith('assets/')) {
+        return trimmed;
+    }
+    return '/uploads/profiles/' + trimmed;
+}
+
+// Sync user profile name, avatar, and localized UI labels
+function syncUserProfileDisplay() {
+    try {
+        let farmer = {};
+        try {
+            farmer = JSON.parse(localStorage.getItem('farmer') || '{}');
+        } catch(e) { farmer = {}; }
+
+        const rawName = farmer.name || farmer.fullName || farmer.farmerName || 'Farmer';
+        const fullName = rawName.trim();
+        const firstName = fullName.split(' ')[0] || 'Farmer';
+        const initials = getFarmerInitials(fullName);
+        const profileImgUrl = getSafeProfileImageUrl(farmer.profileImage);
+
+        const phone = farmer.phone || farmer.mobile || farmer.phoneNumber;
+        const formattedPhone = phone ? (String(phone).startsWith('+91') ? String(phone) : '+91 ' + String(phone).replace(/^0+/, '')) : 'Not available';
+
+        const lang = getAppLanguage();
+        const dict = (typeof I18N_DICT !== 'undefined' && I18N_DICT[lang]) ? I18N_DICT[lang] : (typeof I18N_DICT !== 'undefined' ? I18N_DICT['en'] : {});
+
+        // 1. Navbar Profile Name
+        document.querySelectorAll('#navProfileName, .nav-profile-name').forEach(el => {
+            el.innerText = firstName;
+        });
+
+        // 2. Navbar Avatar Chip
+        const navAvatarChip = document.getElementById('navProfileAvatarChip');
+        if (navAvatarChip) {
+            navAvatarChip.innerHTML = '';
+            if (profileImgUrl) {
+                const img = document.createElement('img');
+                img.src = profileImgUrl;
+                img.alt = fullName;
+                img.className = 'nav-avatar-img';
+                img.style.width = '22px';
+                img.style.height = '22px';
+                img.style.borderRadius = '50%';
+                img.style.objectFit = 'cover';
+                img.onerror = function() {
+                    navAvatarChip.innerHTML = '<i class="fas fa-circle-user nav-profile-icon"></i>';
+                };
+                navAvatarChip.appendChild(img);
+            } else {
+                navAvatarChip.innerHTML = '<i class="fas fa-circle-user nav-profile-icon"></i>';
+            }
+        }
+
+        // 3. Popover Dropdown Header & Items
+        const popoverName = document.getElementById('popoverUserName');
+        if (popoverName) popoverName.innerText = fullName;
+
+        const popoverSub = document.querySelector('.popover-user-sub span');
+        if (popoverSub && dict.profile_my_profile) popoverSub.innerText = dict.profile_my_profile;
+
+        const popoverAvatar = document.getElementById('popoverAvatar');
+        if (popoverAvatar) {
+            popoverAvatar.innerHTML = '';
+            if (profileImgUrl) {
+                const img = document.createElement('img');
+                img.src = profileImgUrl;
+                img.alt = fullName;
+                img.className = 'popover-avatar-img';
+                img.onerror = function() {
+                    popoverAvatar.innerText = initials;
+                };
+                popoverAvatar.appendChild(img);
+            } else {
+                popoverAvatar.innerText = initials;
+            }
+        }
+
+        // 4. Modal Profile Elements & Translations
+        const modalName = document.getElementById('modalProfileName');
+        if (modalName) modalName.innerText = fullName;
+
+        const modalFullName = document.getElementById('modalProfileFullName');
+        if (modalFullName) modalFullName.innerText = fullName;
+
+        const modalPhone = document.getElementById('modalProfilePhone');
+        if (modalPhone) modalPhone.innerText = formattedPhone;
+
+        const langNames = { en: 'English', kn: 'ಕನ್ನಡ (Kannada)', ta: 'தமிழ் (Tamil)', te: 'తెలుగు (Telugu)', ml: 'മലയാളം (Malayalam)', hi: 'हिन्दी (Hindi)' };
+        const modalLang = document.getElementById('modalProfileLang');
+        if (modalLang) modalLang.innerText = langNames[lang] || 'English';
+
+        const modalAvatar = document.getElementById('modalAvatarDisplay');
+        if (modalAvatar) {
+            modalAvatar.innerHTML = '';
+            if (profileImgUrl) {
+                const img = document.createElement('img');
+                img.src = profileImgUrl;
+                img.alt = fullName;
+                img.className = 'modal-avatar-img';
+                img.onerror = function() {
+                    modalAvatar.innerHTML = `${initials}<span class="profile-avatar-badge" title="Change Photo"><i class="fas fa-camera"></i></span>`;
+                };
+                const badge = document.createElement('span');
+                badge.className = 'profile-avatar-badge';
+                badge.title = 'Change Photo';
+                badge.innerHTML = '<i class="fas fa-camera"></i>';
+                modalAvatar.appendChild(img);
+                modalAvatar.appendChild(badge);
+            } else {
+                modalAvatar.innerHTML = `${initials}<span class="profile-avatar-badge" title="Change Photo"><i class="fas fa-camera"></i></span>`;
+            }
+        }
+
+        // Apply data-i18n inside modals & popovers
+        document.querySelectorAll('#farmerProfileModal [data-i18n], #changePasswordModal [data-i18n], .nav-profile-popover [data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (dict[key]) el.innerText = dict[key];
+        });
+
+        document.querySelectorAll('#changePasswordModal [data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            if (dict[key]) el.setAttribute('placeholder', dict[key]);
+        });
+
+    } catch(err) {
+        console.warn('[ProfileSync] Error syncing profile display:', err);
+    }
+}
+
+// Global photo upload handler
+async function handleGlobalProfilePhotoUpload(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+        alert('Image must be less than 5MB');
+        return;
+    }
+
+    let farmer = {};
+    try {
+        farmer = JSON.parse(localStorage.getItem('farmer') || '{}');
+    } catch(err) { farmer = {}; }
+
+    // 1. Immediate local Preview via Base64 FileReader (0ms latency UI update)
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+        const base64Data = evt.target.result;
+        farmer.profileImage = base64Data;
+        localStorage.setItem('farmer', JSON.stringify(farmer));
+        syncUserProfileDisplay();
+    };
+    reader.readAsDataURL(file);
+
+    // 2. Persist to server if farmer ID is available
+    const farmerId = farmer.id || farmer._id;
+    if (farmerId) {
+        const formData = new FormData();
+        formData.append('profileImage', file);
+
+        const endpoints = [
+            `/api/profile/upload/${farmerId}`,
+            `/profile/upload/${farmerId}`,
+            `/api/farmer/profile/upload/${farmerId}`
+        ];
+
+        for (const ep of endpoints) {
+            try {
+                const res = await fetch(ep, {
+                    method: 'POST',
+                    body: formData
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && data.profileImage) {
+                        farmer.profileImage = data.profileImage;
+                        localStorage.setItem('farmer', JSON.stringify(farmer));
+                        syncUserProfileDisplay();
+                        break;
+                    }
+                }
+            } catch(err) {}
+        }
+    }
+}
+
+// Ensure Farmer Profile Modal, Change Password Modal, and Hidden Upload Input exist in DOM
+function ensureFarmerModalsInDOM() {
+    // 1. Farmer Profile Modal
+    if (!document.getElementById('farmerProfileModal')) {
+        const modalDiv = document.createElement('div');
+        modalDiv.className = 'profile-modal-backdrop';
+        modalDiv.id = 'farmerProfileModal';
+        modalDiv.innerHTML = `
+            <div class="profile-modal-card" role="dialog" aria-labelledby="modalProfileName" aria-modal="true">
+                <!-- Modal Header -->
+                <div class="profile-modal-header">
+                    <div class="profile-header-user">
+                        <div class="profile-avatar-wrap" id="modalAvatarDisplay" title="Change Profile Photo" onclick="document.getElementById('profileUploadInputGlobal')?.click()">
+                            F
+                            <span class="profile-avatar-badge" title="Upload Photo"><i class="fas fa-camera"></i></span>
+                        </div>
+                        <div class="profile-header-meta">
+                            <h3 class="profile-header-name" id="modalProfileName">Farmer</h3>
+                            <div class="profile-verified-badge"><i class="fas fa-circle-check"></i> <span data-i18n="profile_verified">Verified Krishi Vaani Account</span></div>
+                        </div>
+                    </div>
+                    <button type="button" class="profile-modal-close" onclick="closeFarmerProfileModal()" aria-label="Close modal">&times;</button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="profile-modal-body">
+                    <!-- Section 1: Personal Information -->
+                    <div class="profile-section">
+                        <div class="profile-section-title">
+                            <i class="fas fa-user"></i>
+                            <span data-i18n="profile_personal_info">Personal Information</span>
+                        </div>
+                        <div class="profile-info-grid">
+                            <div class="profile-info-card">
+                                <div class="profile-info-icon"><i class="fas fa-id-card"></i></div>
+                                <div class="profile-info-content">
+                                    <span class="profile-info-label" data-i18n="profile_full_name">Full Name</span>
+                                    <strong class="profile-info-val" id="modalProfileFullName">Farmer</strong>
+                                </div>
+                            </div>
+                            <div class="profile-info-card">
+                                <div class="profile-info-icon"><i class="fas fa-phone"></i></div>
+                                <div class="profile-info-content">
+                                    <span class="profile-info-label" data-i18n="profile_mobile_number">Mobile Number</span>
+                                    <strong class="profile-info-val" id="modalProfilePhone">Not available</strong>
+                                </div>
+                            </div>
+                            <div class="profile-info-card">
+                                <div class="profile-info-icon"><i class="fas fa-language"></i></div>
+                                <div class="profile-info-content">
+                                    <span class="profile-info-label" data-i18n="profile_pref_language">Preferred Language</span>
+                                    <strong class="profile-info-val" id="modalProfileLang">English</strong>
+                                </div>
+                            </div>
+                            <div class="profile-info-card">
+                                <div class="profile-info-icon"><i class="fas fa-shield-halved"></i></div>
+                                <div class="profile-info-content">
+                                    <span class="profile-info-label" data-i18n="profile_account_status">Account Status</span>
+                                    <strong class="profile-info-val" style="color: #4ade80;" data-i18n="profile_status_active">Active & Protected</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Farm Location -->
+                    <div class="profile-section">
+                        <div class="profile-section-title">
+                            <i class="fas fa-location-dot"></i>
+                            <span data-i18n="profile_farm_location">Farm Location</span>
+                        </div>
+                        <div class="profile-info-grid">
+                            <div class="profile-info-card">
+                                <div class="profile-info-icon"><i class="fas fa-map-pin"></i></div>
+                                <div class="profile-info-content">
+                                    <span class="profile-info-label" data-i18n="profile_location">Location</span>
+                                    <strong class="profile-info-val" id="modalProfileLocation">Manipal, Karnataka</strong>
+                                </div>
+                            </div>
+                            <div class="profile-info-card">
+                                <div class="profile-info-icon"><i class="fas fa-crosshairs"></i></div>
+                                <div class="profile-info-content">
+                                    <span class="profile-info-label" data-i18n="profile_gps_coords">GPS Coordinates</span>
+                                    <strong class="profile-info-val" id="modalProfileCoords">13.3478, 74.7944</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Account & Security -->
+                    <div class="profile-section">
+                        <div class="profile-section-title">
+                            <i class="fas fa-lock"></i>
+                            <span data-i18n="profile_account_security">Account & Security</span>
+                        </div>
+                        <div class="profile-info-grid">
+                            <div class="profile-info-card" style="justify-content: space-between;">
+                                <div style="display: flex; align-items: center; gap: 0.75rem; min-width: 0;">
+                                    <div class="profile-info-icon"><i class="fas fa-key"></i></div>
+                                    <div class="profile-info-content">
+                                        <span class="profile-info-label" data-i18n="profile_password">Password</span>
+                                        <strong class="profile-info-val">••••••••</strong>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-profile-change-pw" onclick="openChangePasswordModal()" title="Change Account Password">
+                                    <i class="fas fa-pen-to-square"></i> <span data-i18n="profile_change_password">Change Password</span>
+                                </button>
+                            </div>
+                            <div class="profile-info-card">
+                                <div class="profile-info-icon"><i class="fas fa-calendar-check"></i></div>
+                                <div class="profile-info-content">
+                                    <span class="profile-info-label" data-i18n="profile_security_tier">Security Tier</span>
+                                    <strong class="profile-info-val" data-i18n="profile_sec_verified">OTP / PIN Verified</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="profile-modal-footer">
+                    <button type="button" class="btn-profile-secondary" onclick="document.getElementById('profileUploadInputGlobal')?.click()">
+                        <i class="fas fa-camera"></i> <span data-i18n="profile_change_photo">Change Photo</span>
+                    </button>
+                    <button type="button" class="btn-profile-primary" onclick="closeFarmerProfileModal()">
+                        <i class="fas fa-check"></i> <span data-i18n="profile_close">Close</span>
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modalDiv);
+    }
+
+    // 2. Change Password Modal
+    if (!document.getElementById('changePasswordModal')) {
+        const cpDiv = document.createElement('div');
+        cpDiv.className = 'profile-modal-backdrop';
+        cpDiv.id = 'changePasswordModal';
+        cpDiv.innerHTML = `
+            <div class="profile-modal-card cp-modal-card" role="dialog" aria-labelledby="cpModalTitle" aria-modal="true">
+                <div class="profile-modal-header">
+                    <div class="profile-header-user">
+                        <div class="profile-info-icon" style="width: 40px; height: 40px; font-size: 1.1rem;"><i class="fas fa-key"></i></div>
+                        <div>
+                            <h3 class="profile-header-name" id="cpModalTitle" data-i18n="cp_title">Change Password</h3>
+                            <p style="margin: 2px 0 0 0; font-size: 0.78rem; color: #94a3b8;" data-i18n="cp_subtitle">Update your account password securely</p>
+                        </div>
+                    </div>
+                    <button type="button" class="profile-modal-close" onclick="closeChangePasswordModal()" aria-label="Close modal">&times;</button>
+                </div>
+
+                <div class="profile-modal-body">
+                    <!-- Status / Feedback Message -->
+                    <div id="cpStatusAlert" class="cp-alert-box" style="display: none;"></div>
+
+                    <form id="changePasswordForm" onsubmit="submitChangePassword(event)" autocomplete="off">
+                        <!-- Current Password -->
+                        <div class="cp-input-group">
+                            <label class="cp-label" for="cpCurrentPw" data-i18n="cp_current_pw">Current Password</label>
+                            <div class="cp-password-wrap">
+                                <input type="password" id="cpCurrentPw" class="cp-input" data-i18n-placeholder="cp_current_ph" placeholder="Enter your current password" required autocomplete="current-password">
+                                <button type="button" class="cp-eye-btn" onclick="togglePasswordVisibility('cpCurrentPw', this)" title="Show/Hide Password" aria-label="Toggle password visibility">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- New Password -->
+                        <div class="cp-input-group">
+                            <label class="cp-label" for="cpNewPw" data-i18n="cp_new_pw">New Password</label>
+                            <div class="cp-password-wrap">
+                                <input type="password" id="cpNewPw" class="cp-input" data-i18n-placeholder="cp_new_ph" placeholder="Enter new password (min. 6 characters)" required minlength="6" autocomplete="new-password">
+                                <button type="button" class="cp-eye-btn" onclick="togglePasswordVisibility('cpNewPw', this)" title="Show/Hide Password" aria-label="Toggle password visibility">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Confirm New Password -->
+                        <div class="cp-input-group">
+                            <label class="cp-label" for="cpConfirmPw" data-i18n="cp_confirm_pw">Confirm New Password</label>
+                            <div class="cp-password-wrap">
+                                <input type="password" id="cpConfirmPw" class="cp-input" data-i18n-placeholder="cp_confirm_ph" placeholder="Re-enter new password" required minlength="6" autocomplete="new-password">
+                                <button type="button" class="cp-eye-btn" onclick="togglePasswordVisibility('cpConfirmPw', this)" title="Show/Hide Password" aria-label="Toggle password visibility">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="profile-modal-footer" style="padding: 1rem 0 0 0; margin-top: 1rem; border-top: 1px solid #2E404B;">
+                            <button type="button" class="btn-profile-secondary" onclick="closeChangePasswordModal()" data-i18n="cp_btn_cancel">Cancel</button>
+                            <button type="submit" id="btnSubmitChangePw" class="btn-profile-primary">
+                                <i class="fas fa-shield-halved"></i> <span data-i18n="cp_btn_update">Update Password</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(cpDiv);
+    }
+
+    // 3. Hidden File Upload Input
+    if (!document.getElementById('profileUploadInputGlobal')) {
+        const fileInp = document.createElement('input');
+        fileInp.type = 'file';
+        fileInp.id = 'profileUploadInputGlobal';
+        fileInp.accept = 'image/*';
+        fileInp.style.display = 'none';
+        fileInp.addEventListener('change', handleGlobalProfilePhotoUpload);
+        document.body.appendChild(fileInp);
+    }
+}
+
+// Toggle password visibility helper
+window.togglePasswordVisibility = function(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    const icon = btn.querySelector('i');
+    if (icon) {
+        icon.className = isPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
+    }
+};
+
+// Open Farmer Profile Modal
+window.openFarmerProfileModal = function(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    
+    // Close dropdown menu
+    const dd = document.getElementById('navProfileDropdown');
+    const btn = document.getElementById('profileDropdownBtn');
+    if (dd) dd.classList.remove('show');
+    if (btn) btn.classList.remove('active');
+
+    ensureFarmerModalsInDOM();
+
+    let farmer = {};
+    try {
+        farmer = JSON.parse(localStorage.getItem('farmer') || '{}');
+    } catch(err) { farmer = {}; }
+
+    const rawName = farmer.name || farmer.fullName || 'Farmer';
+    const fullName = rawName.trim();
+    const phone = farmer.phone || farmer.mobile || farmer.phoneNumber;
+    const formattedPhone = phone ? (String(phone).startsWith('+91') ? String(phone) : '+91 ' + String(phone).replace(/^0+/, '')) : 'Not available';
+
+    const city = farmer.city || window.currentCity || 'Manipal';
+    const state = farmer.state || window.currentState || 'Karnataka';
+    const locationStr = `${city}, ${state}`;
+
+    const lat = window.currentLat || (farmer.location?.coordinates ? farmer.location.coordinates[1] : 13.3478);
+    const lon = window.currentLon || (farmer.location?.coordinates ? farmer.location.coordinates[0] : 74.7944);
+    const coordsStr = (lat && lon) ? `${Number(lat).toFixed(4)}, ${Number(lon).toFixed(4)}` : 'Not available';
+
+    const locEl = document.getElementById('modalProfileLocation');
+    if (locEl) locEl.innerText = locationStr;
+
+    const coordsEl = document.getElementById('modalProfileCoords');
+    if (coordsEl) coordsEl.innerText = coordsStr;
+
+    syncUserProfileDisplay();
+
+    const modal = document.getElementById('farmerProfileModal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+// Close Farmer Profile Modal
+window.closeFarmerProfileModal = function() {
+    const modal = document.getElementById('farmerProfileModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+};
+
+// Open Change Password Modal
+window.openChangePasswordModal = function() {
+    ensureFarmerModalsInDOM();
+    const alertBox = document.getElementById('cpStatusAlert');
+    if (alertBox) {
+        alertBox.style.display = 'none';
+        alertBox.className = 'cp-alert-box';
+        alertBox.innerText = '';
+    }
+    const form = document.getElementById('changePasswordForm');
+    if (form) form.reset();
+
+    // Reset eye icons to eye (hidden password state)
+    document.querySelectorAll('.cp-eye-btn i').forEach(icon => {
+        icon.className = 'fas fa-eye';
+    });
+    document.querySelectorAll('.cp-input').forEach(inp => {
+        inp.type = 'password';
+    });
+
+    const cpModal = document.getElementById('changePasswordModal');
+    if (cpModal) {
+        cpModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    syncUserProfileDisplay();
+};
+
+// Close Change Password Modal
+window.closeChangePasswordModal = function() {
+    const cpModal = document.getElementById('changePasswordModal');
+    if (cpModal) {
+        cpModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    const form = document.getElementById('changePasswordForm');
+    if (form) form.reset();
+};
+
+// Submit Change Password Form
+window.submitChangePassword = async function(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+
+    const lang = getAppLanguage();
+    const dict = (typeof I18N_DICT !== 'undefined' && I18N_DICT[lang]) ? I18N_DICT[lang] : (typeof I18N_DICT !== 'undefined' ? I18N_DICT['en'] : {});
+
+    const currentPwEl = document.getElementById('cpCurrentPw');
+    const newPwEl = document.getElementById('cpNewPw');
+    const confirmPwEl = document.getElementById('cpConfirmPw');
+    const alertBox = document.getElementById('cpStatusAlert');
+    const submitBtn = document.getElementById('btnSubmitChangePw');
+
+    const currentPw = currentPwEl ? currentPwEl.value : '';
+    const newPw = newPwEl ? newPwEl.value : '';
+    const confirmPw = confirmPwEl ? confirmPwEl.value : '';
+
+    function showAlert(msg, isError = true) {
+        if (!alertBox) return;
+        alertBox.style.display = 'block';
+        alertBox.className = isError ? 'cp-alert-box cp-alert-error' : 'cp-alert-box cp-alert-success';
+        alertBox.innerHTML = `<i class="${isError ? 'fas fa-circle-exclamation' : 'fas fa-circle-check'}"></i> <span>${msg}</span>`;
+    }
+
+    // Client-side Validations with localized messages
+    if (!currentPw) {
+        showAlert(dict.cp_err_empty_current || 'Please enter your current password.', true);
+        return;
+    }
+    if (!newPw) {
+        showAlert(dict.cp_err_empty_new || 'Please enter a new password.', true);
+        return;
+    }
+    if (newPw.length < 6) {
+        showAlert(dict.cp_err_length || 'New password must be at least 6 characters long.', true);
+        return;
+    }
+    if (newPw !== confirmPw) {
+        showAlert(dict.cp_err_mismatch || 'New password and confirmation password do not match.', true);
+        return;
+    }
+    if (newPw === currentPw) {
+        showAlert(dict.cp_err_same || 'New password cannot be identical to your current password.', true);
+        return;
+    }
+
+    let farmer = {};
+    try {
+        farmer = JSON.parse(localStorage.getItem('farmer') || '{}');
+    } catch(err) { farmer = {}; }
+
+    const farmerId = farmer.id || farmer._id;
+    if (!farmerId) {
+        showAlert('Please log in again to update your password.', true);
+        return;
+    }
+
+    // Disable submit button during request
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>${dict.common_loading || 'Updating...'}</span>`;
+    }
+
+    try {
+        const res = await fetch('/api/auth/change-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
+            },
+            body: JSON.stringify({
+                farmerId,
+                currentPassword: currentPw,
+                newPassword: newPw
+            })
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+            showAlert(dict.cp_success || 'Password updated successfully.', false);
+            if (currentPwEl) currentPwEl.value = '';
+            if (newPwEl) newPwEl.value = '';
+            if (confirmPwEl) confirmPwEl.value = '';
+
+            setTimeout(() => {
+                closeChangePasswordModal();
+            }, 1200);
+        } else {
+            showAlert(data.error || 'Failed to update password. Please check your current password.', true);
+        }
+    } catch(err) {
+        console.error('Password update network error:', err);
+        showAlert('Network error. Please verify your connection and try again.', true);
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<i class="fas fa-shield-halved"></i> <span>${dict.cp_btn_update || 'Update Password'}</span>`;
+        }
+    }
+};
+
+// Global click outside modal listener
+document.addEventListener('click', (e) => {
+    const profileModal = document.getElementById('farmerProfileModal');
+    if (profileModal && profileModal.classList.contains('active') && e.target === profileModal) {
+        closeFarmerProfileModal();
+    }
+    const cpModal = document.getElementById('changePasswordModal');
+    if (cpModal && cpModal.classList.contains('active') && e.target === cpModal) {
+        closeChangePasswordModal();
+    }
+});
+
+// Sync on DOMContentLoaded and languageChanged
+document.addEventListener('DOMContentLoaded', () => {
+    syncUserProfileDisplay();
+    ensureFarmerModalsInDOM();
+    initScrollRevealObserver();
+});
+
+
+// Universal Scroll Reveal & Component Visibility Initializer
+function initScrollRevealObserver() {
+    const selector = '.scroll-reveal, .page-header-row, .stats-strip, .filter-card, .main-layout-grid, .commodity-cards-grid, .table-view-container, .sidebar-panel, .disclaimer-card, .page-header, .charts-grid, .alerts-container, .alert-page, .threshold-grid, .news-header, .news-grid';
+    
+    // Immediately reveal existing elements on page load
+    const elements = document.querySelectorAll(selector);
+    elements.forEach(el => el.classList.add('is-revealed'));
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.05, rootMargin: '0px 0px 50px 0px' });
+
+        document.querySelectorAll(selector).forEach(el => observer.observe(el));
+    }
+}
+
+window.revealNewElements = function(container) {
+    if (!container) return;
+    const items = container.querySelectorAll('.commodity-card, .alert-card, .news-card, .stat-item, .chart-card, .threshold-card');
+    items.forEach(el => el.classList.add('is-revealed'));
+    if (container.classList) container.classList.add('is-revealed');
+};
+
+
+window.addEventListener('krishi:languageChanged', () => {
+    syncUserProfileDisplay();
+});

@@ -65,6 +65,9 @@ const Farmer = {
 
   // Find a farmer by UUID ID
   findById: async (id) => {
+    if (!id || typeof id !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+      return null;
+    }
     const res = await query('SELECT * FROM farmers WHERE id = $1 LIMIT 1', [id]);
     return res.rows.length > 0 ? formatFarmer(res.rows[0]) : null;
   },
@@ -195,6 +198,20 @@ const Farmer = {
   },
 
   // Update profile image
+    // Update password with secure bcrypt hashing
+  updatePassword: async (id, newPassword) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    const res = await query(`
+      UPDATE farmers
+      SET password = $1, last_activity_at = NOW(), updated_at = NOW()
+      WHERE id = $2
+      RETURNING *
+    `, [hashedPassword, id]);
+
+    return res.rows.length > 0 ? formatFarmer(res.rows[0]) : null;
+  },
+
   updateProfileImage: async (id, profileImage) => {
     const res = await query(`
       UPDATE farmers
