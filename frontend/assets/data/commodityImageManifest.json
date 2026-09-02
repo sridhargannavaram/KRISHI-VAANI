@@ -197,10 +197,10 @@
   },
   "cowpea": {
     "name": "Cowpea",
-    "filename": "cowpea.webp",
-    "localPath": "assets/images/commodities/cowpea.webp",
+    "filename": "cowpea.png",
+    "localPath": "assets/images/commodities/cowpea.png",
     "status": "available",
-    "fileSizeBytes": 119763
+    "fileSizeBytes": 2620992
   },
   "cucumber": {
     "name": "Cucumber",
@@ -218,10 +218,10 @@
   },
   "custard-apple": {
     "name": "Custard Apple",
-    "filename": "custard-apple.webp",
-    "localPath": "assets/images/commodities/custard-apple.webp",
+    "filename": "custard-apple.jpg",
+    "localPath": "assets/images/commodities/custard-apple.jpg",
     "status": "available",
-    "fileSizeBytes": 86439
+    "fileSizeBytes": 53396
   },
   "drumstick": {
     "name": "Drumstick",
@@ -302,10 +302,10 @@
   },
   "guava": {
     "name": "Guava",
-    "filename": "guava.webp",
-    "localPath": "assets/images/commodities/guava.webp",
+    "filename": "Guava.png",
+    "localPath": "assets/images/commodities/Guava.png",
     "status": "available",
-    "fileSizeBytes": 29652
+    "fileSizeBytes": 2412522
   },
   "horse-gram": {
     "name": "Horse Gram",
@@ -691,5 +691,33 @@
     "localPath": "assets/images/commodities/yam.webp",
     "status": "available",
     "fileSizeBytes": 211573
+  },
+  "black-gram": {
+    "name": "Black Gram (Urad)",
+    "filename": "Black Gram (Urad).png",
+    "localPath": "assets/images/commodities/Black Gram (Urad).png",
+    "status": "available",
+    "fileSizeBytes": 2565831
+  },
+  "pepper": {
+    "name": "Pepper",
+    "filename": "pepper.png",
+    "localPath": "assets/images/commodities/pepper.png",
+    "status": "available",
+    "fileSizeBytes": 2483744
+  },
+  "sugarcane": {
+    "name": "Sugarcane",
+    "filename": "sugarcane.jpg",
+    "localPath": "assets/images/commodities/sugarcane.jpg",
+    "status": "available",
+    "fileSizeBytes": 73251
+  },
+  "sunflower": {
+    "name": "Sunflower",
+    "filename": "sunflower.jpg",
+    "localPath": "assets/images/commodities/sunflower.jpg",
+    "status": "available",
+    "fileSizeBytes": 58720
   }
 }
