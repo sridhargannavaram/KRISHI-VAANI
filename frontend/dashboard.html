@@ -4851,6 +4851,13 @@
             if (lower.includes('intercrop') || lower.includes('ഇടവിള') || lower.includes('ஊடுபயிர்') || lower.includes('ಮಿಶ್ರ') || lower.includes('అంతర')) return 'intercropping';
             if (lower.includes('bajra') || lower.includes('pearl millet') || lower.includes('సజ్జ') || lower.includes('ಸಜ್ಜೆ') || lower.includes('கம்பு') || lower.includes('കമ്പം') || lower.includes('बाजरा')) return 'bajra';
             if (lower.includes('jowar') || lower.includes('sorghum') || lower.includes('జొన్న') || lower.includes('ಜೋಳ') || lower.includes('சோளம்') || lower.includes('ज्वार')) return 'jowar';
+            if (lower.includes('sesame') || lower.includes('til') || lower.includes('నువ్వు') || lower.includes('ಎಳ್ಳು') || lower.includes('எள்') || lower.includes('तिल')) return 'sesame';
+            if (lower.includes('cowpea') || lower.includes('alasande') || lower.includes('bobbarlu') || lower.includes('காராமணி') || lower.includes('लोबिया')) return 'cowpea';
+            if (lower.includes('bitter gourd') || lower.includes('karela') || lower.includes('కాకర') || lower.includes('ಹಾಗಲ') || lower.includes('பாகற்காய்')) return 'bitter gourd';
+            if (lower.includes('brinjal') || lower.includes('eggplant') || lower.includes('వంకాయ') || lower.includes('ಬದನೆ') || lower.includes('கத்தரிக்காய்') || lower.includes('बैंगन')) return 'brinjal';
+            if (lower.includes('guava') || lower.includes('జామ') || lower.includes('ಸೀಬೆ') || lower.includes('கொய்யா') || lower.includes('अमरूद')) return 'guava';
+            if (lower.includes('pepper') || lower.includes('మిరియాలు') || lower.includes('ಕಾಳುಮೆಣಸು') || lower.includes('மிளகு') || lower.includes('काली मिर्च')) return 'pepper';
+            if (lower.includes('custard apple') || lower.includes('sitaphal') || lower.includes('sharifa') || lower.includes('annona')) return 'custard apple';
             return null;
         }
 
@@ -5003,6 +5010,186 @@
                 sowing: { en: 'Feb – May / July – Oct', te: 'ఫిబ్రవరి – మే / జూలై – అక్టోబరు', kn: 'ಫೆಬ್ರವರಿ – ಮೇ / ಜುಲೈ – ಅಕ್ಟೋಬರ್', hi: 'फरवरी – मई / जुलाई – अक्टूबर', ta: 'பிப்ரவரி – மே / ஜூலை – அக்டோபர்', ml: 'ഫെബ്രുവരി – മേയ് / ജൂലൈ – ഒക്ടോബർ' },
                 soil: { en: 'Rich loamy soil with high fertility and pH 6.5–7.5', te: 'సారవంతమైన గరప నేలలు', kn: 'ಉತ್ತಮ ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'उपजाऊ दोमट मिट्टी', ta: 'வளமான வண்டல் மண்', ml: 'ഫലഭൂയിഷ്ഠമായ പശിമരാശി മണ്ണ്' },
                 water: { en: 'High (1500–2000 mm), regular drip irrigation', te: 'ఎక్కువ (క్రమంతప్పని బిందు సేద్యం)', kn: 'ಅಧಿಕ (ನಿಯಮಿತ ಹನಿ ನೀರಾವರಿ)', hi: 'अधिक (नियमित ड्रिप सिंचाई)', ta: 'அதிக நீர்த் தேவை', ml: 'ഉയർന്ന ജല ആവശ്യകത' },
+                icon: 'fa-apple-whole'
+            },
+            'wheat': {
+                slug: 'wheat',
+                category: 'cereals',
+                secondary: { en: 'Wheat (Triticum aestivum)', te: 'గోధుమ (Triticum aestivum)', kn: 'ಗೋಧಿ (Triticum aestivum)', hi: 'गेहूं (Triticum aestivum)', ta: 'கோதுமை (Triticum aestivum)', ml: 'ഗോതമ്പ് (Triticum aestivum)' },
+                varieties: ['HD-2967', 'PBW-343', 'HD-3086', 'WH-1105', 'DBW-187'],
+                sowing: { en: 'Oct – Nov (Rabi)', te: 'అక్టోబరు – నవంబరు (రబీ)', kn: 'ಅಕ್ಟೋಬರ್ – ನವೆಂಬರ್ (ರಬಿ)', hi: 'अक्टूबर – नवंबर (रबी)', ta: 'அக்டோபர் – நவம்பர் (ரபி)', ml: 'ഒക്ടോബർ – നവംബർ (റബി)' },
+                soil: { en: 'Well-drained fertile loam to clay loam soil', te: 'సారవంతమైన గరప లేదా బంకమట్టి నేలలు', kn: 'ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'उपजाऊ दोमट या बलुई दोमट मिट्टी', ta: 'வளமான வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (450–650 mm), critical irrigations at CRI stage', te: 'మధ్యస్థం (450–650 మి.మీ)', kn: 'ಮಧ್ಯಮ (450–650 ಮಿ.ಮೀ)', hi: 'मध्यम (450–650 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-wheat-awn'
+            },
+            'mustard': {
+                slug: 'mustard',
+                category: 'oilseeds',
+                secondary: { en: 'Mustard / Sarson (Brassica juncea)', te: 'ఆవాలు (Brassica juncea)', kn: 'ಸಾಸಿವೆ (Brassica juncea)', hi: 'सरसों (Brassica juncea)', ta: 'கடுகு (Brassica juncea)', ml: 'കടുക് (Brassica juncea)' },
+                varieties: ['Pusa Bold', 'RH-30', 'Varuna (T-59)', 'Pusa Jai Kisan', 'Kranti'],
+                sowing: { en: 'Sep – Oct (Rabi)', te: 'సెప్టెంబరు – అక్టోబరు', kn: 'ಸೆಪ್ಟೆಂಬರ್ – ಅಕ್ಟೋಬರ್', hi: 'सितंबर – अक्टूबर', ta: 'செப்டம்பர் – அக்டோபர்', ml: 'സെപ്റ്റംബർ – ഒക്ടോബർ' },
+                soil: { en: 'Sandy loam to clay loam with good drainage', te: 'నీరు ఇంకే ఇసుక గరప నేలలు', kn: 'ಉತ್ತಮ ನೀರು ಬಸಿಯುವ ಗೋಡು ಮಣ್ಣು', hi: 'बलुई दोमट मिट्टी', ta: 'வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Low (250–350 mm), requires 2–3 irrigations', te: 'తక్కువ (250–350 మి.మీ)', kn: 'ಕಡಿಮೆ (250–350 ಮಿ.ಮೀ)', hi: 'कम (250–350 मिमी)', ta: 'குறைந்த நீர்த் தேவை', ml: 'കുറഞ്ഞ ജല ആവശ്യകത' },
+                icon: 'fa-sun'
+            },
+            'soybean': {
+                slug: 'soybean',
+                category: 'oilseeds',
+                secondary: { en: 'Soybean (Glycine max)', te: 'సోయాబీన్ (Glycine max)', kn: 'ಸೋಯಾಬೀನ್ (Glycine max)', hi: 'सोयाबीन (Glycine max)', ta: 'சோயாபீன் (Glycine max)', ml: 'സോയാബീൻ (Glycine max)' },
+                varieties: ['JS-335', 'JS-9305', 'JS-9560', 'MACS-450', 'NRC-37'],
+                sowing: { en: 'June – July (Kharif)', te: 'జూన్ – జూలై (ఖరీఫ్)', kn: 'ಜೂನ್ – ಜುಲೈ (ಖಾರೀಫ್)', hi: 'जून – जुलाई (खरीफ)', ta: 'ஜூன் – ஜூலை (காரீஃப்)', ml: 'ജൂൺ – ജൂലൈ (ഖാരിഫ്)' },
+                soil: { en: 'Well-drained fertile black cotton soil (Vertisols)', te: 'సారవంతమైన నల్లరేగడి నేలలు', kn: 'ಫಲವತ್ತಾದ ಕಪ್ಪು ಹತ್ತಿ ಮಣ್ಣು', hi: 'उर्वर काली मिट्टी (वर्टिसोल)', ta: 'வளமான கரிசல் மண்', ml: 'ഫലഭൂയിഷ്ഠമായ കരിമണ്ണ്' },
+                water: { en: 'Medium (450–650 mm), sensitive to waterlogging', te: 'మధ్యస్థం (450–650 మి.మీ)', kn: 'ಮಧ್ಯಮ (450–650 ಮಿ.ಮೀ)', hi: 'मध्यम (450–650 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-seedling'
+            },
+            'chilli': {
+                slug: 'chilli',
+                category: 'vegetables',
+                secondary: { en: 'Chilli (Capsicum annuum)', te: 'మిరపకాయ (Capsicum annuum)', kn: 'ಮೆಣಸಿನಕಾಯಿ (Capsicum annuum)', hi: 'मिर्च (Capsicum annuum)', ta: 'மிளகாய் (Capsicum annuum)', ml: 'മുളക് (Capsicum annuum)' },
+                varieties: ['Guntur Sannam (S4)', 'Byadgi Kaddi', 'LCA-334', 'Arka Meghana', 'Pusa Jwala'],
+                sowing: { en: 'July – Sep (Kharif) / Oct – Nov (Rabi)', te: 'జూలై – సెప్టెంబరు / అక్టోబరు', kn: 'ಜುಲೈ – ಸೆಪ್ಟೆಂಬರ್ / ಅಕ್ಟೋಬರ್', hi: 'जुलाई – सितंबर / अक्टूबर', ta: 'ஜூலை – செப்டம்பர்', ml: 'ജൂലൈ – സെപ്റ്റംബർ' },
+                soil: { en: 'Well-drained sandy loam or black clay loam', te: 'నీరు ఇంకే ఇసుక గరప లేదా నల్లరేగడి నేలలు', kn: 'ಉತ್ತಮ ನೀರು ಬಸಿಯುವ ಗೋಡು ಅಥವಾ ಕಪ್ಪು ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली दोमट मिट्टी', ta: 'வண்டல் அல்லது கரிசல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (500–600 mm), drip irrigation optimal', te: 'మధ్యస్థం (500–600 మి.మీ)', kn: 'ಮಧ್ಯಮ (500–600 ಮಿ.ಮೀ)', hi: 'मध्यम (500–600 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-seedling'
+            },
+            'sugarcane': {
+                slug: 'sugarcane',
+                category: 'all',
+                secondary: { en: 'Sugarcane (Saccharum officinarum)', te: 'చెరకు (Saccharum officinarum)', kn: 'ಕಬ್ಬು (Saccharum officinarum)', hi: 'गन्ना (Saccharum officinarum)', ta: 'கரும்பு (Saccharum officinarum)', ml: 'കരിമ്പ് (Saccharum officinarum)' },
+                varieties: ['Co-86032', 'Co-0238', 'Co-8371', 'CoM-0265'],
+                sowing: { en: 'Jan – March (Eksali) / July – Aug (Adsali)', te: 'జనవరి – మార్చి / జూలై – ఆగస్టు', kn: 'ಜನವರಿ – ಮಾರ್ಚ್ / ಜುಲೈ – ಆಗಸ್ಟ್', hi: 'जनवरी – मार्च / जुलाई – अगस्त', ta: 'ஜனவரி – மார்ச் / ஜூலை – ஆகஸ்ட்', ml: 'ജനുവരി – మార్చి' },
+                soil: { en: 'Deep fertile loam or clay loam with high organic matter', te: 'లోతైన సారవంతమైన గరప లేదా బంకమట్టి నేలలు', kn: 'ಆಳವಾದ ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'गहरी उपजाऊ दोमट मिट्टी', ta: 'ஆழமான வளமான வண்டல் மண்', ml: 'ആഴമുള്ള പശിമരാശി മണ്ണ്' },
+                water: { en: 'High (1500–2500 mm), furrow or subsurface drip', te: 'ఎక్కువ (1500–2500 మి.మీ)', kn: 'ಅಧಿಕ (1500–2500 ಮಿ.ಮೀ)', hi: 'अधिक (1500–2500 मिमी)', ta: 'அதிக நீர்த் தேவை', ml: 'ഉയർന്ന ജല ആവശ്യകത' },
+                icon: 'fa-leaf'
+            },
+            'bengal gram': {
+                slug: 'bengal-gram',
+                category: 'pulses',
+                secondary: { en: 'Chickpea / Chana (Cicer arietinum)', te: 'శనగలు (Cicer arietinum)', kn: 'ಕಡಲೆ ಕಾಳು (Cicer arietinum)', hi: 'चना (Cicer arietinum)', ta: 'கொண்டைக்கடலை (Cicer arietinum)', ml: 'കടല (Cicer arietinum)' },
+                varieties: ['JG-11', 'JAKI-9218', 'Annigeri-1', 'Pusa-362', 'KAK-2'],
+                sowing: { en: 'Oct – Nov (Post-Monsoon Rabi)', te: 'అక్టోబరు – నవంబరు (రబీ)', kn: 'ಅಕ್ಟೋಬರ್ – ನವೆಂಬರ್ (ರಬಿ)', hi: 'अक्टूबर – नवंबर (रबी)', ta: 'அக்டோபர் – நவம்பர் (ரபி)', ml: 'ഒക്ടോബർ – നവംബർ' },
+                soil: { en: 'Deep moisture-retentive black cotton or clay loam', te: 'తేమను నిలిపే లోతైన నల్లరేగడి నేలలు', kn: 'ತೇವಾಂಶ ಹಿಡಿದಿಡುವ ಕಪ್ಪು ಮಣ್ಣು', hi: 'नमी धारण करने वाली भारी दोमट या काली मिट्टी', ta: 'ஈரப்பதம் தேங்கும் கரிசல் மண்', ml: 'ഈർപ്പം നിലനിർത്തുന്ന കരിമണ്ണ്' },
+                water: { en: 'Low (250–350 mm), drought hardy, fixes atmospheric nitrogen', te: 'తక్కువ (250–350 మి.మీ)', kn: 'ಕಡಿಮೆ (250–350 ಮಿ.ಮೀ)', hi: 'कम (250–350 मिमी)', ta: 'குறைந்த நீர்த் தேவை', ml: 'കുറഞ്ഞ ജല ആവശ്യകത' },
+                icon: 'fa-seedling'
+            },
+            'potato': {
+                slug: 'potato',
+                category: 'vegetables',
+                secondary: { en: 'Potato (Solanum tuberosum)', te: 'బంగాళాదుంప (Solanum tuberosum)', kn: 'ಆಲೂಗಡ್ಡೆ (Solanum tuberosum)', hi: 'आलू (Solanum tuberosum)', ta: 'உருளைக்கிழங்கு (Solanum tuberosum)', ml: 'ഉരുളക്കിഴങ്ങ് (Solanum tuberosum)' },
+                varieties: ['Kufri Jyoti', 'Kufri Pukhraj', 'Kufri Bahar', 'Kufri Surya'],
+                sowing: { en: 'Sep – Oct (Autumn Rabi) / Jan (Spring)', te: 'సెప్టెంబరు – అక్టోబరు / జనవరి', kn: 'ಸೆಪ್ಟೆಂಬರ್ – ಅಕ್ಟೋಬರ್ / ಜನವರಿ', hi: 'सितंबर – अक्टूबर / जनवरी', ta: 'செப்டம்பர் – அக்டோபர்', ml: 'സെപ്റ്റംബർ – ഒക്ടോബർ' },
+                soil: { en: 'Loose, friable sandy loam rich in organic matter', te: 'వదులుగా ఉండే సారవంతమైన ఇసుక గరప నేలలు', kn: 'ಸಡಿಲವಾದ ಮರಳು ಗೋಡು ಮಣ್ಣು', hi: 'भुरभुरी, जीवांश युक्त बलुई दोमट मिट्टी', ta: 'மென்மையான வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (400–500 mm), frequent light irrigations', te: 'మధ్యస్థం (400–500 మి.మీ)', kn: 'ಮಧ್ಯಮ (400–500 ಮಿ.ಮೀ)', hi: 'मध्यम (400–500 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-carrot'
+            },
+            'sunflower': {
+                slug: 'sunflower',
+                category: 'oilseeds',
+                secondary: { en: 'Sunflower (Helianthus annuus)', te: 'పొద్దుతిరుగుడు (Helianthus annuus)', kn: 'ಸೂರ್ಯಕಾಂತಿ (Helianthus annuus)', hi: 'सूरजमुखी (Helianthus annuus)', ta: 'சூரியகாந்தி (Helianthus annuus)', ml: 'സൂര്യകാന്തി (Helianthus annuus)' },
+                varieties: ['KBSH-44', 'DRSH-1', 'RSFH-130', 'PAC-36'],
+                sowing: { en: 'Aug – Sep (Kharif/Rabi transition) / Jan (Summer)', te: 'ఆగస్టు – సెప్టెంబరు / జనవరి', kn: 'ಆಗಸ್ಟ್ – ಸೆಪ್ಟೆಂಬರ್ / ಜನವರಿ', hi: 'अगस्त – सितंबर / जनवरी', ta: 'ஆகஸ்ட் – செப்டம்பர்', ml: 'ആഗസ്റ്റ് – സെപ്റ്റംബർ' },
+                soil: { en: 'Deep black soil or fertile loamy soil', te: 'లోతైన నల్లరేగడి లేదా గరప నేలలు', kn: 'ಆಳವಾದ ಕಪ್ಪು ಅಥವಾ ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'गहरी काली या उपजाऊ दोमट मिट्टी', ta: 'வளமான கரிசல் மண்', ml: 'കരിമണ്ണ്' },
+                water: { en: 'Medium (400–500 mm), highly photo-insensitive', te: 'మధ్యస్థం (400–500 మి.మీ)', kn: 'ಮಧ್ಯಮ (400–500 ಮಿ.ಮೀ)', hi: 'मध्यम (400–500 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-sun'
+            },
+            'bajra': {
+                slug: 'bajra',
+                category: 'cereals',
+                secondary: { en: 'Pearl Millet (Pennisetum glaucum)', te: 'సజ్జలు (Pennisetum glaucum)', kn: 'ಸಜ್ಜೆ (Pennisetum glaucum)', hi: 'बाजरा (Pennisetum glaucum)', ta: 'கம்பு (Pennisetum glaucum)', ml: 'കമ്പം (Pennisetum glaucum)' },
+                varieties: ['Pusa-1201', 'HHB-67', 'GHB-538', 'RHB-177'],
+                sowing: { en: 'June – Aug (Kharif) / March (Summer)', te: 'జూన్ – ఆగస్టు / మార్చి', kn: 'ಜೂನ್ – ಆಗಸ್ಟ್ / ಮಾರ್ಚ್', hi: 'जून – अगस्त / मार्च', ta: 'ஜூன் – ஆகஸ்ட்', ml: 'ಜೂನ್ – ആഗస్ట్' },
+                soil: { en: 'Drought-prone light sandy or gravelly loam', te: 'తేలికపాటి ఇసుక లేదా కంకర నేలలు', kn: 'ಹಗುರವಾದ ಮರಳು ಮಣ್ಣು', hi: 'हल्की बलुई या रेतीली मिट्टी', ta: 'மணல் பாங்கான நிலம்', ml: 'മണൽ മണ്ണ്' },
+                water: { en: 'Very Low (250–350 mm), exceptional heat tolerance', te: 'చాలా తక్కువ (250–350 మి.మీ)', kn: 'ಅತ್ಯಂತ ಕಡಿಮೆ (250–350 ಮಿ.ಮೀ)', hi: 'अत्यंत कम (250–350 मिमी)', ta: 'மிகக் குறைந்த நீர்த் தேவை', ml: 'വളരെ കുറഞ്ഞ ജല ആവശ്യകത' },
+                icon: 'fa-wheat-awn'
+            },
+            'jowar': {
+                slug: 'jowar',
+                category: 'cereals',
+                secondary: { en: 'Sorghum (Sorghum bicolor)', te: 'జొన్నలు (Sorghum bicolor)', kn: 'ಜೋಳ (Sorghum bicolor)', hi: 'ज्वार (Sorghum bicolor)', ta: 'சோளம் (Sorghum bicolor)', ml: 'ചോളം (Sorghum bicolor)' },
+                varieties: ['Maldandi (M-35-1)', 'CSH-14', 'CSV-216R', 'Phule Revati'],
+                sowing: { en: 'June – July (Kharif) / Sep – Oct (Rabi)', te: 'జూన్ – జూలై / సెప్టెంబరు – అక్టోబరు', kn: 'ಜೂನ್ – ಜುಲೈ / ಸೆಪ್ಟೆಂಬರ್ – ಅಕ್ಟೋಬರ್', hi: 'जून – जुलाई / सितंबर – अक्टूबर', ta: 'ஜூன் – ஜூலை / செப்டம்பர்', ml: 'ജൂൺ – ജൂലൈ' },
+                soil: { en: 'Clay loam to heavy black cotton soil', te: 'బంకమట్టి లేదా నల్లరేగడి నేలలు', kn: 'ಜೇಡಿ ಗೋಡು ಅಥವಾ ಭಾರವಾದ ಕಪ್ಪು ಮಣ್ಣು', hi: 'चिकनी दोमट या भारी काली मिट्टी', ta: 'கரிசல் மண்', ml: 'കരിമണ്ണ്' },
+                water: { en: 'Low to Medium (350–450 mm), drought resilient', te: 'తక్కువ నుండి మధ్యస్థం (350–450 మి.మీ)', kn: 'ಕಡಿಮೆ-ಮಧ್ಯಮ (350–450 ಮಿ.ಮೀ)', hi: 'कम से मध्यम (350–450 मिमी)', ta: 'குறைந்த முதல் மிதமான நீர்த் தேவை', ml: 'കുറഞ്ഞത് മുതൽ ഇടത്തരം വരെ' },
+                icon: 'fa-wheat-awn'
+            },
+            'sesame': {
+                slug: 'sesame',
+                category: 'oilseeds',
+                secondary: { en: 'Sesame / Til (Sesamum indicum)', te: 'నువ్వులు / తిలలు (Sesamum indicum)', kn: 'ಎಳ್ಳು (Sesamum indicum)', hi: 'तिल (Sesamum indicum)', ta: 'எள் (Sesamum indicum)', ml: 'എള്ള് (Sesamum indicum)' },
+                varieties: ['TMV-7', 'RT-346', 'Swetha', 'Punjab Til No.1'],
+                sowing: { en: 'July – Sep (Kharif) / Jan – Feb (Summer)', te: 'జూలై – సెప్టెంబరు / జనవరి – ఫిబ్రవరి', kn: 'ಜುಲೈ – ಸೆಪ್ಟೆಂಬರ್ / ಜನವರಿ – ಫೆಬ್ರವರಿ', hi: 'जुलाई – सितंबर / जनवरी – फरवरी', ta: 'ஜூலை – செப்டம்பர் / ஜனவரி – பிப்ரவரி', ml: 'ജൂലൈ – സെപ്റ്റംബർ' },
+                soil: { en: 'Well-drained light sandy loam with neutral pH', te: 'నీరు ఇంకే ఇసుక గరప నేలలు', kn: 'ಉತ್ತಮ ನೀರು ಬಸಿಯುವ ಹಗುರವಾದ ಮರಳು ಗೋಡು ಮಣ್ಣು', hi: 'अच्छी जल निकासी वाली हल्की बलुई दोमट मिट्टी', ta: 'மணல் கலந்த வண்டல் மண்', ml: 'നീർവാർച്ചയുള്ള പശിമരാശി മണ്ണ്' },
+                water: { en: 'Low (250–350 mm), drought hardy summer/kharif oilseed', te: 'తక్కువ (250–350 మి.మీ)', kn: 'ಕಡಿಮೆ (250–350 ಮಿ.ಮೀ)', hi: 'कम (250–350 मिमी)', ta: 'குறைந்த நீர்த் தேவை', ml: 'കുറഞ്ഞ ജല ആവശ്യകത' },
+                icon: 'fa-sun'
+            },
+            'cowpea': {
+                slug: 'cowpea',
+                category: 'pulses',
+                secondary: { en: 'Cowpea / Black-eyed pea (Vigna unguiculata)', te: 'బొబ్బర్లు / అలసందులు (Vigna unguiculata)', kn: 'ಅಲಸಂದೆ (Vigna unguiculata)', hi: 'लोबिया (Vigna unguiculata)', ta: 'காராமணி (Vigna unguiculata)', ml: 'പയർ (Vigna unguiculata)' },
+                varieties: ['C-152', 'Pusa Komal', 'KBC-2', 'VBN-1'],
+                sowing: { en: 'June – Aug (Kharif) / Feb (Summer)', te: 'జూన్ – ఆగస్టు / ఫిబ్రవరి', kn: 'ಜೂನ್ – ಆಗಸ್ಟ್ / ಫೆಬ್ರವರಿ', hi: 'जून – अगस्त / फरवरी', ta: 'ஜூன் – ஆகஸ்ட் / பிப்ரவரி', ml: 'ജൂൺ – ആഗസ്റ്റ്' },
+                soil: { en: 'Sandy loam to well-drained clay loam', te: 'ఇసుక గరప లేదా బంకమట్టి నేలలు', kn: 'ಮರಳು ಗೋಡು ಅಥವಾ ಜೇಡಿ ಮಣ್ಣು', hi: 'बलुई दोमट या दोमट मिट्टी', ta: 'வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Low (300–400 mm), rapid nitrogen-fixing legume', te: 'తక్కువ (300–400 మి.మీ)', kn: 'ಕಡಿಮೆ (300–400 ಮಿ.ಮೀ)', hi: 'कम (300–400 मिमी)', ta: 'குறைந்த நீர்த் தேவை', ml: 'കുറഞ്ഞ ജല ആവശ്യകത' },
+                icon: 'fa-seedling'
+            },
+            'bitter gourd': {
+                slug: 'bitter-gourd',
+                category: 'vegetables',
+                secondary: { en: 'Bitter Gourd / Karela (Momordica charantia)', te: 'కాకరకాయ (Momordica charantia)', kn: 'ಹಾಗಲಕಾಯಿ (Momordica charantia)', hi: 'करेला (Momordica charantia)', ta: 'பாகற்காய் (Momordica charantia)', ml: 'പാവയ്ക്ക (Momordica charantia)' },
+                varieties: ['Pusa Do Mausami', 'Arka Harit', 'CO-1', 'Priya'],
+                sowing: { en: 'June – July (Kharif) / Jan – March (Summer)', te: 'జూన్ – జూలై / జనవరి – మార్చి', kn: 'ಜೂನ್ – ಜುಲೈ / ಜನವರಿ – ಮಾರ್ಚ್', hi: 'जून – जुलाई / जनवरी – मार्च', ta: 'ஜூன் – ஜூலை / ஜனவரி – மார்ச்', ml: 'ജൂൺ – ജൂലൈ' },
+                soil: { en: 'Sandy loam rich in organic matter with pH 6.0–7.0', te: 'సేంద్రియ పదార్థం గల సారవంతమైన నేలలు', kn: 'ಸಾವಯವ ಸಮೃದ್ಧ ಫಲವತ್ತಾದ ಮಣ್ಣು', hi: 'जीवांश युक्त उपजाऊ बलुई दोमट मिट्टी', ta: 'வளமான வண்டல் மண்', ml: 'ഫലഭൂയിഷ്ഠമായ മണ്ണ്' },
+                water: { en: 'Medium (400–500 mm), trellis & drip irrigation recommended', te: 'మధ్యస్థం (400–500 మి.మీ)', kn: 'ಮಧ್ಯಮ (400–500 ಮಿ.ಮೀ)', hi: 'मध्यम (400–500 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-seedling'
+            },
+            'brinjal': {
+                slug: 'brinjal',
+                category: 'vegetables',
+                secondary: { en: 'Eggplant / Brinjal (Solanum melongena)', te: 'వంకాయ (Solanum melongena)', kn: 'ಬದನೆಕಾಯಿ (Solanum melongena)', hi: 'बैंगन (Solanum melongena)', ta: 'கத்தரிக்காய் (Solanum melongena)', ml: 'വഴുതനങ്ങ (Solanum melongena)' },
+                varieties: ['Pusa Purple Long', 'Pusa Purple Round', 'Arka Anand', 'BH-1'],
+                sowing: { en: 'June – July (Kharif) / Oct – Nov (Rabi) / Jan – Feb', te: 'జూన్ – జూలై / అక్టోబరు / జనవరి', kn: 'ಜೂನ್ – ಜುಲೈ / ಅಕ್ಟೋಬರ್ / ಜನವರಿ', hi: 'जून – जुलाई / अक्टूबर / जनवरी', ta: 'ஜூன் – ஜூலை / அக்டோபர் / ஜனவரி', ml: 'വർഷം മുഴുവൻ' },
+                soil: { en: 'Deep fertile silt loam to clay loam', te: 'లోతైన సారవంతమైన గరప నేలలు', kn: 'ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'उर्वर दोमट या मटियार दोमट मिट्टी', ta: 'வளமான வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (450–550 mm), regular irrigations', te: 'మధ్యస్థం (450–550 మి.మీ)', kn: 'ಮಧ್ಯಮ (450–550 ಮಿ.ಮೀ)', hi: 'मध्यम (450–550 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-seedling'
+            },
+            'guava': {
+                slug: 'guava',
+                category: 'fruits',
+                secondary: { en: 'Guava (Psidium guajava)', te: 'జామకాయ (Psidium guajava)', kn: 'ಸೀಬೆಹಣ್ಣು (Psidium guajava)', hi: 'अमरूद (Psidium guajava)', ta: 'கொய்யா (Psidium guajava)', ml: 'പേരയ്ക്ക (Psidium guajava)' },
+                varieties: ['Allahabad Safeda', 'Lucknow-49 (Sardar)', 'Arka Mridula', 'Lalit'],
+                sowing: { en: 'June – Aug (Monsoon planting) / Feb – March', te: 'జూన్ – ఆగస్టు / ఫిబ్రవరి', kn: 'ಜೂನ್ – ಆಗಸ್ಟ್ / ಫೆಬ್ರವರಿ', hi: 'जून – अगस्त / फरवरी', ta: 'ஜூன் – ஆகஸ்ட் / பிப்ரவரி', ml: 'ജൂൺ – ആഗസ്റ്റ്' },
+                soil: { en: 'Deep loamy to clay loam, tolerates mild salinity', te: 'లోతైన గరప నేలలు', kn: 'ಆಳವಾದ ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'गहरी उपजाऊ दोमट मिट्टी', ta: 'வளமான வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium (600–800 mm), drip irrigation during fruit set', te: 'మధ్యస్థం (600–800 మి.మీ)', kn: 'ಮಧ್ಯಮ (600–800 ಮಿ.ಮೀ)', hi: 'मध्यम (600–800 मिमी)', ta: 'மிதமான நீர்த் தேவை', ml: 'ഇടത്തരം ജല ആവശ്യകത' },
+                icon: 'fa-apple-whole'
+            },
+            'pepper': {
+                slug: 'black-pepper',
+                category: 'all',
+                secondary: { en: 'Black Pepper (Piper nigrum)', te: 'నల్ల మిరియాలు (Piper nigrum)', kn: 'ಕಾಳುಮೆಣಸು (Piper nigrum)', hi: 'काली मिर्च (Piper nigrum)', ta: 'மிளகு (Piper nigrum)', ml: 'കുരുമുളക് (Piper nigrum)' },
+                varieties: ['Panniyur-1', 'Panniyur-5', 'Karimunda', 'Sreekara'],
+                sowing: { en: 'May – July (Monsoon planting alongside support trees)', te: 'మే – జూలై (వర్షాకాలం)', kn: 'ಮೇ – ಜುಲೈ (ಮುಂಗಾರು)', hi: 'मई – जुलाई (मानसून)', ta: 'மே – ஜூலை (பருவமழை)', ml: 'മേയ് – ജൂലൈ' },
+                soil: { en: 'Humus-rich laterite and red loamy soil', te: 'హ్యూమస్ సమృద్ధిగా ఉన్న లేటరైట్ నేలలు', kn: 'ಹ್ಯೂಮಸ್ ಸಮೃದ್ಧ ಲ್ಯಾಟರೈಟ್ ಹಾಗೂ ಕೆಂಪು ಮಣ್ಣು', hi: 'ह्यूमस युक्त लैटेराइट व लाल दोमट मिट्टी', ta: 'செம்மண் நிலம்', ml: 'ചെങ്കൽ മണ്ണ്' },
+                water: { en: 'High (2000–3000 mm annual rainfall, humid climate)', te: 'ఎక్కువ (తేమతో కూడిన వాతావరణం)', kn: 'ಅಧಿಕ (ಆರ್ದ್ರತೆಯ ಹವಾಮಾನ)', hi: 'अधिक (आर्द्र जलवायु)', ta: 'அதிக நீர்த் தேவை', ml: 'ഉയർന്ന ജല ആവശ്യകത' },
+                icon: 'fa-tree'
+            },
+            'turmeric': {
+                slug: 'turmeric',
+                category: 'all',
+                secondary: { en: 'Turmeric (Curcuma longa)', te: 'పసుపు (Curcuma longa)', kn: 'ಅರಿಶಿನ (Curcuma longa)', hi: 'हल्दी (Curcuma longa)', ta: 'மஞ்சள் (Curcuma longa)', ml: 'മഞ്ഞൾ (Curcuma longa)' },
+                varieties: ['IISR Pratibha', 'Salem', 'Erode Local', 'Roma', 'Prabha'],
+                sowing: { en: 'May – July (Kharif)', te: 'మే – జూలై (ఖరీఫ్)', kn: 'ಮೇ – ಜುಲೈ (ಖಾರೀಫ್)', hi: 'मई – जुलाई (खरीफ)', ta: 'மே – ஜூலை (காரீஃப்)', ml: 'മേയ് – ജൂലൈ' },
+                soil: { en: 'Well-drained rich loamy or alluvial soil with pH 6.0–7.5', te: 'సారవంతమైన గరప లేదా ఒండ్రు నేలలు', kn: 'ಫಲವತ್ತಾದ ಗೋಡು ಮಣ್ಣು', hi: 'जीवांश युक्त उपजाऊ दोमट मिट्टी', ta: 'வளமான வண்டல் மண்', ml: 'പശിമരാശി മണ്ണ്' },
+                water: { en: 'Medium to High (1000–1500 mm), furrow or drip irrigation', te: 'మధ్యస్థం నుండి ఎక్కువ (1000–1500 మి.మీ)', kn: 'ಮಧ್ಯಮ-ಅಧಿಕ (1000–1500 ಮಿ.ಮೀ)', hi: 'मध्यम से अधिक (1000–1500 मिमी)', ta: 'மிதமான முதல் அதிக நீர்த் தேவை', ml: 'ഇടത്തരം മുതൽ ഉയർന്നത് வரை' },
+                icon: 'fa-leaf'
+            },
+            'custard apple': {
+                slug: 'custard-apple',
+                category: 'fruits',
+                secondary: { en: 'Custard Apple / Sitaphal (Annona squamosa)', te: 'సీతాఫలం (Annona squamosa)', kn: 'ಸೀತಾಫಲ (Annona squamosa)', hi: 'सीताफल / शरीफा (Annona squamosa)', ta: 'சீத்தாப்பழம் (Annona squamosa)', ml: 'സീതപ്പഴം (Annona squamosa)' },
+                varieties: ['Balanagar', 'Arka Sahan', 'Washington', 'Purandar Local'],
+                sowing: { en: 'June – Aug (Monsoon planting)', te: 'జూన్ – ఆగస్టు', kn: 'ಜೂನ್ – ಆಗಸ್ಟ್', hi: 'जून – अगस्त', ta: 'ஜூன் – ஆகஸ்ட்', ml: 'ജൂൺ – ആഗസ്റ്റ്' },
+                soil: { en: 'Rocky, gravelly or shallow black/red soils', te: 'రాతి లేదా తేలికపాటి నేలలు', kn: 'ಕಲ್ಲು ಮಿಶ್ರಿತ ಹಗುರವಾದ ಮಣ್ಣು', hi: 'हल्की, पथरीली या उथली मिट्टी', ta: 'சரளை மண்', ml: 'ചെങ്കൽ മണ്ണ്' },
+                water: { en: 'Low (drought-hardy semi-arid fruit)', te: 'చాలా తక్కువ', kn: 'ಅತ್ಯಂತ ಕಡಿಮೆ', hi: 'कम', ta: 'குறைந்த நீர்த் தேவை', ml: 'കുറഞ്ഞ ജಲ ആവശ്യകത' },
                 icon: 'fa-apple-whole'
             }
         };
@@ -5299,25 +5486,18 @@
                 }
             });
 
-            // Standard fallback catalogue if API returned less than 8
-            const fallbackCatalogKeys = ['paddy', 'ragi', 'tur dal', 'okra', 'groundnut', 'green gram', 'coconut', 'arecanut', 'maize', 'banana'];
-            fallbackCatalogKeys.forEach(k => {
-                const alreadyHas = crops.some(c => (c.key === k) || (c.rawName && c.rawName.toLowerCase().includes(k)) || k.includes((c.rawName||'').toLowerCase()));
-                if (!alreadyHas && crops.length < 8) {
-                    const catalogItem = CROP_CATALOG[k];
-                    if (catalogItem) {
-                        const localizedName = getLocalizedCropName(k, lang);
-                        crops.push({
-                            key: k,
-                            rawName: k,
-                            name: localizedName,
-                            reason: 'Favorable agro-climatic conditions for optimal vegetative growth and yield.',
-                            meta: matchCropMetadata(k, lang)
-                        });
-                    }
+            // Deduplicate crops by normalized key / rawName to guarantee no duplicates
+            const uniqueCrops = [];
+            const seenKeys = new Set();
+            crops.forEach(c => {
+                const id = (c.key || c.rawName || '').toLowerCase().trim();
+                if (id && !seenKeys.has(id)) {
+                    seenKeys.add(id);
+                    uniqueCrops.push(c);
                 }
             });
-
+            crops.length = 0;
+            crops.push(...uniqueCrops);
             window.lastSeasonalCropsList = crops;
 
             const locParts = [currentDistrict || currentCity, currentState].filter(Boolean);
