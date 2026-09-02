@@ -162,10 +162,10 @@
   },
   "coconut-oil": {
     "name": "Coconut Oil",
-    "filename": "coconut-oil.webp",
-    "localPath": "assets/images/commodities/coconut-oil.webp",
+    "filename": "cocount oil.png",
+    "localPath": "assets/images/commodities/cocount oil.png",
     "status": "available",
-    "fileSizeBytes": 76239
+    "fileSizeBytes": 2288925
   },
   "coconut": {
     "name": "Coconut",
@@ -210,11 +210,11 @@
     "fileSizeBytes": 200460
   },
   "cumin": {
-    "name": "Cumin",
-    "filename": "cumin.webp",
-    "localPath": "assets/images/commodities/cumin.webp",
+    "name": "Cummin Seed (Jeera)",
+    "filename": "Cummin Seed(Jeera).png",
+    "localPath": "assets/images/commodities/Cummin Seed(Jeera).png",
     "status": "available",
-    "fileSizeBytes": 430706
+    "fileSizeBytes": 2750380
   },
   "custard-apple": {
     "name": "Custard Apple",
@@ -344,10 +344,10 @@
   },
   "lemon": {
     "name": "Lemon",
-    "filename": "lemon.webp",
-    "localPath": "assets/images/commodities/lemon.webp",
+    "filename": "Lemon.png",
+    "localPath": "assets/images/commodities/Lemon.png",
     "status": "available",
-    "fileSizeBytes": 205501
+    "fileSizeBytes": 2416450
   },
   "lentil": {
     "name": "Lentil",
@@ -365,10 +365,10 @@
   },
   "mango": {
     "name": "Mango",
-    "filename": "mango.webp",
-    "localPath": "assets/images/commodities/mango.webp",
+    "filename": "Mango.png",
+    "localPath": "assets/images/commodities/Mango.png",
     "status": "available",
-    "fileSizeBytes": 29652
+    "fileSizeBytes": 2218239
   },
   "marigold": {
     "name": "Marigold",
@@ -427,7 +427,7 @@
     "fileSizeBytes": 48882
   },
   "onion-green": {
-    "name": "Onion Green",
+    "name": "Green Onion (Spring Onion)",
     "filename": "Green Onion (Spring Onion).png",
     "localPath": "assets/images/commodities/Green Onion (Spring Onion).png",
     "status": "available",
@@ -435,10 +435,10 @@
   },
   "onion": {
     "name": "Onion",
-    "filename": "Green Onion (Spring Onion).png",
-    "localPath": "assets/images/commodities/Green Onion (Spring Onion).png",
+    "filename": "onion.png",
+    "localPath": "assets/images/commodities/onion.png",
     "status": "available",
-    "fileSizeBytes": 3150210
+    "fileSizeBytes": 2553620
   },
   "orange": {
     "name": "Orange",
@@ -719,5 +719,12 @@
     "localPath": "assets/images/commodities/sunflower.jpg",
     "status": "available",
     "fileSizeBytes": 58720
+  },
+  "lime": {
+    "name": "Lime",
+    "filename": "Lime.png",
+    "localPath": "assets/images/commodities/Lime.png",
+    "status": "available",
+    "fileSizeBytes": 2435444
   }
 }

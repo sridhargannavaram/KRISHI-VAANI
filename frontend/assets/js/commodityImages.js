@@ -27,7 +27,13 @@
   const LOCAL_COMMODITY_REGISTRY = {
     // Solanaceae & Alliums
     'tomato': LOCAL_IMAGE_BASE + 'Tomatoes.jpg',
-    'onion': LOCAL_IMAGE_BASE + 'Green Onion (Spring Onion).png',
+    'onion': LOCAL_IMAGE_BASE + 'onion.png',
+    'onion_green': LOCAL_IMAGE_BASE + 'Green Onion (Spring Onion).png',
+    'mango': LOCAL_IMAGE_BASE + 'Mango.png',
+    'lemon': LOCAL_IMAGE_BASE + 'Lemon.png',
+    'lime': LOCAL_IMAGE_BASE + 'Lime.png',
+    'cumin': LOCAL_IMAGE_BASE + 'Cummin Seed(Jeera).png',
+    'coconut_oil': LOCAL_IMAGE_BASE + 'cocount oil.png',
     'onion_green': LOCAL_IMAGE_BASE + 'Green Onion (Spring Onion).png',
     'potato': LOCAL_IMAGE_BASE + 'potato.jpg',
     'sweet_potato': LOCAL_IMAGE_BASE + 'sweet potato.jpg',
@@ -256,7 +262,10 @@
     if (str.includes('pear') || str.includes('nashpati') || str.includes('marasebu')) return 'pear';
     if (str.includes('apple') || str.includes('seb')) return 'apple';
     if (str.includes('pomegranate') || str.includes('anar')) return 'pomegranate';
-    if (str.includes('lemon') || str.includes('lime') || str.includes('nimbu')) return 'lemon';
+    if (str.includes('sweet lime') || str.includes('mousambi') || str.includes('mosambi')) return 'sweet_lime';
+    if (str.includes('lime')) return 'lime';
+    if (str.includes('lemon') || str.includes('nimbu')) return 'lemon';
+    if (str.includes('mango') || str.includes('aam')) return 'mango';
     if (str.includes('orange') || str.includes('santrash') || str.includes('santara')) return 'orange';
     if (str.includes('grapes') || str.includes('angoor')) return 'grapes';
     if (str.includes('guava') || str.includes('amrood')) return 'guava';
