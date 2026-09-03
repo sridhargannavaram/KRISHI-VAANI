@@ -1751,6 +1751,12 @@
                         </div>
                     </div>
 
+                    <!-- 4. In-App Install App Button (Right side of profile) -->
+                    <button type="button" class="btn-install-app" id="installPwaBtn" onclick="triggerPwaInstallPrompt()" title="Install KRISHI VAANI App">
+                        <i class="fas fa-download"></i>
+                        <span class="install-pwa-text" data-i18n="nav_install_app">Install App</span>
+                    </button>
+
                     <!-- Mobile Navigation Toggle -->
                     <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
                         <i class="fas fa-bars"></i>
@@ -1813,6 +1819,14 @@
 
         <!-- Quick Actions: Notifications, Settings & Appearance Theme -->
         <div class="mobile-drawer-section">
+            <button type="button" class="mobile-drawer-action-btn" id="mobileInstallPwaBtn" onclick="triggerPwaInstallPrompt(); closeMobileDrawer();" title="Install KRISHI VAANI App">
+                <div class="mobile-drawer-action-left">
+                    <i class="fas fa-download" style="color: var(--primary);"></i>
+                    <span data-i18n="nav_install_app" style="font-weight: 600;">Install App</span>
+                </div>
+                <span class="mobile-action-pill" style="background: var(--primary-light); color: var(--primary-dark); font-size: 0.72rem; padding: 2px 8px; border-radius: 6px; font-weight: 700;">FREE</span>
+            </button>
+
             <button type="button" class="mobile-drawer-action-btn" onclick="krishiFCM.openNotificationCenter(); closeMobileDrawer();" title="Notifications">
                 <div class="mobile-drawer-action-left">
                     <i class="fas fa-bell"></i>
