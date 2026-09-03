@@ -43,7 +43,8 @@ function formatFarmer(row) {
     isVerified: !!row.is_verified,
     isActive: row.is_active !== false,
     alertPreferences: { ...defaultPrefs, ...alertPrefs },
-    profileImage: row.profile_image || '',
+    profileImage: row.profile_image_url || row.profile_image || '',
+    profileImageUrl: row.profile_image_url || row.profile_image || '',
     loginCount: parseInt(row.login_count || 1, 10),
     lastSeenAt: row.last_seen_at || row.last_login_at || row.created_at,
     lastActivityAt: row.last_activity_at || row.last_login_at || row.created_at,
@@ -215,7 +216,7 @@ const Farmer = {
   updateProfileImage: async (id, profileImage) => {
     const res = await query(`
       UPDATE farmers
-      SET profile_image = $1, last_activity_at = NOW(), updated_at = NOW()
+      SET profile_image = $1, profile_image_url = $1, last_activity_at = NOW(), updated_at = NOW()
       WHERE id = $2
       RETURNING *
     `, [profileImage, id]);

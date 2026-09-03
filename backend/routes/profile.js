@@ -4,12 +4,14 @@ const multer = require('multer');
 const path = require('path');
 const Farmer = require('../models/Farmer');
 
-// Configure multer storage in memory (Vercel has read-only filesystem)
+const fs = require('fs');
+
+// Configure multer storage in memory
 const storage = multer.memoryStorage();
 
 const upload = multer({
     storage,
-    limits: { fileSize: 2 * 1024 * 1024 }, // 2MB max for Base64 efficiency
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
     fileFilter: (req, file, cb) => {
         const allowed = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
         const ext = path.extname(file.originalname).toLowerCase();
@@ -21,7 +23,7 @@ const upload = multer({
     }
 });
 
-// Upload profile image as Base64 string
+// Upload profile image as File/URL
 router.post('/upload/:id', upload.single('profileImage'), async (req, res) => {
     try {
         if (!req.file) {
@@ -31,15 +33,27 @@ router.post('/upload/:id', upload.single('profileImage'), async (req, res) => {
         const farmer = await Farmer.findById(req.params.id);
         if (!farmer) return res.status(404).json({ error: 'Farmer not found.' });
 
-        // Convert buffer to Base64 data URI
-        const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
-        
-        await Farmer.updateProfileImage(req.params.id, base64Image);
+        const uploadDir = path.join(__dirname, '../uploads/profiles');
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        let ext = path.extname(req.file.originalname).toLowerCase();
+        if (!ext || ext === '.') ext = '.jpg';
+        const filename = `profile_${farmer.id}_${Date.now()}${ext}`;
+        const filePath = path.join(uploadDir, filename);
+
+        // Write image binary buffer to file on disk
+        fs.writeFileSync(filePath, req.file.buffer);
+        const fileUrl = `/uploads/profiles/${filename}`;
+
+        // Save URL string reference to database
+        await Farmer.updateProfileImage(req.params.id, fileUrl);
 
         res.json({
             success: true,
-            profileImage: base64Image,
-            message: 'Profile image uploaded successfully (saved to DB)!'
+            profileImage: fileUrl,
+            message: 'Profile image uploaded successfully!'
         });
     } catch (error) {
         console.error('Profile Upload Error:', error.message);
