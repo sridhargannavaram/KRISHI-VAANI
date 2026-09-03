@@ -1,60 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AlertGuard | KRISHI VAANI</title>
+    <title>AlertGuard Settings | KRISHI VAANI</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .alert-page { max-width: 750px; margin: 0 auto; }
+        .alert-page {
+            max-width: 680px;
+            margin: 2rem auto;
+            width: 100%;
+        }
 
-        /* Crop Input */
         .crop-input-wrap {
             position: relative;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            box-sizing: border-box;
         }
         .crop-input-wrap input {
             width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            font-size: 1.1rem;
-            border-radius: 14px;
+            box-sizing: border-box;
+            padding-left: 2.8rem;
+            font-size: 0.95rem;
+            height: 48px;
         }
-        .crop-input-wrap .crop-icon-left {
+        .crop-icon-left {
             position: absolute;
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 1.2rem;
-            color: var(--accent-color);
+            color: var(--primary);
+            font-size: 1.1rem;
         }
         .crop-suggestions {
-            background: rgba(255,255,255,0.95);
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            max-height: 250px;
-            overflow-y: auto;
-            display: none;
             position: absolute;
-            width: 100%;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            max-height: 220px;
+            overflow-y: auto;
             z-index: 100;
-            margin-top: 4px;
+            display: none;
         }
         .crop-suggestion-item {
-            padding: 0.8rem 1.2rem;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
             cursor: pointer;
-            color: #111;
-            font-size: 0.95rem;
-            border-bottom: 1px solid #eee;
             display: flex;
             align-items: center;
             gap: 0.8rem;
             transition: background 0.2s;
         }
-        .crop-suggestion-item:hover { background: #e8f5e9; }
+        .crop-suggestion-item:hover { background: var(--bg-subtle); }
         .crop-suggestion-item:last-child { border-bottom: none; }
-        .crop-suggestion-item .crop-emoji { font-size: 1.3rem; }
-        .crop-suggestion-item .crop-details { font-size: 0.75rem; color: #666; }
+        .crop-suggestion-item .crop-icon-chip { font-size: 1.1rem; color: var(--primary); }
+        .crop-suggestion-item .crop-details { font-size: 0.75rem; color: var(--text-secondary); }
 
         /* Active Crop Badge */
         .active-crop-badge {
@@ -64,13 +70,13 @@
             padding: 1rem 1.5rem;
             border-radius: 14px;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, rgba(76,175,80,0.15), rgba(139,195,74,0.1));
-            border: 1px solid rgba(76,175,80,0.3);
+            background: var(--primary-light);
+            border: 1px solid var(--primary-border);
         }
         .active-crop-badge .crop-name {
             font-size: 1.1rem;
             font-weight: 700;
-            color: var(--accent-color);
+            color: var(--primary-dark);
         }
         .active-crop-badge .crop-tolerance {
             font-size: 0.8rem;
@@ -85,7 +91,7 @@
             font-size: 1rem;
             transition: color 0.2s;
         }
-        .clear-crop-btn:hover { color: #f44336; }
+        .clear-crop-btn:hover { color: #ef4444; }
 
         /* Threshold Cards */
         .threshold-grid {
@@ -98,92 +104,310 @@
         .threshold-card {
             padding: 1.2rem;
             border-radius: 14px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--glass-border);
-            transition: all 0.3s;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
         }
-        .threshold-card:hover { background: rgba(255,255,255,0.1); }
+        .threshold-card:hover { 
+            border-color: var(--primary-border);
+            box-shadow: var(--shadow-md); 
+        }
         .threshold-card label {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.85rem;
             font-weight: 600;
+            color: var(--text-primary);
             margin-bottom: 0.6rem;
         }
         .threshold-card input {
             width: 100%;
-            padding: 0.7rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-align: center;
-            border-radius: 10px;
+            padding: 0.65rem 0.85rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+            font-size: 1.05rem;
+            font-weight: 600;
         }
-        .threshold-card .threshold-help {
-            font-size: 0.7rem;
+        .threshold-card input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        .threshold-help {
+            font-size: 0.75rem;
             color: var(--text-secondary);
             margin-top: 0.4rem;
-            text-align: center;
         }
         .threshold-changed {
-            border-color: var(--accent-color) !important;
-            box-shadow: 0 0 10px rgba(76,175,80,0.2);
+            animation: pulseHighlight 0.5s ease;
+        }
+        @keyframes pulseHighlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); border-color: var(--primary); }
+            100% { transform: scale(1); }
         }
 
-        /* Rain toggle */
-        .rain-toggle {
+        .status-box {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+        .status-box.active-alerts {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            display: block;
+        }
+        .status-box.all-clear {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            display: block;
+        }
+
+        .alert-item-mini {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--glass-border);
-            margin-bottom: 1.5rem;
+            gap: 0.6rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 0.85rem;
         }
-
-        /* Status box */
-        .status-box {
-            padding: 1rem 1.5rem;
-            border-radius: 14px;
-            margin-bottom: 1rem;
-            display: none;
-        }
-        .status-success { background: rgba(76,175,80,0.15); border: 1px solid rgba(76,175,80,0.3); }
-        .status-alert { background: rgba(255,152,0,0.15); border: 1px solid rgba(255,152,0,0.3); }
+        .alert-item-mini:last-child { border-bottom: none; }
     </style>
 </head>
 <body>
-    <nav class="glass">
-        <a href="dashboard.html" class="logo"><i class="fas fa-leaf"></i> KRISHI VAANI</a>
-        <div class="nav-links">
-            <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
-            <a href="crop-alerts.html"><i class="fas fa-shield-alt"></i> Crop Alerts</a>
-            <a href="news.html"><i class="fas fa-newspaper"></i> Agri-News</a>
-            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-            <button id="logoutBtn" class="btn btn-glass">Logout</button>
+
+    <!-- Unified App Header -->
+        <!-- Modern AgriTech / SaaS Navbar -->
+    <header class="app-header">
+        <!-- ROW 1: Main Header (Logo on Left, Controls on Right) -->
+        <div class="header-top-row">
+            <div class="header-container-top">
+                <!-- Left: Brand Logo -->
+                <a href="dashboard.html" class="brand-logo" title="KRISHI VAANI">
+                    <div class="brand-icon-wrap">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <span class="brand-name">KRISHI VAANI</span>
+                </a>
+
+                <!-- Right: Standardized Header Controls [ Notification | Language | Profile ] -->
+                <div class="header-nav-right">
+                    <!-- 1. Notification Bell Button -->
+                    <div class="nav-notification-container" style="position: relative;">
+                        <button type="button" class="nav-notification-btn" id="notificationBellBtn" onclick="krishiFCM.openNotificationCenter()" title="Live Alerts & Notifications" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span id="notificationBadge" class="notification-counter-badge" style="display: none;">0</span>
+                        </button>
+                    </div>
+
+                    <!-- 2. Language Selector: [ Globe Icon | English | Dropdown Arrow ] -->
+                    <div class="nav-lang-box" title="Select Language">
+                        <i class="fas fa-globe"></i>
+                        <select id="langSelect" class="nav-lang-select" aria-label="Select Language">
+                            <option value="en">English</option>
+                            <option value="kn">ಕನ್ನಡ</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="ml">മലയാളം</option>
+                            <option value="hi">हिन्दी</option>
+                        </select>
+                        <i class="fas fa-chevron-down nav-lang-arrow"></i>
+                    </div>
+
+                    <!-- 3. Profile Button: [ User Icon | User Name | Dropdown Arrow ] -->
+                    <div class="nav-profile-container">
+                        <button class="nav-profile-button" id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Account Menu">
+                            <i class="fas fa-circle-user nav-profile-icon"></i>
+                            <span id="navProfileName" class="nav-profile-name">Farmer</span>
+                            <i class="fas fa-chevron-down nav-caret"></i>
+                        </button>
+                        <div class="nav-profile-popover" id="navProfileDropdown">
+                            <a href="#" onclick="openFarmerProfileModal(event)" class="popover-profile-header" title="View Profile">
+                                <div class="popover-avatar-wrap">
+                                    <div class="popover-avatar" id="popoverAvatar">F</div>
+                                </div>
+                                <div class="popover-user-info">
+                                    <div class="popover-user-name" id="popoverUserName">Farmer</div>
+                                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> My Profile</div>
+                                </div>
+                                <i class="fas fa-chevron-right popover-arrow"></i>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <div class="popover-theme-row">
+                                <div class="popover-theme-label">
+                                    <i class="fas fa-palette"></i>
+                                    <span>Appearance</span>
+                                </div>
+                                <div class="popover-theme-pills">
+                                    <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                                </div>
+                            </div>
+                            <a href="alert-guard.html" class="popover-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                            <a href="#" onclick="openFarmerSettingsModal(event)" class="popover-item">
+                                <i class="fas fa-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <a href="#" onclick="logout(event)" class="popover-item popover-logout">
+                                <i class="fas fa-right-from-bracket"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Navigation Toggle -->
+                    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-    </nav>
+
+        <!-- ROW 2: Primary Navigation (Dashboard | Marketplace | Crop Alerts | AlertGuard) -->
+        <div class="header-nav-row">
+            <div class="header-container-bottom">
+                <nav class="header-nav-primary">
+                    <a href="dashboard.html" class="nav-tab ">
+                        <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
+                    </a>
+                    <a href="marketplace.html" class="nav-tab ">
+                        <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
+                    </a>
+                    <a href="crop-alerts.html" class="nav-tab ">
+                        <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
+                    </a>
+                    <a href="alert-guard.html" class="nav-tab active">
+                        <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Backdrop -->
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop" onclick="closeMobileDrawer()"></div>
+
+    <!-- Mobile Navigation Drawer (Overlay Sidebar) -->
+    <div class="mobile-nav-drawer" id="mobileNavDrawer" role="dialog" aria-label="Mobile Navigation Menu">
+        <!-- Drawer Header with Logo & Close Button -->
+        <div class="mobile-drawer-header">
+            <div class="mobile-drawer-brand">
+                <div class="brand-icon-wrap" style="width: 28px; height: 28px; font-size: 0.85rem;">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <span style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">KRISHI VAANI</span>
+            </div>
+            <button type="button" class="mobile-drawer-close" onclick="closeMobileDrawer()" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Profile Section in Mobile Drawer -->
+        <div class="mobile-drawer-profile-card">
+            <a href="#" onclick="openFarmerProfileModal(event); closeMobileDrawer();" class="mobile-profile-card-link" title="View Profile">
+                <div class="popover-avatar-wrap">
+                    <div class="popover-avatar" id="mobileDrawerAvatar">F</div>
+                </div>
+                <div class="popover-user-info">
+                    <div class="popover-user-name nav-profile-name" id="mobileDrawerUserName">Farmer</div>
+                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> <span data-i18n="profile_my_profile">My Profile</span></div>
+                </div>
+                <i class="fas fa-chevron-right popover-arrow"></i>
+            </a>
+        </div>
+
+        <!-- Quick Actions: Notifications, Settings & Appearance Theme -->
+        <div class="mobile-drawer-section">
+            <button type="button" class="mobile-drawer-action-btn" onclick="krishiFCM.openNotificationCenter(); closeMobileDrawer();" title="Notifications">
+                <div class="mobile-drawer-action-left">
+                    <i class="fas fa-bell"></i>
+                    <span data-i18n="profile_notifications">Notifications</span>
+                </div>
+                <span class="notification-counter-badge" id="mobileDrawerNotificationBadge" style="display: none;">0</span>
+            </button>
+
+            <button type="button" class="mobile-drawer-action-btn" onclick="openFarmerSettingsModal(event); closeMobileDrawer();" title="Account Settings">
+                <div class="mobile-drawer-action-left">
+                    <i class="fas fa-gear"></i>
+                    <span data-i18n="profile_settings">Settings</span>
+                </div>
+                <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--text-light);"></i>
+            </button>
+
+            <div class="mobile-drawer-theme-box">
+                <div class="mobile-drawer-theme-label">
+                    <i class="fas fa-palette"></i>
+                    <span data-i18n="profile_appearance">Appearance</span>
+                </div>
+                <div class="popover-theme-pills">
+                    <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                    <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                    <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="popover-divider"></div>
+
+        <!-- Primary Navigation Links -->
+        <div class="mobile-drawer-nav-section">
+            <div class="mobile-drawer-section-title" data-i18n="nav_menu">Menu</div>
+            <a href="dashboard.html" class="mobile-drawer-link ">
+                <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
+            </a>
+            <a href="marketplace.html" class="mobile-drawer-link ">
+                <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
+            </a>
+            <a href="crop-alerts.html" class="mobile-drawer-link ">
+                <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
+            </a>
+            <a href="alert-guard.html" class="mobile-drawer-link active">
+                <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
+            </a>
+            <a href="news.html" class="mobile-drawer-link ">
+                <i class="fas fa-newspaper"></i> <span data-i18n="nav_agri_news">Agri-News</span>
+            </a>
+        </div>
+
+        <div class="popover-divider" style="margin-top: auto;"></div>
+
+        <!-- Logout Action at bottom -->
+        <a href="#" onclick="logout(event); closeMobileDrawer();" class="mobile-drawer-link mobile-drawer-logout" title="Logout">
+            <i class="fas fa-right-from-bracket"></i> <span data-i18n="profile_logout">Logout</span>
+        </a>
+    </div>
+    </header>
 
     <div class="container" style="align-items: flex-start; min-height: auto; margin-top: 1rem;">
         <div class="glass glass-card alert-page">
             <h2 style="margin-bottom: 0.5rem;">
-                <i class="fas fa-bell" style="color: var(--accent-color);"></i> AlertGuard Settings
+                <i class="fas fa-bell" style="color: var(--accent-color);"></i> <span data-i18n="ag_title">AlertGuard Settings</span>
             </h2>
             <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
-                Type your crop name → thresholds auto-adjust to that crop's sensitivity. Save to activate SMS & Voice alerts.
+                <span data-i18n="ag_subtitle">Type your crop name → thresholds auto-adjust to that crop's sensitivity. Save to activate SMS & Voice alerts.</span>
             </p>
 
             <!-- Crop Input with Autocomplete -->
             <div class="crop-input-wrap">
                 <i class="fas fa-seedling crop-icon-left"></i>
-                <input type="text" id="cropNameInput" class="form-control" placeholder="Type crop name (e.g., Tomato, Rice, Ragi, Cotton...)" autocomplete="off">
+                <input type="text" id="cropNameInput" class="form-control" data-i18n-placeholder="ag_crop_placeholder" placeholder="Type crop name (e.g., Tomato, Rice, Ragi, Cotton...)" autocomplete="off">
                 <div class="crop-suggestions" id="cropSuggestions"></div>
             </div>
 
             <!-- Active Crop Badge -->
             <div class="active-crop-badge" id="activeCropBadge">
-                <span style="font-size: 1.5rem;" id="cropBadgeEmoji">🌾</span>
+                <i class="fas fa-wheat-awn" style="font-size: 1.4rem; color: var(--primary);" id="cropBadgeIcon"></i>
                 <div>
                     <div class="crop-name" id="cropBadgeName">--</div>
                     <div class="crop-tolerance" id="cropBadgeInfo">--</div>
@@ -195,34 +419,34 @@
                 <!-- Threshold Cards -->
                 <div class="threshold-grid">
                     <div class="threshold-card" id="tempCard">
-                        <label><i class="fas fa-thermometer-half" style="color: #ef5350;"></i> Temperature (°C)</label>
+                        <label><i class="fas fa-thermometer-half" style="color: #ef5350;"></i> <span data-i18n="ca_temp">Temperature (°C)</span></label>
                         <input type="number" id="tempThreshold" class="form-control" value="35">
-                        <div class="threshold-help" id="tempHelp">Alert if temp exceeds this</div>
+                        <div class="threshold-help" id="tempHelp" data-i18n="ag_temp_help">Alert if temp exceeds this</div>
                     </div>
                     <div class="threshold-card" id="humidityCard">
-                        <label><i class="fas fa-tint" style="color: #4fc3f7;"></i> Humidity (%)</label>
+                        <label><i class="fas fa-tint" style="color: #4fc3f7;"></i> <span data-i18n="ca_humidity">Humidity (%)</span></label>
                         <input type="number" id="humidityThreshold" class="form-control" value="80">
-                        <div class="threshold-help" id="humidityHelp">Alert if humidity exceeds this</div>
+                        <div class="threshold-help" id="humidityHelp" data-i18n="ag_humidity_help">Alert if humidity exceeds this</div>
                     </div>
                     <div class="threshold-card" id="windCard">
-                        <label><i class="fas fa-wind" style="color: #aed581;"></i> Wind Speed (m/s)</label>
+                        <label><i class="fas fa-wind" style="color: #aed581;"></i> <span data-i18n="ca_wind">Wind Speed (m/s)</span></label>
                         <input type="number" id="windSpeedThreshold" class="form-control" value="15">
-                        <div class="threshold-help" id="windHelp">Alert if wind exceeds this</div>
+                        <div class="threshold-help" id="windHelp" data-i18n="ag_wind_help">Alert if wind exceeds this</div>
                     </div>
                     <div class="threshold-card">
-                        <label><i class="fas fa-cloud-rain" style="color: #90caf9;"></i> Rain Alert</label>
-                        <div class="rain-toggle" style="padding: 0.5rem 0; border: none; margin: 0; background: none;">
-                            <input type="checkbox" id="rainAlert" style="width: 22px; height: 22px;" checked>
-                            <span style="font-size: 0.9rem;">Heavy Rain Alerts</span>
+                        <label><i class="fas fa-cloud-rain" style="color: #90caf9;"></i> <span data-i18n="ag_rain_label">Rain Alert</span></label>
+                        <div class="rain-toggle" style="height: 42px; display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0; border: none; margin: 0; background: none;">
+                            <input type="checkbox" id="rainAlert" style="width: 20px; height: 20px; cursor: pointer;" checked>
+                            <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-primary);" data-i18n="ag_heavy_rain">Heavy Rain Alerts</span>
                         </div>
-                        <div class="threshold-help" id="rainHelp">Notified on heavy rain</div>
+                        <div class="threshold-help" id="rainHelp" data-i18n="ag_rain_help">Notified on heavy rain</div>
                     </div>
                 </div>
 
                 <div class="status-box" id="statusBox"></div>
 
                 <button type="submit" id="saveBtn" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem;">
-                    <i class="fas fa-save"></i> Save & Check Current Weather
+                    <i class="fas fa-save"></i> <span data-i18n="ag_save_btn">Save & Check Current Weather</span>
                 </button>
             </form>
         </div>
@@ -232,25 +456,25 @@
     <script>
         if (!isAuthenticated()) window.location.href = 'login.html';
 
-        const farmer = JSON.parse(localStorage.getItem('farmer'));
+        const farmer = JSON.parse(localStorage.getItem('farmer') || '{}');
 
-        // Crop profiles with ideal thresholds
+        // Crop profiles with ideal thresholds (Professional FontAwesome Icons)
         const cropProfiles = {
-            rice:       { name: 'Rice (Paddy)', emoji: '🌾', tempMax: 38, humidityMax: 95, windMax: 12, rainSensitive: false, info: 'Rain tolerant • Heat sensitive above 38°C' },
-            wheat:      { name: 'Wheat',        emoji: '🌿', tempMax: 30, humidityMax: 70, windMax: 10, rainSensitive: true,  info: 'Rain sensitive at harvest • Rust risk above 70% humidity' },
-            tomato:     { name: 'Tomato',       emoji: '🍅', tempMax: 35, humidityMax: 65, windMax: 8,  rainSensitive: true,  info: 'Very rain sensitive • Blight risk above 65% humidity' },
-            ragi:       { name: 'Ragi (Finger Millet)', emoji: '🌱', tempMax: 35, humidityMax: 80, windMax: 10, rainSensitive: false, info: 'Drought resistant • Moderate rain tolerance' },
-            cotton:     { name: 'Cotton',       emoji: '☁️', tempMax: 40, humidityMax: 70, windMax: 10, rainSensitive: true,  info: 'Rain sensitive (boll rot) • Bollworm risk in humidity' },
-            sugarcane:  { name: 'Sugarcane',    emoji: '🎋', tempMax: 40, humidityMax: 85, windMax: 8,  rainSensitive: false, info: 'Wind sensitive (lodging) • High water need' },
-            groundnut:  { name: 'Groundnut',    emoji: '🥜', tempMax: 35, humidityMax: 70, windMax: 10, rainSensitive: true,  info: 'Rain sensitive (pod rot) • Tikka disease risk' },
-            maize:      { name: 'Maize (Corn)', emoji: '🌽', tempMax: 35, humidityMax: 75, windMax: 10, rainSensitive: false, info: 'Moderate tolerance • Stalk borer risk in humidity' },
-            sunflower:  { name: 'Sunflower',    emoji: '🌻', tempMax: 35, humidityMax: 70, windMax: 8,  rainSensitive: true,  info: 'Lodging risk in wind • Head rot in humidity' },
-            onion:      { name: 'Onion',        emoji: '🧅', tempMax: 32, humidityMax: 65, windMax: 10, rainSensitive: true,  info: 'Very rain sensitive • Thrips attack in dry heat' },
-            chilli:     { name: 'Chilli',       emoji: '🌶️', tempMax: 35, humidityMax: 65, windMax: 8,  rainSensitive: true,  info: 'Rain sensitive • Anthracnose risk above 65% humidity' },
-            banana:     { name: 'Banana',       emoji: '🍌', tempMax: 38, humidityMax: 85, windMax: 6,  rainSensitive: false, info: 'Very wind sensitive • Needs high moisture' },
-            coconut:    { name: 'Coconut',      emoji: '🥥', tempMax: 40, humidityMax: 90, windMax: 12, rainSensitive: false, info: 'Wind tolerant • Root wilt in waterlogging' },
-            turmeric:   { name: 'Turmeric',     emoji: '🟡', tempMax: 35, humidityMax: 80, windMax: 10, rainSensitive: false, info: 'Needs moisture • Rhizome rot in waterlogging' },
-            pepper:     { name: 'Black Pepper', emoji: '⚫', tempMax: 35, humidityMax: 85, windMax: 8,  rainSensitive: false, info: 'Shade loving • Quick wilt in waterlogging' }
+            rice:       { name: 'Rice (Paddy)', icon: 'fa-wheat-awn', tempMax: 38, humidityMax: 95, windMax: 12, rainSensitive: false, info: 'Rain tolerant • Heat sensitive above 38°C' },
+            wheat:      { name: 'Wheat',        icon: 'fa-seedling', tempMax: 30, humidityMax: 70, windMax: 10, rainSensitive: true,  info: 'Rain sensitive at harvest • Rust risk above 70% humidity' },
+            tomato:     { name: 'Tomato',       icon: 'fa-apple-whole', tempMax: 35, humidityMax: 65, windMax: 8,  rainSensitive: true,  info: 'Very rain sensitive • Blight risk above 65% humidity' },
+            ragi:       { name: 'Ragi (Finger Millet)', icon: 'fa-plant-wilt', tempMax: 35, humidityMax: 80, windMax: 10, rainSensitive: false, info: 'Drought resistant • Moderate rain tolerance' },
+            cotton:     { name: 'Cotton',       icon: 'fa-feather', tempMax: 40, humidityMax: 70, windMax: 10, rainSensitive: true,  info: 'Rain sensitive (boll rot) • Bollworm risk in humidity' },
+            sugarcane:  { name: 'Sugarcane',    icon: 'fa-tree', tempMax: 40, humidityMax: 85, windMax: 8,  rainSensitive: false, info: 'Wind sensitive (lodging) • High water need' },
+            groundnut:  { name: 'Groundnut',    icon: 'fa-cubes-stacked', tempMax: 35, humidityMax: 70, windMax: 10, rainSensitive: true,  info: 'Rain sensitive (pod rot) • Tikka disease risk' },
+            maize:      { name: 'Maize (Corn)', icon: 'fa-cubes-stacked', tempMax: 35, humidityMax: 75, windMax: 10, rainSensitive: false, info: 'Moderate tolerance • Stalk borer risk in humidity' },
+            sunflower:  { name: 'Sunflower',    icon: 'fa-sun', tempMax: 35, humidityMax: 70, windMax: 8,  rainSensitive: true,  info: 'Lodging risk in wind • Head rot in humidity' },
+            onion:      { name: 'Onion',        icon: 'fa-circle-notch', tempMax: 32, humidityMax: 65, windMax: 10, rainSensitive: true,  info: 'Very rain sensitive • Thrips attack in dry heat' },
+            chilli:     { name: 'Chilli',       icon: 'fa-pepper-hot', tempMax: 35, humidityMax: 65, windMax: 8,  rainSensitive: true,  info: 'Rain sensitive • Anthracnose risk above 65% humidity' },
+            banana:     { name: 'Banana',       icon: 'fa-leaf', tempMax: 38, humidityMax: 85, windMax: 6,  rainSensitive: false, info: 'Very wind sensitive • Needs high moisture' },
+            coconut:    { name: 'Coconut',      icon: 'fa-tree', tempMax: 40, humidityMax: 90, windMax: 12, rainSensitive: false, info: 'Wind tolerant • Root wilt in waterlogging' },
+            turmeric:   { name: 'Turmeric',     icon: 'fa-seedling', tempMax: 35, humidityMax: 80, windMax: 10, rainSensitive: false, info: 'Needs moisture • Rhizome rot in waterlogging' },
+            pepper:     { name: 'Black Pepper', icon: 'fa-circle-dot', tempMax: 35, humidityMax: 85, windMax: 8,  rainSensitive: false, info: 'Shade loving • Quick wilt in waterlogging' }
         };
 
         let selectedCropKey = null;
@@ -282,7 +506,7 @@
 
             suggestionsBox.innerHTML = matches.map(([key, crop]) => `
                 <div class="crop-suggestion-item" data-key="${key}">
-                    <span class="crop-emoji">${crop.emoji}</span>
+                    <span class="crop-icon-chip"><i class="fas ${crop.icon || 'fa-leaf'}" style="color: var(--primary); font-size: 1.1rem;"></i></span>
                     <div>
                         <div style="font-weight: 600;">${crop.name}</div>
                         <div class="crop-details">${crop.info}</div>
@@ -321,10 +545,11 @@
             suggestionsBox.style.display = 'none';
             cropInput.value = '';
 
-            // Show badge
+            // Show badge with icon
             const badge = document.getElementById('activeCropBadge');
             badge.style.display = 'flex';
-            document.getElementById('cropBadgeEmoji').innerText = crop.emoji;
+            const badgeIcon = document.getElementById('cropBadgeIcon');
+            if (badgeIcon) badgeIcon.className = 'fas ' + (crop.icon || 'fa-wheat-awn');
             document.getElementById('cropBadgeName').innerText = crop.name;
             document.getElementById('cropBadgeInfo').innerText = crop.info;
 
@@ -334,9 +559,9 @@
             animateThreshold('windSpeedThreshold', crop.windMax, 'windCard', `Alert if wind > ${crop.windMax} m/s (${crop.name})`);
             
             document.getElementById('rainAlert').checked = crop.rainSensitive;
-            document.getElementById('rainHelp').innerText = crop.rainSensitive 
-                ? `⚠️ ${crop.name} is rain sensitive!` 
-                : `✅ ${crop.name} tolerates rain`;
+            document.getElementById('rainHelp').innerHTML = crop.rainSensitive 
+                ? `<i class="fas fa-triangle-exclamation" style="color: #f59e0b; margin-right: 4px;"></i> ${crop.name} is rain sensitive!` 
+                : `<i class="fas fa-circle-check" style="color: #22c55e; margin-right: 4px;"></i> ${crop.name} tolerates rain`;
 
             document.getElementById('tempHelp').innerText = `Alert if temp > ${crop.tempMax}°C (${crop.name})`;
             document.getElementById('humidityHelp').innerText = `Alert if humidity > ${crop.humidityMax}% (${crop.name})`;
@@ -349,21 +574,16 @@
             const current = parseInt(input.value);
             
             card.classList.add('threshold-changed');
-            setTimeout(() => card.classList.remove('threshold-changed'), 1500);
+            setTimeout(() => card.classList.remove('threshold-changed'), 500);
 
-            // Smooth number animation
-            const diff = targetValue - current;
-            const steps = 15;
-            const stepDelay = 30;
-            let step = 0;
-            const interval = setInterval(() => {
-                step++;
-                input.value = Math.round(current + (diff * step / steps));
-                if (step >= steps) {
-                    clearInterval(interval);
-                    input.value = targetValue;
-                }
-            }, stepDelay);
+            // Smooth number count
+            const step = targetValue > current ? 1 : -1;
+            let val = current;
+            const timer = setInterval(() => {
+                val += step;
+                input.value = val;
+                if (val === targetValue) clearInterval(timer);
+            }, 25);
         }
 
         function clearCrop() {
@@ -379,57 +599,85 @@
             document.getElementById('rainHelp').innerText = 'Notified on heavy rain';
         }
 
-        // Save form
+        // Save & Check Weather
         document.getElementById('alertForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('saveBtn');
-            const ogBtn = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking Weather...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving & Checking Weather...';
             btn.disabled = true;
 
-            const prefs = {
-                temperatureThreshold: parseInt(document.getElementById('tempThreshold').value),
-                humidityThreshold: parseInt(document.getElementById('humidityThreshold').value),
-                windSpeedThreshold: parseInt(document.getElementById('windSpeedThreshold').value),
+            const preferences = {
+                temperatureThreshold: parseFloat(document.getElementById('tempThreshold').value),
+                humidityThreshold: parseFloat(document.getElementById('humidityThreshold').value),
+                windSpeedThreshold: parseFloat(document.getElementById('windSpeedThreshold').value),
                 rainAlert: document.getElementById('rainAlert').checked,
-                windAlert: true,
-                cropName: selectedCropKey || ''
+                selectedCrop: selectedCropKey ? cropProfiles[selectedCropKey].name : null
             };
 
             try {
-                const res = await fetch(`${API_BASE_URL}/farmer/alerts/${farmer.id}`, {
+                // 1. Save preferences
+                await fetch('/api/farmer/profile', {
                     method: 'PUT',
                     headers: getAuthHeader(),
-                    body: JSON.stringify({ alertPreferences: prefs })
+                    body: JSON.stringify({ alertPreferences: preferences })
                 });
-                const data = await res.json();
-                if (!res.ok) throw new Error();
 
-                farmer.alertPreferences = prefs;
+                // Update local storage
+                farmer.alertPreferences = preferences;
                 localStorage.setItem('farmer', JSON.stringify(farmer));
 
+                // 2. Trigger instant weather check
+                const alertRes = await fetch('/api/crop-alerts/analyze', {
+                    method: 'POST',
+                    headers: { ...getAuthHeader(), 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        crop: selectedCropKey || 'rice',
+                        location: farmer.location || 'Manipal, Karnataka',
+                        lat: farmer.latitude || 13.3478,
+                        lon: farmer.longitude || 74.7944
+                    })
+                });
+                const alertData = await alertRes.json();
+
                 const statusBox = document.getElementById('statusBox');
-                statusBox.style.display = 'block';
-                
-                if (data.triggered) {
-                    statusBox.className = 'status-box status-alert';
-                    let info = `🚨 <strong>Alert Triggered!</strong><br>${data.message}`;
-                    if (data.smsStatus) info += `<br>📱 SMS: ${data.smsStatus}`;
-                    if (data.callStatus) info += `<br>📞 Call: ${data.callStatus}`;
-                    statusBox.innerHTML = info;
+
+                if (alertData.alerts && alertData.alerts.length > 0) {
+                    statusBox.className = 'status-box active-alerts';
+                    statusBox.innerHTML = `
+                        <strong><i class="fas fa-exclamation-triangle"></i> ${alertData.alerts.length} Active Alert(s) Triggered!</strong>
+                        <div style="margin-top: 0.5rem;">
+                            ${alertData.alerts.map(a => `
+                                <div class="alert-item-mini">
+                                    <span>${a.message}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div style="margin-top: 0.5rem; font-size: 0.8rem;">
+                            <i class="fas fa-check-circle"></i> Preferences saved! You will receive SMS & Voice calls when these conditions occur.
+                        </div>
+                    `;
                 } else {
-                    statusBox.className = 'status-box status-success';
-                    statusBox.innerHTML = `✅ <strong>${data.message || 'Settings saved!'}</strong>`;
-                    if (selectedCropKey) {
-                        statusBox.innerHTML += `<br><small>Thresholds optimized for ${cropProfiles[selectedCropKey].name}</small>`;
-                    }
+                    statusBox.className = 'status-box all-clear';
+                    statusBox.innerHTML = `
+                        <strong><i class="fas fa-check-circle"></i> AlertGuard Active — All Conditions Normal!</strong>
+                        <p style="margin-top: 0.3rem; margin-bottom: 0;">
+                            Current weather at your location is within safe thresholds${selectedCropKey ? ' for ' + cropProfiles[selectedCropKey].name : ''}. 
+                            We will notify you immediately via SMS and Voice if thresholds are breached.
+                        </p>
+                    `;
                 }
-                setTimeout(() => statusBox.style.display = 'none', 8000);
-            } catch(e) {
-                alert('Failed to save preferences.');
+
+                btn.innerHTML = '<i class="fas fa-check"></i> Saved Successfully!';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-save"></i> <span data-i18n="ag_save_btn">Save & Check Current Weather</span>';
+                    btn.disabled = false;
+                }, 2000);
+
+            } catch (err) {
+                console.error(err);
+                btn.innerHTML = '<i class="fas fa-times"></i> Error saving. Try again.';
+                btn.disabled = false;
             }
-            btn.innerHTML = ogBtn;
-            btn.disabled = false;
         });
     </script>
 </body>

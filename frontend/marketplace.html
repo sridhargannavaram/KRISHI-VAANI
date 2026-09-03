@@ -1,0 +1,3685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Agricultural Market | KRISHI VAANI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <style>
+        /* Subtle card fade-in animation for Marketplace only */
+        @keyframes mandiCardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .commodity-card {
+            animation: mandiCardFadeIn 0.28s ease-out;
+        }
+
+        /* Indic Languages Layout Safety for Marketplace */
+        html[lang="te"], html[lang="kn"], html[lang="ta"], html[lang="ml"], html[lang="hi"] {
+            --font-main: 'Noto Sans', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+        .stat-data .stat-label {
+            line-height: 1.25;
+            word-break: break-word;
+        }
+        .sd-trigger {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .filter-grid {
+            gap: 1rem;
+        }
+        .category-pill span {
+            white-space: nowrap;
+        }
+        .card-commodity-name {
+            word-break: break-word;
+        }
+        .btn-card-details, .btn-filter-apply, .btn-page {
+            white-space: nowrap;
+        }
+        .highlight-text h4 {
+            line-height: 1.3;
+        }
+        .highlight-text p {
+            line-height: 1.4;
+        }
+
+        :root {
+            --bg-page: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-subtle: #f1f5f9;
+            --bg-hover: #f8fafc;
+            
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --text-light: #94a3b8;
+            
+            --primary: #16a34a;
+            --primary-dark: #15803d;
+            --primary-light: #dcfce7;
+            --primary-border: #bbf7d0;
+            
+            --border-color: #e2e8f0;
+            --border-focus: #16a34a;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+            --shadow-card: 0 2px 8px rgba(15, 23, 42, 0.06);
+            --shadow-hover: 0 12px 24px -4px rgba(15, 23, 42, 0.12);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+        }
+
+        [data-theme='dark'] {
+            --bg-page: #0F1720;
+            --bg-surface: #1B2B33;
+            --bg-subtle: #22363F;
+            --bg-hover: #29424E;
+            
+            --text-main: #F1F5F9;
+            --text-muted: #B8C4CC;
+            --text-light: #8997A1;
+            
+            --primary: #22C55E;
+            --primary-dark: #16A34A;
+            --primary-light: rgba(34, 197, 94, 0.15);
+            --primary-border: rgba(34, 197, 94, 0.3);
+            
+            --border-color: #2E404B;
+            --border-focus: #22C55E;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+            --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 12px 24px -4px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Top Navigation Bar */
+        nav.app-nav {
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+        .brand-logo i {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+        }
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.92rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-auth-btn {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 0.55rem 1.2rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .nav-auth-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Global Box Sizing and Overflow Prevention */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        /* Container Layout */
+        .page-container {
+            max-width: 1320px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 640px) {
+            .page-container {
+                padding: 1.2rem 1rem 3rem;
+            }
+        }
+
+        /* Header Area */
+        .page-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            width: 100%;
+        }
+        .header-title-group h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.7px;
+            line-height: 1.2;
+            margin-bottom: 0.35rem;
+        }
+        @media (max-width: 768px) {
+            .header-title-group h1 {
+                font-size: 1.75rem;
+            }
+        }
+        .header-title-group h1 span.green-accent {
+            color: var(--primary);
+        }
+        .header-title-group p {
+            color: var(--text-muted);
+            font-size: 1.02rem;
+            font-weight: 400;
+        }
+        .header-meta-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .meta-pill {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .meta-pill-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+        }
+        .meta-pill-text .label {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+        .meta-pill-text .val {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Statistics Bar */
+        .stats-strip {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.2rem 1.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.8rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (max-width: 992px) {
+            .stats-strip {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                padding: 1rem 1.2rem;
+            }
+            .stat-item:nth-child(2) {
+                border-right: none;
+            }
+        }
+        @media (max-width: 480px) {
+            .stats-strip {
+                grid-template-columns: 1fr;
+            }
+            .stat-item {
+                border-right: none !important;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 0.75rem;
+            }
+            .stat-item:last-child {
+                border-bottom: none;
+            }
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.2rem 0.5rem;
+            min-width: 0;
+        }
+        .stat-item:not(:last-child) {
+            border-right: 1px solid var(--border-color);
+        }
+        .stat-icon-wrap {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--bg-subtle);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+        }
+        .stat-data {
+            min-width: 0;
+        }
+        .stat-data .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .stat-data .stat-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-top: 0.15rem;
+            white-space: normal;
+            line-height: 1.25;
+            word-break: break-word;
+        }
+
+        /* Filter Panel - Compact Single Row */
+        .filter-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 0.85rem 1rem;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 50;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .filter-grid {
+            display: grid;
+            grid-template-columns: minmax(130px, 1.15fr) minmax(115px, 1fr) minmax(115px, 1fr) minmax(120px, 1.05fr) minmax(135px, 1.35fr) auto;
+            gap: 0.5rem;
+            align-items: flex-end;
+            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .filter-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.55rem;
+            }
+            .filter-grid .form-group:nth-child(4) {
+                grid-column: span 1;
+            }
+            .filter-grid .form-group:nth-child(5) {
+                grid-column: span 2;
+            }
+            .filter-btn-group {
+                grid-column: span 1;
+                display: flex;
+                width: 100%;
+            }
+            .btn-filter-apply {
+                flex: 1;
+                justify-content: center;
+            }
+            .btn-filter-reset {
+                width: 38px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .filter-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .filter-grid .form-group:nth-child(5) {
+                grid-column: 1 / -1;
+            }
+            .filter-btn-group {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+            .filter-card {
+                padding: 0.85rem 0.75rem;
+            }
+        }
+
+        .form-group {
+            min-width: 0;
+            margin-bottom: 0;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.3px;
+        }
+        .form-control {
+            width: 100%;
+            height: 38px;
+            padding: 0 0.65rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.83rem;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+        }
+        select.form-control option,
+        select.sort-select option {
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            padding: 8px 12px;
+            font-size: 0.85rem;
+        }
+        .filter-btn-group {
+            display: flex;
+            gap: 0.35rem;
+            flex-shrink: 0;
+        }
+        .btn-filter-apply {
+            height: 38px;
+            padding: 0 0.85rem;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .btn-filter-apply:hover {
+            background: var(--primary-dark);
+        }
+        .btn-filter-reset {
+            height: 38px;
+            width: 36px;
+            padding: 0;
+            background: var(--bg-subtle);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .btn-filter-reset:hover {
+            background: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        /* ===== Searchable Custom Dropdown ===== */
+        .searchable-dropdown {
+            position: relative;
+            width: 100%;
+        }
+        .searchable-dropdown.open {
+            z-index: 1000;
+        }
+        .sd-trigger {
+            width: 100%;
+            height: 38px;
+            padding: 0 1.6rem 0 0.65rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-surface);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.83rem;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            user-select: none;
+            position: relative;
+        }
+        .sd-trigger::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.6rem;
+            position: absolute;
+            right: 0.55rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            transition: transform 0.2s;
+            pointer-events: none;
+        }
+        .searchable-dropdown.open .sd-trigger::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        .sd-trigger:hover {
+            border-color: var(--primary);
+        }
+        .searchable-dropdown.open .sd-trigger {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+        }
+        .sd-panel {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            width: 100%;
+            min-width: 220px;
+            max-height: 320px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            overflow: hidden;
+            flex-direction: column;
+        }
+        .searchable-dropdown.open .sd-panel {
+            display: flex;
+        }
+        .sd-search-wrap {
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background: var(--bg-surface);
+        }
+        .sd-search-input {
+            width: 100%;
+            height: 34px;
+            padding: 0 0.65rem 0 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-subtle);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.82rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .sd-search-input:focus {
+            border-color: var(--primary);
+        }
+        .sd-search-wrap .sd-search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        .sd-list {
+            overflow-y: auto;
+            max-height: 260px;
+            padding: 0.25rem 0;
+        }
+        .sd-list::-webkit-scrollbar { width: 6px; }
+        .sd-list::-webkit-scrollbar-track { background: transparent; }
+        .sd-list::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+        .sd-option {
+            padding: 0.5rem 0.85rem;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: background 0.15s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sd-option:hover,
+        .sd-option.sd-highlighted {
+            background: var(--primary-light);
+        }
+        .sd-option.sd-selected {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        .sd-option.sd-selected::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.65rem;
+            margin-right: 0.45rem;
+            color: var(--primary);
+        }
+        .sd-no-results {
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+        .sd-loading {
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+        .sd-loading i { margin-right: 0.4rem; }
+
+        /* Category Horizontal Scroll with Real Photos */
+        .category-nav-wrapper {
+            margin-bottom: 2rem;
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+        }
+        .category-scroll-strip {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding: 0.4rem 0.2rem 0.6rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            width: 100%;
+            max-width: 100%;
+        }
+        .category-scroll-strip::-webkit-scrollbar {
+            display: none;
+        }
+        .category-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.45rem 0.9rem 0.45rem 0.5rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        .category-pill:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+        .category-pill.active {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary-dark);
+            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.15);
+        }
+        .category-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: var(--bg-subtle);
+        }
+        .category-icon-all {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* 2-Column Main Workspace */
+        .main-layout-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 320px;
+            gap: 1.75rem;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .main-layout-grid {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* Section Header in Main Column */
+        .section-headline-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .section-headline-bar h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.4px;
+        }
+        .section-headline-bar p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+        .view-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .sort-select {
+            height: 36px;
+            padding: 0 0.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+            outline: none;
+            cursor: pointer;
+        }
+        .view-toggle-btns {
+            display: flex;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 2px;
+        }
+        .view-btn {
+            border: none;
+            background: transparent;
+            padding: 0.4rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .view-btn.active {
+            background: var(--bg-surface);
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* REALISTIC COMMODITY CARDS GRID */
+        .commodity-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Realistic Commodity Card */
+        .commodity-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            position: relative;
+        }
+        .commodity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: #cbd5e1;
+        }
+
+        /* Card Image Container */
+        .card-image-box {
+            position: relative;
+            height: 155px;
+            width: 100%;
+            overflow: hidden;
+            background-color: var(--bg-subtle);
+        }
+        .card-real-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+        .commodity-card:hover .card-real-img {
+            transform: scale(1.03);
+        }
+        .card-top-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(4px);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+        }
+        .card-date-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--bg-surface);
+            backdrop-filter: blur(4px);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+        }
+        .card-distance-tag {
+            position: absolute;
+            bottom: 8px;
+            left: 10px;
+            background: var(--primary);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Card Content Area */
+        .card-content {
+            padding: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.2rem;
+        }
+        .card-commodity-name {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+        .card-grade-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            background: var(--bg-subtle);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+        }
+        .card-variety-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Price Structure */
+        .card-price-headline {
+            margin-bottom: 0.85rem;
+        }
+        .card-modal-price {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+        .card-unit-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Min / Modal / Max 3-Col Micro-Strip */
+        .price-range-strip {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background: var(--bg-subtle);
+            border-radius: var(--radius-sm);
+            padding: 0.45rem 0.6rem;
+            margin-bottom: 0.9rem;
+            text-align: center;
+        }
+        .range-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .range-col:not(:last-child) {
+            border-right: 1px solid var(--border-color);
+        }
+        .range-col .lbl {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+        .range-col .val {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Market Location */
+        .card-market-meta {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        .card-market-meta i {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+        .card-market-meta .market-name {
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Card Action Button */
+        .btn-card-details {
+            width: 100%;
+            height: 38px;
+            background: var(--bg-surface);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+            margin-top: auto;
+        }
+        .btn-card-details:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-border);
+            color: var(--primary-dark);
+        }
+
+        /* Table View Structure */
+        .table-view-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow-x: auto;
+            max-width: 100%;
+            width: 100%;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 2rem;
+            display: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .mandi-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            text-align: left;
+        }
+        .mandi-table th {
+            background: var(--bg-subtle);
+            padding: 0.85rem 1rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.4px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .mandi-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        .mandi-table tr:hover {
+            background: var(--bg-hover);
+        }
+
+        /* RIGHT SIDEBAR PANELS */
+        .sidebar-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.3rem;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 1.5rem;
+        }
+        .sidebar-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .sidebar-panel-header h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.3px;
+        }
+        .sidebar-panel-header a {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .sidebar-panel-header a:hover {
+            text-decoration: underline;
+        }
+
+        /* Nearby Market List Items */
+        .nearby-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--bg-subtle);
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+        .nearby-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .nearby-thumb {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+            background: var(--bg-subtle);
+        }
+        .nearby-info {
+            flex-grow: 1;
+        }
+        .nearby-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+        .nearby-loc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .nearby-price-box {
+            text-align: right;
+        }
+        .nearby-price {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .nearby-distance {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        /* Highlights Box */
+        .highlight-item {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--bg-subtle);
+        }
+        .highlight-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .highlight-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .highlight-text h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .highlight-text p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.1rem;
+        }
+
+        /* Disclaimer Card */
+        .disclaimer-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .disclaimer-card strong {
+            color: var(--text-main);
+        }
+
+        /* Skeletons */
+        .skeleton-card {
+            height: 360px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Empty State */
+        .empty-results-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 3.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .empty-results-box i {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        .empty-results-box h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.4rem;
+        }
+        .empty-results-box p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            max-width: 420px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Pagination */
+        .pagination-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+        .btn-page {
+            height: 38px;
+            padding: 0 0.9rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-page:hover:not(:disabled) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .btn-page:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .page-counter-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 0 0.75rem;
+        }
+
+        /* Modals */
+        .app-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+        .app-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .app-modal-box {
+            background: var(--bg-surface);
+            border-radius: var(--radius-xl);
+            max-width: 680px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+        }
+        .app-modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: var(--bg-subtle);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .app-modal-close:hover {
+            background: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1080px) {
+            .filter-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .main-layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .header-title-group h1 { font-size: 1.7rem; }
+            .stats-strip { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .stat-item:not(:last-child) { border-right: none; }
+            .filter-grid { grid-template-columns: 1fr; }
+            .commodity-cards-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Dark Theme Specific Overrides for Marketplace */
+        [data-theme='dark'] .brand-logo {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .header-title-group h1 {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .meta-pill {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .meta-pill-text .val {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .stats-strip {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .stat-item:not(:last-child) {
+            border-right-color: #2E404B;
+        }
+
+        [data-theme='dark'] .stat-icon-wrap {
+            background: #22363F;
+        }
+
+        [data-theme='dark'] .stat-data .stat-number {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .filter-card {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .form-group label {
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .form-control,
+        [data-theme='dark'] .filter-input,
+        [data-theme='dark'] .filter-select {
+            background: #16242B;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] select.form-control option,
+        [data-theme='dark'] select.sort-select option {
+            background-color: #16242B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .filter-input::placeholder,
+        [data-theme='dark'] .form-control::placeholder {
+            color: #6C7D87;
+        }
+
+        [data-theme='dark'] .btn-filter-reset {
+            background: #22363F;
+            border-color: #2E404B;
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .btn-filter-reset:hover {
+            background: #29424E;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .category-pill {
+            background: #1B2B33;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .category-pill:hover {
+            background: #22363F;
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+
+        [data-theme='dark'] .category-pill.active {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: #22C55E;
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .section-headline-bar h2 {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .section-headline-bar p {
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .sort-select {
+            background: #16242B;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .view-toggle-btns {
+            background: #16242B;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .view-btn {
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .view-btn.active {
+            background: #22363F;
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .commodity-card {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .commodity-card:hover {
+            border-color: #38505E;
+        }
+
+        [data-theme='dark'] .card-date-badge {
+            background: rgba(22, 36, 43, 0.9);
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .card-commodity-name {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .card-grade-tag {
+            background: #22363F;
+            border-color: #2E404B;
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .card-variety-subtitle {
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .card-modal-price {
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .card-unit-label {
+            color: #8997A1;
+        }
+
+        [data-theme='dark'] .price-range-strip {
+            background: #16242B;
+        }
+
+        [data-theme='dark'] .range-col:not(:last-child) {
+            border-right-color: #2E404B;
+        }
+
+        [data-theme='dark'] .range-col .lbl {
+            color: #8997A1;
+        }
+
+        [data-theme='dark'] .range-col .val {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .card-market-meta {
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .card-market-meta .market-name {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .btn-card-details {
+            background: #22363F;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .btn-card-details:hover {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .table-view-container {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .mandi-table th {
+            background: #16242B;
+            color: #B8C4CC;
+            border-bottom-color: #2E404B;
+        }
+
+        [data-theme='dark'] .mandi-table td {
+            color: #F1F5F9;
+            border-bottom-color: #2E404B;
+        }
+
+        [data-theme='dark'] .mandi-table tr:hover {
+            background: #22363F;
+        }
+
+        [data-theme='dark'] .sidebar-panel {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .sidebar-panel-header h3 {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .nearby-item {
+            border-bottom-color: #22363F;
+        }
+
+        [data-theme='dark'] .nearby-name {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .nearby-loc {
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .nearby-price {
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .nearby-distance {
+            color: #8997A1;
+        }
+
+        [data-theme='dark'] .highlight-item {
+            border-bottom-color: #22363F;
+        }
+
+        [data-theme='dark'] .highlight-icon {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .highlight-text h4 {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .highlight-text p {
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .disclaimer-card {
+            background: #16242B;
+            border-color: #2E404B;
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .disclaimer-card strong {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .empty-results-box {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .empty-results-box h3 {
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .empty-results-box p {
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .btn-page {
+            background: #1B2B33;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .btn-page:hover:not(:disabled) {
+            background: #22363F;
+            border-color: #22C55E;
+            color: #4ADE80;
+        }
+
+        [data-theme='dark'] .page-counter-text {
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .app-modal-box {
+            background: #1B2B33;
+            border: 1px solid #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .app-modal-close {
+            background: #22363F;
+            color: #B8C4CC;
+        }
+
+        [data-theme='dark'] .app-modal-close:hover {
+            background: #29424E;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .skeleton-card {
+            background: linear-gradient(90deg, #1B2B33 25%, #22363F 50%, #1B2B33 75%);
+            background-size: 200% 100%;
+        }
+    </style>
+</head>
+<body>
+
+        <!-- Modern AgriTech / SaaS Navbar -->
+    <header class="app-header">
+        <!-- ROW 1: Main Header (Logo on Left, Controls on Right) -->
+        <div class="header-top-row">
+            <div class="header-container-top">
+                <!-- Left: Brand Logo -->
+                <a href="dashboard.html" class="brand-logo" title="KRISHI VAANI">
+                    <div class="brand-icon-wrap">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <span class="brand-name">KRISHI VAANI</span>
+                </a>
+
+                <!-- Right: Standardized Header Controls [ Notification | Language | Profile ] -->
+                <div class="header-nav-right">
+                    <!-- 1. Notification Bell Button -->
+                    <div class="nav-notification-container" style="position: relative;">
+                        <button type="button" class="nav-notification-btn" id="notificationBellBtn" onclick="krishiFCM.openNotificationCenter()" title="Live Alerts & Notifications" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span id="notificationBadge" class="notification-counter-badge" style="display: none;">0</span>
+                        </button>
+                    </div>
+
+                    <!-- 2. Language Selector: [ Globe Icon | English | Dropdown Arrow ] -->
+                    <div class="nav-lang-box" title="Select Language">
+                        <i class="fas fa-globe"></i>
+                        <select id="langSelect" class="nav-lang-select" aria-label="Select Language">
+                            <option value="en">English</option>
+                            <option value="kn">ಕನ್ನಡ</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="ml">മലയാളം</option>
+                            <option value="hi">हिन्दी</option>
+                        </select>
+                        <i class="fas fa-chevron-down nav-lang-arrow"></i>
+                    </div>
+
+                    <!-- 3. Profile Button: [ User Icon | User Name | Dropdown Arrow ] -->
+                    <div class="nav-profile-container">
+                        <button class="nav-profile-button" id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Account Menu">
+                            <i class="fas fa-circle-user nav-profile-icon"></i>
+                            <span id="navProfileName" class="nav-profile-name">Farmer</span>
+                            <i class="fas fa-chevron-down nav-caret"></i>
+                        </button>
+                        <div class="nav-profile-popover" id="navProfileDropdown">
+                            <a href="#" onclick="openFarmerProfileModal(event)" class="popover-profile-header" title="View Profile">
+                                <div class="popover-avatar-wrap">
+                                    <div class="popover-avatar" id="popoverAvatar">F</div>
+                                </div>
+                                <div class="popover-user-info">
+                                    <div class="popover-user-name" id="popoverUserName">Farmer</div>
+                                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> My Profile</div>
+                                </div>
+                                <i class="fas fa-chevron-right popover-arrow"></i>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <div class="popover-theme-row">
+                                <div class="popover-theme-label">
+                                    <i class="fas fa-palette"></i>
+                                    <span>Appearance</span>
+                                </div>
+                                <div class="popover-theme-pills">
+                                    <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                                </div>
+                            </div>
+                            <a href="alert-guard.html" class="popover-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                            <a href="#" onclick="openFarmerSettingsModal(event)" class="popover-item">
+                                <i class="fas fa-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <a href="#" onclick="logout(event)" class="popover-item popover-logout">
+                                <i class="fas fa-right-from-bracket"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Navigation Toggle -->
+                    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: Primary Navigation (Dashboard | Marketplace | Crop Alerts | AlertGuard) -->
+        <div class="header-nav-row">
+            <div class="header-container-bottom">
+                <nav class="header-nav-primary">
+                    <a href="dashboard.html" class="nav-tab ">
+                        <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
+                    </a>
+                    <a href="marketplace.html" class="nav-tab active">
+                        <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
+                    </a>
+                    <a href="crop-alerts.html" class="nav-tab ">
+                        <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
+                    </a>
+                    <a href="alert-guard.html" class="nav-tab ">
+                        <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Backdrop -->
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop" onclick="closeMobileDrawer()"></div>
+
+    <!-- Mobile Navigation Drawer (Overlay Sidebar) -->
+    <div class="mobile-nav-drawer" id="mobileNavDrawer" role="dialog" aria-label="Mobile Navigation Menu">
+        <!-- Drawer Header with Logo & Close Button -->
+        <div class="mobile-drawer-header">
+            <div class="mobile-drawer-brand">
+                <div class="brand-icon-wrap" style="width: 28px; height: 28px; font-size: 0.85rem;">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <span style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">KRISHI VAANI</span>
+            </div>
+            <button type="button" class="mobile-drawer-close" onclick="closeMobileDrawer()" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Profile Section in Mobile Drawer -->
+        <div class="mobile-drawer-profile-card">
+            <a href="#" onclick="openFarmerProfileModal(event); closeMobileDrawer();" class="mobile-profile-card-link" title="View Profile">
+                <div class="popover-avatar-wrap">
+                    <div class="popover-avatar" id="mobileDrawerAvatar">F</div>
+                </div>
+                <div class="popover-user-info">
+                    <div class="popover-user-name nav-profile-name" id="mobileDrawerUserName">Farmer</div>
+                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> <span data-i18n="profile_my_profile">My Profile</span></div>
+                </div>
+                <i class="fas fa-chevron-right popover-arrow"></i>
+            </a>
+        </div>
+
+        <!-- Quick Actions: Notifications, Settings & Appearance Theme -->
+        <div class="mobile-drawer-section">
+            <button type="button" class="mobile-drawer-action-btn" onclick="krishiFCM.openNotificationCenter(); closeMobileDrawer();" title="Notifications">
+                <div class="mobile-drawer-action-left">
+                    <i class="fas fa-bell"></i>
+                    <span data-i18n="profile_notifications">Notifications</span>
+                </div>
+                <span class="notification-counter-badge" id="mobileDrawerNotificationBadge" style="display: none;">0</span>
+            </button>
+
+            <button type="button" class="mobile-drawer-action-btn" onclick="openFarmerSettingsModal(event); closeMobileDrawer();" title="Account Settings">
+                <div class="mobile-drawer-action-left">
+                    <i class="fas fa-gear"></i>
+                    <span data-i18n="profile_settings">Settings</span>
+                </div>
+                <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--text-light);"></i>
+            </button>
+
+            <div class="mobile-drawer-theme-box">
+                <div class="mobile-drawer-theme-label">
+                    <i class="fas fa-palette"></i>
+                    <span data-i18n="profile_appearance">Appearance</span>
+                </div>
+                <div class="popover-theme-pills">
+                    <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                    <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                    <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="popover-divider"></div>
+
+        <!-- Primary Navigation Links -->
+        <div class="mobile-drawer-nav-section">
+            <div class="mobile-drawer-section-title" data-i18n="nav_menu">Menu</div>
+            <a href="dashboard.html" class="mobile-drawer-link ">
+                <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
+            </a>
+            <a href="marketplace.html" class="mobile-drawer-link active">
+                <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
+            </a>
+            <a href="crop-alerts.html" class="mobile-drawer-link ">
+                <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
+            </a>
+            <a href="alert-guard.html" class="mobile-drawer-link ">
+                <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
+            </a>
+            <a href="news.html" class="mobile-drawer-link ">
+                <i class="fas fa-newspaper"></i> <span data-i18n="nav_agri_news">Agri-News</span>
+            </a>
+        </div>
+
+        <div class="popover-divider" style="margin-top: auto;"></div>
+
+        <!-- Logout Action at bottom -->
+        <a href="#" onclick="logout(event); closeMobileDrawer();" class="mobile-drawer-link mobile-drawer-logout" title="Logout">
+            <i class="fas fa-right-from-bracket"></i> <span data-i18n="profile_logout">Logout</span>
+        </a>
+    </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="page-container">
+        
+        <!-- Header Row -->
+        <div class="page-header-row">
+            <div class="header-title-group">
+                <h1>Indian <span class="green-accent">Agricultural Market</span></h1>
+                <p>Explore daily mandi prices, nearby markets and agricultural listings across India.</p>
+            </div>
+            <div class="header-meta-group">
+                <div class="meta-pill">
+                    <div class="meta-pill-icon"><i class="fas fa-location-dot"></i></div>
+                    <div class="meta-pill-text">
+                        <div class="label">Your Location</div>
+                        <div class="val" id="userLocationHeader">Bengaluru, Karnataka</div>
+                    </div>
+                </div>
+                <div class="meta-pill">
+                    <div class="meta-pill-icon"><i class="far fa-clock"></i></div>
+                    <div class="meta-pill-text">
+                        <div class="label">Last Updated</div>
+                        <div class="val" id="lastUpdatedHeader">Today, 08:30 AM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Horizontal Statistics Strip -->
+        <div class="stats-strip">
+            <div class="stat-item">
+                <div class="stat-icon-wrap"><i class="fas fa-store-alt"></i></div>
+                <div class="stat-data">
+                    <div class="stat-number" id="statActiveMandis">1,090+</div>
+                    <div class="stat-label" data-i18n="mkt_active_mandis">Active Mandis</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon-wrap"><i class="fas fa-map-location-dot"></i></div>
+                <div class="stat-data">
+                    <div class="stat-number" id="statStatesCovered">21</div>
+                    <div class="stat-label" data-i18n="mkt_states_covered">States Covered</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon-wrap"><i class="fas fa-seedling"></i></div>
+                <div class="stat-data">
+                    <div class="stat-number" id="statCommodities">160+</div>
+                    <div class="stat-label" data-i18n="mkt_commodities">Commodities</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon-wrap"><i class="far fa-calendar-check"></i></div>
+                <div class="stat-data">
+                    <div class="stat-number" id="statLatestDate" style="font-size: 1.25rem;">24 Aug 2026</div>
+                    <div class="stat-label">Latest Price Date</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clean White Filter Panel -->
+        <div class="filter-card">
+            <div class="filter-grid">
+                <div class="form-group">
+                    <label>Type</label>
+                    <select class="form-control" id="marketTypeSelect" onchange="switchMarketView(this.value)">
+                        <option value="mandi">Market Prices (Govt)</option>
+                        <option value="sell">Farmer Sell Offers</option>
+                        <option value="buy">Buyer Requirements</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>State</label>
+                    <div class="searchable-dropdown" id="sdState" data-value="">
+                        <div class="sd-trigger" tabindex="0">All States</div>
+                        <div class="sd-panel">
+                            <div class="sd-search-wrap">
+                                <i class="fas fa-search sd-search-icon"></i>
+                                <input type="text" class="sd-search-input" placeholder="Search states..." autocomplete="off">
+                            </div>
+                            <div class="sd-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>District</label>
+                    <div class="searchable-dropdown" id="sdDistrict" data-value="">
+                        <div class="sd-trigger" tabindex="0">All Districts</div>
+                        <div class="sd-panel">
+                            <div class="sd-search-wrap">
+                                <i class="fas fa-search sd-search-icon"></i>
+                                <input type="text" class="sd-search-input" placeholder="Search districts..." autocomplete="off">
+                            </div>
+                            <div class="sd-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Commodity</label>
+                    <div class="searchable-dropdown" id="sdCommodity" data-value="">
+                        <div class="sd-trigger" tabindex="0">All Commodities</div>
+                        <div class="sd-panel">
+                            <div class="sd-search-wrap">
+                                <i class="fas fa-search sd-search-icon"></i>
+                                <input type="text" class="sd-search-input" placeholder="Search commodities..." autocomplete="off">
+                            </div>
+                            <div class="sd-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Search</label>
+                    <input type="text" class="form-control" id="filterSearch" placeholder="Search commodity, market, district..." oninput="handleSearchDebounce()">
+                </div>
+                <div class="filter-btn-group">
+                    <button class="btn-filter-apply" onclick="loadMandiPrices(1)"><i class="fas fa-filter"></i> Apply</button>
+                    <button class="btn-filter-reset" onclick="resetAllFilters()" title="Reset Filters"><i class="fas fa-undo"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Horizontal Commodity Category Navigation with REAL Photographs -->
+        <div class="category-nav-wrapper">
+            <div class="category-scroll-strip" id="commodityCategoryStrip">
+                <!-- Dynamically populated with real photographic thumbnails -->
+            </div>
+        </div>
+
+        <!-- Main 2-Column Workspace Grid -->
+        <div class="main-layout-grid">
+            
+            <!-- Left Main Column (Cards / Table) -->
+            <div class="main-content-column">
+                
+                <div class="section-headline-bar">
+                    <div>
+                        <h2 id="mainSectionTitle">Today's Mandi Prices</h2>
+                        <p id="mainSectionSubtitle"><span data-i18n="mkt_reported_daily">Reported daily mandi prices from across India</span></p>
+                    </div>
+                    <div class="view-controls">
+                        <select class="sort-select" id="sortSelect" onchange="loadMandiPrices(1)">
+                            <option value="recent">Sort by: Latest Date</option>
+                            <option value="highest">Sort by: Highest Price</option>
+                            <option value="lowest">Sort by: Lowest Price</option>
+                            <option value="nearest">Sort by: Nearest (PostGIS)</option>
+                        </select>
+                        <div class="view-toggle-btns">
+                            <button class="view-btn active" id="btnViewGrid" onclick="toggleViewMode('grid')"><i class="fas fa-th-large"></i></button>
+                            <button class="view-btn" id="btnViewTable" onclick="toggleViewMode('table')"><i class="fas fa-list"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skeletons Loader -->
+                <div class="commodity-cards-grid" id="cardsLoader" style="display: none;">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+
+                <!-- Realistic Commodity Cards Grid -->
+                <div class="commodity-cards-grid" id="commodityCardsContainer">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Table View Mode -->
+                <div class="table-view-container" id="mandiTableContainer">
+                    <table class="mandi-table">
+                        <thead>
+                            <tr>
+                                <th>Commodity</th>
+                                <th>Market & Location</th>
+                                <th>Variety / Grade</th>
+                                <th>Modal Price</th>
+                                <th>Min / Max Range</th>
+                                <th>Arrival Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mandiTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty Results State -->
+                <div class="empty-results-box" id="emptyResultsState" style="display: none;">
+                    <i class="fas fa-seedling"></i>
+                    <h3>No Market Prices Found</h3>
+                    <p>We couldn't find mandi prices matching your filter criteria. Try selecting another state, commodity or reset filters.</p>
+                    <button class="btn-filter-apply" onclick="resetAllFilters()" style="margin: 0 auto;">Reset All Filters</button>
+                </div>
+
+                <!-- Pagination Bar -->
+                <div class="pagination-bar" id="paginationBar" style="display: none;">
+                    <button class="btn-page" id="btnPagePrev" onclick="navigatePage(-1)"><i class="fas fa-chevron-left"></i> Prev</button>
+                    <span class="page-counter-text" id="pageCounterText">Page 1 of 1</span>
+                    <button class="btn-page" id="btnPageNext" onclick="navigatePage(1)">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+            </div>
+
+            <!-- Right Sidebar Column -->
+            <div class="sidebar-column">
+                
+                <!-- Nearby Markets Panel -->
+                <div class="sidebar-panel">
+                    <div class="sidebar-panel-header">
+                        <h3><i class="fas fa-location-crosshairs" style="color: var(--primary);"></i> Nearby Markets</h3>
+                        <a href="javascript:void(0)" onclick="filterByNearby()">View All</a>
+                    </div>
+                    <div id="nearbyMarketsList">
+                        <!-- Populated dynamically with real PostGIS distance calculations -->
+                    </div>
+                </div>
+
+                <!-- Market Highlights Panel -->
+                <div class="sidebar-panel">
+                    <div class="sidebar-panel-header">
+                        <h3><i class="fas fa-chart-line" style="color: var(--primary);"></i> Market Highlights</h3>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-arrow-trend-up"></i></div>
+                        <div class="highlight-text">
+                            <h4><span data-i18n="mkt_highlight_1_title">Tomato & Onion Arrivals Strong</span></h4>
+                            <p><span data-i18n="mkt_highlight_1_desc">Active trading reported across South & West APMC yards.</span></p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-clock-rotate-left"></i></div>
+                        <div class="highlight-text">
+                            <h4><span data-i18n="mkt_highlight_2_title">Daily Synchronization</span></h4>
+                            <p><span data-i18n="mkt_highlight_2_desc">Prices synced from Agmarknet & Data.gov.in daily at 06:00 AM.</span></p>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="highlight-icon"><i class="fas fa-shield-check"></i></div>
+                        <div class="highlight-text">
+                            <h4><span data-i18n="mkt_highlight_3_title">Direct Farmer Listings</span></h4>
+                            <p><span data-i18n="mkt_highlight_3_desc">Connect peer-to-peer with verified local farmers and FPOs.</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Attribution & Disclaimer -->
+                <div class="disclaimer-card">
+                    <p><strong><i class="fas fa-building-columns"></i> Data Source:</strong> Government of India Open Government Data (data.gov.in) & Agmarknet.</p>
+                    <p style="margin-top: 0.4rem;"><strong><i class="fas fa-info-circle"></i> Note:</strong> Mandi prices are reported arrival rates and may vary with produce quality and auction timings.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Modal for Detailed Price History & Chart -->
+    <div class="app-modal-overlay" id="detailModal">
+        <div class="app-modal-box">
+            <button class="app-modal-close" onclick="closeModal('detailModal')">&times;</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Modal for Market Comparison -->
+    <div class="app-modal-overlay" id="compareModal">
+        <div class="app-modal-box" style="max-width: 760px;">
+            <button class="app-modal-close" onclick="closeModal('compareModal')">&times;</button>
+            <h2 style="font-size: 1.3rem; margin-bottom: 0.4rem;" id="compareModalTitle">Regional Market Comparison</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem;">Compare modal prices for this commodity across regional mandis.</p>
+            <div id="compareTableContainer"></div>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/commodityImages.js"></script>
+    <script>
+        window.API_BASE_URL = window.API_BASE_URL || '/api';
+        
+        // Primary Popular Categories for Navigation Strip
+        const PRIMARY_CATEGORIES = [
+            { name: 'All Commodities', slug: '', iconAll: true },
+            { name: 'Tomato', slug: 'Tomato' },
+            { name: 'Onion', slug: 'Onion' },
+            { name: 'Potato', slug: 'Potato' },
+            { name: 'Paddy / Rice', slug: 'Paddy' },
+            { name: 'Wheat', slug: 'Wheat' },
+            { name: 'Maize', slug: 'Maize' },
+            { name: 'Cotton', slug: 'Cotton' },
+            { name: 'Chilli', slug: 'Chilli' },
+            { name: 'Banana', slug: 'Banana' },
+            { name: 'Groundnut', slug: 'Groundnut' },
+            { name: 'Turmeric', slug: 'Turmeric' },
+            { name: 'Soybean', slug: 'Soyabean' },
+            { name: 'Garlic', slug: 'Garlic' },
+            { name: 'Jasmine', slug: 'Jasmine' },
+            { name: 'Mentha Oil', slug: 'Mentha Oil' }
+        ];
+
+        // State Variables
+        let currentViewMode = 'grid'; // 'grid' or 'table'
+        let currentMarketType = 'mandi';
+        let currentPage = 1;
+        let totalPages = 1;
+        let searchDebounceTimer = null;
+        let farmerLocation = { lat: 12.9716, lon: 77.5946, city: 'Bengaluru, Karnataka', isGpsVerified: false };
+
+        const ALL_INDIAN_STATES = [
+            "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", 
+            "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", 
+            "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", 
+            "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", 
+            "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+            "Andaman and Nicobar", "Chandigarh", "Delhi", "Jammu and Kashmir", "Ladakh", "Puducherry"
+        ];
+
+        const TOP_COMMODITIES = [
+            "Rice", "Wheat", "Maize", "Cotton", "Sugarcane", "Tomato", "Potato", "Onion", 
+            "Jasmine", "Rose", "Marigold", "Groundnut", "Soyabean", "Mustard", "Chilli Red", 
+            "Turmeric", "Banana", "Mango", "Apple", "Gram", "Arhar (Tur)", "Moong", "Urad", "Ginger"
+        ];
+
+        function formatNaturalDistanceUI(distKm, distMeters) {
+            if (distKm == null || isNaN(distKm)) return '';
+            const m = distMeters != null ? distMeters : distKm * 1000;
+            if (m < 1000) {
+                return `${Math.round(m)} m`;
+            } else if (distKm < 10) {
+                return `${distKm.toFixed(1)} km`;
+            } else {
+                return `${Math.round(distKm)} km`;
+            }
+        }
+
+
+        // Clean Short Location Formatter (Mandi Display Rule: Name & State only)
+        function formatShortLocation(loc) {
+            if (!loc) return 'Bengaluru, Karnataka';
+            if (typeof loc === 'object') {
+                const primary = loc.city || loc.town || loc.village || loc.district || loc.suburb;
+                const state = loc.state || '';
+                if (primary && state) return `${primary}, ${state}`;
+                if (primary) return primary;
+                if (state) return state;
+                if (loc.formattedAddress) {
+                    const parts = loc.formattedAddress.split(',').map(s => s.trim()).filter(Boolean);
+                    const cleaned = parts.filter(p => !/^\d{5,6}$/.test(p) && p.toLowerCase() !== 'india');
+                    if (cleaned.length >= 2) {
+                        return `${cleaned[cleaned.length - 2]}, ${cleaned[cleaned.length - 1]}`;
+                    } else if (cleaned.length === 1) {
+                        return cleaned[0];
+                    }
+                }
+            }
+            if (typeof loc === 'string') {
+                const parts = loc.split(',').map(s => s.trim()).filter(Boolean);
+                const cleaned = parts.filter(p => !/^\d{5,6}$/.test(p) && p.toLowerCase() !== 'india');
+                if (cleaned.length >= 2) {
+                    return `${cleaned[cleaned.length - 2]}, ${cleaned[cleaned.length - 1]}`;
+                } else if (cleaned.length === 1) {
+                    return cleaned[0];
+                }
+            }
+            return 'Bengaluru, Karnataka';
+        }
+
+        function initFarmerGpsCoordinates() {
+            // 1. Check logged-in farmer profile in localStorage as fallback
+            const farmer = JSON.parse(localStorage.getItem('farmer') || 'null');
+            if (farmer) {
+                const authBtn = document.getElementById('navAuthBtn') || document.getElementById('profileDropdownBtn');
+                if (authBtn && farmer.name) {
+                    const firstName = (farmer.name || 'Farmer').split(' ')[0];
+                    authBtn.innerHTML = `<i class="fas fa-user"></i> <span>${firstName}</span>`;
+                }
+                if (farmer.city || farmer.state || farmer.district) {
+                    farmerLocation.city = formatShortLocation(farmer);
+                    const locHdr = document.getElementById('userLocationHeader');
+                    if (locHdr) locHdr.innerText = farmerLocation.city;
+                }
+                if (farmer.location?.coordinates && Array.isArray(farmer.location.coordinates)) {
+                    farmerLocation.lon = farmer.location.coordinates[0];
+                    farmerLocation.lat = farmer.location.coordinates[1];
+                } else if (farmer.latitude && farmer.longitude) {
+                    farmerLocation.lat = parseFloat(farmer.latitude);
+                    farmerLocation.lon = parseFloat(farmer.longitude);
+                }
+            }
+
+            // 2. Check saved session GPS as secondary fallback
+            const savedGps = JSON.parse(localStorage.getItem('farmer_gps_location') || 'null');
+            if (savedGps && savedGps.lat && savedGps.lon) {
+                farmerLocation.lat = parseFloat(savedGps.lat);
+                farmerLocation.lon = parseFloat(savedGps.lon);
+                if (savedGps.city || savedGps.formattedAddress || savedGps.district) {
+                    farmerLocation.city = formatShortLocation(savedGps);
+                    const locHdr = document.getElementById('userLocationHeader');
+                    if (locHdr) locHdr.innerText = farmerLocation.city;
+                }
+            }
+
+            // 3. ALWAYS attempt fresh GPS detection on startup with maximumAge: 0
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    async (pos) => {
+                        farmerLocation.lat = pos.coords.latitude;
+                        farmerLocation.lon = pos.coords.longitude;
+                        farmerLocation.accuracy = pos.coords.accuracy || 0;
+                        farmerLocation.isGpsVerified = true;
+
+                        try {
+                            const geoRes = await fetch(`${API_BASE_URL}/farmer/location/reverse-geocode?lat=${farmerLocation.lat}&lon=${farmerLocation.lon}`);
+                            const geoJson = await geoRes.json();
+                            if (geoJson.success && geoJson.location) {
+                                farmerLocation.city = formatShortLocation(geoJson.location);
+                            }
+                        } catch(e) {
+                            console.warn('Geocode proxy note:', e);
+                        }
+
+                        const locHdr = document.getElementById('userLocationHeader');
+                        if (locHdr) locHdr.innerText = farmerLocation.city;
+
+                        localStorage.setItem('farmer_gps_location', JSON.stringify({
+                            lat: farmerLocation.lat,
+                            lon: farmerLocation.lon,
+                            city: farmerLocation.city,
+                            timestamp: Date.now()
+                        }));
+
+                        // Recalculate distance and re-render nearby markets and mandi listings
+                        loadNearbyMarkets();
+                        loadMandiPrices(1);
+                    },
+                    (err) => {
+                        console.info('Marketplace GPS note: Using saved fallback location.', err.message);
+                    },
+                    { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+                );
+            }
+        }
+
+        // Initialize Page
+        document.addEventListener('DOMContentLoaded', async () => {
+            initFarmerGpsCoordinates();
+
+            // Populate static defaults immediately so dropdowns are never empty
+            populateInitialDropdowns();
+            renderCategoryNavigation();
+            
+            // Fetch live summaries & enrich dropdowns concurrently for instant card display
+            loadSummaryStats();
+            loadFilterDropdowns();
+            loadMandiPrices(1);
+            loadNearbyMarkets();
+        });
+
+        // ===== SearchableDropdown Class =====
+        class SearchableDropdown {
+            constructor(containerId, { placeholder = 'Select...', onSelect = null } = {}) {
+                this.container = document.getElementById(containerId);
+                if (!this.container) return;
+                this.trigger = this.container.querySelector('.sd-trigger');
+                this.panel = this.container.querySelector('.sd-panel');
+                this.searchInput = this.container.querySelector('.sd-search-input');
+                this.list = this.container.querySelector('.sd-list');
+                this.placeholder = placeholder;
+                this.onSelect = onSelect;
+                this.options = []; // [{value, label}]
+                this.filteredOptions = [];
+                this.highlightedIndex = -1;
+                this.isOpen = false;
+
+                this._bindEvents();
+            }
+
+            _bindEvents() {
+                // Click trigger to toggle
+                this.trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.isOpen ? this.close() : this.open();
+                });
+
+                // Search input filter
+                this.searchInput.addEventListener('input', () => this._filterList());
+                this.searchInput.addEventListener('click', (e) => e.stopPropagation());
+                this.searchInput.addEventListener('keydown', (e) => this._handleKeyboard(e));
+
+                // Keyboard on trigger
+                this.trigger.addEventListener('keydown', (e) => {
+                    if (['Enter', ' ', 'ArrowDown'].includes(e.key)) {
+                        e.preventDefault();
+                        this.open();
+                    }
+                });
+
+                // Reliable event delegation on list items
+                this.list.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const optEl = e.target.closest('.sd-option');
+                    if (!optEl) return;
+                    const idx = parseInt(optEl.dataset.index);
+                    const opt = this.filteredOptions[idx];
+                    if (opt) {
+                        this.setValue(opt.value);
+                        this.close();
+                    }
+                });
+
+                // Close on click outside
+                document.addEventListener('click', (e) => {
+                    if (!this.container.contains(e.target)) this.close();
+                });
+            }
+
+            open() {
+                // Close any other open dropdowns
+                document.querySelectorAll('.searchable-dropdown.open').forEach(dd => {
+                    if (dd !== this.container) dd.classList.remove('open');
+                });
+                this.container.classList.add('open');
+                this.isOpen = true;
+                this.searchInput.value = '';
+                this._filterList();
+                setTimeout(() => {
+                    if (this.searchInput) this.searchInput.focus();
+                }, 50);
+            }
+
+            close() {
+                this.container.classList.remove('open');
+                this.isOpen = false;
+                this.highlightedIndex = -1;
+            }
+
+            setOptions(options) {
+                this.options = Array.isArray(options) ? options : [];
+                this._filterList();
+            }
+
+            setLoading() {
+                this.list.innerHTML = '<div class="sd-loading"><i class="fas fa-spinner fa-spin"></i> Loading options...</div>';
+            }
+
+            getValue() {
+                return this.container.dataset.value || '';
+            }
+
+            setValue(val, silent = false) {
+                this.container.dataset.value = val;
+                const opt = this.options.find(o => o.value === val);
+                this.trigger.textContent = opt ? opt.label : this.placeholder;
+                if (!silent && this.onSelect) this.onSelect(val);
+            }
+
+            reset(silent = false) {
+                this.container.dataset.value = '';
+                this.trigger.textContent = this.placeholder;
+                this.options = [];
+                this.list.innerHTML = '';
+                if (!silent && this.onSelect) this.onSelect('');
+            }
+
+            _filterList() {
+                const query = (this.searchInput.value || '').trim().toLowerCase();
+                this.filteredOptions = query
+                    ? this.options.filter(o => (o.label || '').toLowerCase().includes(query) || (o.value || '').toLowerCase().includes(query))
+                    : [...this.options];
+                this.highlightedIndex = -1;
+                this._renderList();
+            }
+
+            _renderList() {
+                const currentVal = this.getValue();
+                if (!this.filteredOptions || this.filteredOptions.length === 0) {
+                    this.list.innerHTML = '<div class="sd-no-results"><i class="fas fa-search" style="opacity:0.5; margin-right: 0.35rem;"></i> No matches found</div>';
+                    return;
+                }
+                this.list.innerHTML = this.filteredOptions.map((opt, i) => {
+                    const selectedCls = opt.value === currentVal ? ' sd-selected' : '';
+                    const highlightCls = i === this.highlightedIndex ? ' sd-highlighted' : '';
+                    return `<div class="sd-option${selectedCls}${highlightCls}" data-index="${i}" data-value="${this._escAttr(opt.value)}">${this._escHtml(opt.label)}</div>`;
+                }).join('');
+            }
+
+            _handleKeyboard(e) {
+                const len = this.filteredOptions.length;
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    this.highlightedIndex = Math.min(this.highlightedIndex + 1, len - 1);
+                    this._renderList();
+                    this._scrollToHighlighted();
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    this.highlightedIndex = Math.max(this.highlightedIndex - 1, 0);
+                    this._renderList();
+                    this._scrollToHighlighted();
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (this.highlightedIndex >= 0 && this.highlightedIndex < len) {
+                        const opt = this.filteredOptions[this.highlightedIndex];
+                        this.setValue(opt.value);
+                        this.close();
+                    }
+                } else if (e.key === 'Escape') {
+                    this.close();
+                    this.trigger.focus();
+                }
+            }
+
+            _scrollToHighlighted() {
+                const highlighted = this.list.querySelector('.sd-highlighted');
+                if (highlighted) highlighted.scrollIntoView({ block: 'nearest' });
+            }
+
+            _escHtml(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+            _escAttr(s) { return String(s || '').replace(/"/g,'&quot;'); }
+        }
+
+        // Create dropdown instances
+        let ddState, ddDistrict, ddCommodity;
+
+        function populateInitialDropdowns() {
+            // State dropdown - pre-populated with all real Indian States
+            ddState = new SearchableDropdown('sdState', {
+                placeholder: 'All States',
+                onSelect: handleStateChange
+            });
+            const stateOpts = [{ value: '', label: 'All States' }];
+            ALL_INDIAN_STATES.forEach(st => stateOpts.push({ value: st, label: st }));
+            ddState.setOptions(stateOpts);
+            ddState.setValue('', true);
+
+            // District dropdown
+            ddDistrict = new SearchableDropdown('sdDistrict', {
+                placeholder: 'All Districts',
+                onSelect: handleDistrictChange
+            });
+            ddDistrict.setOptions([{ value: '', label: 'All Districts' }]);
+            ddDistrict.setValue('', true);
+
+            // Commodity dropdown - pre-populated with top commodities
+            ddCommodity = new SearchableDropdown('sdCommodity', {
+                placeholder: 'All Commodities',
+                onSelect: handleCommodityChange
+            });
+            const commOpts = [{ value: '', label: 'All Commodities' }];
+            TOP_COMMODITIES.forEach(cm => commOpts.push({ value: cm, label: cm }));
+            ddCommodity.setOptions(commOpts);
+            ddCommodity.setValue('', true);
+        }
+
+        // Filter Dropdowns - enrich with DB counts asynchronously
+        async function loadFilterDropdowns() {
+            try {
+                // States from DB
+                const sRes = await fetch(`${API_BASE_URL}/market-prices/states`);
+                if (sRes.ok) {
+                    const sData = await sRes.json();
+                    if (sData.states && sData.states.length > 0) {
+                        const stateOpts = [{ value: '', label: 'All States' }];
+                        sData.states.forEach(st => {
+                            stateOpts.push({ value: st.state, label: `${st.state} (${st.market_count} Mandis)` });
+                        });
+                        ddState.setOptions(stateOpts);
+                    }
+                }
+
+                // Commodities from DB
+                const cRes = await fetch(`${API_BASE_URL}/market-prices/commodities`);
+                if (cRes.ok) {
+                    const cData = await cRes.json();
+                    if (cData.commodities && cData.commodities.length > 0) {
+                        const commOpts = [{ value: '', label: 'All Commodities' }];
+                        cData.commodities.forEach(cm => {
+                            const lbl = cm.avg_modal_price ? `${cm.commodity} (Avg ₹${cm.avg_modal_price})` : cm.commodity;
+                            commOpts.push({ value: cm.commodity, label: lbl });
+                        });
+                        ddCommodity.setOptions(commOpts);
+                    }
+                }
+            } catch (e) {
+                console.warn('Filter options warning:', e);
+            }
+        }
+
+        async function handleStateChange(state) {
+            // Reset district & commodity selection
+            ddDistrict.setOptions([{ value: '', label: 'All Districts' }]);
+            ddDistrict.setValue('', true);
+            ddCommodity.setValue('', true);
+
+            if (state) {
+                // Load districts for this state
+                try {
+                    ddDistrict.setLoading();
+                    const res = await fetch(`${API_BASE_URL}/market-prices/districts?state=${encodeURIComponent(state)}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        const distOpts = [{ value: '', label: 'All Districts' }];
+                        if (data.districts && data.districts.length > 0) {
+                            data.districts.forEach(d => {
+                                distOpts.push({ value: d.district, label: `${d.district} (${d.market_count} Mandis)` });
+                            });
+                        }
+                        ddDistrict.setOptions(distOpts);
+                    } else {
+                        ddDistrict.setOptions([{ value: '', label: 'All Districts' }]);
+                    }
+                    ddDistrict.setValue('', true);
+                } catch (e) {
+                    console.warn('District fetch warning:', e);
+                    ddDistrict.setOptions([{ value: '', label: 'All Districts' }]);
+                    ddDistrict.setValue('', true);
+                }
+
+                // Load commodities scoped to state
+                try {
+                    const cRes = await fetch(`${API_BASE_URL}/market-prices/commodities?state=${encodeURIComponent(state)}`);
+                    if (cRes.ok) {
+                        const cData = await cRes.json();
+                        const commOpts = [{ value: '', label: 'All Commodities' }];
+                        if (cData.commodities && cData.commodities.length > 0) {
+                            cData.commodities.forEach(cm => {
+                                const lbl = cm.avg_modal_price ? `${cm.commodity} (Avg ₹${cm.avg_modal_price})` : cm.commodity;
+                                commOpts.push({ value: cm.commodity, label: lbl });
+                            });
+                        }
+                        ddCommodity.setOptions(commOpts);
+                    }
+                    ddCommodity.setValue('', true);
+                } catch (e) {
+                    console.warn('Commodity fetch warning:', e);
+                }
+            } else {
+                // Reset to all commodities
+                try {
+                    const cRes = await fetch(`${API_BASE_URL}/market-prices/commodities`);
+                    if (cRes.ok) {
+                        const cData = await cRes.json();
+                        const commOpts = [{ value: '', label: 'All Commodities' }];
+                        if (cData.commodities && cData.commodities.length > 0) {
+                            cData.commodities.forEach(cm => {
+                                const lbl = cm.avg_modal_price ? `${cm.commodity} (Avg ₹${cm.avg_modal_price})` : cm.commodity;
+                                commOpts.push({ value: cm.commodity, label: lbl });
+                            });
+                        }
+                        ddCommodity.setOptions(commOpts);
+                    }
+                } catch (e) {}
+            }
+
+            loadMandiPrices(1);
+        }
+
+        async function handleDistrictChange(district) {
+            const state = ddState.getValue();
+            ddCommodity.setValue('', true);
+
+            // Reload commodities scoped to state + district
+            try {
+                let url = `${API_BASE_URL}/market-prices/commodities`;
+                const params = [];
+                if (state) params.push(`state=${encodeURIComponent(state)}`);
+                if (district) params.push(`district=${encodeURIComponent(district)}`);
+                if (params.length) url += '?' + params.join('&');
+
+                const cRes = await fetch(url);
+                if (cRes.ok) {
+                    const cData = await cRes.json();
+                    const commOpts = [{ value: '', label: 'All Commodities' }];
+                    if (cData.commodities && cData.commodities.length > 0) {
+                        cData.commodities.forEach(cm => {
+                            const lbl = cm.avg_modal_price ? `${cm.commodity} (Avg ₹${cm.avg_modal_price})` : cm.commodity;
+                            commOpts.push({ value: cm.commodity, label: lbl });
+                        });
+                    }
+                    ddCommodity.setOptions(commOpts);
+                }
+                ddCommodity.setValue('', true);
+            } catch (e) {}
+
+            loadMandiPrices(1);
+        }
+
+        function handleCommodityChange(commodity) {
+            loadMandiPrices(1);
+        }
+
+        // Render Horizontal Category Navigation
+        function renderCategoryNavigation() {
+            const container = document.getElementById('commodityCategoryStrip');
+            container.innerHTML = PRIMARY_CATEGORIES.map(cat => {
+                if (cat.iconAll) {
+                    return `
+                        <div class="category-pill active" onclick="selectCategory(this, '')">
+                            <div class="category-icon-all"><i class="fas fa-border-all"></i></div>
+                            <span>${cat.name}</span>
+                        </div>
+                    `;
+                }
+                const imgUrl = CommodityImageService.getCommodityImageUrl(cat.slug || cat.name);
+                const safeCat = (cat.name || '').replace(/'/g, "\\'");
+                return `
+                    <div class="category-pill" onclick="selectCategory(this, '${cat.slug}')">
+                        <img class="category-thumb" src="${imgUrl}" alt="${cat.name}" loading="lazy" onerror="CommodityImageService.handleImageError(this, '${safeCat}')">
+                        <span>${cat.name}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectCategory(el, slug) {
+            document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+            el.classList.add('active');
+            if (ddCommodity) ddCommodity.setValue(slug, true);
+            loadMandiPrices(1);
+        }
+
+        // Summary Stats
+        async function loadSummaryStats() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/market-prices/summary`);
+                const data = await res.json();
+                if (data.summary) {
+                    document.getElementById('statActiveMandis').innerText = (data.summary.marketsCount || 1090).toLocaleString() + '+';
+                    document.getElementById('statStatesCovered').innerText = data.summary.statesCount || 21;
+                    document.getElementById('statCommodities').innerText = (data.summary.commoditiesCount || 160).toLocaleString() + '+';
+                    if (data.summary.latestArrivalDate) {
+                        const d = new Date(data.summary.latestArrivalDate);
+                        const dateFormatted = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+                        document.getElementById('statLatestDate').innerText = dateFormatted;
+                        document.getElementById('lastUpdatedHeader').innerText = `${dateFormatted}, 08:30 AM`;
+                    }
+                }
+            } catch (e) {
+                console.warn('Stats fetch warning:', e);
+            }
+        }
+
+        function handleSearchDebounce() {
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(() => loadMandiPrices(1), 350);
+        }
+
+        function resetAllFilters() {
+            if (ddState) ddState.setValue('', true);
+            if (ddDistrict) {
+                ddDistrict.setOptions([{ value: '', label: 'All Districts' }]);
+                ddDistrict.setValue('', true);
+            }
+            if (ddCommodity) ddCommodity.setValue('', true);
+            const sInput = document.getElementById('filterSearch');
+            if (sInput) sInput.value = '';
+            const sortSel = document.getElementById('sortSelect');
+            if (sortSel) sortSel.value = 'recent';
+            const mType = document.getElementById('marketTypeSelect');
+            if (mType) mType.value = 'mandi';
+            
+            document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+            document.querySelector('.category-pill')?.classList.add('active');
+            
+            // Reload all commodities
+            loadFilterDropdowns();
+            loadMandiPrices(1);
+        }
+
+        function switchMarketView(val) {
+            currentMarketType = val;
+            const titleEl = document.getElementById('mainSectionTitle');
+            const subEl = document.getElementById('mainSectionSubtitle');
+            if (val === 'mandi') {
+                if (titleEl) titleEl.innerText = typeof t === 'function' ? (t('mkt_reported_daily_title') || "Today's Mandi Prices") : "Today's Mandi Prices";
+                if (subEl) subEl.innerHTML = '<span data-i18n="mkt_reported_daily">' + (typeof t === 'function' ? t('mkt_reported_daily') : 'Reported daily mandi prices from across India') + '</span>';
+            } else if (val === 'sell') {
+                if (titleEl) titleEl.innerText = "Farmer Sell Offers";
+                if (subEl) subEl.innerText = "Direct agricultural produce listings from verified farmers";
+            } else {
+                if (titleEl) titleEl.innerText = "Buyer Requirements";
+                if (subEl) subEl.innerText = "Active crop purchase requirements from buyers & FPOs";
+            }
+            loadMandiPrices(1);
+        }
+
+
+        function navigatePage(delta) {
+            const newPage = currentPage + delta;
+            if (newPage >= 1 && newPage <= totalPages) {
+                loadMandiPrices(newPage);
+                const gridEl = document.querySelector('.main-layout-grid');
+                if (gridEl) {
+                    window.scrollTo({ top: gridEl.offsetTop - 80, behavior: 'smooth' });
+                }
+            }
+        }
+    
+        function toggleViewMode(mode) {
+            currentViewMode = mode;
+            const btnGrid = document.getElementById('btnViewGrid');
+            const btnTable = document.getElementById('btnViewTable');
+            if (btnGrid) btnGrid.classList.toggle('active', mode === 'grid');
+            if (btnTable) btnTable.classList.toggle('active', mode === 'table');
+            
+            const gridContainer = document.getElementById('commodityCardsContainer');
+            const tableContainer = document.getElementById('mandiTableContainer');
+            if (gridContainer) gridContainer.style.display = mode === 'grid' ? 'grid' : 'none';
+            if (tableContainer) tableContainer.style.display = mode === 'table' ? 'block' : 'none';
+        }
+
+        let mandiAbortController = null;
+
+        // ================= LOAD MANDI PRICES =================
+        async function loadMandiPrices(page = 1) {
+            currentPage = page;
+            const cardsContainer = document.getElementById('commodityCardsContainer');
+            const tableBody = document.getElementById('mandiTableBody');
+            const tableContainer = document.getElementById('mandiTableContainer');
+            const loader = document.getElementById('cardsLoader');
+            const emptyState = document.getElementById('emptyResultsState');
+            const paginationBar = document.getElementById('paginationBar');
+
+            if (mandiAbortController) {
+                mandiAbortController.abort();
+            }
+            mandiAbortController = new AbortController();
+
+            cardsContainer.style.display = 'none';
+            tableContainer.style.display = 'none';
+            emptyState.style.display = 'none';
+            loader.style.display = 'grid';
+
+            const state = ddState ? ddState.getValue() : '';
+            const district = ddDistrict ? ddDistrict.getValue() : '';
+            const commodity = ddCommodity ? ddCommodity.getValue() : '';
+            const search = document.getElementById('filterSearch').value.trim();
+            const sort = document.getElementById('sortSelect').value;
+
+            let url = `${API_BASE_URL}/market-prices?page=${page}&limit=16&sort=${sort}`;
+            if (state) url += `&state=${encodeURIComponent(state)}`;
+            if (district) url += `&district=${encodeURIComponent(district)}`;
+            if (commodity) url += `&commodity=${encodeURIComponent(commodity)}`;
+            if (search) url += `&search=${encodeURIComponent(search)}`;
+            if (farmerLocation.lat && farmerLocation.lon) {
+                url += `&lat=${farmerLocation.lat}&lon=${farmerLocation.lon}`;
+            }
+
+            try {
+                const res = await fetch(url, { signal: mandiAbortController.signal });
+                const data = await res.json();
+                loader.style.display = 'none';
+
+                if (!data.records || data.records.length === 0) {
+                    emptyState.style.display = 'block';
+                    paginationBar.style.display = 'none';
+                    return;
+                }
+
+                // Render Grid Cards
+                cardsContainer.innerHTML = data.records.map(r => renderCommodityCard(r)).join('');
+                if (window.revealNewElements) window.revealNewElements(cardsContainer);
+                
+                // Render Table Rows
+                tableBody.innerHTML = data.records.map(r => renderTableRow(r)).join('');
+
+                if (currentViewMode === 'grid') {
+                    cardsContainer.style.display = 'grid';
+                } else {
+                    tableContainer.style.display = 'block';
+                }
+
+                // Pagination
+                totalPages = data.totalPages || 1;
+                document.getElementById('pageCounterText').innerText = `Page ${data.page} of ${totalPages} (${data.total.toLocaleString()} Records)`;
+                document.getElementById('btnPagePrev').disabled = data.page <= 1;
+                document.getElementById('btnPageNext').disabled = data.page >= totalPages;
+                paginationBar.style.display = totalPages > 1 ? 'flex' : 'none';
+            } catch (err) {
+                if (err.name === 'AbortError') return; // Cancelled in favor of newer request
+                loader.style.display = 'none';
+                emptyState.style.display = 'block';
+            }
+        }
+
+        // Render Single Realistic Commodity Card
+        function renderCommodityCard(r) {
+            const imgUrl = CommodityImageService.getCommodityImageUrl(r.commodity);
+            const distText = r.formatted_distance || formatNaturalDistanceUI(r.distance_km, r.distance_meters);
+            const distBadge = (distText && r.distance_km != null) ? `<div class="card-distance-tag"><i class="fas fa-location-arrow"></i> ${distText}</div>` : '';
+            const safeCommodity = (r.commodity || '').replace(/'/g, "\\'");
+            const safeObj = JSON.stringify(r).replace(/'/g, "&#39;");
+
+            return `
+                <div class="commodity-card">
+                    <div class="card-image-box">
+                        <img class="card-real-img" src="${imgUrl}" alt="${r.commodity}" loading="lazy" onerror="CommodityImageService.handleImageError(this, '${safeCommodity}')">
+                        <div class="card-top-badge">${getMarketplaceText('mkt_market_price_badge')}</div>
+                        <div class="card-date-badge">${r.arrival_date}</div>
+                        ${distBadge}
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title-row">
+                            <div class="card-commodity-name">${r.commodity}</div>
+                            <span class="card-grade-tag">${r.grade || 'FAQ'}</span>
+                        </div>
+                        <div class="card-variety-subtitle">${r.variety || 'Local Variety'}</div>
+
+                        <div class="card-price-headline">
+                            <div class="card-modal-price">₹${r.modal_price.toLocaleString()} <span class="card-unit-label">${getMarketplaceText('mkt_per_quintal')}</span></div>
+                        </div>
+
+                        <div class="price-range-strip">
+                            <div class="range-col">
+                                <span class="lbl">Min</span>
+                                <span class="val">₹${r.min_price.toLocaleString()}</span>
+                            </div>
+                            <div class="range-col">
+                                <span class="lbl">Modal</span>
+                                <span class="val">₹${r.modal_price.toLocaleString()}</span>
+                            </div>
+                            <div class="range-col">
+                                <span class="lbl">Max</span>
+                                <span class="val">₹${r.max_price.toLocaleString()}</span>
+                            </div>
+                        </div>
+
+                        <div class="card-market-meta">
+                            <i class="fas fa-location-dot"></i>
+                            <div>
+                                <div class="market-name">${r.market}</div>
+                                <div>${r.district}, ${r.state}</div>
+                            </div>
+                        </div>
+
+                        <button class="btn-card-details" onclick='openPriceDetailsModal(${safeObj})'>
+                            <i class="fas fa-chart-line"></i> ${getMarketplaceText('mkt_btn_details')}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Table Row
+        function renderTableRow(r) {
+            const imgUrl = CommodityImageService.getCommodityImageUrl(r.commodity);
+            const safeCommodity = (r.commodity || '').replace(/'/g, "\\'");
+            const safeObj = JSON.stringify(r).replace(/'/g, "&#39;");
+            return `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 0.65rem;">
+                            <img src="${imgUrl}" style="width: 36px; height: 36px; border-radius: 6px; object-fit: cover;" onerror="CommodityImageService.handleImageError(this, '${safeCommodity}')" loading="lazy">
+                            <strong>${r.commodity}</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <strong>${r.market}</strong><br>
+                        <span style="color: var(--text-muted); font-size: 0.78rem;">${r.district}, ${r.state}</span>
+                    </td>
+                    <td>${r.variety || 'Standard'} <span class="card-grade-tag">${r.grade || 'FAQ'}</span></td>
+                    <td><strong style="color: var(--primary); font-size: 1rem;">₹${r.modal_price.toLocaleString()}</strong></td>
+                    <td style="color: var(--text-muted); font-size: 0.82rem;">₹${r.min_price.toLocaleString()} - ₹${r.max_price.toLocaleString()}</td>
+                    <td>${r.arrival_date}</td>
+                    <td>
+                        <button class="btn-filter-reset" onclick='openPriceDetailsModal(${safeObj})' style="height: 32px; padding: 0 0.6rem; font-size: 0.8rem;">
+                            Details
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }
+
+        // ================= LOAD NEARBY MARKETS =================
+        async function loadNearbyMarkets() {
+            const container = document.getElementById('nearbyMarketsList');
+            if (!container) return;
+
+            if (!farmerLocation || !farmerLocation.lat || !farmerLocation.lon) {
+                container.innerHTML = `
+                    <div style="padding: 1.2rem 0.5rem; text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+                        <i class="fas fa-location-crosshairs" style="color: var(--primary); font-size: 1.3rem; margin-bottom: 0.5rem; display: block;"></i>
+                        Location permission required to find nearby mandis.
+                        <button onclick="requestGpsLocationManual()" class="btn-filter-apply" style="margin: 0.75rem auto 0; height: 32px; font-size: 0.78rem; padding: 0 0.85rem;">
+                            <i class="fas fa-location-arrow"></i> Detect Location
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/market-prices/nearby?lat=${farmerLocation.lat}&lon=${farmerLocation.lon}&radius_km=300`);
+                const data = await res.json();
+                const markets = data.markets || [];
+
+                if (markets.length === 0) {
+                    container.innerHTML = `
+                        <div style="padding: 1.2rem 0.5rem; text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+                            <i class="fas fa-store-slash" style="color: var(--text-light); font-size: 1.3rem; margin-bottom: 0.5rem; display: block;"></i>
+                            No nearby markets found.
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = markets.slice(0, 5).map(m => {
+                    const imgUrl = CommodityImageService.getCommodityImageUrl(m.commodity);
+                    const safeCommodity = (m.commodity || '').replace(/'/g, "\\'");
+                    const safeMarket = (m.market || '').replace(/'/g, "\\'");
+                    const safeState = (m.state || '').replace(/'/g, "\\'");
+                    const distLabel = m.formatted_distance || formatNaturalDistanceUI(m.distance_km, m.distance_meters);
+                    const locationLabel = `${m.commodity} • ${m.district}${m.state ? ', ' + m.state : ''}`;
+
+                    return `
+                        <div class="nearby-item" onclick="filterBySelectedMarket('${safeMarket}', '${safeState}')">
+                            <img class="nearby-thumb" src="${imgUrl}" alt="${m.commodity}" loading="lazy" onerror="CommodityImageService.handleImageError(this, '${safeCommodity}')">
+                            <div class="nearby-info">
+                                <div class="nearby-name">${m.market}</div>
+                                <div class="nearby-loc">${locationLabel}</div>
+                            </div>
+                            <div class="nearby-price-box">
+                                <div class="nearby-price">₹${m.modal_price.toLocaleString()}</div>
+                                <div class="nearby-distance">${distLabel}</div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (e) {
+                container.innerHTML = '<p style="font-size: 0.85rem; color: var(--text-muted); padding: 0.5rem 0;">Could not load nearby markets.</p>';
+            }
+        }
+
+        function requestGpsLocationManual() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    async (pos) => {
+                        farmerLocation.lat = pos.coords.latitude;
+                        farmerLocation.lon = pos.coords.longitude;
+                        farmerLocation.accuracy = pos.coords.accuracy || 0;
+                        farmerLocation.isGpsVerified = true;
+
+                        try {
+                            const geoRes = await fetch(`${API_BASE_URL}/farmer/location/reverse-geocode?lat=${farmerLocation.lat}&lon=${farmerLocation.lon}`);
+                            const geoJson = await geoRes.json();
+                            if (geoJson.success && geoJson.location) {
+                                farmerLocation.city = formatShortLocation(geoJson.location);
+                            }
+                        } catch(e) {
+                            console.warn('Geocode proxy note:', e);
+                        }
+
+                        const locHdr = document.getElementById('userLocationHeader');
+                        if (locHdr) locHdr.innerText = farmerLocation.city;
+
+                        localStorage.setItem('farmer_gps_location', JSON.stringify({
+                            lat: farmerLocation.lat,
+                            lon: farmerLocation.lon,
+                            city: farmerLocation.city,
+                            timestamp: Date.now()
+                        }));
+
+                        loadNearbyMarkets();
+                        loadMandiPrices(1);
+                    },
+                    (err) => {
+                        alert('Could not access GPS coordinates. Please enable location permissions in your browser.');
+                    },
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
+            }
+        }
+
+        function filterBySelectedMarket(marketName, stateName) {
+            document.getElementById('filterSearch').value = marketName;
+            loadMandiPrices(1);
+        }
+
+        function filterByNearby() {
+            document.getElementById('sortSelect').value = 'nearest';
+            loadMandiPrices(1);
+        }
+
+        // ================= PRICE DETAILS & CHART MODAL =================
+        async function openPriceDetailsModal(r) {
+            const modalBody = document.getElementById('modalBody');
+            const imgUrl = CommodityImageService.getCommodityImageUrl(r.commodity);
+            const safeCommodity = (r.commodity || '').replace(/'/g, "\\'");
+
+            modalBody.innerHTML = `
+                <div style="display: flex; gap: 1.2rem; align-items: center; margin-bottom: 1.5rem;">
+                    <img src="${imgUrl}" style="width: 72px; height: 72px; border-radius: 12px; object-fit: cover; box-shadow: var(--shadow-sm);" onerror="CommodityImageService.handleImageError(this, '${safeCommodity}')" loading="lazy">
+                    <div>
+                        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-main); line-height: 1.2;">${r.commodity}</h2>
+                        <div style="font-size: 0.9rem; color: var(--text-muted);">${r.variety || 'Standard Variety'} • Grade: <strong>${r.grade || 'FAQ'}</strong></div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);"><i class="fas fa-location-dot" style="color: var(--primary);"></i> ${r.market} APMC, ${r.district}, ${r.state}</div>
+                    </div>
+                </div>
+
+                <div style="background: var(--primary-light); border: 1px solid var(--primary-border); border-radius: var(--radius-md); padding: 1rem; text-align: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--primary-dark);">₹${r.modal_price.toLocaleString()} <span style="font-size: 1rem; font-weight: 600;">${getMarketplaceText('mkt_per_quintal')}</span></div>
+                    <div style="font-size: 0.82rem; font-weight: 600; color: var(--primary-dark);">${getMarketplaceText('mkt_modal_price')}</div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">${getMarketplaceText('mkt_min_price')}</div>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--text-main);">₹${r.min_price.toLocaleString()}</div>
+                    </div>
+                    <div style="background: var(--bg-subtle); padding: 0.85rem; border-radius: var(--radius-sm); text-align: center;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">${getMarketplaceText('mkt_max_price')}</div>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: var(--text-main);">₹${r.max_price.toLocaleString()}</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <h4 style="font-size: 1rem; font-weight: 800; color: var(--text-main);"><i class="fas fa-chart-area" style="color: var(--primary);"></i> Price Trend Analysis</h4>
+                    <button class="btn-filter-reset" onclick="openRegionalCompare('${r.commodity}', '${r.state}')" style="height: 32px; padding: 0 0.8rem; font-size: 0.8rem;">
+                        <i class="fas fa-scale-balanced"></i> ${getMarketplaceText('mkt_btn_compare')}
+                    </button>
+                </div>
+
+                <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.2rem;">
+                    <canvas id="trendChartCanvas" height="170" style="width: 100%;"></canvas>
+                </div>
+
+                <div class="disclaimer-card">
+                    <p><strong><i class="fas fa-circle-check" style="color: var(--primary);"></i> Verified Arrival:</strong> Reported on ${r.arrival_date} via Agmarknet Government Portal.</p>
+                </div>
+            `;
+
+            document.getElementById('detailModal').classList.add('active');
+            drawTrendLineChart(r.commodity, r.market);
+        }
+
+        async function drawTrendLineChart(commodity, market) {
+            try {
+                const res = await fetch(`${API_BASE_URL}/market-prices/history?commodity=${encodeURIComponent(commodity)}&market=${encodeURIComponent(market)}&days=30`);
+                const data = await res.json();
+                const canvas = document.getElementById('trendChartCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+                const points = data.history || [];
+
+                const w = canvas.width = canvas.offsetWidth || 550;
+                const h = canvas.height = 170;
+                ctx.clearRect(0, 0, w, h);
+
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                if (points.length < 2) {
+                    ctx.fillStyle = isDark ? '#B8C4CC' : '#64748b';
+                    ctx.font = '13px Plus Jakarta Sans';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Daily price trend graph is being tracked across arrival cycles.', w / 2, 85);
+                    return;
+                }
+
+                const prices = points.map(p => p.modal_price);
+                const min = Math.min(...prices) * 0.95;
+                const max = Math.max(...prices) * 1.05;
+
+                // Draw line
+                ctx.strokeStyle = isDark ? '#22c55e' : '#16a34a';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+
+                points.forEach((p, i) => {
+                    const x = 40 + (i / (points.length - 1)) * (w - 80);
+                    const y = h - 30 - ((p.modal_price - min) / (max - min)) * (h - 60);
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                });
+                ctx.stroke();
+
+                // Draw dots & labels
+                ctx.fillStyle = isDark ? '#4ade80' : '#15803d';
+                points.forEach((p, i) => {
+                    const x = 40 + (i / (points.length - 1)) * (w - 80);
+                    const y = h - 30 - ((p.modal_price - min) / (max - min)) * (h - 60);
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            } catch (e) {}
+        }
+
+        // ================= REGIONAL COMPARISON MODAL =================
+        async function openRegionalCompare(commodity, state) {
+            closeModal('detailModal');
+            const title = document.getElementById('compareModalTitle');
+            const container = document.getElementById('compareTableContainer');
+            title.innerText = `Compare ${commodity} Prices (${state})`;
+            container.innerHTML = '<div style="text-align: center; padding: 2rem;"><i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--primary);"></i></div>';
+            document.getElementById('compareModal').classList.add('active');
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/market-prices/compare?commodity=${encodeURIComponent(commodity)}&state=${encodeURIComponent(state)}`);
+                const data = await res.json();
+                const markets = data.markets || [];
+
+                if (markets.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; padding: 1.5rem; color: var(--text-muted);">No comparison records found for this state.</p>';
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div style="overflow-x: auto;">
+                        <table class="mandi-table">
+                            <thead>
+                                <tr>
+                                    <th>Market</th>
+                                    <th>District</th>
+                                    <th>Modal Price</th>
+                                    <th>Price Range (Min - Max)</th>
+                                    <th>Reported Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${markets.map(m => `
+                                    <tr>
+                                        <td><strong>${m.market}</strong></td>
+                                        <td style="color: var(--text-muted);">${m.district}</td>
+                                        <td><strong style="color: var(--primary); font-size: 1rem;">₹${m.modal_price.toLocaleString()} / Qtl</strong></td>
+                                        <td style="color: var(--text-muted);">₹${m.min_price.toLocaleString()} - ₹${m.max_price.toLocaleString()}</td>
+                                        <td>${m.arrival_date}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            } catch (e) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Failed to load comparison data.</p>';
+            }
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+
+        // Dedicated Multilingual Dictionary for Marketplace (Self-Contained)
+        const MARKETPLACE_I18N = {
+            en: {
+                mkt_title_prefix: "Indian",
+                mkt_title_accent: "Agricultural Market",
+                mkt_subtitle: "Explore daily mandi prices, nearby markets and agricultural listings across India.",
+                mkt_your_location: "Your Location",
+                mkt_last_updated: "Last Updated",
+                mkt_active_mandis: "Active Mandis",
+                mkt_states_covered: "States Covered",
+                mkt_commodities: "Commodities",
+                mkt_latest_price_date: "Latest Price Date",
+                mkt_filter_type: "Type",
+                mkt_filter_state: "State",
+                mkt_filter_district: "District",
+                mkt_filter_commodity: "Commodity",
+                common_search: "Search",
+                mkt_type_mandi: "Market Prices (Govt)",
+                mkt_type_seller: "Farmer Sell Offers",
+                mkt_type_buyer: "Buyer Requirements",
+                mkt_filter_search_ph: "Search commodity, market, district...",
+                mkt_filter_apply: "Apply",
+                mkt_all_commodities: "All Commodities",
+                mkt_all_states: "All States",
+                mkt_all_districts: "All Districts",
+                mkt_reported_daily_title: "Today's Mandi Prices",
+                mkt_reported_daily: "Reported daily mandi prices from across India",
+                mkt_sort_recent: "Sort by: Latest Date",
+                mkt_sort_highest: "Sort by: Highest Price",
+                mkt_sort_lowest: "Sort by: Lowest Price",
+                mkt_sort_nearest: "Sort by: Nearest (PostGIS)",
+                mkt_nearby_title: "Nearby Markets",
+                mkt_view_all: "View All",
+                mkt_highlights_title: "Market Highlights",
+                mkt_highlight_1_title: "Tomato & Onion Arrivals Strong",
+                mkt_highlight_1_desc: "Active trading reported across South & West APMC yards.",
+                mkt_highlight_2_title: "Daily Synchronization",
+                mkt_highlight_2_desc: "Prices synced from Agmarknet & Data.gov.in daily at 06:00 AM.",
+                mkt_highlight_3_title: "Direct Farmer Listings",
+                mkt_highlight_3_desc: "Connect peer-to-peer with verified local farmers and FPOs.",
+                mkt_data_source: "Data Source:",
+                mkt_data_source_text: "Government of India Open Government Data (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "Note: Mandi prices are reported arrival rates and may vary with produce quality and auction timings.",
+                mkt_btn_details: "View Details & History",
+                mkt_btn_compare: "Compare Markets",
+                mkt_no_prices_title: "No Market Prices Found",
+                mkt_no_prices_desc: "We couldn't find mandi prices matching your filter criteria. Try selecting another state, commodity or reset filters.",
+                mkt_reset_all: "Reset All Filters",
+                mkt_prev: "Prev",
+                mkt_next: "Next",
+                mkt_market_price_badge: "Market Price",
+                mkt_per_quintal: "/ Quintal",
+                mkt_min_price: "Minimum Price",
+                mkt_max_price: "Maximum Price",
+                mkt_modal_price: "Modal Price",
+                mkt_verified_arrival: "Verified Arrival: Reported via Agmarknet Government Portal."
+            },
+            te: {
+                mkt_title_prefix: "భారతీయ",
+                mkt_title_accent: "వ్యవసాయ మార్కెట్",
+                mkt_subtitle: "భారతదేశం అంతటా రోజువారీ మండి ధరలు, సమీప మార్కెట్లు మరియు వ్యవసాయ జాబితాలను అన్వేషించండి.",
+                mkt_your_location: "మీ స్థానం",
+                mkt_last_updated: "చివరిగా అప్‌డేట్ చేయబడింది",
+                mkt_active_mandis: "క్రియాశీల మండిలు",
+                mkt_states_covered: "రాష్ట్రాలు",
+                mkt_commodities: "వ్యవసాయ వస్తువులు",
+                mkt_latest_price_date: "తాజా ధరల తేదీ",
+                mkt_filter_type: "రకం",
+                mkt_filter_state: "రాష్ట్రం",
+                mkt_filter_district: "జిల్లా",
+                mkt_filter_commodity: "పంట / వస్తువు",
+                common_search: "శోధించండి",
+                mkt_type_mandi: "మండి ధరలు (ప్రభుత్వ)",
+                mkt_type_seller: "రైతుల విక్రయ ఆఫర్లు",
+                mkt_type_buyer: "కొనుగోలుదారుల అవసరాలు",
+                mkt_filter_search_ph: "వస్తువు, మార్కెట్, జిల్లాను శోధించండి...",
+                mkt_filter_apply: "వర్తించు",
+                mkt_all_commodities: "అన్ని వస్తువులు",
+                mkt_all_states: "అన్ని రాష్ట్రాలు",
+                mkt_all_districts: "అన్ని జిల్లాలు",
+                mkt_reported_daily_title: "నేటి మండి ధరలు",
+                mkt_reported_daily: "భారతదేశం అంతటా నమోదైన రోజువారీ మండి ధరలు",
+                mkt_sort_recent: "క్రమబద్ధీకరించు: తాజా తేదీ",
+                mkt_sort_highest: "క్రమబద్ధీకరించు: గరిష్ట ధర",
+                mkt_sort_lowest: "క్రమబద్ధీకరించు: కనిష్ట ధర",
+                mkt_sort_nearest: "క్రమబద్ధీకరించు: దగ్గరి మార్కెట్",
+                mkt_nearby_title: "సమీప మార్కెట్లు",
+                mkt_view_all: "అన్నీ చూడండి",
+                mkt_highlights_title: "మార్కెట్ ముఖ్యాంశాలు",
+                mkt_highlight_1_title: "టమోటా & ఉల్లి రాకలు స్థిరంగా ఉన్నాయి",
+                mkt_highlight_1_desc: "దక్షిణ & పశ్చిమ APMC యార్డులలో చురుకైన వ్యాపారం నమోదైంది.",
+                mkt_highlight_2_title: "రోజువారీ నవీకరణ",
+                mkt_highlight_2_desc: "ధరలు ప్రతిరోజూ ఉదయం 06:00 గంటలకు Agmarknet & Data.gov.in నుండి నవీకరించబడతాయి.",
+                mkt_highlight_3_title: "ప్రత్యక్ష రైతుల జాబితాలు",
+                mkt_highlight_3_desc: "ధృవీకరించబడిన స్థానిక రైతులు మరియు FPOలతో నేరుగా కనెక్ట్ అవ్వండి.",
+                mkt_data_source: "సమాచార మూలం:",
+                mkt_data_source_text: "భారత ప్రభుత్వం ఓపెన్ గవర్నమెంట్ డేటా (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "గమనిక: మండి ధరలు నమోదైన రాక రేట్లు, నాణ్యత మరియు వేలం సమయాలను బట్టి మారవచ్చు.",
+                mkt_btn_details: "వివరాలు & చరిత్ర చూడండి",
+                mkt_btn_compare: "మార్కెట్లను పోల్చండి",
+                mkt_no_prices_title: "మండి ధరలు కనుగొనబడలేదు",
+                mkt_no_prices_desc: "మీ ఫిల్టర్ ప్రమాణాలకు సరిపోలే మండి ధరలు దొరకలేదు. వేరే రాష్ట్రం, వస్తువును ఎంచుకోండి లేదా ఫిల్టర్‌లను రీసెట్ చేయండి.",
+                mkt_reset_all: "అన్ని ఫిల్టర్‌లను రీసెట్ చేయండి",
+                mkt_prev: "మునుపటి",
+                mkt_next: "తదుపరి",
+                mkt_market_price_badge: "మండి ధర",
+                mkt_per_quintal: "/ క్వింటాల్",
+                mkt_min_price: "కనిష్ట ధర",
+                mkt_max_price: "గరిష్ట ధర",
+                mkt_modal_price: "మోడల్ ధర",
+                mkt_verified_arrival: "ధృవీకరించబడిన రాక: Agmarknet పోర్టల్ ద్వారా నివేదించబడింది."
+            },
+            kn: {
+                mkt_title_prefix: "ಭಾರತೀಯ",
+                mkt_title_accent: "ಕೃಷಿ ಮಾರುಕಟ್ಟೆ",
+                mkt_subtitle: "ಭಾರತದಾದ್ಯಂತ ದೈನಂದಿನ ಮಂಡಿ ದರಗಳು, ಹತ್ತಿರದ ಮಾರುಕಟ್ಟೆಗಳು ಮತ್ತು ಕೃಷಿ ಪಟ್ಟಿಗಳನ್ನು ಅನ್ವೇಷಿಸಿ.",
+                mkt_your_location: "ನಿಮ್ಮ ಸ್ಥಳ",
+                mkt_last_updated: "ಕೊನೆಯ ನವೀಕರಣ",
+                mkt_active_mandis: "ಸಕ್ರಿಯ ಮಂಡಿಗಳು",
+                mkt_states_covered: "ಒಳಗೊಂಡ ರಾಜ್ಯಗಳು",
+                mkt_commodities: "ಕೃಷಿ ಸರಕುಗಳು",
+                mkt_latest_price_date: "ಇತ್ತೀಚಿನ ಬೆಲೆ ದಿನಾಂಕ",
+                mkt_filter_type: "ಪ್ರಕಾರ",
+                mkt_filter_state: "ರಾಜ್ಯ",
+                mkt_filter_district: "ಜಿಲ್ಲೆ",
+                mkt_filter_commodity: "ಬೆಳೆ / ಸರಕು",
+                common_search: "ಹುಡುಕಿ",
+                mkt_type_mandi: "ಮಾರುಕಟ್ಟೆ ಬೆಲೆಗಳು (ಸರ್ಕಾರಿ)",
+                mkt_type_seller: "ರೈತರ ಮಾರಾಟ ಆಫರ್‌ಗಳು",
+                mkt_type_buyer: "ಖರೀದಿದಾರರ ಅವಶ್ಯಕತೆಗಳು",
+                mkt_filter_search_ph: "ಸರಕು, ಮಾರುಕಟ್ಟೆ, ಜಿಲ್ಲೆ ಹುಡುಕಿ...",
+                mkt_filter_apply: "ಅನ್ವಯಿಸು",
+                mkt_all_commodities: "ಎಲ್ಲಾ ಸರಕುಗಳು",
+                mkt_all_states: "ಎಲ್ಲಾ ರಾಜ್ಯಗಳು",
+                mkt_all_districts: "ಎಲ್ಲಾ ಜಿಲ್ಲೆಗಳು",
+                mkt_reported_daily_title: "ಇಂದಿನ ಮಂಡಿ ದರಗಳು",
+                mkt_reported_daily: "ಭಾರತದಾದ್ಯಂತ ವರದಿಯಾದ ದೈನಂದಿನ ಮಂಡಿ ದರಗಳು",
+                mkt_sort_recent: "ವಿಂಗಡಿಸಿ: ಇತ್ತೀಚಿನ ದಿನಾಂಕ",
+                mkt_sort_highest: "ವಿಂಗಡಿಸಿ: ಗರಿಷ್ಠ ಬೆಲೆ",
+                mkt_sort_lowest: "ವಿಂಗಡಿಸಿ: ಕನಿಷ್ಠ ಬೆಲೆ",
+                mkt_sort_nearest: "ವಿಂಗಡಿಸಿ: ಹತ್ತಿರದ ಮಾರುಕಟ್ಟೆ",
+                mkt_nearby_title: "ಹತ್ತಿರದ ಮಾರುಕಟ್ಟೆಗಳು",
+                mkt_view_all: "ಎಲ್ಲವನ್ನೂ ವೀಕ್ಷಿಸಿ",
+                mkt_highlights_title: "ಮಾರುಕಟ್ಟೆ ಮುಖ್ಯಾಂಶಗಳು",
+                mkt_highlight_1_title: "ಟೊಮೆಟೊ ಮತ್ತು ಈರುಳ್ಳಿ ಆಗಮನ ಉತ್ತಮವಾಗಿದೆ",
+                mkt_highlight_1_desc: "ದಕ್ಷಿಣ ಮತ್ತು ಪಶ್ಚಿಮ ಎಪಿಎಂಸಿಗಳಲ್ಲಿ ಸಕ್ರಿಯ ವ್ಯಾಪಾರ.",
+                mkt_highlight_2_title: "ದೈನಂದಿನ ಸಿಂಕ್ರೊನೈಸೇಶನ್",
+                mkt_highlight_2_desc: "ದರಗಳು ಪ್ರತಿದಿನ ಬೆಳಗ್ಗೆ 06:00 ಗಂಟೆಗೆ Agmarknet & Data.gov.in ನಿಂದ ಸಿಂಕ್ ಆಗುತ್ತವೆ.",
+                mkt_highlight_3_title: "ನೇರ ರೈತರ ಪಟ್ಟಿಗಳು",
+                mkt_highlight_3_desc: "ಪರಿಶೀಲಿಸಿದ ಸ್ಥಳೀಯ ರೈತರು ಮತ್ತು ಎಫ್‌ಪಿಒಗಳೊಂದಿಗೆ ನೇರವಾಗಿ ಸಂಪರ್ಕ ಸಾಧಿಸಿ.",
+                mkt_data_source: "ಮಾಹಿತಿ ಮೂಲ:",
+                mkt_data_source_text: "ಭಾರತ ಸರ್ಕಾರದ ಮುಕ್ತ ಡೇಟಾ (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "ಗಮನಿಸಿ: ಮಂಡಿ ಬೆಲೆಗಳು ವರದಿಯಾದ ಆಗಮನ ದರಗಳಾಗಿದ್ದು, ಗುಣಮಟ್ಟ ಮತ್ತು ಹರಾಜು ಸಮಯಕ್ಕೆ ಅನುಗುಣವಾಗಿ ಬದಲಾಗಬಹುದು.",
+                mkt_btn_details: "ವಿವರಗಳು ಮತ್ತು ಇತಿಹಾಸ ವೀಕ್ಷಿಸಿ",
+                mkt_btn_compare: "ಮಾರುಕಟ್ಟೆಗಳನ್ನು ಹೋಲಿಕೆ ಮಾಡಿ",
+                mkt_no_prices_title: "ಯಾವುದೇ ಮಾರುಕಟ್ಟೆ ಬೆಲೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ",
+                mkt_no_prices_desc: "ನಿಮ್ಮ ಫಿಲ್ಟರ್‌ಗೆ ಹೊಂದಿಕೆಯಾಗುವ ಮಂಡಿ ಬೆಲೆಗಳು ಕಂಡುಬಂದಿಲ್ಲ. ಮತ್ತೊಂದು ರಾಜ್ಯ, ಸರಕು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಫಿಲ್ಟರ್ ಮರುಹೊಂದಿಸಿ.",
+                mkt_reset_all: "ಎಲ್ಲಾ ಫಿಲ್ಟರ್‌ಗಳನ್ನು ಮರುಹೊಂದಿಸಿ",
+                mkt_prev: "ಹಿಂದಿನ",
+                mkt_next: "ಮುಂದಿನ",
+                mkt_market_price_badge: "ಮಂಡಿ ಬೆಲೆ",
+                mkt_per_quintal: "/ ಕ್ವಿಂಟಾಲ್",
+                mkt_min_price: "ಕನಿಷ್ಠ ಬೆಲೆ",
+                mkt_max_price: "ಗರಿಷ್ಠ ಬೆಲೆ",
+                mkt_modal_price: "ಮಾದರಿ ಬೆಲೆ",
+                mkt_verified_arrival: "ಪರಿಶೀಲಿಸಿದ ಆಗಮನ: Agmarknet ಪೋರ್ಟಲ್ ಮೂಲಕ ವರದಿಯಾಗಿದೆ."
+            },
+            ta: {
+                mkt_title_prefix: "இந்திய",
+                mkt_title_accent: "வேளாண் சந்தை",
+                mkt_subtitle: "இந்தியா முழுவதிலும் உள்ள தினசரி மண்டி விலைகள், அருகிலுள்ள சந்தைகள் மற்றும் விவசாய பட்டியல்களை ஆராயுங்கள்.",
+                mkt_your_location: "உங்கள் இருப்பிடம்",
+                mkt_last_updated: "கடைசியாக புதுப்பிக்கப்பட்டது",
+                mkt_active_mandis: "செயலில் உள்ள மண்டிகள்",
+                mkt_states_covered: "உள்ளடக்கிய மாநிலங்கள்",
+                mkt_commodities: "பொருட்கள்",
+                mkt_latest_price_date: "சமீபத்திய விலை தேதி",
+                mkt_filter_type: "வகை",
+                mkt_filter_state: "மாநிலம்",
+                mkt_filter_district: "மாவட்டம்",
+                mkt_filter_commodity: "பயிர் / பொருள்",
+                common_search: "தேடு",
+                mkt_type_mandi: "மண்டி விலைகள் (அரசு)",
+                mkt_type_seller: "விவசாயிகள் விற்பனை சலுகைகள்",
+                mkt_type_buyer: "வாங்குபவர் தேவைகள்",
+                mkt_filter_search_ph: "பொருள், சந்தை, மாவட்டம் தேடவும்...",
+                mkt_filter_apply: "பயன்படுத்து",
+                mkt_all_commodities: "அனைத்து பொருட்கள்",
+                mkt_all_states: "அனைத்து மாநிலங்கள்",
+                mkt_all_districts: "அனைத்து மாவட்டங்கள்",
+                mkt_reported_daily_title: "இன்றைய மண்டி விலைகள்",
+                mkt_reported_daily: "இந்தியா முழுவதிலுமிருந்து தினசரி பதிவுசெய்யப்பட்ட மண்டி விலைகள்",
+                mkt_sort_recent: "வரிசைப்படுத்து: சமீபத்திய தேதி",
+                mkt_sort_highest: "வரிசைப்படுத்து: அதிகபட்ச விலை",
+                mkt_sort_lowest: "வரிசைப்படுத்து: குறைந்த விலை",
+                mkt_sort_nearest: "வரிசைப்படுத்து: அருகிலுள்ள சந்தை",
+                mkt_nearby_title: "அருகிலுள்ள சந்தைகள்",
+                mkt_view_all: "அனைத்தையும் பார்",
+                mkt_highlights_title: "சந்தை சிறப்பம்சங்கள்",
+                mkt_highlight_1_title: "தக்காளி மற்றும் வெங்காயம் வரத்து அதிகம்",
+                mkt_highlight_1_desc: "தெற்கு & மேற்கு ஏபிஎம்சி வளாகங்களில் தீவிர வர்த்தகம்.",
+                mkt_highlight_2_title: "தினசரி ஒத்திசைவு",
+                mkt_highlight_2_desc: "விலைகள் தினமும் காலை 06:00 மணிக்கு Agmarknet & Data.gov.in மூலம் புதுப்பிக்கப்படுகின்றன.",
+                mkt_highlight_3_title: "நேரடி விவசாயி பட்டியல்கள்",
+                mkt_highlight_3_desc: "சரிபார்க்கப்பட்ட உள்ளூர் விவசாயிகள் மற்றும் FPOக்களுடன் நேரடியாக இணையுங்கள்.",
+                mkt_data_source: "தரவு ஆதாரம்:",
+                mkt_data_source_text: "இந்திய அரசு திறந்த தரவு (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "குறிப்பு: மண்டி விலைகள் வருகை விகிதங்கள் ஆகும், தரம் மற்றும் ஏல நேரத்தைப் பொறுத்து மாறுபடலாம்.",
+                mkt_btn_details: "விவரங்கள் & வரலாறு காண்க",
+                mkt_btn_compare: "சந்தைகளை ஒப்பிடுக",
+                mkt_no_prices_title: "மண்டி விலைகள் எதுவும் கிடைக்கவில்லை",
+                mkt_no_prices_desc: "உங்கள் வடிகட்டி அளவுகோல்களுக்கு பொருந்தும் மண்டி விலைகள் கிடைக்கவில்லை. மற்றொரு மாநிலம், பொருளைத் தேர்ந்தெடுக்கவும்.",
+                mkt_reset_all: "எல்லா வடிகட்டிகளையும் மீட்டமை",
+                mkt_prev: "முந்தைய",
+                mkt_next: "அடுத்தது",
+                mkt_market_price_badge: "சந்தை விலை",
+                mkt_per_quintal: "/ குவிண்டால்",
+                mkt_min_price: "குறைந்தபட்ச விலை",
+                mkt_max_price: "அதிகபட்ச விலை",
+                mkt_modal_price: "சராசரி விலை",
+                mkt_verified_arrival: "சரிபார்க்கப்பட்ட வருகை: Agmarknet போர்டல் மூலம் தெரிவிக்கப்பட்டது."
+            },
+            ml: {
+                mkt_title_prefix: "ഇന്ത്യൻ",
+                mkt_title_accent: "കാർഷിക വിപണി",
+                mkt_subtitle: "ഇന്ത്യയിലുടനീളമുള്ള പ്രതിദിന മണ്ടി വിലകൾ, അടുത്തുള്ള വിപണികൾ, കാർഷിക ലിസ്റ്റിംഗുകൾ എന്നിവ കണ്ടെത്തുക.",
+                mkt_your_location: "നിങ്ങളുടെ സ്ഥലം",
+                mkt_last_updated: "അവസാനം പുതുക്കിയത്",
+                mkt_active_mandis: "സജീവ മണ്ടികൾ",
+                mkt_states_covered: "ഉൾപ്പെട്ട സംസ്ഥാനങ്ങൾ",
+                mkt_commodities: "വിളകൾ / ഉൽപ്പന്നങ്ങൾ",
+                mkt_latest_price_date: "ഏറ്റവും പുതിയ വില തീയതി",
+                mkt_filter_type: "തരം",
+                mkt_filter_state: "സംസ്ഥാനം",
+                mkt_filter_district: "ജില്ല",
+                mkt_filter_commodity: "വിള / ഉൽപ്പന്നം",
+                common_search: "തിരയുക",
+                mkt_type_mandi: "മണ്ടി വിലകൾ (സർക്കാർ)",
+                mkt_type_seller: "കർഷക വിൽപന ഓഫറുകൾ",
+                mkt_type_buyer: "വാങ്ങുന്നവരുടെ ആവശ്യങ്ങൾ",
+                mkt_filter_search_ph: "ഉൽപ്പന്നം, മാർക്കറ്റ്, ജില്ല തിരയുക...",
+                mkt_filter_apply: "പ്രയോഗിക്കുക",
+                mkt_all_commodities: "എല്ലാ വിളകളും",
+                mkt_all_states: "എല്ലാ സംസ്ഥാനങ്ങളും",
+                mkt_all_districts: "എല്ലാ ജില്ലകളും",
+                mkt_reported_daily_title: "ഇന്നത്തെ മണ്ടി വിലകൾ",
+                mkt_reported_daily: "ഇന്ത്യയിലുടനീളം റിപ്പോർട്ട് ചെയ്ത പ്രതിദിന മണ്ടി വിലകൾ",
+                mkt_sort_recent: "ക്രമീകരിക്കുക: പുതിയ തീയതി",
+                mkt_sort_highest: "ക്രമീകരിക്കുക: ഉയർന്ന വില",
+                mkt_sort_lowest: "ക്രമീകരിക്കുക: കുറഞ്ഞ വില",
+                mkt_sort_nearest: "ക്രമീകരിക്കുക: അടുത്തുള്ള മാർക്കറ്റ്",
+                mkt_nearby_title: "അടുത്തുള്ള മാർക്കറ്റുകൾ",
+                mkt_view_all: "എല്ലാം കാണുക",
+                mkt_highlights_title: "മാർക്കറ്റ് ഹൈലൈറ്റുകൾ",
+                mkt_highlight_1_title: "തക്കാളി, ഉള്ളി വരവ് ശക്തമാണ്",
+                mkt_highlight_1_desc: "തെക്ക്, പടിഞ്ഞാറൻ എപിഎംസി യാർഡുകളിൽ സജീവ വ്യാപാരം.",
+                mkt_highlight_2_title: "പ്രതിദിന സിൻക്രൊണൈസേഷൻ",
+                mkt_highlight_2_desc: "വിലകൾ ദിവസേന രാവിലെ 06:00 ന് Agmarknet & Data.gov.in വഴി പുതുക്കുന്നു.",
+                mkt_highlight_3_title: "നേരിട്ടുള്ള കർഷക ലിസ്റ്റിംഗുകൾ",
+                mkt_highlight_3_desc: "പരിശോധിച്ചുറപ്പിച്ച പ്രാദേശിക കർഷകരുമായും എഫ്‌പിഒകളുമായും നേരിട്ട് ബന്ധപ്പെടുക.",
+                mkt_data_source: "വിവര സ്രോതസ്സ്:",
+                mkt_data_source_text: "ഇന്ത്യാ ഗവൺമെന്റ് ഓപ്പൺ ഡാറ്റ (data.gov.in) & Agmarknet.",
+                mkt_disclaimer_note: "കുറിപ്പ്: മണ്ടി വിലകൾ റിപ്പോർട്ട് ചെയ്ത നിരക്കുകളാണ്, ഗുണനിലവാരത്തിനും ലേല സമയത്തിനും അനുസരിച്ച് വ്യത്യാസപ്പെടാം.",
+                mkt_btn_details: "വിശദാംശങ്ങളും ചരിത്രവും കാണുക",
+                mkt_btn_compare: "മാർക്കറ്റുകൾ താരതമ്യം ചെയ്യുക",
+                mkt_no_prices_title: "വിപണി വിലകളൊന്നും കണ്ടെത്തിയില്ല",
+                mkt_no_prices_desc: "നിങ്ങളുടെ ഫിൽട്ടറുമായി പൊരുത്തപ്പെടുന്ന മണ്ടി വിലകൾ കണ്ടെത്താനായില്ല. മറ്റൊരു സംസ്ഥാനം, ഉൽപ്പന്നം തിരഞ്ഞെടുക്കുക.",
+                mkt_reset_all: "എല്ലാ ഫിൽട്ടറുകളും പുനഃക്രമീകരിക്കുക",
+                mkt_prev: "മുമ്പത്തെ",
+                mkt_next: "അടുത്തത്",
+                mkt_market_price_badge: "വിപണി വില",
+                mkt_per_quintal: "/ ക്വിന്റൽ",
+                mkt_min_price: "കുറഞ്ഞ വില",
+                mkt_max_price: "പരമാവധി വില",
+                mkt_modal_price: "ശരാശരി വില",
+                mkt_verified_arrival: "സ്ഥിരീകരിച്ച വരവ്: Agmarknet പോർട്ടൽ വഴി റിപ്പോർട്ട് ചെയ്തത്."
+            },
+            hi: {
+                mkt_title_prefix: "भारतीय",
+                mkt_title_accent: "कृषि मंडी बाज़ार",
+                mkt_subtitle: "पूरे भारत में दैनिक मंडी भाव, निकटतम बाज़ार और कृषि उपज सूचियों का अन्वेषण करें।",
+                mkt_your_location: "आपका स्थान",
+                mkt_last_updated: "अंतिम अपडेट",
+                mkt_active_mandis: "सक्रिय मंडियां",
+                mkt_states_covered: "शामिल राज्य",
+                mkt_commodities: "कृषि जींस / फसलें",
+                mkt_latest_price_date: "नवीनतम भाव तिथि",
+                mkt_filter_type: "प्रकार",
+                mkt_filter_state: "राज्य",
+                mkt_filter_district: "जिला",
+                mkt_filter_commodity: "फसल / वस्तु",
+                common_search: "खोजें",
+                mkt_type_mandi: "मंडी भाव (सरकारी)",
+                mkt_type_seller: "किसान बिक्री प्रस्ताव",
+                mkt_type_buyer: "क्रेता आवश्यकताएं",
+                mkt_filter_search_ph: "फसल, मंडी, जिला खोजें...",
+                mkt_filter_apply: "लागू करें",
+                mkt_all_commodities: "सभी फसलें",
+                mkt_all_states: "सभी राज्य",
+                mkt_all_districts: "सभी जिले",
+                mkt_reported_daily_title: "आज के मंडी भाव",
+                mkt_reported_daily: "पूरे भारत से दर्ज दैनिक मंडी भाव",
+                mkt_sort_recent: "क्रमबद्ध करें: नवीनतम तारीख",
+                mkt_sort_highest: "क्रमबद्ध करें: उच्चतम भाव",
+                mkt_sort_lowest: "क्रमबद्ध करें: न्यूनतम भाव",
+                mkt_sort_nearest: "क्रमबद्ध करें: निकटतम मंडी",
+                mkt_nearby_title: "निकटतम मंडियां",
+                mkt_view_all: "सभी देखें",
+                mkt_highlights_title: "बाज़ार की मुख्य बातें",
+                mkt_highlight_1_title: "टमाटर और प्याज की आवक मजबूत",
+                mkt_highlight_1_desc: "दक्षिण और पश्चिम एपीएमसी यार्डों में सक्रिय व्यापार दर्ज किया गया।",
+                mkt_highlight_2_title: "दैनिक तुल्यकालन (सिंक)",
+                mkt_highlight_2_desc: "भाव प्रतिदिन सुबह 06:00 बजे Agmarknet और Data.gov.in से सिंक होते हैं।",
+                mkt_highlight_3_title: "सीधी किसान लिस्टिंग",
+                mkt_highlight_3_desc: "सत्यापित स्थानीय किसानों और एफपीओ के साथ सीधे जुड़ें।",
+                mkt_data_source: "डेटा स्रोत:",
+                mkt_data_source_text: "भारत सरकार ओपन गवर्नमेंट डेटा (data.gov.in) और एग्मार्कनेट।",
+                mkt_disclaimer_note: "नोट: मंडी भाव दर्ज आगमन दरें हैं और उपज की गुणवत्ता व नीलामी समय के अनुसार भिन्न हो सकते हैं।",
+                mkt_btn_details: "विवरण व इतिहास देखें",
+                mkt_btn_compare: "मंडियों की तुलना करें",
+                mkt_no_prices_title: "कोई मंडी भाव नहीं मिला",
+                mkt_no_prices_desc: "आपके फ़िल्टर के अनुसार कोई मंडी भाव नहीं मिला। कृपया अन्य राज्य, फसल चुनें या फ़िल्टर रीसेट करें।",
+                mkt_reset_all: "सभी फ़िल्टर रीसेट करें",
+                mkt_prev: "पिछला",
+                mkt_next: "अगला",
+                mkt_market_price_badge: "मंडी भाव",
+                mkt_per_quintal: "/ क्विंटल",
+                mkt_min_price: "न्यूनतम मूल्य",
+                mkt_max_price: "अधिकतम मूल्य",
+                mkt_modal_price: "मॉडल मूल्य",
+                mkt_verified_arrival: "सत्यापित आगमन: एग्मार्कनेट पोर्टल द्वारा दर्ज।"
+            }
+        };
+
+        function getMarketplaceText(key) {
+            const lang = localStorage.getItem('krishiLang') || 'en';
+            if (MARKETPLACE_I18N[lang] && MARKETPLACE_I18N[lang][key]) {
+                return MARKETPLACE_I18N[lang][key];
+            }
+            if (MARKETPLACE_I18N.en && MARKETPLACE_I18N.en[key]) {
+                return MARKETPLACE_I18N.en[key];
+            }
+            if (typeof t === 'function') {
+                return t(key);
+            }
+            return key;
+        }
+
+
+        function updateMarketplaceTranslations() {
+            // Header
+            const titleH1 = document.querySelector('.header-title-group h1');
+            if (titleH1) titleH1.innerHTML = `${getMarketplaceText('mkt_title_prefix')} <span class="green-accent">${getMarketplaceText('mkt_title_accent')}</span>`;
+            const titleP = document.querySelector('.header-title-group p');
+            if (titleP) titleP.innerText = getMarketplaceText('mkt_subtitle');
+
+            // Meta labels
+            const metaLabels = document.querySelectorAll('.meta-pill-text .label');
+            if (metaLabels[0]) metaLabels[0].innerText = getMarketplaceText('mkt_your_location');
+            if (metaLabels[1]) metaLabels[1].innerText = getMarketplaceText('mkt_last_updated');
+
+            // Stats labels
+            const statMandis = document.getElementById('statActiveMandis');
+            if (statMandis && statMandis.nextElementSibling) statMandis.nextElementSibling.innerText = getMarketplaceText('mkt_active_mandis');
+            const statStates = document.getElementById('statStatesCovered');
+            if (statStates && statStates.nextElementSibling) statStates.nextElementSibling.innerText = getMarketplaceText('mkt_states_covered');
+            const statComm = document.getElementById('statCommodities');
+            if (statComm && statComm.nextElementSibling) statComm.nextElementSibling.innerText = getMarketplaceText('mkt_commodities');
+            const statDate = document.getElementById('statLatestDate');
+            if (statDate && statDate.nextElementSibling) statDate.nextElementSibling.innerText = getMarketplaceText('mkt_latest_price_date');
+
+            // Filter Labels
+            const filterLabels = document.querySelectorAll('.filter-grid .form-group label');
+            if (filterLabels[0]) filterLabels[0].innerText = getMarketplaceText('mkt_filter_type');
+            if (filterLabels[1]) filterLabels[1].innerText = getMarketplaceText('mkt_filter_state');
+            if (filterLabels[2]) filterLabels[2].innerText = getMarketplaceText('mkt_filter_district');
+            if (filterLabels[3]) filterLabels[3].innerText = getMarketplaceText('mkt_filter_commodity');
+            if (filterLabels[4]) filterLabels[4].innerText = getMarketplaceText('common_search');
+
+            // Filter Type Options
+            const typeSelect = document.getElementById('marketTypeSelect');
+            if (typeSelect && typeSelect.options.length >= 3) {
+                typeSelect.options[0].text = getMarketplaceText('mkt_type_mandi');
+                typeSelect.options[1].text = getMarketplaceText('mkt_type_seller');
+                typeSelect.options[2].text = getMarketplaceText('mkt_type_buyer');
+            }
+
+            // Filter Search placeholder & Apply button
+            const filterSearch = document.getElementById('filterSearch');
+            if (filterSearch) filterSearch.placeholder = getMarketplaceText('mkt_filter_search_ph');
+
+            const applyBtn = document.querySelector('.btn-filter-apply');
+            if (applyBtn) applyBtn.innerHTML = `<i class="fas fa-filter"></i> ${getMarketplaceText('mkt_filter_apply')}`;
+
+            // Category strip first item
+            const firstCatSpan = document.querySelector('.category-icon-all + span');
+            if (firstCatSpan) firstCatSpan.innerText = getMarketplaceText('mkt_all_commodities');
+
+            // Section Headline & Subtitle
+            const mainTitle = document.getElementById('mainSectionTitle');
+            if (mainTitle && currentMarketType === 'mandi') mainTitle.innerText = getMarketplaceText('mkt_reported_daily_title');
+            const mainSub = document.getElementById('mainSectionSubtitle');
+            if (mainSub && currentMarketType === 'mandi') mainSub.innerHTML = `<span>${getMarketplaceText('mkt_reported_daily')}</span>`;
+
+            // Sort dropdown options
+            const sortSelect = document.getElementById('sortSelect');
+            if (sortSelect && sortSelect.options.length >= 4) {
+                sortSelect.options[0].text = getMarketplaceText('mkt_sort_recent');
+                sortSelect.options[1].text = getMarketplaceText('mkt_sort_highest');
+                sortSelect.options[2].text = getMarketplaceText('mkt_sort_lowest');
+                sortSelect.options[3].text = getMarketplaceText('mkt_sort_nearest');
+            }
+
+            // Sidebar Headers
+            const nearbyH3 = document.querySelector('.sidebar-panel:first-child .sidebar-panel-header h3');
+            if (nearbyH3) nearbyH3.innerHTML = `<i class="fas fa-location-crosshairs" style="color: var(--primary);"></i> ${getMarketplaceText('mkt_nearby_title')}`;
+            const nearbyViewAll = document.querySelector('.sidebar-panel:first-child .sidebar-panel-header a');
+            if (nearbyViewAll) nearbyViewAll.innerText = getMarketplaceText('mkt_view_all');
+
+            const highlightsH3 = document.querySelector('.sidebar-panel:nth-child(2) .sidebar-panel-header h3');
+            if (highlightsH3) highlightsH3.innerHTML = `<i class="fas fa-chart-line" style="color: var(--primary);"></i> ${getMarketplaceText('mkt_highlights_title')}`;
+
+            // Market Highlights Items
+            const hItems = document.querySelectorAll('.highlight-item');
+            if (hItems[0]) {
+                const h4 = hItems[0].querySelector('h4');
+                const p = hItems[0].querySelector('p');
+                if (h4) h4.innerText = getMarketplaceText('mkt_highlight_1_title');
+                if (p) p.innerText = getMarketplaceText('mkt_highlight_1_desc');
+            }
+            if (hItems[1]) {
+                const h4 = hItems[1].querySelector('h4');
+                const p = hItems[1].querySelector('p');
+                if (h4) h4.innerText = getMarketplaceText('mkt_highlight_2_title');
+                if (p) p.innerText = getMarketplaceText('mkt_highlight_2_desc');
+            }
+            if (hItems[2]) {
+                const h4 = hItems[2].querySelector('h4');
+                const p = hItems[2].querySelector('p');
+                if (h4) h4.innerText = getMarketplaceText('mkt_highlight_3_title');
+                if (p) p.innerText = getMarketplaceText('mkt_highlight_3_desc');
+            }
+
+            // Disclaimer card
+            const disclaimerP = document.querySelectorAll('.disclaimer-card p');
+            if (disclaimerP[0]) disclaimerP[0].innerHTML = `<strong><i class="fas fa-building-columns"></i> ${getMarketplaceText('mkt_data_source')}</strong> ${getMarketplaceText('mkt_data_source_text')}`;
+            if (disclaimerP[1]) disclaimerP[1].innerHTML = `<strong><i class="fas fa-info-circle"></i></strong> ${getMarketplaceText('mkt_disclaimer_note')}`;
+
+            // Empty state texts
+            const emptyH3 = document.querySelector('.empty-results-box h3');
+            if (emptyH3) emptyH3.innerText = getMarketplaceText('mkt_no_prices_title');
+            const emptyP = document.querySelector('.empty-results-box p');
+            if (emptyP) emptyP.innerText = getMarketplaceText('mkt_no_prices_desc');
+            const emptyBtn = document.querySelector('.empty-results-box button');
+            if (emptyBtn) emptyBtn.innerText = getMarketplaceText('mkt_reset_all');
+
+            // Pagination button texts
+            const btnPrev = document.getElementById('btnPagePrev');
+            if (btnPrev) btnPrev.innerHTML = `<i class="fas fa-chevron-left"></i> ${getMarketplaceText('mkt_prev')}`;
+            const btnNext = document.getElementById('btnPageNext');
+            if (btnNext) btnNext.innerHTML = `${getMarketplaceText('mkt_next')} <i class="fas fa-chevron-right"></i>`;
+
+            // Re-render current page
+            loadMandiPrices(currentPage);
+        }
+
+
+        window.addEventListener('krishi:languageChanged', () => {
+            updateMarketplaceTranslations();
+        });
+
+        // Initialize translations on load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateMarketplaceTranslations();
+        });
+    </script>
+</body>
+</html>

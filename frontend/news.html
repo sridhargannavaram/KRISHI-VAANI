@@ -31,31 +31,32 @@
         .category-tab {
             padding: 0.6rem 1.2rem;
             border-radius: 25px;
-            border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
             color: var(--text-primary);
             cursor: pointer;
             font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
             font-weight: 600;
-            transition: all 0.3s;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 0.4rem;
+            box-shadow: var(--shadow-sm);
         }
-        .category-tab:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+        .category-tab:hover { background: var(--bg-subtle); transform: translateY(-1px); box-shadow: var(--shadow-md); }
         .category-tab.active {
             background: var(--accent-color);
             color: white;
-            border-color: var(--accent-color);
-            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.2);
         }
 
         /* News Grid */
         .news-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+            gap: 1.25rem;
         }
 
         /* News Card */
@@ -64,18 +65,23 @@
             flex-direction: column;
             overflow: hidden;
             padding: 0;
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            border-radius: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-border);
         }
 
         .news-card-img {
             width: 100%;
             height: 180px;
             object-fit: cover;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .news-badge {
@@ -90,10 +96,10 @@
             letter-spacing: 0.5px;
             backdrop-filter: blur(8px);
         }
-        .badge-crops { background: rgba(76,175,80,0.85); color: white; }
-        .badge-weather { background: rgba(33,150,243,0.85); color: white; }
-        .badge-schemes { background: rgba(255,152,0,0.85); color: white; }
-        .badge-technology { background: rgba(156,39,176,0.85); color: white; }
+        .badge-crops { background: #16a34a; color: white; }
+        .badge-weather { background: #2563eb; color: white; }
+        .badge-schemes { background: #ea580c; color: white; }
+        .badge-technology { background: #9333ea; color: white; }
 
         .news-img-wrap {
             position: relative;
@@ -106,7 +112,7 @@
             left: 0;
             right: 0;
             height: 60px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.3));
+            background: linear-gradient(transparent, rgba(0,0,0,0.15));
             pointer-events: none;
         }
 
@@ -122,6 +128,7 @@
             font-weight: 700;
             margin-bottom: 0.6rem;
             line-height: 1.4;
+            color: var(--text-primary);
         }
         .news-desc {
             color: var(--text-secondary);
@@ -144,52 +151,318 @@
             padding: 0.6rem 1.2rem;
             text-align: center;
             border-radius: 8px;
-            background: rgba(76,175,80,0.15);
-            color: var(--accent-color);
+            background: var(--primary-light);
+            color: var(--primary-dark);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.85rem;
-            transition: background 0.2s;
-            border: 1px solid rgba(76,175,80,0.2);
+            transition: all 0.2s;
+            border: 1px solid var(--primary-border);
         }
         .read-more-btn:hover {
-            background: var(--accent-color);
+            background: var(--primary);
             color: white;
+            border-color: var(--primary);
         }
 
-        /* Agri-icon placeholders */
-        .news-icon-placeholder {
+        /* Clean Image unavailable placeholder */
+        .news-no-img-placeholder {
             width: 100%;
             height: 180px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            border-bottom: 1px solid var(--glass-border);
+            gap: 0.5rem;
+            background: var(--bg-subtle, #f8fafc);
+            color: var(--text-secondary, #94a3b8);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color, #e2e8f0);
         }
-        .icon-crops { background: linear-gradient(135deg, #1b5e20, #4CAF50); color: rgba(255,255,255,0.5); }
-        .icon-weather { background: linear-gradient(135deg, #0d47a1, #2196F3); color: rgba(255,255,255,0.5); }
-        .icon-schemes { background: linear-gradient(135deg, #e65100, #FF9800); color: rgba(255,255,255,0.5); }
-        .icon-technology { background: linear-gradient(135deg, #4a148c, #9C27B0); color: rgba(255,255,255,0.5); }
+        .news-no-img-placeholder i {
+            font-size: 2rem;
+            opacity: 0.7;
+        }
+        [data-theme='dark'] .news-no-img-placeholder {
+            background: #16242B;
+            color: #64748B;
+            border-color: #2E404B;
+        }
+        .icon-technology { background: #faf5ff; color: #9333ea; }
+
+        /* Dark Theme Specific Overrides for Agri-News */
+        [data-theme='dark'] .category-tab {
+            background: #1B2B33;
+            border-color: #2E404B;
+            color: #F1F5F9;
+        }
+
+        [data-theme='dark'] .category-tab:hover {
+            background: #22363F;
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+
+        [data-theme='dark'] .category-tab.active {
+            background: #16A34A;
+            color: #FFFFFF;
+            border-color: #16A34A;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        [data-theme='dark'] .news-card {
+            background: #1B2B33;
+            border-color: #2E404B;
+        }
+
+        [data-theme='dark'] .news-card:hover {
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+
+        [data-theme='dark'] .news-card-img {
+            border-bottom-color: #2E404B;
+        }
+
+        [data-theme='dark'] .read-more-btn {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ADE80;
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        [data-theme='dark'] .read-more-btn:hover {
+            background: #16A34A;
+            color: #FFFFFF;
+            border-color: #16A34A;
+        }
+
+        [data-theme='dark'] .news-icon-placeholder {
+            border-bottom-color: #2E404B;
+        }
+
+        [data-theme='dark'] .icon-crops { background: #152B20; color: #4ADE80; }
+        [data-theme='dark'] .icon-weather { background: #15243B; color: #60A5FA; }
+        [data-theme='dark'] .icon-schemes { background: #332215; color: #FB923C; }
+        [data-theme='dark'] .icon-technology { background: #28183B; color: #C084FC; }
     </style>
 </head>
 <body>
-    <nav class="glass">
-        <a href="dashboard.html" class="logo">
-            <i class="fas fa-leaf"></i> KRISHI VAANI
-        </a>
-        <div class="nav-links">
-            <a href="dashboard.html"><i class="fas fa-home"></i> Home</a>
-            <a href="alert-guard.html"><i class="fas fa-bell"></i> AlertGuard</a>
-            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-            <button id="logoutBtn" class="btn btn-glass">Logout</button>
+        <!-- Modern AgriTech / SaaS Navbar -->
+    <header class="app-header">
+        <!-- ROW 1: Main Header (Logo on Left, Controls on Right) -->
+        <div class="header-top-row">
+            <div class="header-container-top">
+                <!-- Left: Brand Logo -->
+                <a href="dashboard.html" class="brand-logo" title="KRISHI VAANI">
+                    <div class="brand-icon-wrap">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <span class="brand-name">KRISHI VAANI</span>
+                </a>
+
+                <!-- Right: Standardized Header Controls [ Notification | Language | Profile ] -->
+                <div class="header-nav-right">
+                    <!-- 1. Notification Bell Button -->
+                    <div class="nav-notification-container" style="position: relative;">
+                        <button type="button" class="nav-notification-btn" id="notificationBellBtn" onclick="krishiFCM.openNotificationCenter()" title="Live Alerts & Notifications" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span id="notificationBadge" class="notification-counter-badge" style="display: none;">0</span>
+                        </button>
+                    </div>
+
+                    <!-- 2. Language Selector: [ Globe Icon | English | Dropdown Arrow ] -->
+                    <div class="nav-lang-box" title="Select Language">
+                        <i class="fas fa-globe"></i>
+                        <select id="langSelect" class="nav-lang-select" aria-label="Select Language">
+                            <option value="en">English</option>
+                            <option value="kn">ಕನ್ನಡ</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="ml">മലയാളം</option>
+                            <option value="hi">हिन्दी</option>
+                        </select>
+                        <i class="fas fa-chevron-down nav-lang-arrow"></i>
+                    </div>
+
+                    <!-- 3. Profile Button: [ User Icon | User Name | Dropdown Arrow ] -->
+                    <div class="nav-profile-container">
+                        <button class="nav-profile-button" id="profileDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Account Menu">
+                            <i class="fas fa-circle-user nav-profile-icon"></i>
+                            <span id="navProfileName" class="nav-profile-name">Farmer</span>
+                            <i class="fas fa-chevron-down nav-caret"></i>
+                        </button>
+                        <div class="nav-profile-popover" id="navProfileDropdown">
+                            <a href="#" onclick="openFarmerProfileModal(event)" class="popover-profile-header" title="View Profile">
+                                <div class="popover-avatar-wrap">
+                                    <div class="popover-avatar" id="popoverAvatar">F</div>
+                                </div>
+                                <div class="popover-user-info">
+                                    <div class="popover-user-name" id="popoverUserName">Farmer</div>
+                                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> My Profile</div>
+                                </div>
+                                <i class="fas fa-chevron-right popover-arrow"></i>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <div class="popover-theme-row">
+                                <div class="popover-theme-label">
+                                    <i class="fas fa-palette"></i>
+                                    <span>Appearance</span>
+                                </div>
+                                <div class="popover-theme-pills">
+                                    <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                                    <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                                </div>
+                            </div>
+                            <a href="alert-guard.html" class="popover-item">
+                                <i class="fas fa-bell"></i>
+                                <span>Notifications</span>
+                            </a>
+                            <a href="#" onclick="openFarmerSettingsModal(event)" class="popover-item">
+                                <i class="fas fa-gear"></i>
+                                <span>Settings</span>
+                            </a>
+                            <div class="popover-divider"></div>
+                            <a href="#" onclick="logout(event)" class="popover-item popover-logout">
+                                <i class="fas fa-right-from-bracket"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Navigation Toggle -->
+                    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation" aria-expanded="false">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-    </nav>
+
+        <!-- ROW 2: Primary Navigation (Dashboard | Marketplace | Crop Alerts | AlertGuard) -->
+        <div class="header-nav-row">
+            <div class="header-container-bottom">
+                <nav class="header-nav-primary">
+                    <a href="dashboard.html" class="nav-tab ">
+                        <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
+                    </a>
+                    <a href="marketplace.html" class="nav-tab ">
+                        <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
+                    </a>
+                    <a href="crop-alerts.html" class="nav-tab ">
+                        <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
+                    </a>
+                    <a href="alert-guard.html" class="nav-tab ">
+                        <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Backdrop -->
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop" onclick="closeMobileDrawer()"></div>
+
+    <!-- Mobile Navigation Drawer (Overlay Sidebar) -->
+    <div class="mobile-nav-drawer" id="mobileNavDrawer" role="dialog" aria-label="Mobile Navigation Menu">
+        <!-- Drawer Header with Logo & Close Button -->
+        <div class="mobile-drawer-header">
+            <div class="mobile-drawer-brand">
+                <div class="brand-icon-wrap" style="width: 28px; height: 28px; font-size: 0.85rem;">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <span style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">KRISHI VAANI</span>
+            </div>
+            <button type="button" class="mobile-drawer-close" onclick="closeMobileDrawer()" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Profile Section in Mobile Drawer -->
+        <div class="mobile-drawer-profile-card">
+            <a href="#" onclick="openFarmerProfileModal(event); closeMobileDrawer();" class="mobile-profile-card-link" title="View Profile">
+                <div class="popover-avatar-wrap">
+                    <div class="popover-avatar" id="mobileDrawerAvatar">F</div>
+                </div>
+                <div class="popover-user-info">
+                    <div class="popover-user-name nav-profile-name" id="mobileDrawerUserName">Farmer</div>
+                    <div class="popover-user-sub"><i class="fas fa-id-badge"></i> <span data-i18n="profile_my_profile">My Profile</span></div>
+                </div>
+                <i class="fas fa-chevron-right popover-arrow"></i>
+            </a>
+        </div>
+
+        <!-- Quick Actions: Notifications, Settings & Appearance Theme -->
+        <div class="mobile-drawer-section">
+            <button type="button" class="mobile-drawer-action-btn" onclick="krishiFCM.openNotificationCenter(); closeMobileDrawer();" title="Notifications">
+                <div class="mobile-drawer-action-left">
+                    <i class="fas fa-bell"></i>
+                    <span data-i18n="profile_notifications">Notifications</span>
+                </div>
+                <span class="notification-counter-badge" id="mobileDrawerNotificationBadge" style="display: none;">0</span>
+            </button>
+
+            <button type="button" class="mobile-drawer-action-btn" onclick="openFarmerSettingsModal(event); closeMobileDrawer();" title="Account Settings">
+                <div class="mobile-drawer-action-left">
+                    <i class="fas fa-gear"></i>
+                    <span data-i18n="profile_settings">Settings</span>
+                </div>
+                <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--text-light);"></i>
+            </button>
+
+            <div class="mobile-drawer-theme-box">
+                <div class="mobile-drawer-theme-label">
+                    <i class="fas fa-palette"></i>
+                    <span data-i18n="profile_appearance">Appearance</span>
+                </div>
+                <div class="popover-theme-pills">
+                    <button type="button" class="theme-pill" data-theme-val="dark" title="Dark Mode" onclick="setAppTheme('dark')"><i class="fas fa-moon"></i></button>
+                    <button type="button" class="theme-pill" data-theme-val="light" title="Light Mode" onclick="setAppTheme('light')"><i class="fas fa-sun"></i></button>
+                    <button type="button" class="theme-pill" data-theme-val="system" title="System Theme" onclick="setAppTheme('system')"><i class="fas fa-desktop"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="popover-divider"></div>
+
+        <!-- Primary Navigation Links -->
+        <div class="mobile-drawer-nav-section">
+            <div class="mobile-drawer-section-title" data-i18n="nav_menu">Menu</div>
+            <a href="dashboard.html" class="mobile-drawer-link ">
+                <i class="fas fa-chart-line"></i> <span data-i18n="nav_dashboard">Dashboard</span>
+            </a>
+            <a href="marketplace.html" class="mobile-drawer-link ">
+                <i class="fas fa-store"></i> <span data-i18n="nav_marketplace">Marketplace</span>
+            </a>
+            <a href="crop-alerts.html" class="mobile-drawer-link ">
+                <i class="fas fa-bell"></i> <span data-i18n="nav_crop_alerts">Crop Alerts</span>
+            </a>
+            <a href="alert-guard.html" class="mobile-drawer-link ">
+                <i class="fas fa-shield-alt"></i> <span data-i18n="nav_alert_guard">AlertGuard</span>
+            </a>
+            <a href="news.html" class="mobile-drawer-link active">
+                <i class="fas fa-newspaper"></i> <span data-i18n="nav_agri_news">Agri-News</span>
+            </a>
+        </div>
+
+        <div class="popover-divider" style="margin-top: auto;"></div>
+
+        <!-- Logout Action at bottom -->
+        <a href="#" onclick="logout(event); closeMobileDrawer();" class="mobile-drawer-link mobile-drawer-logout" title="Logout">
+            <i class="fas fa-right-from-bracket"></i> <span data-i18n="profile_logout">Logout</span>
+        </a>
+    </div>
+    </header>
 
     <div class="container">
         <div class="news-header">
             <h2><i class="fas fa-tractor" style="color: var(--accent-color);"></i> Farmer News & Updates</h2>
             <p>Stay informed with the latest agricultural news, government schemes, weather alerts & farming technology</p>
+        </div>
+
+        <!-- News Search Bar -->
+        <div style="display: flex; justify-content: center; margin-bottom: 1.2rem;">
+            <div style="position: relative; width: 100%; max-width: 520px;">
+                <i class="fas fa-search" style="position: absolute; left: 1.1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 0.9rem;"></i>
+                <input type="text" id="newsSearchInput" placeholder="Search Indian agriculture, crops, schemes, monsoon, ICAR..." style="width: 100%; padding: 0.65rem 1rem 0.65rem 2.7rem; border-radius: 25px; border: 1px solid var(--border-color); background: #ffffff; color: var(--text-primary); font-size: 0.88rem; outline: none; box-shadow: var(--shadow-sm); font-family: 'Inter', sans-serif; transition: border-color 0.2s;">
+            </div>
         </div>
 
         <!-- Category Filter Tabs -->
@@ -212,7 +485,19 @@
             window.location.href = 'login.html';
         }
 
+        // HTML Escape Helper
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         let currentCategory = 'all';
+        let searchDebounceTimer = null;
 
         const categoryIcons = {
             crops: 'fa-seedling',
@@ -227,16 +512,45 @@
                 document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 currentCategory = tab.dataset.cat;
-                fetchNews(currentCategory);
+                const searchVal = document.getElementById('newsSearchInput')?.value.trim() || '';
+                fetchNews(currentCategory, searchVal);
             });
         });
 
-        async function fetchNews(category = 'all') {
+        // Search input handler with debounce
+        const searchInput = document.getElementById('newsSearchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchDebounceTimer);
+                searchDebounceTimer = setTimeout(() => {
+                    fetchNews(currentCategory, e.target.value.trim());
+                }, 400);
+            });
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    clearTimeout(searchDebounceTimer);
+                    fetchNews(currentCategory, e.target.value.trim());
+                }
+            });
+        }
+
+        async function fetchNews(category = 'all', searchQuery = '') {
             const newsBox = document.getElementById('newsBox');
-            newsBox.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Loading farmer news...</p>';
+            const loadingText = typeof t === 'function' ? t('news_loading') : 'Loading farmer news...';
+            const readMoreText = typeof t === 'function' ? t('news_read_more') : 'Read Full Article';
+            const noNewsText = typeof t === 'function' ? (t('news_no_news') || 'No recent relevant news available.') : 'No recent relevant news available.';
+            const failedText = typeof t === 'function' ? t('news_failed') : 'Failed to load news. Please try again later.';
+
+            newsBox.innerHTML = `<p style="text-align: center; grid-column: 1 / -1; padding: 2.5rem 1rem; color: var(--text-secondary);"><i class="fas fa-spinner fa-spin" style="color: var(--primary); font-size: 1.6rem; margin-bottom: 0.6rem;"></i><br>${loadingText}</p>`;
 
             try {
-                const res = await fetch(`${API_BASE_URL}/news?category=${category}`);
+                const currentLang = typeof getAppLanguage === 'function' ? getAppLanguage() : 'en';
+                let url = `${API_BASE_URL}/news?category=${encodeURIComponent(category)}&lang=${encodeURIComponent(currentLang)}`;
+                if (searchQuery) {
+                    url += `&search=${encodeURIComponent(searchQuery)}`;
+                }
+
+                const res = await fetch(url);
                 const data = await res.json();
                 
                 if (data.articles && data.articles.length > 0) {
@@ -244,53 +558,61 @@
                     data.articles.forEach(article => {
                         const cat = article.category || guessCategory(article.title + ' ' + article.description);
                         const badgeClass = `badge-${cat}`;
-                        const iconClass = `icon-${cat}`;
-                        const icon = categoryIcons[cat] || 'fa-newspaper';
-                        const catLabel = cat.charAt(0).toUpperCase() + cat.slice(1);
+                        
+                        let catLabel = cat.charAt(0).toUpperCase() + cat.slice(1);
+                        if (typeof t === 'function') {
+                            if (cat === 'crops') catLabel = t('news_cat_crops');
+                            else if (cat === 'weather') catLabel = t('news_cat_weather');
+                            else if (cat === 'schemes') catLabel = t('news_cat_schemes');
+                            else if (cat === 'technology') catLabel = t('news_cat_tech');
+                        }
                         
                         const timeAgo = article.publishedAt ? getTimeAgo(article.publishedAt) : '';
-                        const source = article.source?.name || 'Krishi Vaani';
+                        const dateFormatted = article.publishedAt ? formatPubDate(article.publishedAt) : '';
+                        const source = article.source?.name || 'Agri News';
 
-                        const imgSection = article.urlToImage && article.urlToImage !== '' 
+                        const hasImg = article.urlToImage && typeof article.urlToImage === 'string' && article.urlToImage.trim().startsWith('http');
+                        const imgSection = hasImg
                             ? `<div class="news-img-wrap">
-                                    <img class="news-card-img" src="${article.urlToImage}" alt="" onerror="this.parentElement.innerHTML='<div class=\\'news-icon-placeholder ${iconClass}\\'><i class=\\'fas ${icon}\\'></i></div>'">
-                                    <span class="news-badge ${badgeClass}">${catLabel}</span>
+                                    <img class="news-card-img" src="${escapeHtml(article.urlToImage)}" alt="${escapeHtml(article.title)}" loading="lazy" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'news-no-img-placeholder\\'><i class=\\'fas fa-image\\'></i><span>Image unavailable</span></div><span class=\\'news-badge ${badgeClass}\\'>${escapeHtml(catLabel)}</span>';">
+                                    <span class="news-badge ${badgeClass}">${escapeHtml(catLabel)}</span>
                                </div>`
                             : `<div class="news-img-wrap">
-                                    <div class="news-icon-placeholder ${iconClass}"><i class="fas ${icon}"></i></div>
-                                    <span class="news-badge ${badgeClass}">${catLabel}</span>
+                                    <div class="news-no-img-placeholder"><i class="fas fa-image"></i><span>Image unavailable</span></div>
+                                    <span class="news-badge ${badgeClass}">${escapeHtml(catLabel)}</span>
                                </div>`;
 
                         html += `
                             <div class="glass news-card">
                                 ${imgSection}
                                 <div class="news-content">
-                                    <div class="news-title">${article.title}</div>
-                                    <div class="news-desc">${article.description || 'Read more for details.'}</div>
+                                    <div class="news-title">${escapeHtml(article.title)}</div>
+                                    <div class="news-desc">${escapeHtml(article.description || 'Read more for agricultural details.')}</div>
                                     <div class="news-meta">
-                                        <span class="news-source"><i class="fas fa-rss"></i> ${source}</span>
-                                        <span>${timeAgo}</span>
+                                        <span class="news-source"><i class="fas fa-newspaper" style="color: var(--primary); margin-right: 3px;"></i> ${escapeHtml(source)}</span>
+                                        <span title="${dateFormatted}"><i class="far fa-clock" style="margin-right: 3px;"></i> ${timeAgo}</span>
                                     </div>
-                                    <a href="${article.url}" target="_blank" class="read-more-btn"><i class="fas fa-arrow-right"></i> Read Full Article</a>
+                                    <a href="${escapeHtml(article.url)}" target="_blank" rel="noopener noreferrer" class="read-more-btn"><i class="fas fa-arrow-up-right-from-square"></i> ${readMoreText}</a>
                                 </div>
                             </div>
                         `;
                     });
                     newsBox.innerHTML = html;
+            if (typeof initScrollRevealAnimations === 'function') requestAnimationFrame(() => initScrollRevealAnimations());
                 } else {
-                    newsBox.innerHTML = '<p style="text-align:center; color: var(--text-secondary);">No farmer news found for this category.</p>';
+                    newsBox.innerHTML = `<p style="text-align:center; grid-column: 1 / -1; color: var(--text-secondary); padding: 2.5rem 1rem;">${noNewsText}</p>`;
                 }
             } catch(e) {
-                newsBox.innerHTML = '<p style="color:#ff6b6b;">Failed to load news. Please try again later.</p>';
+                newsBox.innerHTML = `<p style="color:#ff6b6b; text-align: center; grid-column: 1 / -1; padding: 2rem;">${failedText}</p>`;
             }
         }
 
         function guessCategory(text) {
             text = text.toLowerCase();
-            if (text.includes('crop') || text.includes('price') || text.includes('mandi') || text.includes('harvest') || text.includes('seed')) return 'crops';
-            if (text.includes('weather') || text.includes('monsoon') || text.includes('rain') || text.includes('forecast') || text.includes('drought')) return 'weather';
-            if (text.includes('scheme') || text.includes('subsidy') || text.includes('government') || text.includes('pm-kisan') || text.includes('policy')) return 'schemes';
-            if (text.includes('technology') || text.includes('drone') || text.includes('organic') || text.includes('innovation') || text.includes('iot')) return 'technology';
+            if (text.includes('crop') || text.includes('price') || text.includes('mandi') || text.includes('harvest') || text.includes('seed') || text.includes('paddy') || text.includes('wheat') || text.includes('ragi')) return 'crops';
+            if (text.includes('weather') || text.includes('monsoon') || text.includes('rain') || text.includes('forecast') || text.includes('drought') || text.includes('imd')) return 'weather';
+            if (text.includes('scheme') || text.includes('subsidy') || text.includes('government') || text.includes('pm-kisan') || text.includes('policy') || text.includes('kcc')) return 'schemes';
+            if (text.includes('technology') || text.includes('drone') || text.includes('organic') || text.includes('innovation') || text.includes('iot') || text.includes('icar') || text.includes('agritech')) return 'technology';
             return 'crops';
         }
 
@@ -298,12 +620,62 @@
             const now = new Date();
             const then = new Date(dateStr);
             const diff = Math.floor((now - then) / 1000);
+            if (diff < 60) return 'Just now';
             if (diff < 3600) return `${Math.floor(diff/60)}m ago`;
             if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
-            return `${Math.floor(diff/86400)}d ago`;
+            const days = Math.floor(diff/86400);
+            if (days === 1) return '1d ago';
+            if (days <= 7) return `${days}d ago`;
+            return `${days}d ago`;
         }
 
-        fetchNews();
+        function formatPubDate(dateStr) {
+            try {
+                const d = new Date(dateStr);
+                return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+            } catch(e) {
+                return dateStr;
+            }
+        }
+
+        function updateNewsTranslations() {
+            const h2 = document.querySelector('.news-header h2');
+            if (h2 && typeof t === 'function') h2.innerHTML = `<i class="fas fa-tractor" style="color: var(--accent-color);"></i> ${t('news_title')}`;
+            const p = document.querySelector('.news-header p');
+            if (p && typeof t === 'function') p.innerText = t('news_subtitle');
+
+            const tabKeys = ['news_cat_all', 'news_cat_crops', 'news_cat_weather', 'news_cat_schemes', 'news_cat_tech'];
+            const tabIcons = ['fa-th-large', 'fa-seedling', 'fa-cloud-sun-rain', 'fa-hand-holding-usd', 'fa-microchip'];
+            document.querySelectorAll('.category-tab').forEach((tab, i) => {
+                if (tabKeys[i] && typeof t === 'function') {
+                    tab.innerHTML = `<i class="fas ${tabIcons[i]}"></i> ${t(tabKeys[i])}`;
+                }
+            });
+
+            const searchInput = document.getElementById('newsSearchInput');
+            if (searchInput && typeof t === 'function') {
+                const lang = (typeof getAppLanguage === 'function' ? getAppLanguage() : (localStorage.getItem('krishiLang') || 'en')).toLowerCase();
+                const placeholders = {
+                    en: 'Search Indian agriculture, crops, schemes, monsoon, ICAR...',
+                    kn: 'ಕೃಷಿ ಸುದ್ದಿ, ಬೆಳೆಗಳು, ಯೋಜನೆಗಳು, ಮುಂಗಾರು ಹುಡುಕಿ...',
+                    te: 'వ్యవసాయ వార్తలు, పంటలు, పథకాలు, వర్షం శోధించండి...',
+                    ta: 'விவசாய செய்திகள், பயிர்கள், திட்டங்கள், மழை தேடவும்...',
+                    ml: 'കാർഷിക വാർത്തകൾ, വിളകൾ, പദ്ധതികൾ തിരയുക...',
+                    hi: 'कृषि समाचार, फसलें, सरकारी योजनाएं, मानसून खोजें...'
+                };
+                searchInput.placeholder = placeholders[lang] || placeholders.en;
+            }
+
+            const searchVal = document.getElementById('newsSearchInput')?.value.trim() || '';
+            fetchNews(currentCategory, searchVal);
+        }
+
+        window.addEventListener('krishi:languageChanged', () => {
+            updateNewsTranslations();
+        });
+
+        // Initial load
+        updateNewsTranslations();
     </script>
 </body>
 </html>

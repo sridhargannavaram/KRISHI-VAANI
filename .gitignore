@@ -10,6 +10,13 @@ yarn-error.log
 .env.test.local
 .env.production.local
 
+# Firebase Service Account Credentials
+serviceAccountKey*.json
+firebase-admin*.json
+*firebase-service-account*.json
+firebase-key*.json
+*.pem
+
 # Build output
 dist/
 build/
@@ -17,3 +24,9 @@ build/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Scratch and Local Diagnostics
+scratch/
+*backup*/
+backup*/
+
