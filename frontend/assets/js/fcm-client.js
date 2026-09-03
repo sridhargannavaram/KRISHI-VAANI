@@ -291,6 +291,7 @@ class KrishiNotificationClient {
         }
 
         modal.style.display = 'flex';
+        modal.classList.add('active');
 
         try {
             const res = await fetch('/api/notifications/history?limit=30', {
@@ -359,6 +360,14 @@ class KrishiNotificationClient {
         }
         if (actionUrl && actionUrl !== '#') {
             window.location.href = actionUrl;
+        }
+    }
+
+    closeNotificationCenter() {
+        const modal = document.getElementById('notificationCenterModal');
+        if (modal) {
+            modal.classList.remove('active');
+            modal.style.display = 'none';
         }
     }
 }

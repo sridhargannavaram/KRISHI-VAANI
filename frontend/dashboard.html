@@ -5748,47 +5748,7 @@
                                 </div>
                                 <div class="seasonal-subtitle-text">${escapeHtml(i18n.seasonal_crops_subtitle || 'Recommendations based on weather, season & soil conditions')}</div>
                             </div>
-                            <button type="button" class="btn-seasonal-refresh" onclick="fetchSeasonalCrops(true)" title="Refresh Seasonal Crops">
-                                <i class="fas fa-sync-alt"></i> <span>${escapeHtml(i18n.refresh || 'Refresh')}</span>
-                            </button>
-                        </div>
-
-                        <!-- Category Filter Pills Bar -->
-                        <div class="seasonal-categories-bar">
-                            ${categoryTabsHtml}
-                        </div>
-
-                        <!-- 3-Column Crops Grid -->
-                        <div class="seasonal-cards-grid">
-                            ${cardsHtml}
-                        </div>
-
-                        <!-- Centered View More / Less Button -->
-                        ${viewMoreBtnHtml}
-
-                        <!-- Bottom Farming Tip & Weather Advisory Cards Row -->
-                        <div class="seasonal-advisories-row">
-                            <!-- Left: Farming Tip -->
-                            <div class="advisory-box-tip">
-                                <div class="advisory-box-header">
-                                    <i class="fas fa-lightbulb"></i>
-                                    <span>${escapeHtml(i18n.farming_tip_header || 'FARMING TIP')}</span>
-                                </div>
-                                <div class="advisory-box-text">${escapeHtml(activeTip)}</div>
-                                <a href="#cropAdvisorTitle" class="advisory-box-link">${escapeHtml(i18n.read_more || 'Read More →')}</a>
-                            </div>
-
-                            <!-- Right: Weather Advisory -->
-                            <div class="advisory-box-weather">
-                                <div class="advisory-box-header">
-                                    <i class="fas fa-triangle-exclamation"></i>
-                                    <span>${escapeHtml(i18n.weather_advisory_header || 'WEATHER ADVISORY')}</span>
-                                </div>
-                                <div class="advisory-box-text">${escapeHtml(activeCaution)}</div>
-                                <a href="#weatherWidget" class="advisory-box-link">${escapeHtml(i18n.view_details_link || 'View Details →')}</a>
-                            </div>
-                        </div>
-                    </div>
+               
                 </div>
             `;
         }
@@ -6539,12 +6499,14 @@ function openFarmerSettingsModal(e) {
         </div>
     </div>
 
-    <!-- In-App Notification Center Modal -->
+    
+
+        <!-- In-App Notification Center Modal -->
     <div id="notificationCenterModal" class="loc-modal-backdrop" style="display: none;">
         <div class="loc-modal-box" style="max-width: 480px;">
             <div class="loc-modal-header" style="justify-content: space-between;">
                 <h3 style="margin: 0; font-size: 1.05rem;"><i class="fas fa-bell" style="color: #22c55e;"></i> &nbsp;Live Alerts & Notifications</h3>
-                <button type="button" onclick="document.getElementById('notificationCenterModal').style.display='none'" style="background: none; border: none; color: var(--text-secondary); font-size: 1.1rem; cursor: pointer;"><i class="fas fa-xmark"></i></button>
+                <button type="button" onclick="krishiFCM.closeNotificationCenter()" style="background: none; border: none; color: var(--text-secondary); font-size: 1.1rem; cursor: pointer;"><i class="fas fa-xmark"></i></button>
             </div>
             <div style="padding: 0.75rem 1.25rem; background: var(--bg-subtle, rgba(255,255,255,0.02)); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem;">
                 <span style="color: var(--text-secondary);">Push Status:</span>
@@ -6554,7 +6516,7 @@ function openFarmerSettingsModal(e) {
                 <!-- Rendered dynamically by krishiFCM.openNotificationCenter() -->
             </div>
             <div style="padding: 0.75rem 1.25rem; border-top: 1px solid var(--border-color); text-align: right; background: var(--bg-subtle);">
-                <button type="button" onclick="document.getElementById('notificationCenterModal').style.display='none'" style="background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.4rem 0.9rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">Close</button>
+                <button type="button" onclick="krishiFCM.closeNotificationCenter()" style="background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.4rem 0.9rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">Close</button>
             </div>
         </div>
     </div>
