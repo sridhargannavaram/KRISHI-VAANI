@@ -224,6 +224,31 @@ const Farmer = {
     return res.rows.length > 0 ? formatFarmer(res.rows[0]) : null;
   },
 
+  saveAvatar: async (id, base64Data) => {
+    const avatarUrl = `/api/profile/avatar/${id}`;
+    const res = await query(`
+      UPDATE farmers
+      SET profile_image_backup = $1,
+          profile_image_url = $2,
+          profile_image = $2,
+          last_activity_at = NOW(),
+          updated_at = NOW()
+      WHERE id = $3
+      RETURNING *
+    `, [base64Data, avatarUrl, id]);
+
+    return res.rows.length > 0 ? formatFarmer(res.rows[0]) : null;
+  },
+
+  getAvatarRawData: async (id) => {
+    const res = await query(`
+      SELECT profile_image_backup, profile_image
+      FROM farmers
+      WHERE id = $1
+    `, [id]);
+    return res.rows[0] || null;
+  },
+
   // Update last login timestamp and increment login count
   updateLastLogin: async (id, req = null) => {
     await query(`
