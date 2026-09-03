@@ -773,8 +773,92 @@ body > nav.glass {
   padding: 0.5rem;
   z-index: 1000;
   display: none;
+  flex-direction: column;
+  gap: 0.25rem;
   animation: popoverFadeIn 0.15s ease-out;
 }
+
+/* Appearance Row inside Profile Dropdown Menu */
+.popover-theme-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  box-sizing: border-box;
+  background: var(--bg-subtle, #f8fafc);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 8px;
+  margin: 0.25rem 0;
+}
+
+[data-theme='dark'] .popover-theme-row {
+  background: #1B2B33;
+  border-color: #2E404B;
+}
+
+.popover-theme-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-secondary, #64748b);
+}
+
+.popover-theme-label i {
+  font-size: 0.85rem;
+  color: var(--text-secondary, #64748b);
+}
+
+.popover-theme-pills {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--bg-surface, #ffffff);
+  padding: 2px 4px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color, #e2e8f0);
+}
+
+[data-theme='dark'] .popover-theme-pills {
+  background: #16242B;
+  border-color: #2E404B;
+}
+
+.theme-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-secondary, #64748b);
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.theme-pill:hover,
+.theme-pill.active {
+  background: var(--primary-light, #dcfce7);
+  color: var(--primary-dark, #15803d);
+}
+
+[data-theme='dark'] .theme-pill:hover,
+[data-theme='dark'] .theme-pill.active {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+.theme-pill .kv-icon {
+  width: 13px;
+  height: 13px;
+}
+
 
 /* =============================================================
    IN-APP PWA INSTALL BUTTON (Right side of profile)
@@ -1285,14 +1369,18 @@ body > nav.glass {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0.85rem;
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  box-sizing: border-box;
   background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   margin-top: 0.25rem;
 }
 
 [data-theme='dark'] .mobile-drawer-theme-box {
   background: #1B2B33;
+  border-color: #2E404B;
 }
 
 .mobile-drawer-theme-label {
