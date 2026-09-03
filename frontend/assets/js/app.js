@@ -2650,3 +2650,56 @@ window.revealNewElements = function(container) {
 window.addEventListener('krishi:languageChanged', () => {
     syncUserProfileDisplay();
 });
+
+// =============================================================
+// IN-APP PWA INSTALLATION PROMPT HANDLER
+// =============================================================
+window.deferredPwaPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    window.deferredPwaPrompt = e;
+    const installBtns = document.querySelectorAll('#installPwaBtn, #mobileInstallPwaBtn');
+    installBtns.forEach(btn => {
+        btn.style.display = 'inline-flex';
+    });
+});
+
+window.addEventListener('appinstalled', () => {
+    window.deferredPwaPrompt = null;
+    const installBtns = document.querySelectorAll('#installPwaBtn, #mobileInstallPwaBtn');
+    installBtns.forEach(btn => {
+        btn.style.display = 'none';
+    });
+    if (typeof showNotification === 'function') {
+        showNotification('🎉 Krishi Vaani app installed successfully!', 'success');
+    }
+});
+
+window.triggerPwaInstallPrompt = async function() {
+    if (window.deferredPwaPrompt) {
+        window.deferredPwaPrompt.prompt();
+        const choice = await window.deferredPwaPrompt.userChoice;
+        if (choice && choice.outcome === 'accepted') {
+            const installBtns = document.querySelectorAll('#installPwaBtn, #mobileInstallPwaBtn');
+            installBtns.forEach(btn => btn.style.display = 'none');
+        }
+        window.deferredPwaPrompt = null;
+    } else {
+        // Fallback for iOS Safari or browsers where prompt was already handled
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+            if (typeof showNotification === 'function') {
+                showNotification('📲 To install on iPhone/iPad: Tap the Share button 📤 in Safari and select "Add to Home Screen" ➕', 'info', 7000);
+            } else {
+                alert('To install on iPhone/iPad:\n1. Tap the Share button in Safari 📤\n2. Select "Add to Home Screen" ➕');
+            }
+        } else {
+            if (typeof showNotification === 'function') {
+                showNotification('📲 App can be installed via Chrome: Click the three dots (⋮) ➔ "Install KRISHI VAANI..."', 'info', 5000);
+            } else {
+                alert('App can be installed via Chrome: Click the three dots (⋮) ➔ "Install KRISHI VAANI..."');
+            }
+        }
+    }
+};
