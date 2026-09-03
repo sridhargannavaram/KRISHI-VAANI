@@ -468,26 +468,26 @@
 
     <div class="container">
         <div class="page-header">
-            <h2><i class="fas fa-shield-alt" style="color: var(--accent-color);"></i> Smart Crop Alert Engine</h2>
+            <h2><img src="/assets/icons/shield.png" alt="Crop Alert Engine" class="kv-icon kv-icon-md"> Smart Crop Alert Engine</h2>
             <p>Select your crop to get weather-based alerts with priority levels & trigger actions</p>
         </div>
 
         <!-- Crop Selector -->
         <div class="crop-selector" id="cropSelector">
-            <button class="crop-btn" data-crop="rice"><i class="fas fa-wheat-awn"></i> Rice</button>
-            <button class="crop-btn" data-crop="wheat"><i class="fas fa-wheat-awn"></i> Wheat</button>
-            <button class="crop-btn" data-crop="tomato"><i class="fas fa-apple-whole"></i> Tomato</button>
-            <button class="crop-btn" data-crop="potato"><i class="fas fa-carrot"></i> Potato</button>
-            <button class="crop-btn" data-crop="onion"><i class="fas fa-seedling"></i> Onion</button>
-            <button class="crop-btn" data-crop="cotton"><i class="fas fa-feather"></i> Cotton</button>
-            <button class="crop-btn" data-crop="sugarcane"><i class="fas fa-seedling"></i> Sugarcane</button>
-            <button class="crop-btn" data-crop="chilli"><i class="fas fa-pepper-hot"></i> Chilli</button>
-            <button class="crop-btn" data-crop="ragi"><i class="fas fa-leaf"></i> Ragi</button>
+            <button class="crop-btn" data-crop="rice"><img src="/assets/icons/wheat.png" alt="Rice" class="kv-icon kv-icon-xs"> Rice</button>
+            <button class="crop-btn" data-crop="wheat"><img src="/assets/icons/wheat.png" alt="Wheat" class="kv-icon kv-icon-xs"> Wheat</button>
+            <button class="crop-btn" data-crop="tomato"><img src="/assets/icons/seedling.png" alt="Tomato" class="kv-icon kv-icon-xs"> Tomato</button>
+            <button class="crop-btn" data-crop="potato"><img src="/assets/icons/seedling.png" alt="Potato" class="kv-icon kv-icon-xs"> Potato</button>
+            <button class="crop-btn" data-crop="onion"><img src="/assets/icons/seedling.png" alt="Onion" class="kv-icon kv-icon-xs"> Onion</button>
+            <button class="crop-btn" data-crop="cotton"><img src="/assets/icons/leaf.png" alt="Cotton" class="kv-icon kv-icon-xs"> Cotton</button>
+            <button class="crop-btn" data-crop="sugarcane"><img src="/assets/icons/seedling.png" alt="Sugarcane" class="kv-icon kv-icon-xs"> Sugarcane</button>
+            <button class="crop-btn" data-crop="chilli"><img src="/assets/icons/leaf.png" alt="Chilli" class="kv-icon kv-icon-xs"> Chilli</button>
+            <button class="crop-btn" data-crop="ragi"><img src="/assets/icons/wheat.png" alt="Ragi" class="kv-icon kv-icon-xs"> Ragi</button>
         </div>
 
         <!-- Weather Summary -->
         <div class="glass glass-card">
-            <h3 style="margin-bottom: 1rem;"><i class="fas fa-cloud-sun" style="color: #4fc3f7;"></i> Current Weather Summary</h3>
+            <h3 style="margin-bottom: 1rem;"><img src="/assets/icons/cloud-sun.png" alt="Weather" class="kv-icon kv-icon-sm"> Current Weather Summary</h3>
             <div class="weather-summary" id="weatherSummary">
                 <div class="weather-badge"><i class="fas fa-spinner fa-spin"></i> <span data-i18n="ca_loading_weather">Loading weather...</span></div>
             </div>
@@ -496,7 +496,7 @@
         <!-- Alert Results -->
         <div class="glass glass-card" style="margin-top: 1.5rem;" id="alertsSection">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h3><i class="fas fa-exclamation-triangle" style="color: #FF9800;"></i> <span id="alertTitle">Crop Alerts</span></h3>
+                <h3><img src="/assets/icons/warning.png" alt="Alerts" class="kv-icon kv-icon-sm"> <span id="alertTitle">Crop Alerts</span></h3>
                 <div id="alertSummary" style="font-size: 0.85rem; color: var(--text-secondary);"></div>
             </div>
             <div class="alerts-container" id="alertsBox">
@@ -508,13 +508,13 @@
 
         <!-- Weather Visualization Charts -->
         <div class="page-header" style="margin-top: 0;">
-            <h2><i class="fas fa-chart-area" style="color: #ce93d8;"></i> Weather Forecast Visualization</h2>
+            <h2><img src="/assets/icons/dashboard.png" alt="Forecast Charts" class="kv-icon kv-icon-md"> Weather Forecast Visualization</h2>
             <p>5-day weather trends for your location</p>
         </div>
 
         <div class="charts-grid">
             <div class="glass glass-card chart-card">
-                <h4 style="margin-bottom: 1rem;"><i class="fas fa-thermometer-half" style="color: #ef5350;"></i> Temperature (°C)</h4>
+                <h4 style="margin-bottom: 1rem;"><img src="/assets/icons/temp.png" alt="Temperature" class="kv-icon kv-icon-sm"> Temperature (°C)</h4>
                 <canvas id="tempChart"></canvas>
             </div>
             <div class="glass glass-card chart-card">

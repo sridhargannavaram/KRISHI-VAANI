@@ -401,9 +401,7 @@
 
     <div class="container" style="align-items: flex-start; min-height: auto; margin-top: 1rem;">
         <div class="glass glass-card alert-page">
-            <h2 style="margin-bottom: 0.5rem;">
-                <i class="fas fa-bell" style="color: var(--accent-color);"></i> <span data-i18n="ag_title">AlertGuard Settings</span>
-            </h2>
+            <h2 style="margin-bottom: 0.5rem;"><img src="/assets/icons/shield.png" alt="AlertGuard" class="kv-icon kv-icon-md"> <span data-i18n="ag_title">AlertGuard Settings</span></h2>
             <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">
                 <span data-i18n="ag_subtitle">Type your crop name → thresholds auto-adjust to that crop's sensitivity. Save to activate SMS & Voice alerts.</span>
             </p>
@@ -429,22 +427,22 @@
                 <!-- Threshold Cards -->
                 <div class="threshold-grid">
                     <div class="threshold-card" id="tempCard">
-                        <label><i class="fas fa-thermometer-half" style="color: #ef5350;"></i> <span data-i18n="ca_temp">Temperature (°C)</span></label>
+                        <label><img src="/assets/icons/temp.png" alt="Temperature" class="kv-icon kv-icon-sm"> <span data-i18n="ca_temp">Temperature (°C)</span></label>
                         <input type="number" id="tempThreshold" class="form-control" value="35">
                         <div class="threshold-help" id="tempHelp" data-i18n="ag_temp_help">Alert if temp exceeds this</div>
                     </div>
                     <div class="threshold-card" id="humidityCard">
-                        <label><i class="fas fa-tint" style="color: #4fc3f7;"></i> <span data-i18n="ca_humidity">Humidity (%)</span></label>
+                        <label><img src="/assets/icons/humidity.png" alt="Humidity" class="kv-icon kv-icon-sm"> <span data-i18n="ca_humidity">Humidity (%)</span></label>
                         <input type="number" id="humidityThreshold" class="form-control" value="80">
                         <div class="threshold-help" id="humidityHelp" data-i18n="ag_humidity_help">Alert if humidity exceeds this</div>
                     </div>
                     <div class="threshold-card" id="windCard">
-                        <label><i class="fas fa-wind" style="color: #aed581;"></i> <span data-i18n="ca_wind">Wind Speed (m/s)</span></label>
+                        <label><img src="/assets/icons/wind.png" alt="Wind Speed" class="kv-icon kv-icon-sm"> <span data-i18n="ca_wind">Wind Speed (m/s)</span></label>
                         <input type="number" id="windSpeedThreshold" class="form-control" value="15">
                         <div class="threshold-help" id="windHelp" data-i18n="ag_wind_help">Alert if wind exceeds this</div>
                     </div>
                     <div class="threshold-card">
-                        <label><i class="fas fa-cloud-rain" style="color: #90caf9;"></i> <span data-i18n="ag_rain_label">Rain Alert</span></label>
+                        <label><img src="/assets/icons/rain.png" alt="Rain Alert" class="kv-icon kv-icon-sm"> <span data-i18n="ag_rain_label">Rain Alert</span></label>
                         <div class="rain-toggle" style="height: 42px; display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0; border: none; margin: 0; background: none;">
                             <input type="checkbox" id="rainAlert" style="width: 20px; height: 20px; cursor: pointer;" checked>
                             <span style="font-size: 0.9rem; font-weight: 500; color: var(--text-primary);" data-i18n="ag_heavy_rain">Heavy Rain Alerts</span>
