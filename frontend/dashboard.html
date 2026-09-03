@@ -5748,7 +5748,47 @@
                                 </div>
                                 <div class="seasonal-subtitle-text">${escapeHtml(i18n.seasonal_crops_subtitle || 'Recommendations based on weather, season & soil conditions')}</div>
                             </div>
-               
+                            <button type="button" class="btn-seasonal-refresh" onclick="fetchSeasonalCrops(true)" title="Refresh Seasonal Crops">
+                                <i class="fas fa-sync-alt"></i> <span>${escapeHtml(i18n.refresh || 'Refresh')}</span>
+                            </button>
+                        </div>
+
+                        <!-- Category Filter Pills Bar -->
+                        <div class="seasonal-categories-bar">
+                            ${categoryTabsHtml}
+                        </div>
+
+                        <!-- 3-Column Crops Grid -->
+                        <div class="seasonal-cards-grid">
+                            ${cardsHtml}
+                        </div>
+
+                        <!-- Centered View More / Less Button -->
+                        ${viewMoreBtnHtml}
+
+                        <!-- Bottom Farming Tip & Weather Advisory Cards Row -->
+                        <div class="seasonal-advisories-row">
+                            <!-- Left: Farming Tip -->
+                            <div class="advisory-box-tip">
+                                <div class="advisory-box-header">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>${escapeHtml(i18n.farming_tip_header || 'FARMING TIP')}</span>
+                                </div>
+                                <div class="advisory-box-text">${escapeHtml(activeTip)}</div>
+                                <a href="#cropAdvisorTitle" class="advisory-box-link">${escapeHtml(i18n.read_more || 'Read More →')}</a>
+                            </div>
+
+                            <!-- Right: Weather Advisory -->
+                            <div class="advisory-box-weather">
+                                <div class="advisory-box-header">
+                                    <i class="fas fa-triangle-exclamation"></i>
+                                    <span>${escapeHtml(i18n.weather_advisory_header || 'WEATHER ADVISORY')}</span>
+                                </div>
+                                <div class="advisory-box-text">${escapeHtml(activeCaution)}</div>
+                                <a href="#weatherWidget" class="advisory-box-link">${escapeHtml(i18n.view_details_link || 'View Details →')}</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             `;
         }
