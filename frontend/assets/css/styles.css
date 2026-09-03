@@ -1394,9 +1394,29 @@ body > nav.glass {
     min-height: 38px;
     padding: 0.45rem 0.95rem;
   }
+
+  /* Standalone Landing Page Header on Mobile */
+  body > nav.glass {
+    padding: 0.75rem 1rem;
+    margin: 0.75rem auto 1rem;
+    width: calc(100% - 1.5rem);
+  }
+  body > nav.glass .nav-links {
+    display: none !important;
+  }
+  body > nav.glass .mobile-nav-toggle {
+    display: inline-flex !important;
+  }
 }
 
 @media (min-width: 769px) {
+  body > nav.glass .mobile-nav-toggle {
+    display: none !important;
+  }
+  body > nav.glass .nav-links {
+    display: flex !important;
+  }
+
   .header-top-row .nav-notification-container,
   .header-top-row .nav-profile-container {
     display: flex !important;
