@@ -74,5 +74,11 @@
     </div>
 
     <script src="assets/js/app.js"></script>
+    <script>
+        // Auto-redirect logged-in users to dashboard (fixes PWA re-open showing landing page)
+        if (localStorage.getItem('token')) {
+            window.location.replace('dashboard.html');
+        }
+    </script>
 </body>
 </html>
