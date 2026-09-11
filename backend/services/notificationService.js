@@ -13,9 +13,12 @@ let isFirebaseConfigured = false;
 function initializeFirebaseAdmin() {
     if (firebaseApp) return firebaseApp;
 
+    console.log('🔧 Firebase Admin SDK: Attempting initialization...');
+
     try {
         // Strategy A: Service Account JSON String in Environment Variable
         if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+            console.log('🔧 Firebase: Trying Strategy A (FIREBASE_SERVICE_ACCOUNT_KEY env var)...');
             let serviceAccount;
             try {
                 serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
@@ -30,10 +33,13 @@ function initializeFirebaseAdmin() {
             isFirebaseConfigured = true;
             console.log('✅ Firebase Admin SDK Initialized via FIREBASE_SERVICE_ACCOUNT_KEY env var.');
             return firebaseApp;
+        } else {
+            console.log('ℹ️ Firebase: Strategy A skipped (FIREBASE_SERVICE_ACCOUNT_KEY not set).');
         }
 
         // Strategy B: Dedicated Individual Environment Variables
         if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_CLIENT_EMAIL && process.env.FIREBASE_PRIVATE_KEY) {
+            console.log('🔧 Firebase: Trying Strategy B (individual FIREBASE_* env vars)...');
             const privateKey = process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n');
             firebaseApp = admin.initializeApp({
                 credential: admin.cert({
@@ -45,6 +51,8 @@ function initializeFirebaseAdmin() {
             isFirebaseConfigured = true;
             console.log('✅ Firebase Admin SDK Initialized via FIREBASE_* individual env vars.');
             return firebaseApp;
+        } else {
+            console.log('ℹ️ Firebase: Strategy B skipped (missing FIREBASE_CLIENT_EMAIL or FIREBASE_PRIVATE_KEY).');
         }
 
         // Strategy C: Local serviceAccountKey.json file in backend root (gitignored)
@@ -52,6 +60,7 @@ function initializeFirebaseAdmin() {
         const altLocalKeyPath = path.join(__dirname, '..', 'firebase-admin.json');
 
         if (fs.existsSync(localKeyPath)) {
+            console.log('🔧 Firebase: Trying Strategy C (local serviceAccountKey.json)...');
             const serviceAccount = JSON.parse(fs.readFileSync(localKeyPath, 'utf8'));
             firebaseApp = admin.initializeApp({
                 credential: admin.cert(serviceAccount)
@@ -60,6 +69,7 @@ function initializeFirebaseAdmin() {
             console.log('✅ Firebase Admin SDK Initialized via local serviceAccountKey.json.');
             return firebaseApp;
         } else if (fs.existsSync(altLocalKeyPath)) {
+            console.log('🔧 Firebase: Trying Strategy C (local firebase-admin.json)...');
             const serviceAccount = JSON.parse(fs.readFileSync(altLocalKeyPath, 'utf8'));
             firebaseApp = admin.initializeApp({
                 credential: admin.cert(serviceAccount)
@@ -67,20 +77,26 @@ function initializeFirebaseAdmin() {
             isFirebaseConfigured = true;
             console.log('✅ Firebase Admin SDK Initialized via local firebase-admin.json.');
             return firebaseApp;
+        } else {
+            console.log('ℹ️ Firebase: Strategy C skipped (no local serviceAccountKey.json or firebase-admin.json found).');
         }
 
         // Strategy D: GOOGLE_APPLICATION_CREDENTIALS default path
         if (process.env.GOOGLE_APPLICATION_CREDENTIALS && fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS)) {
+            console.log('🔧 Firebase: Trying Strategy D (GOOGLE_APPLICATION_CREDENTIALS)...');
             firebaseApp = admin.initializeApp({
                 credential: admin.applicationDefault()
             });
             isFirebaseConfigured = true;
             console.log('✅ Firebase Admin SDK Initialized via GOOGLE_APPLICATION_CREDENTIALS.');
             return firebaseApp;
+        } else {
+            console.log('ℹ️ Firebase: Strategy D skipped (GOOGLE_APPLICATION_CREDENTIALS not set or file not found).');
         }
 
         // Graceful Unconfigured Mode
-        console.log('ℹ️ Firebase Admin SDK: Credentials not yet configured. In-app notifications & database history active; FCM push will activate when credentials are provided.');
+        console.log('⚠️ Firebase Admin SDK: All initialization strategies exhausted. Push notifications DISABLED.');
+        console.log('💡 To enable push notifications, set FIREBASE_SERVICE_ACCOUNT_KEY env var with your service account JSON.');
         isFirebaseConfigured = false;
         return null;
     } catch (error) {

@@ -3,7 +3,7 @@
   "short_name": "Krishi Vaani",
   "id": "/",
   "description": "Smart Weather Alert System and AI Agricultural Advisory for Farmers",
-  "start_url": "/index.html",
+  "start_url": "/dashboard.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
