@@ -43,21 +43,8 @@ router.post('/send-otp', async (req, res) => {
         // Ensure E.164 format for India
         let formattedPhone = phone.startsWith('+') ? phone : '+91' + phone;
 
-        // Attempt Twilio Verify V2 first
-        if (twilioClient && process.env.TWILIO_VERIFY_SERVICE_SID) {
-            try {
-                await twilioClient.verify.v2.services(process.env.TWILIO_VERIFY_SERVICE_SID)
-                    .verifications
-                    .create({ to: formattedPhone, channel: 'sms' });
-                console.log('✅ Twilio Verify OTP sent to', formattedPhone);
-                return res.json({ success: true, message: `OTP sent to ${formattedPhone}! Check your phone.`, mode: 'twilio' });
-            } catch(vErr) {
-                console.warn('⚠️ Twilio Verify failed:', vErr.message);
-                // Fall through to simulation
-            }
-        }
-
-        // Graceful Fallback: Generate simulated OTP with 5-min TTL, stored in PostgreSQL
+        // Always generate a simulated OTP and store in database for reliable verification
+        // Twilio trial accounts often don't deliver SMS, so we always show the OTP to the user
         await ensureOtpTable();
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         const expiresAt = new Date(Date.now() + (5 * 60 * 1000)); // 5 minutes
@@ -70,8 +57,20 @@ router.post('/send-otp', async (req, res) => {
             [formattedPhone, otp, expiresAt]
         );
         
-        console.log(`📱 Simulated OTP for ${formattedPhone}: ${otp} (valid for 5 mins)`);
-        // Always return OTP in simulated mode so user can complete signup
+        // Also attempt Twilio Verify in background (best-effort, don't block on it)
+        if (twilioClient && process.env.TWILIO_VERIFY_SERVICE_SID) {
+            try {
+                await twilioClient.verify.v2.services(process.env.TWILIO_VERIFY_SERVICE_SID)
+                    .verifications
+                    .create({ to: formattedPhone, channel: 'sms' });
+                console.log('✅ Twilio Verify OTP also sent to', formattedPhone);
+            } catch(vErr) {
+                console.warn('⚠️ Twilio Verify failed (using simulated):', vErr.message);
+            }
+        }
+        
+        console.log(`📱 OTP for ${formattedPhone}: ${otp} (valid for 5 mins)`);
+        // Always return OTP to user so they can complete signup
         return res.json({ 
             success: true, 
             message: `OTP generated! Your code is: ${otp}`, 
@@ -92,23 +91,8 @@ router.post('/verify-otp', async (req, res) => {
         
         let formattedPhone = phone.startsWith('+') ? phone : '+91' + phone;
 
-        // Attempt Twilio Verify check first
-        if (twilioClient && process.env.TWILIO_VERIFY_SERVICE_SID) {
-            try {
-                const check = await twilioClient.verify.v2.services(process.env.TWILIO_VERIFY_SERVICE_SID)
-                    .verificationChecks
-                    .create({ to: formattedPhone, code: otp });
-                    
-                if (check.status === 'approved') {
-                    return res.json({ success: true, message: 'OTP verified successfully!' });
-                } else {
-                    return res.status(400).json({ error: 'Invalid OTP code.' });
-                }
-            } catch(vErr) {
-                console.warn('⚠️ Twilio Verify check failed:', vErr.message);
-                // Fall through to simulated check
-            }
-        }
+        // Use database-backed verification as primary method
+        // (Twilio Verify check removed - we always use our own OTP stored in PostgreSQL)
 
         // Database-backed verification: check against stored OTP with TTL
         await ensureOtpTable();
