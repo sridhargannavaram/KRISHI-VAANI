@@ -1960,6 +1960,23 @@ if (isAuthenticated() && !window.location.pathname.includes('admin')) {
     sendFarmerHeartbeat();
     // Send periodic heartbeat every 60 seconds
     setInterval(sendFarmerHeartbeat, 60000);
+
+    // Validate and sync fresh farmer profile to keep session permanently active
+    fetch(`${API_BASE_URL}/auth/me`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    }).then(res => {
+        if (res.ok) return res.json();
+        if (res.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('farmer');
+            window.location.replace('login.html');
+        }
+    }).then(data => {
+        if (data && data.farmer) {
+            localStorage.setItem('farmer', JSON.stringify(data.farmer));
+            if (typeof syncUserProfileDisplay === 'function') syncUserProfileDisplay();
+        }
+    }).catch(() => {});
 }
 
 

@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        try {
+            if (localStorage.getItem('token')) {
+                window.location.replace('dashboard.html');
+            }
+        } catch(e) {}
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- PWA & Mobile Installability Meta Tags -->
@@ -216,9 +223,16 @@
                 const data = await res.json();
                 
                 if (res.ok) {
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                        if (data.farmer) {
+                            localStorage.setItem('farmer', JSON.stringify(data.farmer));
+                        }
+                        sessionStorage.setItem('freshLogin', 'true');
+                    }
                     document.getElementById('regSuccess').style.display = 'block';
-                    document.getElementById('regSuccess').innerText = 'Registration successful! Redirecting to login...';
-                    setTimeout(() => window.location.href = 'login.html', 2000);
+                    document.getElementById('regSuccess').innerText = 'Registration successful! Opening dashboard...';
+                    setTimeout(() => window.location.replace('dashboard.html'), 600);
                 } else {
                     document.getElementById('regError').style.display = 'block';
                     document.getElementById('regError').innerText = data.error || 'Registration failed';

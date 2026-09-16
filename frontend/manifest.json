@@ -1,7 +1,7 @@
 {
   "name": "KRISHI VAANI - Smart Weather & Crop Advisory",
   "short_name": "Krishi Vaani",
-  "id": "/",
+  "id": "/dashboard.html",
   "description": "Smart Weather Alert System and AI Agricultural Advisory for Farmers",
   "start_url": "/dashboard.html",
   "scope": "/",

@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        // Instant PWA / App session redirect: if already logged in, go straight to dashboard
+        try {
+            if (localStorage.getItem('token')) {
+                window.location.replace('dashboard.html');
+            }
+        } catch(e) {}
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- PWA & Mobile Installability Meta Tags -->
@@ -74,11 +82,5 @@
     </div>
 
     <script src="assets/js/app.js"></script>
-    <script>
-        // Auto-redirect logged-in users to dashboard (fixes PWA re-open showing landing page)
-        if (localStorage.getItem('token')) {
-            window.location.replace('dashboard.html');
-        }
-    </script>
 </body>
 </html>

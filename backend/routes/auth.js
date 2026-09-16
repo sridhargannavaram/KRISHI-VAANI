@@ -151,7 +151,32 @@ router.post('/register', async (req, res) => {
             isVerified: true
         });
 
-        res.status(201).json({ success: true, message: 'Farmer registered successfully.', farmerId: farmer.id });
+        // Generate persistent 1-year JWT token so user stays permanently logged in
+        const token = jwt.sign(
+            { id: farmer.id, phone: farmer.phone },
+            process.env.JWT_SECRET,
+            { expiresIn: '365d' }
+        );
+
+        res.status(201).json({ 
+            success: true, 
+            message: 'Farmer registered successfully.', 
+            token,
+            farmer: {
+                id: farmer.id,
+                name: farmer.name,
+                phone: farmer.phone,
+                city: farmer.city,
+                state: farmer.state,
+                district: farmer.district,
+                village: farmer.village,
+                postalCode: farmer.postalCode,
+                formattedAddress: farmer.formattedAddress,
+                location: farmer.location,
+                profileImage: farmer.profileImage,
+                isVerified: farmer.isVerified
+            }
+        });
     } catch (error) {
         console.error('Registration Error:', error);
         res.status(500).json({ error: 'Server error during registration: ' + error.message });
@@ -178,10 +203,11 @@ router.post('/login', async (req, res) => {
 
         await Farmer.updateLastLogin(farmer.id, req);
 
+        // 1-year persistent token for seamless mobile app / PWA experience
         const token = jwt.sign(
             { id: farmer.id, phone: farmer.phone },
             process.env.JWT_SECRET,
-            { expiresIn: '30d' }
+            { expiresIn: '365d' }
         );
 
         res.json({
@@ -384,6 +410,34 @@ router.post('/change-password', async (req, res) => {
     } catch (error) {
         console.error('Password Change Error:', error);
         res.status(500).json({ success: false, error: 'Failed to update password: ' + error.message });
+    }
+});
+
+// GET /api/auth/me - Verify and retrieve current logged-in farmer session
+router.get('/me', requireFarmerAuth, async (req, res) => {
+    try {
+        const farmer = req.farmer;
+        res.json({
+            success: true,
+            farmer: {
+                id: farmer.id,
+                name: farmer.name,
+                phone: farmer.phone,
+                city: farmer.city,
+                state: farmer.state,
+                district: farmer.district,
+                village: farmer.village,
+                postalCode: farmer.postalCode,
+                formattedAddress: farmer.formattedAddress,
+                location: farmer.location,
+                profileImage: farmer.profileImage,
+                isVerified: farmer.isVerified,
+                alertPreferences: farmer.alertPreferences
+            }
+        });
+    } catch (err) {
+        console.error('Auth /me Error:', err);
+        res.status(500).json({ success: false, error: err.message });
     }
 });
 
