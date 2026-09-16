@@ -65,7 +65,7 @@ router.get('/dashboard', async (req, res) => {
 
     const mandisCountRes = await query('SELECT COUNT(*) AS total, COUNT(DISTINCT state) AS states, COUNT(DISTINCT commodity) AS commodities FROM market_prices');
     const listingsCountRes = await query('SELECT COUNT(*) AS total FROM marketplace_listings WHERE status = \'ACTIVE\'');
-    const alertsCountRes = await query('SELECT COUNT(*) AS total FROM weather_alerts_log');
+    const alertsCountRes = await query('SELECT ((SELECT COUNT(*) FROM weather_alerts_log) + (SELECT COUNT(*) FROM in_app_notifications)) AS total');
     const lastSyncRes = await query('SELECT * FROM market_sync_logs ORDER BY started_at DESC LIMIT 1');
 
     const manifestPath = path.join(__dirname, '../../frontend/assets/data/commodityImageManifest.json');
@@ -465,12 +465,32 @@ router.get('/commodity-images', async (req, res) => {
  */
 router.get('/alerts', async (req, res) => {
   try {
-    const limit = parseInt(req.query.limit, 10) || 20;
+    const limit = parseInt(req.query.limit, 10) || 50;
     const alerts = await query(`
-      SELECT l.*, f.name AS farmer_name, f.city AS farmer_city 
+      SELECT 
+        n.id,
+        n.farmer_id,
+        COALESCE(f.name, 'All Registered Farmers') AS farmer_name,
+        COALESCE(f.phone, 'In-App Alert') AS phone,
+        COALESCE(n.type, 'Weather') AS crop,
+        (n.title || ': ' || n.message) AS message,
+        n.priority,
+        n.created_at
+      FROM in_app_notifications n
+      LEFT JOIN farmers f ON n.farmer_id = f.id
+      UNION ALL
+      SELECT 
+        l.id,
+        l.farmer_id,
+        COALESCE(f.name, 'Farmer') AS farmer_name,
+        COALESCE(l.phone, f.phone, 'SMS Broadcast') AS phone,
+        COALESCE(l.crop, 'General') AS crop,
+        l.message,
+        l.priority,
+        l.created_at
       FROM weather_alerts_log l
       LEFT JOIN farmers f ON l.farmer_id = f.id
-      ORDER BY l.created_at DESC
+      ORDER BY created_at DESC
       LIMIT $1
     `, [limit]);
 
