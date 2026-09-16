@@ -1989,6 +1989,9 @@ function getSafeProfileImageUrl(img) {
 // Sync user profile name, avatar, and localized UI labels
 function syncUserProfileDisplay() {
     try {
+        const path = (window.location.pathname || '').toLowerCase();
+        if (path.includes('admin')) return;
+
         let farmer = {};
         try {
             farmer = JSON.parse(localStorage.getItem('farmer') || '{}');
@@ -2179,11 +2182,18 @@ async function handleGlobalProfilePhotoUpload(e) {
 
 // Ensure Farmer Profile Modal, Change Password Modal, and Hidden Upload Input exist in DOM
 function ensureFarmerModalsInDOM() {
+    // Never inject farmer profile modals on admin portals or unauthenticated auth pages
+    const path = (window.location.pathname || '').toLowerCase();
+    if (path.includes('admin') || path.includes('login') || path.includes('register')) {
+        return;
+    }
+
     // 1. Farmer Profile Modal
     if (!document.getElementById('farmerProfileModal')) {
         const modalDiv = document.createElement('div');
         modalDiv.className = 'profile-modal-backdrop';
         modalDiv.id = 'farmerProfileModal';
+        modalDiv.style.display = 'none';
         modalDiv.innerHTML = `
             <div class="profile-modal-card" role="dialog" aria-labelledby="modalProfileName" aria-modal="true">
                 <!-- Modal Header -->
@@ -2314,6 +2324,7 @@ function ensureFarmerModalsInDOM() {
         const cpDiv = document.createElement('div');
         cpDiv.className = 'profile-modal-backdrop';
         cpDiv.id = 'changePasswordModal';
+        cpDiv.style.display = 'none';
         cpDiv.innerHTML = `
             <div class="profile-modal-card cp-modal-card" role="dialog" aria-labelledby="cpModalTitle" aria-modal="true">
                 <div class="profile-modal-header">
@@ -2442,6 +2453,7 @@ window.openFarmerProfileModal = function(e) {
 
     const modal = document.getElementById('farmerProfileModal');
     if (modal) {
+        modal.style.display = 'flex';
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -2452,6 +2464,7 @@ window.closeFarmerProfileModal = function() {
     const modal = document.getElementById('farmerProfileModal');
     if (modal) {
         modal.classList.remove('active');
+        modal.style.display = 'none';
         document.body.style.overflow = '';
     }
 };
@@ -2478,6 +2491,7 @@ window.openChangePasswordModal = function() {
 
     const cpModal = document.getElementById('changePasswordModal');
     if (cpModal) {
+        cpModal.style.display = 'flex';
         cpModal.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -2489,6 +2503,7 @@ window.closeChangePasswordModal = function() {
     const cpModal = document.getElementById('changePasswordModal');
     if (cpModal) {
         cpModal.classList.remove('active');
+        cpModal.style.display = 'none';
         document.body.style.overflow = '';
     }
     const form = document.getElementById('changePasswordForm');
