@@ -163,7 +163,12 @@
         document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
             const phone = document.getElementById('phone').value;
             const otp = document.getElementById('otp').value;
+            if (!otp) return alert('Please enter the OTP code.');
             
+            const btn = document.getElementById('verifyOtpBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
             try {
                 const res = await fetch(`${API_BASE_URL}/auth/verify-otp`, {
                     method: 'POST',
@@ -173,13 +178,19 @@
                 const data = await res.json();
                 if(data.success) {
                     isPhoneVerified = true;
-                    document.getElementById('verifyOtpBtn').innerText = 'Verified';
-                    document.getElementById('verifyOtpBtn').classList.replace('btn-primary', 'btn-glass');
-                    document.getElementById('verifyOtpBtn').disabled = true;
+                    btn.innerText = '✅ Verified';
+                    btn.classList.replace('btn-primary', 'btn-glass');
+                    btn.disabled = true;
                     document.getElementById('submitBtn').disabled = false;
+                } else {
+                    alert(data.error || 'OTP verification failed. Please try again.');
+                    btn.innerHTML = 'Verify';
+                    btn.disabled = false;
                 }
             } catch(e) {
-                alert('Invalid OTP');
+                alert('Error connecting to server. Please check your connection and try again.');
+                btn.innerHTML = 'Verify';
+                btn.disabled = false;
             }
         });
 

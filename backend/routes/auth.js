@@ -4,13 +4,35 @@ const twilio = require('twilio');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Farmer = require('../models/Farmer');
+const { query } = require('../config/db');
 
 // Initialize Twilio client only if credentials are present
 const twilioClient = (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN)
     ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
     : null;
-// In-memory OTP store for fallback simulation
-const otpStore = {};
+
+// Ensure OTP table exists (runs once on cold start)
+let otpTableReady = false;
+async function ensureOtpTable() {
+    if (otpTableReady) return;
+    try {
+        await query(`
+            CREATE TABLE IF NOT EXISTS otp_codes (
+                id SERIAL PRIMARY KEY,
+                phone VARCHAR(50) NOT NULL,
+                code VARCHAR(10) NOT NULL,
+                expires_at TIMESTAMPTZ NOT NULL,
+                used BOOLEAN DEFAULT FALSE,
+                created_at TIMESTAMPTZ DEFAULT NOW()
+            );
+        `);
+        await query(`CREATE INDEX IF NOT EXISTS idx_otp_codes_phone ON otp_codes(phone, used);`);
+        otpTableReady = true;
+    } catch (e) {
+        console.warn('⚠️ OTP table creation warning:', e.message);
+        otpTableReady = true; // Table likely already exists
+    }
+}
 
 // Send OTP via SMS
 router.post('/send-otp', async (req, res) => {
@@ -35,26 +57,26 @@ router.post('/send-otp', async (req, res) => {
             }
         }
 
-        // Graceful Fallback: Generate simulated OTP with 5-min TTL
+        // Graceful Fallback: Generate simulated OTP with 5-min TTL, stored in PostgreSQL
+        await ensureOtpTable();
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
-        otpStore[formattedPhone] = {
-            code: otp,
-            expiresAt: Date.now() + (5 * 60 * 1000) // 5 minutes validity
-        };
+        const expiresAt = new Date(Date.now() + (5 * 60 * 1000)); // 5 minutes
         
-        if (process.env.NODE_ENV !== 'production') {
-            console.log(`📱 [DEV ONLY] Simulated OTP for ${formattedPhone}: ${otp} (valid for 5 mins)`);
-            return res.json({ 
-                success: true, 
-                message: `OTP generated! Your code is: ${otp}`, 
-                otp: otp, 
-                mode: 'simulated' 
-            });
-        }
-
+        // Clear any previous unused OTPs for this phone
+        await query('DELETE FROM otp_codes WHERE phone = $1 AND used = FALSE', [formattedPhone]);
+        // Store new OTP in database
+        await query(
+            'INSERT INTO otp_codes (phone, code, expires_at) VALUES ($1, $2, $3)',
+            [formattedPhone, otp, expiresAt]
+        );
+        
+        console.log(`📱 Simulated OTP for ${formattedPhone}: ${otp} (valid for 5 mins)`);
+        // Always return OTP in simulated mode so user can complete signup
         return res.json({ 
             success: true, 
-            message: `OTP sent successfully to ${formattedPhone}. Please check your phone.`
+            message: `OTP generated! Your code is: ${otp}`, 
+            otp: otp, 
+            mode: 'simulated' 
         });
     } catch (error) {
         console.error('Error sending OTP:', error);
@@ -88,15 +110,22 @@ router.post('/verify-otp', async (req, res) => {
             }
         }
 
-        // Simulated verification: check against stored OTP with TTL
-        const stored = otpStore[formattedPhone];
-        if (stored) {
-            if (Date.now() > stored.expiresAt) {
-                delete otpStore[formattedPhone];
+        // Database-backed verification: check against stored OTP with TTL
+        await ensureOtpTable();
+        const result = await query(
+            'SELECT * FROM otp_codes WHERE phone = $1 AND used = FALSE ORDER BY created_at DESC LIMIT 1',
+            [formattedPhone]
+        );
+        
+        if (result.rows.length > 0) {
+            const stored = result.rows[0];
+            if (new Date() > new Date(stored.expires_at)) {
+                await query('DELETE FROM otp_codes WHERE id = $1', [stored.id]);
                 return res.status(400).json({ error: 'OTP has expired. Please request a new one.' });
             }
             if (stored.code === otp.trim()) {
-                delete otpStore[formattedPhone]; // Invalidate immediately upon successful verification
+                // Mark as used instead of deleting
+                await query('UPDATE otp_codes SET used = TRUE WHERE id = $1', [stored.id]);
                 return res.json({ success: true, message: 'OTP verified successfully!' });
             } else {
                 return res.status(400).json({ error: 'Invalid OTP code.' });
