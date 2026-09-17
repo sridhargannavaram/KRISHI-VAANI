@@ -152,6 +152,7 @@ const profileRoutes = require('./routes/profile');
 const mandiRoutes = require('./routes/mandi');
 const adminRoutes = require('./routes/admin');
 const notificationRoutes = require('./routes/notifications');
+const cronRoutes = require('./routes/cron');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/weather', weatherRoutes);
@@ -169,6 +170,7 @@ app.use('/api/mandi', mandiRoutes);
 app.use('/api/marketplace', mandiRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/cron', cronRoutes);
 
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

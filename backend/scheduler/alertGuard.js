@@ -8,15 +8,25 @@ const twilioClient = (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_
     ? twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
     : null;
 
-// Run every hour
-cron.schedule('0 * * * *', async () => {
-    console.log('🕒 Running AlertGuard Cron Job...');
+// Run every hour if long-running
+async function runAlertGuardCheck() {
+    console.log('🕒 Running AlertGuard Check...');
+    const stats = {
+        checked: 0,
+        alertsTriggered: 0,
+        skipped: 0,
+        errors: []
+    };
 
     try {
         const farmers = await Farmer.findVerified();
+        stats.checked = farmers.length;
 
         for (const farmer of farmers) {
-            if (!farmer.location || !farmer.location.coordinates) continue;
+            if (!farmer.location || !farmer.location.coordinates) {
+                stats.skipped++;
+                continue;
+            }
 
             const [lng, lat] = farmer.location.coordinates;
             
@@ -28,7 +38,7 @@ cron.schedule('0 * * * *', async () => {
             if (process.env.OPENWEATHER_API_KEY) {
                 try {
                     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`;
-                    const response = await axios.get(url);
+                    const response = await axios.get(url, { timeout: 8000 });
                     const weather = response.data;
                     
                     currentTemp = weather.main?.temp || 0;
@@ -37,6 +47,7 @@ cron.schedule('0 * * * *', async () => {
                     isRaining = weather.weather?.some(w => w.main.toLowerCase().includes('rain')) || false;
                 } catch (err) {
                     console.error(`Failed to fetch weather for farmer ${farmer.name}:`, err.message);
+                    stats.errors.push(`Weather fetch failed for ${farmer.name}: ${err.message}`);
                     continue;
                 }
             } else {
@@ -64,12 +75,13 @@ cron.schedule('0 * * * *', async () => {
                 const fullMessage = `KRISHI VAANI ALERT for ${farmer.name}: ` + alertMessages.join(' ');
                 
                 // Format phone with +91 if needed
-                let alertPhone = farmer.phone;
-                if (!alertPhone.startsWith('+')) {
+                let alertPhone = farmer.phone || '';
+                if (alertPhone && !alertPhone.startsWith('+')) {
                     alertPhone = '+91' + alertPhone;
                 }
                 
                 console.log(`🚨 Triggering Alert for ${alertPhone}: ${fullMessage}`);
+                stats.alertsTriggered++;
 
                 // 1. PostgreSQL In-App & Firebase Cloud Messaging Web Push Notification
                 try {
@@ -84,10 +96,11 @@ cron.schedule('0 * * * *', async () => {
                     });
                 } catch (notifErr) {
                     console.error(`Failed to send push/in-app alert for farmer ${farmer.name}:`, notifErr.message);
+                    stats.errors.push(`Notification failed for ${farmer.name}: ${notifErr.message}`);
                 }
 
                 // 2. Legacy SMS / Voice (Twilio Gateway if configured)
-                if (twilioClient && process.env.TWILIO_PHONE_NUMBER && process.env.TWILIO_PHONE_NUMBER !== '+1234567890') {
+                if (twilioClient && process.env.TWILIO_PHONE_NUMBER && process.env.TWILIO_PHONE_NUMBER !== '+1234567890' && alertPhone) {
                     try {
                         await twilioClient.messages.create({
                             body: fullMessage,
@@ -116,7 +129,19 @@ cron.schedule('0 * * * *', async () => {
         }
     } catch (error) {
         console.error('AlertGuard Error:', error);
+        stats.errors.push(error.message);
     }
-});
 
-console.log('✅ AlertGuard Scheduler Initialized');
+    return stats;
+}
+
+try {
+    cron.schedule('0 * * * *', runAlertGuardCheck);
+    console.log('✅ AlertGuard Scheduler Initialized');
+} catch (e) {
+    console.log('ℹ️ Node-cron scheduler initialization note:', e.message);
+}
+
+module.exports = {
+    runAlertGuardCheck
+};
