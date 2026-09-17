@@ -19,6 +19,7 @@ if (!process.env.JWT_SECRET) {
 }
 
 const app = express();
+app.set('trust proxy', 1); // Trust first proxy (Vercel) - required for rate limiting
 const PORT = process.env.PORT || 4000;
 
 // Security Headers with Helmet
