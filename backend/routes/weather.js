@@ -275,4 +275,22 @@ router.get('/farmer/:id', async (req, res) => {
   }
 });
 
+// Trigger AlertGuard check on demand or via cron
+const { runAlertGuardCheck } = require('../scheduler/alertGuard');
+router.get('/check-alerts', async (req, res) => {
+  try {
+    const stats = await runAlertGuardCheck();
+    res.json({
+      success: true,
+      timestamp: new Date().toISOString(),
+      stats
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message
+    });
+  }
+});
+
 module.exports = router;
