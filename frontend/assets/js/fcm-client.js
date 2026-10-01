@@ -28,8 +28,18 @@ class KrishiNotificationClient {
             if (!res.ok) return;
             this.config = await res.json();
 
-            // 2. Register Service Worker
-            this.swRegistration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+            // 2. Register Service Worker with config params & ensure ready
+            const swParams = new URLSearchParams({
+                apiKey: this.config.apiKey || '',
+                projectId: this.config.projectId || '',
+                messagingSenderId: this.config.messagingSenderId || '',
+                appId: this.config.appId || '',
+                authDomain: this.config.authDomain || '',
+                storageBucket: this.config.storageBucket || ''
+            });
+            const swUrl = `/firebase-messaging-sw.js?${swParams.toString()}`;
+            this.swRegistration = await navigator.serviceWorker.register(swUrl, { scope: '/' });
+            await navigator.serviceWorker.ready;
 
             // 3. Load Firebase SDK dynamically if not already present on window
             if (!window.firebase) {
@@ -141,9 +151,10 @@ class KrishiNotificationClient {
         }
 
         try {
+            const activeSw = this.swRegistration || (await navigator.serviceWorker.ready);
             const token = await this.messaging.getToken({
                 vapidKey: this.config.vapidKey,
-                serviceWorkerRegistration: this.swRegistration
+                serviceWorkerRegistration: activeSw
             });
 
             if (!token) {

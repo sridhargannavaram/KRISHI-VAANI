@@ -340,6 +340,9 @@ async function sendNotificationToUser(farmerId, {
                     body: message
                 },
                 data: {
+                    title: String(title),
+                    body: String(message),
+                    message: String(message),
                     type: String(type),
                     priority: String(priority),
                     actionUrl: String(actionUrl || '/dashboard.html'),
@@ -347,16 +350,24 @@ async function sendNotificationToUser(farmerId, {
                     source: String(source)
                 },
                 webpush: {
+                    headers: {
+                        Urgency: priority === 'LOW' ? 'normal' : 'high'
+                    },
                     notification: {
                         title: title,
                         body: message,
-                        icon: icon || '/assets/images/logo.png',
-                        badge: '/assets/images/logo.png',
-                        click_action: actionUrl || '/dashboard.html',
-                        requireInteraction: priority === 'CRITICAL' || priority === 'HIGH'
+                        icon: icon || '/assets/images/icon-192.png',
+                        badge: '/assets/images/icon-192.png',
+                        tag: String(record.id || 'krishi-push-' + Date.now()),
+                        click_action: String(actionUrl || '/dashboard.html'),
+                        requireInteraction: priority === 'CRITICAL' || priority === 'HIGH',
+                        data: {
+                            actionUrl: String(actionUrl || '/dashboard.html'),
+                            notificationId: String(record.id)
+                        }
                     },
                     fcmOptions: {
-                        link: actionUrl || '/dashboard.html'
+                        link: String(actionUrl || '/dashboard.html')
                     }
                 }
             };

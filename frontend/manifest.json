@@ -10,6 +10,7 @@
   "background_color": "#f8fafc",
   "theme_color": "#16a34a",
   "categories": ["weather", "agriculture", "productivity"],
+  "gcm_sender_id": "103953800507",
   "icons": [
     {
       "src": "/assets/images/icon-192.png",
