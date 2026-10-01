@@ -42,7 +42,7 @@
   "crons": [
     {
       "path": "/api/weather/check-alerts",
-      "schedule": "0 * * * *"
+      "schedule": "30 0 * * *"
     }
   ]
 }
