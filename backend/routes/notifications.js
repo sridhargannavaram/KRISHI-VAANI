@@ -141,11 +141,13 @@ router.patch('/read-all', requireFarmerAuth, async (req, res) => {
 // -------------------------------------------------------------
 router.post('/test-alert', requireFarmerAuth, async (req, res) => {
     try {
-        const { title = '🌱 Krishi Vaani Test Notification', message = 'Push notifications are successfully configured on your device!', priority = 'LOW' } = req.body;
+        const { title, message, priority = 'LOW' } = req.body;
 
-        const result = await notificationService.sendNotificationToUser(req.farmerId, {
-            title,
-            message,
+        // Use smart notification with template for language-aware delivery
+        const result = await notificationService.sendSmartNotification(req.farmerId, {
+            templateKey: 'TEST_NOTIFICATION',
+            title: title || '🌱 Krishi Vaani Test Notification',
+            message: message || 'Push notifications are successfully configured on your device!',
             type: 'GENERAL',
             priority: priority || 'LOW',
             source: 'USER_TEST',
