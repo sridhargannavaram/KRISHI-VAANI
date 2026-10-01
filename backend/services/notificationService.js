@@ -733,15 +733,23 @@ async function sendSmartNotification(farmerId, {
 // 7. Public Firebase Web Configuration (Safe Placeholders & Env Exposure)
 // -------------------------------------------------------------
 function getPublicFirebaseWebConfig() {
+    const apiKey = process.env.FIREBASE_API_KEY && process.env.FIREBASE_API_KEY !== 'PLACEHOLDER_FIREBASE_API_KEY' && process.env.FIREBASE_API_KEY !== 'dummy-api-key-for-testing'
+        ? process.env.FIREBASE_API_KEY
+        : 'AIzaSyCt1uGhRzJVYrm8_byf3-wU6z233LFwmy0';
+
+    const vapidKey = process.env.FIREBASE_VAPID_KEY && process.env.FIREBASE_VAPID_KEY !== 'PLACEHOLDER_PUBLIC_VAPID_KEY'
+        ? process.env.FIREBASE_VAPID_KEY
+        : 'BGi7Ih_HBXqlEMqgkq6kFKdIcYqJDJd3-ZAhUSpLEce0BzPEJoymR7MUu3KsUahpd_tXxnfGVpKdBLZzTIZUTNM';
+
     return {
-        apiKey: process.env.FIREBASE_API_KEY || 'PLACEHOLDER_FIREBASE_API_KEY',
-        authDomain: process.env.FIREBASE_AUTH_DOMAIN || 'krishi-vaani.firebaseapp.com',
-        projectId: process.env.FIREBASE_PROJECT_ID || 'krishi-vaani',
-        storageBucket: process.env.FIREBASE_STORAGE_BUCKET || 'krishi-vaani.appspot.com',
-        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || '000000000000',
-        appId: process.env.FIREBASE_APP_ID || '1:000000000000:web:0000000000000000000000',
-        vapidKey: process.env.FIREBASE_VAPID_KEY || 'PLACEHOLDER_PUBLIC_VAPID_KEY',
-        isConfigured: !!(process.env.FIREBASE_API_KEY && process.env.FIREBASE_VAPID_KEY && process.env.FIREBASE_API_KEY !== 'PLACEHOLDER_FIREBASE_API_KEY')
+        apiKey: apiKey,
+        authDomain: process.env.FIREBASE_AUTH_DOMAIN || 'krishi-vaani-554f2.firebaseapp.com',
+        projectId: process.env.FIREBASE_PROJECT_ID || 'krishi-vaani-554f2',
+        storageBucket: process.env.FIREBASE_STORAGE_BUCKET || 'krishi-vaani-554f2.firebasestorage.app',
+        messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || '592911715235',
+        appId: process.env.FIREBASE_APP_ID || '1:592911715235:web:3c0e3d282ed83591f22816',
+        vapidKey: vapidKey,
+        isConfigured: true
     };
 }
 
