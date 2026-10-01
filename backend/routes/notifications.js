@@ -166,7 +166,52 @@ router.post('/test-alert', requireFarmerAuth, async (req, res) => {
 });
 
 // -------------------------------------------------------------
-// 8. GET /api/notifications/preferences (Get Farmer Notification Settings)
+// 8. POST /api/notifications/test-weather-alert (Send a Random Weather Alert in Farmer's Language)
+// -------------------------------------------------------------
+router.post('/test-weather-alert', requireFarmerAuth, async (req, res) => {
+    try {
+        const { templateKey } = req.body;
+
+        // All available template keys with sample variables
+        const templates = {
+            WEATHER_RAIN:       { templateVars: { district: 'Guntur', hours: '6' },         type: 'WEATHER', priority: 'HIGH' },
+            WEATHER_HEAT:       { templateVars: { temp: '42' },                               type: 'WEATHER', priority: 'HIGH' },
+            WEATHER_WIND:       { templateVars: { wind: '65' },                               type: 'WEATHER', priority: 'HIGH' },
+            WEATHER_CYCLONE:    { templateVars: {},                                            type: 'WEATHER', priority: 'CRITICAL' },
+            CROP_DISEASE_RISK:  { templateVars: { crop: 'Paddy', risk: 'Blast disease' },    type: 'CROP',    priority: 'HIGH' },
+            IRRIGATION_ADVICE:  { templateVars: { crop: 'Cotton' },                           type: 'CROP',    priority: 'MEDIUM' },
+            MANDI_PRICE_SPIKE:  { templateVars: { crop: 'Tomato', price: '2400', mandi: 'Kurnool', change: '+18' }, type: 'MARKET', priority: 'MEDIUM' },
+            GOVT_SCHEME:        { templateVars: { schemeName: 'PM Fasal Bima Yojana' },       type: 'GENERAL', priority: 'LOW' }
+        };
+
+        // Pick the requested template or a random one
+        const keys = Object.keys(templates);
+        const chosen = templateKey && templates[templateKey] ? templateKey : keys[Math.floor(Math.random() * keys.length)];
+        const { templateVars, type, priority } = templates[chosen];
+
+        const result = await notificationService.sendSmartNotification(req.farmerId, {
+            templateKey: chosen,
+            templateVars,
+            type,
+            priority,
+            source: 'USER_TEST',
+            actionUrl: '/dashboard.html',
+            preventSpamHours: 0
+        });
+
+        res.json({
+            message: 'Weather alert notification sent.',
+            templateUsed: chosen,
+            result
+        });
+    } catch (error) {
+        console.error('Test Weather Alert Error:', error);
+        res.status(500).json({ error: 'Failed to send weather alert.' });
+    }
+});
+
+// -------------------------------------------------------------
+// 9. GET /api/notifications/preferences (Get Farmer Notification Settings)
 // -------------------------------------------------------------
 router.get('/preferences', requireFarmerAuth, async (req, res) => {
     try {
